@@ -50,10 +50,10 @@ class TicketController extends Controller
                 <div class="btn-acciones">
                     <div class="btn-circle">
                         <a href="'.$actualizar.'" class="btn btn-success" title="Actualizar">
-                            <i class="fa fa-edit"></i>
+                            <i class="far fa-edit"></i>
                         </a>
 			<a href="'.$recibo .'" class="btn btn-primary" title="Recibo de Equipo">
-                            <i class="fa fa-edit"></i>
+                            <i class="far fa-file"></i>
                         </a>
                         <a href="#'.$ruta.'" role="button" class="btn btn-danger" data-toggle="modal" title="Eliminar">
                             <i class="far fa-trash-alt"></i>
@@ -161,7 +161,7 @@ class TicketController extends Controller
 //
         $log = new Log();
         $log->tablas = 'tickets';
-        $log->movimimiento = "Área id: ".$ticket->area_id. "Solicitante: " .$ticket->solicitante. "Contacto: ". $ticket->contacto. "Técnico: ". $ticket->tecnico_id."Categoria: ".$ticket->categoria."Prioridad: ".$ticket->prioridad."Estatus: ".$ticket->estatus."Datos de reporte: ".$ticket->datos_reporte."Fecha de reporte: ".$ticket->fecha_reporte."Fecha de inicio: ".$ticket->fecha_inicio. "Fecha de termino: ". $ticket->fecha_termino."Problema: ".$ticket->problema."Solución: ".$ticket->solucion;
+        $log->movimimiento = "ï¿½rea id: ".$ticket->area_id. "Solicitante: " .$ticket->solicitante. "Contacto: ". $ticket->contacto. "Tï¿½cnico: ". $ticket->tecnico_id."Categoria: ".$ticket->categoria."Prioridad: ".$ticket->prioridad."Estatus: ".$ticket->estatus."Datos de reporte: ".$ticket->datos_reporte."Fecha de reporte: ".$ticket->fecha_reporte."Fecha de inicio: ".$ticket->fecha_inicio. "Fecha de termino: ". $ticket->fecha_termino."Problema: ".$ticket->problema."Soluciï¿½n: ".$ticket->solucion;
         $log->usuario_id = Auth::user()->id;
         $log->acciones = 'Insertar';
         $ticket->save();

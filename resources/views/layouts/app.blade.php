@@ -40,7 +40,13 @@
     <script type="text/javascript">
         loader(true);
     </script>
-
+    <style>
+        .a.btn.btn-success {
+        color: #fff;
+        background-color: #blue;
+        border-color: #28a745;
+    }
+    </style>
 </head>
 <body>
     <div id="app">

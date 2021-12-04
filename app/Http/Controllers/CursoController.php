@@ -85,7 +85,7 @@ class CursoController extends Controller
                 <div class="btn-acciones">
                     <div class="btn-circle">
                         <a href="'.$actualizar.'" class="btn btn-success" title="Actualizar">
-                            <i class="fa fa-edit"></i>
+                            <i class="far fa-edit"></i>
                         </a>
                         <a href="#'.$ruta.'" role="button" class="btn btn-danger" data-toggle="modal" title="Eliminar">
                             <i class="far fa-trash-alt"></i>
@@ -157,7 +157,7 @@ public function cargarDTLabs($consulta)
                 <div class="btn-acciones">
                     <div class="btn-circle">
                         <a href="'.$actualizar.'" role="button" class="btn btn-success" title="Actualizar">
-                            <i class="fa fa-edit"></i>
+                            <i class="far fa-edit"></i>
                         </a>
                         <a href="#'.$ruta.'" role="button" class="btn btn-danger" data-toggle="modal" title="Eliminar">
                             <i class="far fa-trash-alt"></i>
@@ -280,7 +280,7 @@ $value['piso'],
 	//
         $log = new Log();
         $log->tablas = 'cursos';
-        $log->movimimiento = "Área: ".$curso->id_area."Ciclo: ".$curso->ciclo."Tipo: ".$curso->tipo."Día: ".$curso->dia."Aula: ".$curso->aula."CRN: ". $curso->crn."Curso: ".$curso->curso."Código: ".$curso->codigo."Profesor: ".$curso->profesor."Cupo: ".$curso->cupo."Alumnos: ".$curso->alumno."PE: ".$curso->pe."Departamento: ".$curso->departamento."Observaciones: ".$curso->observaciones;
+        $log->movimimiento = "ï¿½rea: ".$curso->id_area."Ciclo: ".$curso->ciclo."Tipo: ".$curso->tipo."Dï¿½a: ".$curso->dia."Aula: ".$curso->aula."CRN: ". $curso->crn."Curso: ".$curso->curso."Cï¿½digo: ".$curso->codigo."Profesor: ".$curso->profesor."Cupo: ".$curso->cupo."Alumnos: ".$curso->alumno."PE: ".$curso->pe."Departamento: ".$curso->departamento."Observaciones: ".$curso->observaciones;
         $log->usuario_id = Auth::user()->id;
         $log->acciones = 'Insertar';
         $curso->save();
@@ -382,7 +382,7 @@ $value['piso'],
        $log = new Log();
        $log->tabla = "cursos";
        $mov="";
-       $mov=$mov."Área: ".$curso->id_area."Ciclo: ".$curso->ciclo."Tipo: ".$curso->tipo."Día: ".$curso->dia."Aula: ".$curso->aula."CRN: ". $curso->crn."Curso: ".$curso->curso."Código: ".$curso->codigo."Profesor: ".$curso->profesor."Cupo: ".$curso->cupo."Alumnos: ".$curso->alumno."PE: ".$curso->pe."Departamento: ".$curso->departamento."Observaciones: ".$curso->observaciones;
+       $mov=$mov."ï¿½rea: ".$curso->id_area."Ciclo: ".$curso->ciclo."Tipo: ".$curso->tipo."Dï¿½a: ".$curso->dia."Aula: ".$curso->aula."CRN: ". $curso->crn."Curso: ".$curso->curso."Cï¿½digo: ".$curso->codigo."Profesor: ".$curso->profesor."Cupo: ".$curso->cupo."Alumnos: ".$curso->alumno."PE: ".$curso->pe."Departamento: ".$curso->departamento."Observaciones: ".$curso->observaciones;
        $log->movimiento = $mov;
        $log->usuario_id = Auth::user()->id;
        $log->acciones = "Edicion";
@@ -442,7 +442,7 @@ $value['piso'],
             $log = new Log();
         $log->tabla = "cursos";
         $mov="";
-        $mov=$mov."Área: ".$curso->id_area."Ciclo: ".$curso->ciclo."Tipo: ".$curso->tipo."Día: ".$curso->dia."Aula: ".$curso->aula."CRN: ". $curso->crn."Curso: ".$curso->curso."Código: ".$curso->codigo."Profesor: ".$curso->profesor."Cupo: ".$curso->cupo."Alumnos: ".$curso->alumno."PE: ".$curso->pe."Departamento: ".$curso->departamento."Observaciones: ".$curso->observaciones.".";
+        $mov=$mov."ï¿½rea: ".$curso->id_area."Ciclo: ".$curso->ciclo."Tipo: ".$curso->tipo."Dï¿½a: ".$curso->dia."Aula: ".$curso->aula."CRN: ". $curso->crn."Curso: ".$curso->curso."Cï¿½digo: ".$curso->codigo."Profesor: ".$curso->profesor."Cupo: ".$curso->cupo."Alumnos: ".$curso->alumno."PE: ".$curso->pe."Departamento: ".$curso->departamento."Observaciones: ".$curso->observaciones.".";
         $log->movimiento = $mov;
         $log->usuario_id = Auth::user()->id;
         $log->acciones = "Borrrado";
