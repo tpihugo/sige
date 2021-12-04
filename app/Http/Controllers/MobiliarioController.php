@@ -39,7 +39,7 @@ class MobiliarioController extends Controller
                 <div class="btn-acciones">
                     <div class="btn-circle">
                         <a href="'.$actualizar.'" class="btn btn-success" title="Actualizar">
-                            <i class="fa fa-edit"></i>
+                            <i class="far fa-edit"></i>
                         </a>
                         <a href="#'.$ruta.'" role="button" class="btn btn-danger" data-toggle="modal" title="Eliminar">
                             <i class="far fa-trash-alt"></i>
@@ -133,7 +133,7 @@ class MobiliarioController extends Controller
 	//
          $log = new Log();
          $log->tablas = 'mobiliarios';
-         $log->movimimiento = "ID UdeG: ".$mobiliario->id_udg."ID resguardante: ".$mobiliario->id_resguardante."Área: ".$mobiliario->area_id."Descripción: ".$mobiliario->descripcion."Ubicación".$mobiliario->ubicacion."Fecha de aquisicion: ".$mobiliario->fecha_adquisicion."Estatus SICI: ".$mobiliario->estatus_sici."Localizado SICI: ".$mobiliario->localizado_sici;
+         $log->movimimiento = "ID UdeG: ".$mobiliario->id_udg."ID resguardante: ".$mobiliario->id_resguardante."ï¿½rea: ".$mobiliario->area_id."Descripciï¿½n: ".$mobiliario->descripcion."Ubicaciï¿½n".$mobiliario->ubicacion."Fecha de aquisicion: ".$mobiliario->fecha_adquisicion."Estatus SICI: ".$mobiliario->estatus_sici."Localizado SICI: ".$mobiliario->localizado_sici;
          $log->usuario_id = Auth::user()->id;
          $log->acciones = 'Insertar';
          $mobiliario->save();
@@ -202,14 +202,14 @@ class MobiliarioController extends Controller
        $log = new Log();
        $log->tabla = "mobiliarios";
        $mov="";
-       $mov=$mov."ID UdeG: ".$mobiliario->id_udg."ID resguardante: ".$mobiliario->id_resguardante."Área: ".$mobiliario->area_id."Descripción: ".$mobiliario->descripcion."Ubicación".$mobiliario->ubicacion."Fecha de aquisicion: ".$mobiliario->fecha_adquisicion."Estatus SICI: ".$mobiliario->estatus_sici."Localizado SICI: ".$mobiliario->localizado_sici;
+       $mov=$mov."ID UdeG: ".$mobiliario->id_udg."ID resguardante: ".$mobiliario->id_resguardante."ï¿½rea: ".$mobiliario->area_id."Descripciï¿½n: ".$mobiliario->descripcion."Ubicaciï¿½n".$mobiliario->ubicacion."Fecha de aquisicion: ".$mobiliario->fecha_adquisicion."Estatus SICI: ".$mobiliario->estatus_sici."Localizado SICI: ".$mobiliario->localizado_sici;
        if(!is_null($mobiliario->fecha_termino) && isset($mobiliario->fecha_termino)){
            $mov=$mov." estatus: Cerrado";
        }
        else{
            $mov=$mov." estatus:".$mobiliario->estatus;
        }
-       $mov=$mov ."ID UdeG: ".$mobiliario->id_udg."ID resguardante: ".$mobiliario->id_resguardante."Área: ".$mobiliario->area_id."Descripción: ".$mobiliario->descripcion."Ubicación".$mobiliario->ubicacion."Fecha de aquisicion: ".$mobiliario->fecha_adquisicion."Estatus SICI: ".$mobiliario->estatus_sici."Localizado SICI: ".$mobiliario->localizado_sici;
+       $mov=$mov ."ID UdeG: ".$mobiliario->id_udg."ID resguardante: ".$mobiliario->id_resguardante."ï¿½rea: ".$mobiliario->area_id."Descripciï¿½n: ".$mobiliario->descripcion."Ubicaciï¿½n".$mobiliario->ubicacion."Fecha de aquisicion: ".$mobiliario->fecha_adquisicion."Estatus SICI: ".$mobiliario->estatus_sici."Localizado SICI: ".$mobiliario->localizado_sici;
        $log->movimiento = $mov;
        $log->usuario_id = Auth::user()->id;
        $log->acciones = "Edicion";
@@ -241,14 +241,14 @@ class MobiliarioController extends Controller
             $log = new Log();
         $log->tabla = "mobiliarios";
         $mov="";
-        $mov=$mov."ID UdeG: ".$mobiliario->id_udg."ID resguardante: ".$mobiliario->id_resguardante."Área: ".$mobiliario->area_id."Descripción: ".$mobiliario->descripcion."Ubicación".$mobiliario->ubicacion."Fecha de aquisicion: ".$mobiliario->fecha_adquisicion."Estatus SICI: ".$mobiliario->estatus_sici."Localizado SICI: ".$mobiliario->localizado_sici;
+        $mov=$mov."ID UdeG: ".$mobiliario->id_udg."ID resguardante: ".$mobiliario->id_resguardante."ï¿½rea: ".$mobiliario->area_id."Descripciï¿½n: ".$mobiliario->descripcion."Ubicaciï¿½n".$mobiliario->ubicacion."Fecha de aquisicion: ".$mobiliario->fecha_adquisicion."Estatus SICI: ".$mobiliario->estatus_sici."Localizado SICI: ".$mobiliario->localizado_sici;
         if(!is_null($mobiliario->fecha_termino) && isset($mobiliario->fecha_termino)){
             $mov=$mov." estatus: Cerrado";
         }
         else{
             $mov=$mov." estatus:".$mobiliario->estatus;
         }
-        $mov=$mov ."ID UdeG: ".$mobiliario->id_udg."ID resguardante: ".$mobiliario->id_resguardante."Área: ".$mobiliario->area_id."Descripción: ".$mobiliario->descripcion."Ubicación".$mobiliario->ubicacion."Fecha de aquisicion: ".$mobiliario->fecha_adquisicion."Estatus SICI: ".$mobiliario->estatus_sici."Localizado SICI: ".$mobiliario->localizado_sici;
+        $mov=$mov ."ID UdeG: ".$mobiliario->id_udg."ID resguardante: ".$mobiliario->id_resguardante."ï¿½rea: ".$mobiliario->area_id."Descripciï¿½n: ".$mobiliario->descripcion."Ubicaciï¿½n".$mobiliario->ubicacion."Fecha de aquisicion: ".$mobiliario->fecha_adquisicion."Estatus SICI: ".$mobiliario->estatus_sici."Localizado SICI: ".$mobiliario->localizado_sici;
         $log->movimiento = $mov;
         $log->usuario_id = Auth::user()->id;
         $log->acciones = "Borrrado";
