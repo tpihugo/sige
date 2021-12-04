@@ -68,7 +68,7 @@ class InventarioController extends Controller
         /*No localizados*/
         $total_no_localizados =$total_equipos_localizados_sici->cuenta_equipos_localizados_sici - $total_incidentes->cuenta_incidentes-$total_localizados->cuenta_localizados;
 
-        /*Reportados a contralorÃ­a*/
+        /*Reportados a contraloría*/
         $total_equipos_reportados = DB::table('equipos')
             ->select(DB::raw('COUNT(*) as cuenta_equipos_reportados'))
             ->where('resguardante', '=', 'CTA')
@@ -148,9 +148,9 @@ class InventarioController extends Controller
             $log->acciones = "Insercion";
             $log->save();
             //
-            $mensaje = 'El artÃ­culo se registro como Localizado con Nota';
+            $mensaje = 'El artículo se registro como Localizado con Nota';
         }else{
-            $mensaje = 'El artÃ­culo ya se habÃ­a registrado como Localizado';
+            $mensaje = 'El artículo ya se había registrado como Localizado';
         }
 
         return redirect()->route('revision-inventario')->with(array('message' => $mensaje));
@@ -240,7 +240,7 @@ class InventarioController extends Controller
             ->first();
         
 
-        /* RevisiÃ³n con Nota*/
+        /* Revisión con Nota*/
         $total_equipos_revision = DB::table('inventariodetalle')
             ->select(DB::raw('COUNT(*) as revisiones'))
             ->where('estatus', '=', 'Revision')
@@ -267,7 +267,7 @@ class InventarioController extends Controller
             ->with('area_id',$area_id);
     }
     public function listarEquipoEncontrado(Request $request){
-        //Se hace la ruta, la ruta manda llamar el mÃ©todo y el mÃ©todo manda llamar la plantilla
+        //Se hace la ruta, la ruta manda llamar el método y el método manda llamar la plantilla
         $listadoEquipos = VsEquipo::where('id', '=', $request->input('id'))
             ->orWhere('udg_id', '=', $request->input('id'))
             ->orWhere('numero_serie', 'like', '%'.$request->input('id').'%')->get();
@@ -309,9 +309,9 @@ class InventarioController extends Controller
             $log->acciones = "Insercion";
             $log->save();
             //
-            $mensaje = 'El artÃ­culo se registro como Localizado';
+            $mensaje = 'El artículo se registro como Localizado';
         }else{
-            $mensaje = 'El artÃ­culo ya se habÃ­a registrado como Localizado';
+            $mensaje = 'El artículo ya se había registrado como Localizado';
         }
         //if($origen='inventario-area'){
           //  return redirect()->route('inventario-por-area', $listadoEquipos->id_area)->with(array('message' => $mensaje));
@@ -336,7 +336,7 @@ class InventarioController extends Controller
             $log->save();
             //
             return redirect()->route('panel-inventario')->with(array(
-                "message" => "Se marco como Ãºltimo inventario 2021"
+                "message" => "Se marco como último inventario 2021"
             ));
         }
     }
@@ -374,7 +374,7 @@ class InventarioController extends Controller
             ->where('IdArea', '=', $area_id)
             ->first();
 
-        /* RevisiÃ³n con Nota*/
+        /* Revisión con Nota*/
         $total_equipos_revision = DB::table('inventariodetalle')
             ->select(DB::raw('COUNT(*) as revisiones'))
             ->where('estatus', '=', 'Revision')

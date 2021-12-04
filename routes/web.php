@@ -211,6 +211,11 @@ Route::get('/actualizacion-inventario/{area_id}', array(
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\RevisionAnualEquipo@revision_inventario_anual'
 ));
+Route::get('/inventario-localizado', array(
+    'as' => 'inventario-localizado',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\InventarioController@inventario_localizado'
+));
 Route::get('/documento/{filename}', array(
     'as' => 'documento',
     'uses' => 'App\Http\Controllers\PrestamoController@obtenerdocumento'

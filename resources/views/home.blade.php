@@ -125,6 +125,7 @@
             <div class="card-footer">
             <div class="stats">
 		<i class="material-icons">inventory</i><a href="{{ route('inventario-cta') }}" >Inventario General</a>
+		<i class="material-icons">location_searching</i><a href="{{ route('inventario-localizado') }}" >Inventario Localizado</a>
             </div>
             </div>
         </div>

@@ -48,8 +48,8 @@
                                     <td>{{ $proyecto->area_interna }}</td>
                                     <td>{{ $proyecto->responsable }}</td>
                                     <td>{{ $proyecto->sede }} - {{ $proyecto->division }} - {{ $proyecto->coordinacion }} - {{ $proyecto->area }}</td>
-                                    <td>{{ $proyecto->fecha_inicio }}</td>
-                                    <td>{{ $proyecto->fecha_fin }}</td>
+                                    <td>{{ date('d/m/Y', strtotime($proyecto->fecha_inicio)) }}</td>
+                                    <td>{{ date('d/m/Y', strtotime($proyecto->fecha_fin)) }}</td>
                                     <td>
                                         <a href="{{ route('proyectos.show', $proyecto->id) }}" class="btn btn-outline-primary">Actividades</a></p>
                                         <a href="{{ route('proyectos.edit', $proyecto->id) }}" class="btn btn-outline-success">Editar</a></p>

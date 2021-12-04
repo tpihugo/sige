@@ -67,8 +67,8 @@
                                     <td>{{ $actividad->nombre }}</td>
                                     <td>{{ $actividad->descripcion }}</td>
                                     <td>{{ $actividad->tiempo }} hrs.</td>
-                                    <td>{{ $actividad->fecha_inicio }}</td>
-                                    <td>{{ $actividad->fecha_fin }}</td>
+                                    <td>{{ date('d/m/Y', strtotime($actividad->fecha_inicio)) }}</td>
+                                    <td>{{ date('d/m/Y', strtotime($actividad->fecha_fin)) }}</td>
                                     <td>
                                         <a href="{{ route('proyecto-actividad.edit', $actividad->id) }}" class="btn btn-outline-success">Editar</a></p>
                                         <button class="btn btn-outline-danger eliminar" data-toggle="modal" data-target="#eliminarModal" 
