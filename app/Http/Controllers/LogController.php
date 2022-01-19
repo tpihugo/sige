@@ -16,10 +16,33 @@ class LogController extends Controller
      */
     public function index()
     {
-        $logs = VsLog::all();
+        $vlogs = VsLog::all();
+        $logs=$this->cargarDT($vlogs);
         return view('log.index')->with('logs',$logs);
     }
+    public function cargarDT($consulta)
+    {
+        $logs = [];
 
+        foreach ($consulta as $key => $value){
+
+           
+
+            
+
+            $logs[$key] = array(
+                $value['folio'],
+                $value['tabla'],
+                $value['movimiento'],
+                $value['usuario'],
+                $value['accion'],
+                $value['fecha']
+            );
+
+        }
+
+        return $logs;
+    }
     /**
      * Show the form for creating a new resource.
      *
