@@ -3,7 +3,7 @@
 
 
     <div class="container">
-        @if(Auth::check() && Auth::user()->role =='admin')
+        @if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='auxiliar' || Auth::user()->role =='redes'))
             @if (session('message'))
                 <div class="alert alert-success">
                     <h2>{{ session('message') }}</h2>
@@ -184,7 +184,7 @@
     </div>
 
     @else
-        El periodo de Registro de Proyectos a terminado
+        Acceso no Valido
     @endif
 
 

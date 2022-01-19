@@ -82,7 +82,7 @@
                                     <option value="Conferencia">Conferencia</option>
                                     <option value="Clase magistral">Clase magistral</option>
                                     <option value="Video conferencia">Video conferencia</option>
-                                    <option value="Foro">foro</option>
+                                    <option value="Foro">Foro</option>
                                     <option value="Transmisión en vivo">Transmisión en vivo</option>
                                 </select>
 
@@ -104,14 +104,9 @@
                                 <input type="text" class="form-control" name="participantes" id="participantes"
                                     aria-describedby="Participantes" required>
                             </div>
-                            <input type="hidden" class="form-control" name="inicio" id="inicio" value="0"
-                                aria-describedby="inicio">
-                            <input type="hidden" class="form-control" name="carousel" id="carousel" value="0"
-                                aria-describedby="carousel">
-                            <input type="hidden" class="form-control" name="activo" id="activo" value="1"
-                                aria-describedby="activo">
-
+                            <div class="text-center"><b>** No usar caracteres especiales (Ejemplos: &#193;, &#241;, &#243;, &#163;, &#169;, @)</b></div>
                             <div class="file-loading">
+
                                 <label for="file" class="form-label">Video</label>
                                 <input id="file" name="file" type="file" class="form-control"
                                     placeholder="Coloca el video" required>
@@ -178,56 +173,54 @@
 
                                 <td>
                                     <div>
-                                        @if ($material->inicio == 0)
-                                            <form action="{{ route('activeIndex', $material->id) }}" method="POST">
-                                                @csrf
-                                                @method('PUT')
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input bg-danger" type="checkbox"
-                                                        id="flexSwitchCheckChecked" onChange="this.form.submit()">
-                                                    Inicio
-                                                </div>
+                                        <form action="{{ route('change_status', $material->id) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="form-check form-switch">
+                                                @if ($material->inicio == 1)
+                                                    <input  id="flexSwitchCheckChecked" class="form-check-input bg-success"
+                                                        type="checkbox"  name="campo"
+                                                        value='{{ 'inicio' . ',' . $material->inicio }}'
+                                                        onChange="this.form.submit()"
+                                                        />
+                                                        <label for="">Inicio</label>
 
-                                            </form>
-                                        @endif
-                                        @if ($material->inicio == 1)
-                                            <form action="{{ route('notActiveIndex', $material->id) }}" method="POST">
-                                                @csrf
-                                                @method('PUT')
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input bg-success" type="checkbox"
-                                                        id="flexSwitchCheckChecked" onChange="this.form.submit()" checked>
-                                                    Inicio
-                                                </div>
 
-                                            </form>
-                                        @endif
-                                    </div>
+                                                @else
+                                                    <input  id="flexSwitchCheckChecked" class="form-check-input bg-danger"
+                                                        type="checkbox"  name="campo"
+                                                        value='{{ 'inicio' . ',' . $material->inicio }}'
+                                                        onChange="this.form.submit()"/>
+                                                        <label for="">Inicio</label>
+                                                @endif
+
+                                            </div>
+
+                                        </form>        
+				    </div>
 
                                     <div>
-                                        @if ($material->carousel == 0)
-                                            <form action="{{ route('carouselShow', $material->id) }}" method="POST">
-                                                @csrf
-                                                @method('PUT')
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input bg-danger" type="checkbox"
-                                                        id="flexSwitchCheckChecked" onChange="this.form.submit()">
-                                                    Carousel
-                                                </div>
-                                            </form>
-                                        @endif
-                                        @if ($material->carousel == 1)
-                                            <form action="{{ route('carouselHidden', $material->id) }}" method="POST">
-                                                @csrf
-                                                @method('PUT')
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input bg-success" type="checkbox"
-                                                        id="flexSwitchCheckChecked" onChange="this.form.submit()" checked>
-                                                    Carousel
-                                                </div>
+                                        <form action="{{ route('change_status', $material->id) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="form-check form-switch">
+                                                @if ($material->carousel == 1)
+                                                <input class="form-check-input bg-success"
+                                                        type="checkbox"
+                                                        onChange="this.form.submit()" name="campo"
+                                                        value='{{ 'carousel' . ',' . $material->carousel }}' />
+                                                        <label for="">Carousel</label>
+                                                @else
+                                                <input class="form-check-input bg-danger"
+                                                        type="checkbox"
+                                                        onChange="this.form.submit()" onclick="cambio(this)" name="campo"
+                                                        value='{{ 'carousel' . ',' . $material->carousel }}'/>
+                                                        <label for="">Carousel</label>
+                                                @endif
 
-                                            </form>
-                                        @endif
+
+                                            </div>
+                                        </form>
                                     </div>
                                 </td>
 
@@ -254,66 +247,77 @@
 
 
     @section('js')
-        <script>
-            $(document).ready(function() {
-                table.destroy();
-                responsive: true
-                $('#material').DataTable({
+    <script>
+        $(document).ready(function() {
+          table.destroy();
+          responsive: true
+            $('#material').DataTable({
 
-                    dom: "Blfrtip",
-                    columnDefs: [{
-                        orderable: false,
-                        targets: 1
-                    }]
-                });
+                dom: "Blfrtip",
+                columnDefs: [{
+                    orderable: false,
+                    targets: 1
+                }]
             });
-        </script> ___scripts_1___
-        <script>
-            $(document).ready(function() {
-                table.destroy();
-                $('#material').DataTable({
-
-                    dom: "Blfrtip",
-                    buttons: [{
-                            text: 'csv',
-                            extend: 'csvHtml5',
-                            exportOptions: {
-                                columns: ':visible:not(.not-export-col)'
-                            }
-                        },
-                        {
-                            text: 'excel',
-                            extend: 'excelHtml5',
-                            exportOptions: {
-                                columns: ':visible:not(.not-export-col)'
-                            }
-                        },
-                        {
-                            text: 'pdf',
-                            extend: 'pdfHtml5',
-                            exportOptions: {
-                                columns: ':visible:not(.not-export-col)'
-                            }
-                        },
-                        {
-                            text: 'print',
-                            extend: 'print',
-                            exportOptions: {
-                                columns: ':visible:not(.not-export-col)'
-                            }
-                        },
-
-                    ],
-                    columnDefs: [{
-                        orderable: false,
-                        targets: -1
-                    }]
-                });
+        });
+        </script> <script>
+        $(document).ready(function() {
+            $('#material').DataTable({
+                dom: "Blfrtip",
+                buttons: [
+                    {
+                        text: 'csv',
+                        extend: 'csvHtml5',
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+                        }
+                    },
+                    {
+                        text: 'excel',
+                        extend: 'excelHtml5',
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+                        }
+                    },
+                    {
+                        text: 'pdf',
+                        extend: 'pdfHtml5',
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+                        }
+                    },
+                    {
+                        text: 'print',
+                        extend: 'print',
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+                        }
+                    },
+                ],
+                columnDefs: [{
+                    orderable: false,
+                    targets: -1
+                }]
             });
-        </script> ___scripts_3___
+        });
+        </script>
+        <script>
 
-
-
+        $(".exportar").click(function() {
+    var i = $(this).index() + 1
+    console.log(i);
+    var table = $('#material').DataTable();
+    if (i == 1) {
+        table.button('.buttons-csv').trigger();
+    } else if (i == 2) {
+        table.button('.buttons-excel').trigger();
+    } else if (i == 3) {
+        table.button('.buttons-pdf').trigger();
+    } else if (i == 4) {
+        table.button('.buttons-print').trigger();
+    }
+});
+    </script>
     @endsection
 
 @endsection

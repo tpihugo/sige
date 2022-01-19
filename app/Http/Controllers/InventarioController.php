@@ -30,7 +30,7 @@ class InventarioController extends Controller
             ->select(DB::raw('COUNT(*) as cuenta_equipos'))
             ->where('resguardante', '=', 'CTA')
             ->first();
-        
+
         $total_equipos_localizados_sici = DB::table('equipos')
         ->select(DB::raw('COUNT(*) as cuenta_equipos_localizados_sici'))
         ->where('resguardante', '=', 'CTA')
@@ -68,7 +68,7 @@ class InventarioController extends Controller
         /*No localizados*/
         $total_no_localizados =$total_equipos_localizados_sici->cuenta_equipos_localizados_sici - $total_incidentes->cuenta_incidentes-$total_localizados->cuenta_localizados;
 
-        /*Reportados a contraloría*/
+        /*Reportados a contralorï¿½a*/
         $total_equipos_reportados = DB::table('equipos')
             ->select(DB::raw('COUNT(*) as cuenta_equipos_reportados'))
             ->where('resguardante', '=', 'CTA')
@@ -110,7 +110,79 @@ class InventarioController extends Controller
     {
         //
     }
+//localizado
+    public function inventario_localizado()
+    {
+        $Vsinventario_localizado = Vs_Equipo_Detalle::where('activo','=',1)->get();
+        $inventariolocalizado = $this->cargarDT($Vsinventario_localizado);
+        return view('inventario.inventario-localizado')->with('inventariolocalizado', $inventariolocalizado);
+    }
 
+    public function cargarDT($consulta)
+    {
+        $inventario_localizado = [];
+
+        foreach ($consulta as $key => $value){
+
+            $ruta = "eliminar".$value['id'];
+            $eliminar = route('delete-ticket', $value['id']);
+            $actualizar =  route('tickets.edit', $value['id']);
+
+
+            $acciones = '
+                <div class="btn-acciones">
+                    <div class="btn-circle">
+                        <a href="'.$actualizar.'" class="btn btn-success" title="Actualizar">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        <a href="#'.$ruta.'" role="button" class="btn btn-danger" data-toggle="modal" title="Eliminar">
+                            <i class="far fa-trash-alt"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="modal fade" id="'.$ruta.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">ï¿½Seguro que deseas eliminar este curso?</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <p class="text-primary">
+                        <small>
+                            '.$value['id'].', '.$value['datos_reporte'].', '.$value['fecha_reporte'].', '.$value['solicitante'].'
+                        </small>
+                      </p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <a href="'.$eliminar.'" type="button" class="btn btn-danger">Eliminar</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ';
+
+            $inventario_localizado[$key] = array(
+                $acciones,
+                $value['id'],
+                $value['udg_id'],
+                $value['localizado_sici'],
+                $value['marca'],
+                $value['modelo'],
+                $value['numero_serie'],
+                $value['detalles'],
+                $value['tipo_equipo'],
+                $value['area'],
+                $value['estatus'],
+            );
+
+        }
+
+        return $inventario_localizado;
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -148,12 +220,14 @@ class InventarioController extends Controller
             $log->acciones = "Insercion";
             $log->save();
             //
-            $mensaje = 'El artículo se registro como Localizado con Nota';
+            $mensaje = 'El artï¿½culo se registro como Localizado con Nota';
         }else{
-            $mensaje = 'El artículo ya se había registrado como Localizado';
+            $mensaje = 'El artï¿½culo ya se habï¿½a registrado como Localizado';
         }
 
-        return redirect()->route('revision-inventario')->with(array('message' => $mensaje));
+        return redirect('revision-inventario')->with(array(
+               "message1" => "El Ã¡rea que trata de eliminar no existe"
+            ));
     }
 
     /**
@@ -238,9 +312,9 @@ class InventarioController extends Controller
             ->where('estatus', '=', 'Localizado')
             ->where('IdArea', '=', $area_id)
             ->first();
-        
 
-        /* Revisión con Nota*/
+
+        /* Revisiï¿½n con Nota*/
         $total_equipos_revision = DB::table('inventariodetalle')
             ->select(DB::raw('COUNT(*) as revisiones'))
             ->where('estatus', '=', 'Revision')
@@ -252,7 +326,7 @@ class InventarioController extends Controller
         $origen ='inventario-area';
 
         /*DATA TABLE*/
-        
+
         $equipos= Vs_Equipo_Detalle::where('id_area','=',$area_id)->get();
         $total_equipos = count($equipos);
         return view('inventario.inventario-area')
@@ -267,7 +341,7 @@ class InventarioController extends Controller
             ->with('area_id',$area_id);
     }
     public function listarEquipoEncontrado(Request $request){
-        //Se hace la ruta, la ruta manda llamar el método y el método manda llamar la plantilla
+        //Se hace la ruta, la ruta manda llamar el mï¿½todo y el mï¿½todo manda llamar la plantilla
         $listadoEquipos = VsEquipo::where('id', '=', $request->input('id'))
             ->orWhere('udg_id', '=', $request->input('id'))
             ->orWhere('numero_serie', 'like', '%'.$request->input('id').'%')->get();
@@ -309,9 +383,9 @@ class InventarioController extends Controller
             $log->acciones = "Insercion";
             $log->save();
             //
-            $mensaje = 'El artículo se registro como Localizado';
+            $mensaje = 'El artï¿½culo se registro como Localizado';
         }else{
-            $mensaje = 'El artículo ya se había registrado como Localizado';
+            $mensaje = 'El artï¿½culo ya se habï¿½a registrado como Localizado';
         }
         //if($origen='inventario-area'){
           //  return redirect()->route('inventario-por-area', $listadoEquipos->id_area)->with(array('message' => $mensaje));
@@ -336,7 +410,7 @@ class InventarioController extends Controller
             $log->save();
             //
             return redirect()->route('panel-inventario')->with(array(
-                "message" => "Se marco como último inventario 2021"
+                "message" => "Se marco como ï¿½ltimo inventario 2021"
             ));
         }
     }
@@ -374,7 +448,7 @@ class InventarioController extends Controller
             ->where('IdArea', '=', $area_id)
             ->first();
 
-        /* Revisión con Nota*/
+        /* Revisiï¿½n con Nota*/
         $total_equipos_revision = DB::table('inventariodetalle')
             ->select(DB::raw('COUNT(*) as revisiones'))
             ->where('estatus', '=', 'Revision')
@@ -401,6 +475,177 @@ class InventarioController extends Controller
             ->with('equipos_en_sici_no_localizados', $equipos_en_sici_no_localizados)
             ->with('origen', $origen)
             ->with('equipos_detalle',$equipos_detalle);
+    }
+
+    public function dashboard_inventario(){
+
+        // $total_equipos = Equipo::count();
+        $total_equipos = DB::table('vs_equipos')
+        ->select(DB::raw('COUNT(*) as localizados'))
+        ->where('tipo_sici','equipo')
+        ->where('resguardante', 'CTA')
+        ->first();
+
+        // $total_equipos_localizados_sici = Equipo::where('localizado_sici','Si')->get();
+        $total_equipos_localizados_sici = DB::table('equipos')
+        ->select(DB::raw('COUNT(*) as localizados_sici'))
+        ->where('tipo_sici','equipo')
+        ->where('localizado_sici', 'Si')
+        ->where('resguardante', 'CTA')
+        ->first();
+
+        $total_cpu_localizados_sici = DB::table('equipos')
+        ->select(DB::raw('COUNT(*) as cpu_localizados'))
+        ->where('localizado_sici','Si')
+        ->where('resguardante','CTA')
+        ->where('tipo_equipo', 'CPU')
+        ->first();
+
+        $total_lap_localizadas_sici = DB::table('equipos')
+        ->select(DB::raw('COUNT(*) as lap_localizadas'))
+        ->where('localizado_sici', 'Si')
+        ->where('resguardante', 'CTA')
+        ->where('tipo_equipo', 'Laptop')
+        ->first();
+
+        $total_imp_localizadas_sici = DB::table('equipos')
+        ->select(DB::raw('COUNT(*) as imp_localizadas'))
+        ->where('localizado_sici', 'Si')
+        ->where('resguardante', 'CTA')
+        ->where('tipo_equipo', 'Impresora')
+        ->first();
+
+        $total_tablets_cta = DB::table('equipos')
+        ->select(DB::raw('COUNT(*) as total_tablet_cta'))
+        ->where('resguardante', 'CTA')
+        ->where('tipo_equipo', 'Tablet')
+        ->first();
+
+        $total_tablets_android = DB::table('equipos')
+        ->select(DB::raw('COUNT(*) as total_tablet_android'))
+        ->where('resguardante', 'CTA')
+        ->where('tipo_equipo', 'Tablet')
+        ->where('marca','<>','APPLE')
+        ->first();
+
+        $total_tablets_apple = DB::table('equipos')
+        ->select(DB::raw('COUNT(*) as total_tablet_apple'))
+        ->where('resguardante', 'CTA')
+        ->where('tipo_equipo', 'Tablet')
+        ->where('marca','APPLE')
+        ->first();
+
+        $total_equipos_no_localizados_sici = DB::table('equipos')
+        ->select(DB::raw('COUNT(*) as no_localizados_sici'))        
+	->where('tipo_sici','equipo')
+        ->where('localizado_sici', 'No')
+        ->where('resguardante', 'CTA')
+        ->first();
+
+        $total_cpu_no_localizados_sici = DB::table('equipos')
+        ->select(DB::raw('COUNT(*) as cpu_localizados'))
+        ->where('localizado_sici', 'No')
+        ->where('resguardante', 'CTA')
+        ->where('tipo_equipo', 'CPU')
+        ->first();
+
+        $total_lap_no_localizadas_sici = DB::table('equipos')
+        ->select(DB::raw('COUNT(*) as lap_localizadas'))
+        ->where('localizado_sici', 'No')
+        ->where('resguardante', 'CTA')
+        ->where('tipo_equipo', 'Laptop')
+        ->first();
+
+        $total_imp_no_localizadas_sici = DB::table('equipos')
+        ->select(DB::raw('COUNT(*) as imp_localizadas'))
+        ->where('localizado_sici', 'No')
+        ->where('resguardante', 'CTA')
+        ->where('tipo_equipo', 'Impresora')
+        ->first();
+
+        $total_equipos_localizados_inventario_anual = DB::table('inventariodetalle')
+        ->select(DB::raw('COUNT(*) as localizados_inv'))
+        ->where('estatus', 'Localizado')
+        ->first();
+
+        $total_equipos_localizados_con_nota = DB::table('inventariodetalle')
+        ->select(DB::raw('COUNT(*) as localizados_nota'))
+        ->where('notas', '<>', '-')
+        ->first();
+
+        // $vs_inventario_general = DB::table('vs_inventariogeneral')
+        // ->select('*')
+        // ->get();
+
+        $total_cpu = DB::table('equipos')
+        ->select(DB::raw('COUNT(*) as cpus'))
+        ->where('tipo_equipo','CPU')
+        ->where('resguardante', 'CTA')
+        ->first();
+
+        $total_lap = DB::table('equipos')
+        ->select(DB::raw('COUNT(*) as laptop'))
+        ->where('tipo_equipo','Laptop')
+        ->where('resguardante', 'CTA')
+        ->first();
+
+        $total_imp = DB::table('equipos')
+        ->select(DB::raw('COUNT(*) as impresora'))
+        ->where('tipo_equipo','Impresora')
+        ->where('resguardante', 'CTA')
+        ->first();
+
+        $vs_prestamos_porEntregar = DB::table('vs_prestamos')
+        ->select(DB::raw('COUNT(*) as porEntregar'))
+        ->where('estado', 'Por Entregar')
+        ->first();
+
+        $vs_prestamos_trasladado = DB::table('vs_prestamos')
+        ->select(DB::raw('COUNT(*) as traladado'))
+        ->where('estado', 'Traslado')
+        ->first();
+
+        $vs_prestamos_devuelto = DB::table('vs_prestamos')
+        ->select(DB::raw('COUNT(*) as devuelto'))
+        ->where('estado', 'Devuelto')
+        ->first();
+
+        $vs_prestamos_enPrestamo = DB::table('vs_prestamos')
+        ->select(DB::raw('COUNT(*) as enPrestamo'))
+        ->where('estado', 'En prestamo')
+        ->first();
+
+        // dd($vs_prestamos_enPrestamo);
+
+        $dataTable[] = array(
+            $vs_prestamos_porEntregar,
+            $vs_prestamos_trasladado,
+            $vs_prestamos_devuelto,
+            $vs_prestamos_enPrestamo,
+        );
+
+        // dd($dataTable);
+
+        return view('inventario.estadistica')
+            ->with('total_equipos',$total_equipos)
+            ->with('total_equipos_localizados_sici',$total_equipos_localizados_sici)
+            ->with('total_cpu_localizados_sici',$total_cpu_localizados_sici)
+            ->with('total_lap_localizadas_sici',$total_lap_localizadas_sici)
+            ->with('total_imp_localizadas_sici',$total_imp_localizadas_sici)
+            ->with('total_equipos_no_localizados_sici',$total_equipos_no_localizados_sici)
+            ->with('total_cpu_no_localizados_sici',$total_cpu_no_localizados_sici)
+            ->with('total_lap_no_localizadas_sici',$total_lap_no_localizadas_sici)
+            ->with('total_imp_no_localizadas_sici',$total_imp_no_localizadas_sici)
+            ->with('total_equipos_localizados_inventario_anual',$total_equipos_localizados_inventario_anual)
+            ->with('total_equipos_localizados_con_nota',$total_equipos_localizados_con_nota)
+            ->with('total_cpu',$total_cpu)
+            ->with('total_lap',$total_lap)
+            ->with('total_imp',$total_imp)
+            ->with('total_tablets_cta',$total_tablets_cta)
+            ->with('total_tablets_android',$total_tablets_android)
+            ->with('total_tablets_apple',$total_tablets_apple)
+            ->with('dataTable',$dataTable);
+            // ->with('vs_inventario_general',$vs_inventario_general);
     }
 
 }

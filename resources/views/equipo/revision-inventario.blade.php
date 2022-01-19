@@ -1,4 +1,5 @@
 @extends('layouts.appdash', ['activePage' => 'dashboard', 'titlePage' => __('Dashboard')])
+
 @section('content')
     <div class="container">
         @if(Auth::check())
@@ -10,9 +11,9 @@
             </div>
             <div class="card-body">
 
-                @if (session('message'))
-                    <div class="alert alert-success">
-                        {{ session('message') }}
+                @if(session('message1'))
+                    <div class="alert alert-success"> dd
+                        {{session('message1')}}
                     </div>
                 @endif
                 <hr>

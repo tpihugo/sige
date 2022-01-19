@@ -36,32 +36,27 @@ class PrestamoController extends Controller
         foreach ($consulta as $key => $value){
            
             $cambiarubicacion = route('cambiar-ubicacion', $value['id']);
-            $actualizar =  route('equipos.edit', $value['id']);
-            $prestamo = route('generar-prestamo', $value['id']);
-	        $historial = route('historial', $value['id']);
+            $actualizar =  route('prestamos.edit', $value['id']);      
+	    $prestamo = route('imprimirPrestamo', $value['id']);
+	   
 $acciones = '';
-/*
+
             $acciones = '
                 <div class="btn-acciones">
                     <div class="btn-circle">
                         <a href="'.$actualizar.'" class="btn btn-success" title="Actualizar">
                             <i class="fa fa-edit"></i>
                         </a>
-                        <a href="'.$prestamo.'" class="btn btn-primary"  title="Prestamo">
+                        <a href="'.$prestamo.'" class="btn btn-primary"  title="Formato de Prestamo" target="_blank">
                             <i class="far fa-file-alt"></i>
                         </a>
-			<a href="'.$cambiarubicacion.'" class="btn btn-danger" title="Reubicar">
-                            <i class="fa fa-map-marker-alt"></i>
-                        </a>
-			<a href="'.$historial.'" class="btn btn-primary" title="Historial">
-                            <i class="far fa-calendar-alt"></i>
-                        </a>
+			
 
                     </div>
                 </div>
                
             ';
-*/
+
             $prestamos[$key] = array(
                 $acciones,
                 $value['id'],
@@ -73,7 +68,7 @@ $acciones = '';
                 $value['lista_equipos'],
                 $value['fecha_actualizacion'],
                 $value['observaciones'],
-                $value['documento'],
+                $value['documento']
                 
 
 

@@ -1,0 +1,8 @@
+span {
+    padding: 5px;
+    margin: 3px;
+    display: inline-flex;
+}
+.btn-warning{
+    background-color: cornflowerblue;
+}

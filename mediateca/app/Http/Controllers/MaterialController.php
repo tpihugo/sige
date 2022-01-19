@@ -48,9 +48,6 @@ class MaterialController extends Controller
      */
     public function store(Request $request)
     {
-
-
-
         $materiales = new Material();
         $materiales->titulo = $request->get('titulo');
         $materiales->descripcion = $request->get('descripcion');
@@ -60,43 +57,43 @@ class MaterialController extends Controller
         $materiales->duracion = $request->get('duracion');
         $materiales->anio_publicacion = $request->get('anio_publicacion');
         $materiales->participantes = $request->get('participantes');
-        $materiales->inicio = $request->get('inicio');
-        $materiales->carousel = $request->get('carousel');
-        $materiales->activo = $request->get('activo');
-
         if($request->hasfile('file')){
-            $nombre = strtr($request->file->getClientOriginalName(), array( " " => "_", "ñ" => "n", "Ñ" => "N", "á" => "a", "Á" => "A", "é" => "e", "É" => "E", "í" => "i", "Í" => "Í", "ó" => "o", "Ó" => "O", "ú" => "u", "Ú" => "U" ));
+
+            $nombre = strtr($request->file->getClientOriginalName(), array( " " => "_", "ñ" => "n", "Ñ" => "N", "á" => "a", "Í" => "A", "é" => "e", "É" => "E", "í" => "i", "A�" => "�", "ó" => "o", 'Ó' => "O", "ú" => "u", "Ú" => "U" , "�" => "_", "!"=> "_","#"=> "_","$"=> "_","%"=> "_","&"=> "_","("=> "_",")"=> "_","="=> "_","'"=> "_","+"=> "_","{"=> "_","}"=> "_","["=> "_","]"=> "_","-"=> "_"));            
             $file= 'http://148.202.212.210:9000/rpc/cat/archivos/videos/'.$nombre;
             $materiales->file = $file;
+	    
         }
 
         if($request->hasfile('file_preview')){
-            $nombre = strtr($request->file('file_preview')->getClientOriginalName(), array( " " => "_", "ñ" => "n", "Ñ" => "N", "á" => "a", "Á" => "A", "é" => "e", "É" => "E", "í" => "i", "Í" => "Í", "ó" => "o", "Ó" => "O", "ú" => "u", "Ú" => "U" ));
-            $file= 'http://148.202.212.210:9000/rpc/cat/archivos/imagenes_videos/'.$nombre;
+            $nombre = strtr($request->file('file_preview')->getClientOriginalName(), array( " " => "_", "ñ" => "n", "Ñ" => "N", "á" => "a", "Í" => "A", "é" => "e", "É" => "E", "í" => "i", "A�" => "�", "ó" => "o", 'Ó' => "O", "ú" => "u", "Ú" => "U" , "�" => "_", "!"=> "_","#"=> "_","$"=> "_","%"=> "_","&"=> "_","("=> "_",")"=> "_","="=> "_","'"=> "_","+"=> "_","{"=> "_","}"=> "_","["=> "_","]"=> "_","-"=> "_"));            
+	$file= 'http://148.202.212.210:9000/rpc/cat/archivos/imagenes_videos/'.$nombre;
             $materiales->file_preview = $file;
         }
+	    
 
-        $materiales->save();
+        
         $ftp_server="148.202.212.210";
         $ftp_usuario="admin";
-        $ftp_password="password";
+        $ftp_password="50p0rt3NAS";
         $conex_id=ftp_connect($ftp_server);
         ftp_login($conex_id, $ftp_usuario, $ftp_password);
 
 		$source_file=$_FILES['file']['tmp_name'];
+		
 		$destino="/mnt/array1/archivos/videos";
 		$nombre=$_FILES["file"]['name'];
-        $nombre = strtr($request->file->getClientOriginalName(), array( " " => "_", "ñ" => "n", "Ñ" => "N", "á" => "a", "Á" => "A", "é" => "e", "É" => "E", "í" => "i", "Í" => "Í", "ó" => "o", "Ó" => "O", "ú" => "u", "Ú" => "U" ));
 
+		
+        $nombre = strtr($request->file->getClientOriginalName(), array( " " => "_", "ñ" => "n", "Ñ" => "N", "á" => "a", "Í" => "A", "é" => "e", "É" => "E", "í" => "i", "A�" => "�", "ó" => "o", 'Ó' => "O", "ú" => "u", "Ú" => "U" , "�" => "_", "!"=> "_","#"=> "_","$"=> "_","%"=> "_","&"=> "_","("=> "_",")"=> "_","="=> "_","'"=> "_","+"=> "_","{"=> "_","}"=> "_","["=> "_","]"=> "_","-"=> "_"));            
         ftp_put($conex_id, $destino.'/'.$nombre, $source_file, FTP_BINARY);
 
         $source_file=$_FILES['file_preview']['tmp_name'];
 		$destino="/mnt/array1/archivos/imagenes_videos";
 		$nombre=$_FILES["file_preview"]['name'];
-        $nombre = strtr($request->file('file_preview')->getClientOriginalName(), array( " " => "_", "ñ" => "n", "Ñ" => "N", "á" => "a", "Á" => "A", "é" => "e", "É" => "E", "í" => "i", "Í" => "Í", "ó" => "o", "Ó" => "O", "ú" => "u", "Ú" => "U" ));
-
+        $nombre = strtr($request->file('file_preview')->getClientOriginalName(), array( " " => "_", "ñ" => "n", "Ñ" => "N", "á" => "a", "Í" => "A", "é" => "e", "É" => "E", "í" => "i", "A�" => "�", "ó" => "o", 'Ó' => "O", "ú" => "u", "Ú" => "U" , "�" => "_", "!"=> "_","#"=> "_","$"=> "_","%"=> "_","&"=> "_","("=> "_",")"=> "_","="=> "_","'"=> "_","+"=> "_","{"=> "_","}"=> "_","["=> "_","]"=> "_","-"=> "_"));            
         ftp_put($conex_id, $destino.'/'.$nombre, $source_file, FTP_BINARY);
-
+	$materiales->save();
 
         return redirect('./material')->with('success','Item created successfully!');
 
@@ -136,7 +133,7 @@ class MaterialController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update_material(Request $request, $id)
     {
         $material = Material::find($id);
         $material->titulo = $request->get('titulo');
@@ -164,7 +161,7 @@ class MaterialController extends Controller
     {
         $materiales = Material::find($id);
         $materiales->update();
-        return redirect('./material');
+        return redirect()->route('material.index');
 
     }
 
@@ -173,7 +170,7 @@ class MaterialController extends Controller
         $materiales = Material::find($id);
         $materiales->inicio = 1;
         $materiales->save();
-        return redirect('./material');
+        return redirect()->route('material.index');
 
     }
 
@@ -182,7 +179,7 @@ class MaterialController extends Controller
         $materiales = Material::find($id);
         $materiales->inicio = 0;
         $materiales->save();
-        return redirect('./material');
+        return redirect()->route('material.index');
 
 
     }
@@ -192,7 +189,7 @@ class MaterialController extends Controller
         $materiales = Material::find($id);
         $materiales->carousel = 1;
         $materiales->save();
-        return redirect('./material');
+        return redirect()->route('material.index');
 
     }
 
@@ -201,7 +198,7 @@ class MaterialController extends Controller
         $materiales = Material::find($id);
         $materiales->carousel = 0;
         $materiales->save();
-        return redirect('./material');
+        return redirect()->route('material.index');
 
 
     }
@@ -211,12 +208,43 @@ class MaterialController extends Controller
         $materiales = Material::find($id);
         $materiales->activo = 0;
         $materiales->save();
-        return redirect('./material');
+        return redirect()->route('material.index');
 
 
     }
 
-    //SOLO BORRADO LÓGICO
+    public function change($id,Request $request){
+        [$campo,$valor]=explode(',', $request->campo);
+
+        if($campo == 'inicio'){
+            if($valor==1){
+                Material::where('id',$id)->update([
+                    'inicio'=>0
+                ]);
+            }else{
+                Material::where('id',$id)->update([
+                    'inicio'=>1
+                ]);
+            }
+
+        }
+        if($campo == 'carousel'){
+            if($valor==1){
+                Material::where('id',$id)->update([
+                    'carousel'=>0
+                ]);
+            }else{
+                Material::where('id',$id)->update([
+                    'carousel'=>1
+                ]);
+            }
+
+        }
+        return redirect()->route('material.index');
+
+    }
+
+    //SOLO BORRADO L�GICO
     /*
      *public function delete_ticket($ticket_id){
     $ticket = Ticket::find($ticket_id);

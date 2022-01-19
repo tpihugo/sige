@@ -44,10 +44,10 @@ $cont=0;
 <div class="container pt-5" >
 
 <ul id="Videos">
-  <div class="row row-cols-md-3 row-cols-sm-1 g-4 shadow-lg p-6  rounded" >
+  <div class="row  row-cols-sm-1  shadow-lg p-6  rounded" >
 
   @foreach($categorias as $categoria)
-  @if($categoria->inicio  == 1 && $categoria->activo  == 1)
+  @if($categoria->activo  == 1)
 <li >
   <!-- Modal -->
   <div class="modal fade" id="staticBackdrop{{$categoria->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -66,7 +66,7 @@ $cont=0;
     </div>
   </div>
 
-  <!-- Fin Modal -->
+  <!-- Fin Modal 
   <div class="col">
 
     <div class="card  text-white bg-dark mb-3">
@@ -81,6 +81,27 @@ $cont=0;
       </button>
     </div>
   </div>
+-->
+
+<div class="row">
+    <div class="card w-100 text-white bg-dark m-1 mb-3">
+        <div class="row ">
+          <div class="col-md-4">
+            <img src="{{asset($categoria->file_preview)}}" class="img-fluid rounded-start" alt="..." style="height: 200px;">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{$categoria->titulo}}</h5>
+              <p class="card-text">{{$categoria->descripcion}}</p>
+              <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{$categoria->id}}">
+                <i class="fa fa-play-circle" aria-hidden="true"></i>&nbsp; Reproducir
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+
 </li>
 @endif
   @endforeach

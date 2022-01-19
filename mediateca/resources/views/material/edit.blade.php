@@ -1,4 +1,5 @@
 @if (Auth::user()->rol == 'Administrador')
+
     @extends('layouts.plantillabase')
 
 
@@ -39,11 +40,18 @@
                 </div>
                 <div class="mb-3">
                     <label for="tipo_material" class="form-label">Tipo de material</label>
-                    <input type="text" class="form-control" name="tipo_material" id="tipo_material"
-                        aria-describedby="Tipo de material" value="{{ $materials->tipo_material }}">
 
-                </div>
-                <div class="mb-3">
+                    <select name="tipo_material" id="tipo_material" class="form-select form-select-lg mb-3"
+                                    aria-describedby="Tipo de material"  Required>
+                                    <option value="{{ $materials->tipo_material }}" selected >{{ $materials->tipo_material }}</option>
+                                    <option value="Conferencia">Conferencia</option>
+                                    <option value="Clase magistral">Clase magistral</option>
+                                    <option value="Video conferencia">Video conferencia</option>
+                                    <option value="Foro">Foro</option>
+                                    <option value="Transmisión en vivo">Transmisión en vivo</option>
+                                </select>
+
+                </div>                <div class="mb-3">
                     <label for="duracion" class="form-label">Duración</label>
                     <input type="text" class="form-control" name="duracion" id="duracion" aria-describedby="Duración"
                         value="{{ $materials->duracion }}">

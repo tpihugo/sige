@@ -45,10 +45,13 @@ Route::put('/carouselShow/{id}', [App\Http\Controllers\MaterialController::class
 
 Route::put('/delete/{id}', [App\Http\Controllers\MaterialController::class, 'delete'])->name('delete');
 Route::put('/{id}/edit', [App\Http\Controllers\MaterialController::class, 'edit'])->name('material.edit');
+Route::put('material/{material}/update', [App\Http\Controllers\MaterialController::class, 'update_material'])->name('material.update');
+Route::put('material/{id}/change',[App\Http\Controllers\MaterialController::class, 'change'])->name('change_status');
+
 
 
 Route::get('/inicio', [App\Http\Controllers\MaterialController::class, 'index'])->name('material.index');
-Route::resource('material','App\Http\Controllers\MaterialController');
+Route::resource('material','App\Http\Controllers\MaterialController')->except(['create','update']);
 
 Route::resource('home','App\Http\Controllers\MaterialController');
 Route::resource('myprofile','App\Http\Controllers\ProfileController');
@@ -62,7 +65,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::resource('materiales', '\App\Http\Controllers\MaterialController')->except(['create']);
+
 
 
 // Route::get('/delete-material/{material_id}', array(

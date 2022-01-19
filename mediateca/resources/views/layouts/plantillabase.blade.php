@@ -1,14 +1,12 @@
-
-<?php $rol = Auth::user()->rol ;
-
-
+<?php 
+$rol = Auth::user()->rol ;
 $usuario = Auth::user()->name ;
 $logo = '/img/logo.png';
 $logoUDG = '/img/udg.png';
 ?>
 
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -23,16 +21,16 @@ $logoUDG = '/img/udg.png';
     <link href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{!! asset('css/style.css') !!}" >
 
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.all.min.js"></script>
+<link rel="icon" href="{{asset('img/favicon.ico')}}">
 
 
     @if( $rol == "Administrador")
-    <title>MEDIATECA (Administrador)</title>
+    	<title>MEDIATECA (Administrador)</title>
 
     @else
-    <title>MEDIATECA</title>
+    	<title>MEDIATECA</title>
 
     @endif
   </head>
@@ -40,7 +38,7 @@ $logoUDG = '/img/udg.png';
   <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="./home">
+        <a class="navbar-brand" href="{{route('home')}}">
           <img src="{{asset($logo)}}" alt="" width="80" height="30" class="d-inline-block align-text-top">
           <!-- MEDIATECA -->
         </a>
@@ -55,13 +53,13 @@ $logoUDG = '/img/udg.png';
             @endif
             <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Categorias</a>
               <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                <li><a class="dropdown-item" href="./conferencias"><i class="fa fa-play-circle" aria-hidden="true"></i>&nbsp;Conferencias</a></li>
-                <li><a class="dropdown-item" href="./clases_Magistrales"><i class="fa fa-play-circle" aria-hidden="true"></i>&nbsp;Clases magistrales</a></li>
-                <li><a class="dropdown-item" href="./video_Conferencias"><i class="fa fa-play-circle" aria-hidden="true"></i>&nbsp;Video conferencias</a></li>
-                <li><a class="dropdown-item" href="./foros"><i class="fa fa-play-circle" aria-hidden="true"></i>&nbsp;Foros</a></li>
-                <li><a class="dropdown-item" href="./transmisiones_En_Vivo"><i class="fa fa-play-circle" aria-hidden="true"></i>&nbsp;Transmisiones en vivo</a></li>
+                <li><a class="dropdown-item" href="{{route('conferencias')}}"><i class="fa fa-play-circle" aria-hidden="true"></i>&nbsp;Conferencias</a></li>
+                <li><a class="dropdown-item" href="{{route('clases_Magistrales')}}"><i class="fa fa-play-circle" aria-hidden="true"></i>&nbsp;Clases magistrales</a></li>
+                <li><a class="dropdown-item" href="{{route('video_Conferencias')}}"><i class="fa fa-play-circle" aria-hidden="true"></i>&nbsp;Video conferencias</a></li>
+                <li><a class="dropdown-item" href="{{route('foros')}}"><i class="fa fa-play-circle" aria-hidden="true"></i>&nbsp;Foros</a></li>
+                <li><a class="dropdown-item" href="{{route('transmisiones_En_Vivo')}}"><i class="fa fa-play-circle" aria-hidden="true"></i>&nbsp;Transmisiones en vivo</a></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="./todos_los_videos">Todos los videos</a></li>
+                <li><a class="dropdown-item" href="{{route('todos_los_videos')}}">Todos los videos</a></li>
               </ul>
             </li>
             <li class="nav-item"><a class="nav-link" href="#"></a></li>
@@ -73,19 +71,18 @@ $logoUDG = '/img/udg.png';
               {{ $usuario }}
             </a>
         <ul class="dropdown-menu dropdown-menu-dark " aria-labelledby="navbarDarkDropdownMenuLink">
-          <li><a class="dropdown-item" href="./myprofile">Mi cuenta</a></li>
+          <li><a class="dropdown-item" href="{{route('myprofile.index')}}">Mi cuenta</a></li>
           <li>
             <form method="POST" action="{{ route('logout') }}">
               @csrf
               <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();">
-                {{ __('Cerrar sesión') }}
+                Cerrar sesión
               </a>
             </form>
           </li>
         </ul>
       </div>
-    </nav>
-  </header>
+    </nav>  </header>
 <main>
         @yield('contenido')
 

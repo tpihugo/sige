@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-    @if(Auth::check() && Auth::user()->role == 'admin')
+    @if(Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'cta' || Auth::user()->role == 'auxiliar' || Auth::user()->role == 'redes'))
 <div class="container-fluid">
 
-
+{{--dd($prestamos)--}}
 
             @if (session('message'))
                 <div class="alert alert-success">
@@ -49,7 +49,7 @@
                 <a href="{{ route('home') }}" class="btn btn-primary">< Regresar</a>
             </p>
 </div>
-@extends('layouts.loader')
+{{--@extends('layouts.loader')--}}
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>

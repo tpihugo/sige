@@ -8,10 +8,9 @@
 
                 </div>
             @endif
-
             <div class="row">
                 <div class="col-md-auto ml-3">
-                    <h2>Captura de Área</h2>
+                    <h2>Edici&oacute;n de Área</h2>
                 </div>
                 <hr>
             </div>
@@ -61,6 +60,7 @@
                                     <option value="Juan Manuel 130">Juan Manuel 130</option>
 					    <option value="Papirolas">Papirolas</option>
 					    <option value="FIL">FIL Expo</option>
+				<option value="Prestamo Externo">Pr&eacute;stamo Externo</option>
 
                                 </select>
                             </div>
@@ -90,6 +90,7 @@
                                     <option value="Edificio S">Edificio S</option>
                                     <option value="Edificio T">Edificio T</option>
                                     <option value="Edificio U">Edificio U</option>
+                                    <option value="Edificio Servicios Generales Belenes">Servicios Generales Belenes</option>
                                 </select>
                             </div>
                             <div class="col-md-3">

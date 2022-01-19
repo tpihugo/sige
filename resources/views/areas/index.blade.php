@@ -1,7 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.appdash')
 
 @section('content')
-@if(Auth::check() && Auth::user()->role == 'admin')
+@if(Auth::check() && ( Auth::user()->role == 'admin' || Auth::user()->role == 'rh' || Auth::user()->role == 'redes'))
 
     <div class="container">
         <div class="row">

@@ -45,6 +45,7 @@ Route::resource('prestamos', 'App\Http\Controllers\PrestamoController');
 Route::resource('mobiliarios', 'App\Http\Controllers\MobiliarioController');
 Route::resource('cursos', 'App\Http\Controllers\CursoController');
 Route::resource('logs', 'App\Http\Controllers\LogController');
+Route::resource('licencias', 'App\Http\Controllers\LicenciaController');
 Route::get('/cambiar-ubicacion/{equipo_id}/{tipo?}', array(
     'as' => 'cambiar-ubicacion',
     'middleware' => 'auth',
@@ -176,6 +177,11 @@ Route::get('/delete-area/{area_id}', array(
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\AreaController@delete_area'
 ));
+Route::get('/delete-licencia/{licencia_id}', array(
+    'as' => 'delete-licencia',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\LicenciaController@delete_licencia'
+));
 Route::get('/delete-prestamo/{prestamo_id}', array(
     'as' => 'delete-prestamo',
     'middleware' => 'auth',
@@ -282,4 +288,9 @@ Route::get('/select/equipo', array(
     'as' => 'select-equipo',
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\ProyectoActividadController@getEquipos'
+));
+Route::get('/estadisticas', array(
+    'as' => 'estadisticas',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\InventarioController@dashboard_inventario'
 ));

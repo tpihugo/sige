@@ -27,7 +27,7 @@ class ProfileController extends Controller
 
      public function usuarios()
     {
-        $profile = User::all();
+        $profile = User::where('email',"!=","victorh.ramirez@administrativos.udg.mx")->get();
         return view('usuarios.index')->with('users',$profile);
 
     }

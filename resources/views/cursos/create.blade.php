@@ -2,7 +2,7 @@
 @section('content')
 
     <div class="container">
-        @if (Auth::check() && Auth::user()->role == 'admin')
+        @if (Auth::check() && (Auth::user()->role =='admin' ||  Auth::user()->role =='cta' || Auth::user()->role =='aulas' || Auth::user()->role =='redes' || Auth::user()->role =='auxiliar'))
             @if (session('message'))
                 <div class="alert alert-success">
                     <h2>{{ session('message') }}</h2>

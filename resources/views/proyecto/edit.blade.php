@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @if (Auth::check() && Auth::user()->role == 'admin')
+    @if (Auth::check() &&(  Auth::user()->role =='admin' || Auth::user()->role =='cta' ||  Auth::user()->role =='redes'))
         <div class="container">
             @if (session('message'))
                 <div class="alert alert-success">

@@ -23,10 +23,10 @@
                         <th>Localizado SICI</th>
                         <th>Marca</th>
                         <th>Modelo</th>
-                        <th>N√∫m. Serie</th>
+                        <th>N˙m. Serie</th>
                         <th>Detalles</th>
                         <th>Tipo de Equipo</th>
-                        <th>√Årea</th>
+                        <th>¡rea</th>
                         <th>Estatus</th>
                     </tr>
                     </thead>
@@ -48,7 +48,7 @@
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs4-4.1.1/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/r-2.2.7/datatables.min.js"></script>
 
     <script type="text/javascript">
-        var data = @json($inventario_detalle);
+        var data = @json($inventariolocalizado);
 
         $(document).ready(function() {
             $('#example').DataTable({
@@ -61,7 +61,7 @@
                     "sProcessing": "Procesando...",
                     "sLengthMenu": "Mostrar _MENU_ registros",
                     "sZeroRecords": "No se encontraron resultados",
-                    "sEmptyTable": "Ning√∫n dato disponible en esta tabla",
+                    "sEmptyTable": "Ning˙n dato disponible en esta tabla",
                     "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
                     "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
                     "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
@@ -72,7 +72,7 @@
                     "sLoadingRecords": "Cargando...",
                     "oPaginate": {
                         "sFirst": "Primero",
-                        "sLast": "√öltimo",
+                        "sLast": "⁄ltimo",
                         "sNext": "Siguiente",
                         "sPrevious": "Anterior"
                     },
@@ -107,12 +107,12 @@
                 var u = 'u';
                 var c = 'c';
                 var special_letters = {
-                    "√Å": a, "√°": a, "√É": a, "√£": a, "√Ä": a, "√†": a,
-                    "√â": e, "√©": e, "√ä": e, "√™": e,
-                    "√ç": i, "√≠": i, "√é": i, "√Æ": i,
-                    "√ì": o, "√≥": o, "√ï": o, "√µ": o, "√î": o, "√¥": o,
-                    "√ö": u, "√∫": u, "√ú": u, "√º": u,
-                    "√ß": c, "√á": c
+                    "¡": a, "·": a, "√": a, "„": a, "¿": a, "‡": a,
+                    "…": e, "È": e, " ": e, "Í": e,
+                    "Õ": i, "Ì": i, "Œ": i, "Ó": i,
+                    "”": o, "Û": o, "’": o, "ı": o, "‘": o, "Ù": o,
+                    "⁄": u, "˙": u, "‹": u, "¸": u,
+                    "Á": c, "«": c
                 };
                 for (var val in special_letters)
                     data = data.split(val).join(special_letters[val]).toLowerCase();
@@ -130,7 +130,7 @@
     </script>
 
         @else
-        Acceso No v√°lido
+        Acceso No v·lido
     @endif
 @endsection
 

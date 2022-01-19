@@ -11,17 +11,15 @@ $img = '/img/';
 
 $cont=0;
 ?>
-
-
 <div id="Carousel" class="carousel slide carousel-fade" data-ride="carousel">
   <div class="carousel-inner carousel-zoom shadow-lg">
     <div class="carousel-item active">
       <img src=" https://pbs.twimg.com/profile_images/378800000600827420/af856239aa8bd9ef6c49338b456e3e6c.jpeg" class="d-block w-10" alt="...">
       <div class="container">
         <div class="carousel-caption text-start">
-            <div class="p-2">
+            <div class="">
           <h1>Bienvenido a MEDIATECA CUCSH.</h1>
-          <p>Preservar la historia de nuestra universidad como nunca antes visto.</p>
+          <p>Preservar la historia de nuestra Universidad como nunca antes visto.</p>
         </div>
         </div>
       </div>
@@ -32,14 +30,14 @@ $cont=0;
 
     <div class="carousel-item">
 
-      <img src="{{asset($material->file_preview)}}" class="d-block w-imagen_prev" alt="...">
+      <img src="{{asset($material->file_preview)}}" class="d-block w-imagen_prev img-fluid" alt="..." style="width=50%">
 
       <div class="container ">
 
         <div class="carousel-caption text-start">
           <h1>{{$material->titulo}}</h1>
-          <p>{{$material->descripcion}}</p>
-          <p class="float-index"><a class="text-light  undecorate" href="#" data-bs-toggle="modal" data-bs-target="#modal{{$material->id}}"><i class="fa fa-play-circle fa-2x">&nbsp;Ver video</i> </a></p>
+          <p>Categoria: {{$material->tipo_material}}</p>
+          <!--<p class="float-index"><a class="text-light  undecorate" href="#" data-bs-toggle="modal" data-bs-target="#modal{{$material->id}}"><i class="fa fa-play-circle fa-2x">&nbsp;Ver video</i> </a></p>-->
         </div>
       </div>
     </div>
@@ -141,7 +139,7 @@ $cont=0;
 
 <div class="card text-center p-2 rounded-top">
   <div class="card-body bg-dark text-light rounded-top">
-    <h1 class="card-title ">Conoce la historia</h1>
+    <h1 class="card-title ">Videos destacados</h1>
   </div>
   <div class="card-footer text-muted bg-secondary d-flex p-2 bd-highlight">
   <a class="btn btn-dark" href="./todos_los_videos" role="button">Ver todos los videos</a>
@@ -150,7 +148,7 @@ $cont=0;
 
 <div class="container pt-5" >
 
-  <div class="row row-cols-1 row-cols-md-3 row-cols-sm-2 g-4 shadow-lg p-5 mb-5  rounded" >
+  <div class="row row-cols-1  g-4 shadow-lg p-5 mb-5  rounded" >
 
   @foreach($materials as $material)
 @if($material->inicio  == 1 && $material->activo  == 1)
@@ -174,8 +172,7 @@ $cont=0;
   </div>
 
 
-  <!-- Fin Modal -->
-
+  <!-- Fin Modal 
   <div class="col ">
 
     <div class="card  text-white bg-dark mb-3" >
@@ -186,13 +183,35 @@ $cont=0;
 
         <h1 class="h3" >{{$material->titulo}}</h1>
 
-        <p class="card-text">{{$material->descripcion}}</p>
+        <p class="card-text text-left">{{$material->descripcion}}</p>
       </div>
       <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{$material->id}}">
         <i class="fa fa-play-circle" aria-hidden="true"></i>&nbsp; Reproducir
       </button>
     </div>
   </div>
+-->
+
+<div class="row">
+    <div class="card w-100 text-white bg-dark m-1 mb-3">
+        <div class="row ">
+          <div class="col-md-4">
+            <img src="{{asset($material->file_preview)}}" class="img-fluid rounded-start" alt="..." style="height: 200px;">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{$material->titulo}}</h5>
+              <p class="card-text">{{$material->descripcion}}</p>
+              <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{$material->id}}">
+                <i class="fa fa-play-circle" aria-hidden="true"></i>&nbsp; Reproducir
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+
+
   @endif
   @endforeach
 </div>
@@ -208,7 +227,6 @@ $cont=0;
 
 function pauseVid{{$material->id}}() {
  vid = document.getElementsByClassName("myVideo{{$material->id}}");
-//console.log(vid);
 for (let i = 0; i < vid.length; i++) {
   vid[i].pause();
 }

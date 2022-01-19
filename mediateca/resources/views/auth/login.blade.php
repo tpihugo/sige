@@ -4,12 +4,12 @@ $logoUDG = '/img/udg.png';
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Mediateca</title>
+    <title>MEDIATECA</title>
 
     <!-- Styles -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
@@ -23,13 +23,15 @@ $logoUDG = '/img/udg.png';
 
     <link href="{{ asset('./css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('./css/estilos.css') }}" rel="stylesheet">
+<link rel="icon" href="{{asset('img/favicon.ico')}}">
+
 
   </head>
   <body >
 
     <nav class="navbar navbar-outline-light bg-transparent">
       <div class="container-fluid">
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="http://www.cucsh.udg.mx/">
           <img src="{{asset($logo)}}" alt="" width="90" height="40" class="d-inline-block align-text-top">
           <!-- MEDIATECA -->
         </a>
@@ -45,8 +47,14 @@ $logoUDG = '/img/udg.png';
 
       </div>
     </nav>
+	<div class="row justify-content-center">
+		<div class="col-auto">
+			<img src="{{asset("img/imagen-inicio.jpg")}}" > 
+		</div> 
+	</div>
 
-    <div class="d-flex container-fluid p-5 mt-5 justify-content-center text-center">
+
+    <div class="d-flex container-fluid justify-content-center text-center">
 
         <div class="d-flex p-5 mt-3 justify-content-center text-center">
             <div class="d-flex p-4">
@@ -153,8 +161,9 @@ $logoUDG = '/img/udg.png';
                 </div>
             </div>
             <div class="modal-footer">
+		<button type="submit" class="btn btn-primary">{{ __('Register') }}</button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('BTN Close') }}</button>
-            <button type="submit" class="btn btn-primary">{{ __('Register') }}</button>
+            
             </div>
         </div>
     </form>
@@ -220,8 +229,9 @@ $logoUDG = '/img/udg.png';
                 </div>
             </div>
             <div class="modal-footer">
+<button type="submit" class="btn btn-primary">{{ __('Login') }}</button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('BTN Close') }}</button>
-            <button type="submit" class="btn btn-primary">{{ __('Login') }}</button>
+            
             </div>
         </form>
       </div>
