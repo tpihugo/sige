@@ -8,7 +8,7 @@
  <div class="col-md-12">
         <div class="card card-chart">
             <div class="card-header card-header-success">
-            B&uacute;squeda
+            B&uacute;squeda General
             </div>
             <div class="card-body">
 	    @if (session('status'))
@@ -148,7 +148,7 @@
         </div>
 @endif
 
-<!-- Apartado de Aulas y Áreas   -->
+<!-- Apartado de Aulas y ï¿½reas   -->
 	@if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='rh' || Auth::user()->role =='redes'))
 
         <div class="col-lg-4 col-md-6 col-sm-6">
