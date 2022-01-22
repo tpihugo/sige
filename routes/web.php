@@ -46,6 +46,7 @@ Route::resource('mobiliarios', 'App\Http\Controllers\MobiliarioController');
 Route::resource('cursos', 'App\Http\Controllers\CursoController');
 Route::resource('logs', 'App\Http\Controllers\LogController');
 Route::resource('licencias', 'App\Http\Controllers\LicenciaController');
+Route::resource('servicios', 'App\Http\Controllers\ServicioController');
 Route::get('/cambiar-ubicacion/{equipo_id}/{tipo?}', array(
     'as' => 'cambiar-ubicacion',
     'middleware' => 'auth',
@@ -181,6 +182,11 @@ Route::get('/delete-licencia/{licencia_id}', array(
     'as' => 'delete-licencia',
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\LicenciaController@delete_licencia'
+));
+Route::get('/delete-servicio/{servicio_id}', array(
+    'as' => 'delete-servicio',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\ServicioController@delete_servicio'
 ));
 Route::get('/delete-prestamo/{prestamo_id}', array(
     'as' => 'delete-prestamo',

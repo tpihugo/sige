@@ -212,6 +212,21 @@
                             </ul>
                         </li>  	
 			@endif 
+            @if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='rh' || Auth::user()->role =='cta')) 
+
+			@if(Auth::check())
+	
+			<li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                Servicios
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="{{ route('servicios.create') }}">Capturar servicio</a></li>
+                                <li><a class="dropdown-item" href="{{ route('servicios.index') }}">Consultar servicios</a></li>
+                            </ul>
+                        </li>
+			@endif 
+		@endif
 		@if(Auth::check() && (Auth::user()->role =='admin'))
 		@if(Auth::check())
 			{{-- ADMIN NAVBAR-MKII --}}
