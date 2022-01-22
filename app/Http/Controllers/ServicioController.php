@@ -47,7 +47,7 @@ class ServicioController extends Controller
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">¿Seguro que deseas eliminar  esta licencia?</h5>
+                      <h5 class="modal-title" id="exampleModalLabel">¿Seguro que deseas eliminar  este servicio?</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -55,7 +55,7 @@ class ServicioController extends Controller
                     <div class="modal-body">
                       <p class="text-primary">
                         <small> 
-                            '.$value['id'].', '.$value['numero_de_licencia'].'                 </small>
+                            '.$value['id'].', '.$value['nombre'].'                 </small>
                       </p>
                     </div>
                     <div class="modal-footer">
