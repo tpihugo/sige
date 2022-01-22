@@ -139,7 +139,7 @@ $acciones = '';
         $log->save();
         //
         return redirect('prestamos')->with(array(
-            'message'=>'El préstamo se guardo Correctamente'
+            'message'=>'El prï¿½stamo se guardo Correctamente'
         ));
     }
 
@@ -217,7 +217,7 @@ $acciones = '';
         $log->save();
         //
         return redirect('prestamos')->with(array(
-            'message'=>'El préstamo se guardo Correctamente'
+            'message'=>'El prï¿½stamo se guardo Correctamente'
         ));
     }
 
@@ -308,7 +308,7 @@ $acciones = '';
         $log->save();
         //
         return redirect('prestamoEquipos/'.$prestamo_id)->with(array(
-            'message'=>'El Equipo se agregó Correctamente al Pr stamo'
+            'message'=>'El Equipo se agregï¿½ Correctamente al Pr stamo'
         ));
     }
 

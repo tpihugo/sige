@@ -325,7 +325,8 @@
         </div>
         </div>
 
-    @endif 
+    @endif
+    
 </div>
 </div>
 </div>{{-- fin del container --}}
