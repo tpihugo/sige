@@ -35,7 +35,7 @@
                         <div class="row align-items-center">
                             <div class="col-md-3">
                                 <label class="font-weight-bold" for="nombre">Nombre del servicio </label>
-                                <input type="text" name="nombre" id="nombre" value="{{$servicio->nombre}}">
+                                <textarea name="nombre" id="nombre" rows="10" cols="50">{{$servicio->nombre}}</textarea>
                             </div>
                             <div class="col-md-3">
                                 <label class="font-weight-bold" for="categoria">Categoria </label>
@@ -43,19 +43,19 @@
                             </div>
                             <div class="col-md-3">
                                 <label class="font-weight-bold" for="descripcion">Descripcion </label>
-                                <input type="text" name="descripcion" id="descripcion"value="{{$servicio->descripcion}}">
+                                <textarea name="descripcion" id="descripcion" rows="10" cols="50">{{$servicio->descripcion}}</textarea>
                             </div>
                             <div class="col-md-3">
                                 <label class="font-weight-bold" for="contacto">Contacto </label>
-                                <input type="text" name="contacto" id="contacto"value="{{$servicio->contacto}}">
+                                <textarea name="contacto" id="contacto" rows="10" cols="50">{{$servicio->contacto}}</textarea>
                             </div>
                             <div class="col-md-3">
                                 <label class="font-weight-bold" for="requisitos">Requisitos </label>
-                                <input type="text" name="requisitos" id="requisitos"value="{{$servicio->requisitos}}">
+                                <textarea name="requisitos" id="requisitos" rows="10" cols="50">{{$servicio->requisitos}}</textarea>
                             </div>
                             <div class="col-md-3">
                                 <label class="font-weight-bold" for="procedimiento">Procedimiento </label>
-                                <input type="text" name="procedimiento" id="procedimiento"value="{{$servicio->procedimiento}}">
+                                <textarea name="procedimiento" id="procedimiento" rows="10" cols="50">{{$servicio->procedimiento}}</textarea>
                             </div>
                             <div class="col-md-3">
                                 <label class="font-weight-bold" for="tiempo_de_respuesta">Tiempo de respuesta </label>
