@@ -300,3 +300,7 @@ Route::get('/estadisticas', array(
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\InventarioController@dashboard_inventario'
 ));
+Route::get('/servicios_inicio', array(
+    'as' => 'servicios_inicio',
+    'uses' => 'App\Http\Controllers\ServicioController@inicio'
+));

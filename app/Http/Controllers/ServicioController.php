@@ -249,4 +249,9 @@ class ServicioController extends Controller
         }
 
     }
+    public function inicio(){
+        $servicios= Servicio::where('top', '<>', 0)->get();
+        return view('servicios.index') ->with('servicios', $servicios);
+
+    }
 }
