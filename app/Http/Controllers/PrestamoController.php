@@ -151,7 +151,12 @@ $acciones = '';
      */
     public function show($id)
     {
-        //
+
+        $prestamo = VsPrestamo::find($id);
+        $equiposPorPrestamo = EquipoPorPrestamo::where('activo', '=', 1)
+            ->where('id_prestamo','=',$id)->get();
+        return view('prestamo.agregarEquipoEdit')
+            ->with('prestamo', $prestamo)->with('equiposPorPrestamo', $equiposPorPrestamo);
     }
 
     /**
@@ -171,13 +176,7 @@ $acciones = '';
         return view('prestamo.edit')->with('prestamo',$prestamo)->with('vsPrestamo',$vsPrestamo)->with('equiposPrestados',$equiposPrestados)->with('areas',$areas);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
         $validateData = $this->validate($request,[
@@ -221,18 +220,13 @@ $acciones = '';
         ));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         //
     }
     public function generarPrestamo($equipo_id){
-        $areas = Area::all();
+        $areas = Area::where('activo','=', 1);
         $equipoPrestamo = Equipo::find($equipo_id);
         return view('prestamo.create')->with('areas', $areas)->with('equipoPrestamo', $equipoPrestamo);
     }
@@ -288,14 +282,15 @@ $acciones = '';
     }
     public function prestamoEquipos($prestamo_id){
         $prestamo = VsPrestamo::find($prestamo_id);
-        $equipoPorPrestamo = EquipoPorPrestamo::where('id_prestamo','=', $prestamo_id)->get();
-        return view('prestamo.agregarEquiposPrestamo')->with('prestamo', $prestamo )->with('prestamo_id', $prestamo_id)->with('equipoPorPrestamo', $equipoPorPrestamo);
+        $equiposPorPrestamo = EquipoPorPrestamo::where('id_prestamo','=', $prestamo_id)->get();
+        return view('prestamo.agregarEquipoEdit')->with('prestamo', $prestamo )
+            ->with('prestamo_id', $prestamo_id)->with('equiposPorPrestamo', $equiposPorPrestamo);
     }
  public function registrarEquipoPrestamo($equipo_id, $prestamo_id){
-         $prestamoEquipo = new PrestamoEquipo();
+        $prestamoEquipo = new PrestamoEquipo();
         $prestamoEquipo->id_prestamo = $prestamo_id;
         $prestamoEquipo->id_equipo = $equipo_id;
-	//$prestamoEquipo->accesorios = $accesorios;
+	    //$prestamoEquipo->accesorios = $accesorios;
         $prestamoEquipo->save();
 	//
         $log = new Log();
@@ -307,27 +302,68 @@ $acciones = '';
         $log->acciones = "Insercion";
         $log->save();
         //
-        return redirect('prestamoEquipos/'.$prestamo_id)->with(array(
+        return redirect('prestamos/'.$prestamo_id)->with(array(
             'message'=>'El Equipo se agreg� Correctamente al Pr stamo'
         ));
     }
 
- public function eliminarEquipoPrestamo($equipo_id, $prestamo_id){
-        $equipo=PrestamoEquipo::where('id_prestamo','=',$prestamo_id)->where('id_equipo','=',$equipo_id);
+ public function eliminarEquipoPrestamo($item_id){
+        $equipoPorPrestamo=PrestamoEquipo::find($item_id);
         //
         $log = new Log();
         $log->tabla = "PrestamoEquipo";
         $mov="";
-        $mov=$mov." id_prestamo:".$equipo->id_prestamo ." id_equipo:". $equipo->id_equipo." accesorios".$equipo->accesorios.".";
+        $mov=$mov." id_prestamo:".$equipoPorPrestamo->id_prestamo ." id_equipo:". $equipoPorPrestamo->id_equipo." accesorios".$equipoPorPrestamo->accesorios.".";
         $log->movimiento = $mov;
         $log->usuario_id = Auth::user()->id;
         $log->acciones = "Borrado";
         $log->save();
         //
-        $equipo->delete();
-        return redirect('prestamoEquipos/'.$prestamo_id)->with(array(
-            'message'=>'El Equipo se quit  Correctamente al Pr stamo'
+     $prestamo_id = $equipoPorPrestamo->id_prestamo;
+     $equipoPorPrestamo->delete();
+        return redirect('prestamos/'.$prestamo_id)->with(array(
+            'message'=>'El equipo se quitó  correctamente al préstamo'
         ));
     }
+    public function nuevoPrestamo(){
+        $areas = Area::where('activo','=', 1)->get();
+        return view ('prestamo.nuevo')->with('areas', $areas);
+        //return 'si charcha';
+    }
+    public function guardarPrestamo(Request $request)
+    {
+        $validateData = $this->validate($request,[
+            'id_area'=>'required',
+            'solicitante'=>'required',
+            'cargo'=>'required',
+            'estado'=>'required',
+            'fecha_inicio'=>'required',
+            'observaciones'=>'required'
+        ]);
+        $prestamo = new Prestamo();
+        $prestamo->id_area = $request->input('id_area');
+        $prestamo->telefono = $request->input('telefono');
+        $prestamo->solicitante = $request->input('solicitante');
+        $prestamo->correo = $request->input('correo');
+        $prestamo->cargo = $request->input('cargo');
+        $prestamo->estado = $request->input('estado');
+        $prestamo->fecha_inicio = $request->input('fecha_inicio');
+        $prestamo->observaciones = $request->input('observaciones');
 
+        $prestamo->save();
+        $prestamo_id = Prestamo::latest('id')->first();
+
+        return redirect('prestamos/'.$prestamo_id->id)->with(array(
+            'message'=>'El Equipo se quit  Correctamente al Préstamo'
+        ));
+    }
+    public function agregarAccesorio(Request $request){
+
+        $prestamo_equipo = PrestamoEquipo::find($request->input('filaprestamo_id'));
+        $prestamo_equipo->accesorios = $request->input('accesorios');
+        $prestamo_equipo->update();
+        return redirect('prestamos/'.$request->input('prestamo_id'))->with(array(
+            'message'=>'El Equipo se agregó Correctamente al prestamo'
+        ));
+    }
 }

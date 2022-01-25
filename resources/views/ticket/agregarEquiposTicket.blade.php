@@ -7,7 +7,7 @@
         <div class="row">
             @if (session('message'))
                 <div class="alert alert-success">
-                    {{ session('message') }}
+                   <h4> {{ session('message') }} </h4>
                 </div>
             @endif
             <h3>Ticket {{$ticket_id}}.</h3> <br>

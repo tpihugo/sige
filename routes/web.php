@@ -108,6 +108,26 @@ Route::get('/generar-prestamo/{equipo_id}', array(
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\PrestamoController@generarPrestamo'
 ));
+Route::get('/nuevo-prestamo/', array(
+    'as' => 'nuevo-prestamo',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\PrestamoController@nuevoPrestamo'
+));
+Route::post('/agregar-accesorio', array(
+    'as' => 'agregar-accesorio',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\PrestamoController@agregarAccesorio'
+));
+Route::post('/busquedaEquiposPrestamo', array(
+    'as' => 'busquedaEquiposPrestamo',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\EquipoController@busquedaEquiposPrestamo'
+));
+Route::post('/guardar-nuevo-prestamo/', array(
+    'as' => 'guardar-nuevo-prestamo',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\PrestamoController@guardarPrestamo'
+));
 Route::get('/quitar-equipo-prestado/{equipo_prestado}/{prestamo_id}', array(
     'as' => 'quitar-equipo-prestado',
     'middleware' => 'auth',
@@ -135,7 +155,7 @@ Route::get('/recepcionEquipo/{ticket_id}', array(
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\TicketController@recepcionEquipo'
 ));
-Route::get('/prestamoEquipos/{presetamo_id}', array(
+Route::get('/prestamoEquipos/{prestamo_id}', array(
     'as' => 'prestamoEquipos',
     'middleware' => 'auth',
     'uses' => '\App\Http\Controllers\PrestamoController@prestamoEquipos'
@@ -157,7 +177,7 @@ Route::get('/eliminarEquipoTicket/{equipo_id}/{ticket_id}', array(
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\TicketController@eliminarEquipoTicket'
 ));
-Route::get('/eliminarEquipoPrestamo/{equipo_id}/{prestamo_id}', array(
+Route::get('/eliminarEquipoPrestamo/{item_id}', array(
     'as' => 'eliminarEquipoPrestamo',
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\PrestamoController@eliminarEquipoPrestamo'

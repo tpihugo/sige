@@ -72,6 +72,7 @@
            
             <h3 class="card-title">Equipos <br></h3>
                 <a href="{{ route('equipos.create') }}" class="btn btn-outline-success">Capturar Equipo</a>
+                <a href="{{ route('nuevo-prestamo') }}" class="btn btn-outline-success">nuevo prestamo</a>
 		<a href="{{ route('prestamos.index') }}" class="btn btn-outline-warning">Consultar Préstamos</a>
             </div>
             <div class="card-footer">
