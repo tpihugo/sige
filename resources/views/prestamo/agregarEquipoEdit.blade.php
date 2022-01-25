@@ -107,8 +107,8 @@
                                                     </ul>
                                                 </div>
                                             @endif
-                                            <input type="hidden" name="filaprestamo_id" id="filaprestamo_id" value="{{$equipoPorPrestamo->id}}">
-                                            <input type="hidden" name="prestamo_id" id="prestamo_id" value="{{$equipoPorPrestamo->id}}">
+                                            <input type="text" name="filaprestamo_id" id="filaprestamo_id" value="{{$equipoPorPrestamo->id}}">
+                                            <input type="text" name="prestamo_id" id="prestamo_id" value="{{$equipoPorPrestamo->id_prestamo}}">
                                             <input type="text" name="accesorios" id="accesorios" value="{{$equipoPorPrestamo->accesorios}}">
                                             <br><br>
                                             <input type="submit" class="btn btn-outline-success" value="Agregar">
