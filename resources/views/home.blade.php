@@ -332,6 +332,31 @@
         </div>
 
     @endif
+
+        @if (Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='redes'))
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-primary card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">info_outline</i>
+                        </div>
+                        <h3 class="card-title">Subredes e IP´s</h3>
+                        <a class="btn btn-outline-success" href="{{ route('subredes.index') }}">Consultar Subredes</a>
+                        <a class="btn btn-outline-danger" href="{{ route('ips.index') }}">Consultar IP's</a>
+
+
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">info</i><a href="{{ route('subredes.create') }}" >Capturar Subred</a>
+                            <i class="material-icons">info</i><a href="{{ route('ips.create') }}">Capturar Ip</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        @endif
     
 </div>
 </div>

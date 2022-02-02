@@ -55,7 +55,9 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                SIGE CTA CUCSH
+
+                   
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -230,6 +232,21 @@
                             </ul>
                         </li>
 			@endif 
+		@endif
+        @if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='rh' || Auth::user()->role =='cta' || Auth::user()->role =='redes'))
+			@if(Auth::check()) 
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                Subredes e IP's
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="{{ route('subredes.create') }}">Captura Subred</a></li>
+                                <li><a class="dropdown-item" href="{{ route('ips.create') }}">Captura IP</a></li>
+                                <li><a class="dropdown-item" href="{{ route('subredes.index') }}">Consulta Subred</a></li>
+                                <li><a class="dropdown-item" href="{{ route('ips.index') }}">Consulta IP</a></li>
+                            </ul>
+                        </li>
+			@endif		    
 		@endif
 		@if(Auth::check() && (Auth::user()->role =='admin'))
 		@if(Auth::check())

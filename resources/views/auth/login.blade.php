@@ -3,10 +3,14 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
+    <div class="col-md-5">
+                    <img src="{{asset('images/cta-logo.jpeg')}}" class="w-100" alt="">
+                </div>
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Acceso') }} Sistema de Gesti&oacute;n CTA CUCSH</div>
-
+                
+            
+                <div class="card-header text-center">{{ __('Acceso') }} Sistema de Gesti&oacute;n CTA CUCSH</div>
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
@@ -72,24 +76,31 @@
 <br>
 <br>
 <div class="row justify-content-center">
-        <div class="col-md-4 offset-md-2">
+    <div class="col-md-4 col-sm-12">
+        <a href="{{route('lista_servicios')}}"><img src="{{asset('images/imagen_servicios.jpeg')}}" class="img-fluid" alt=""></a>
+    
+    </div>
+    
+</div>
+<div class="row justify-content-center">
+        <div class="col-md-4">
 
-<div class="card text-dark bg-light mb-3" style="max-width: 18rem;">
-  <div class="card-header">Tutor&iacute;as</div>
+<div class="card text-dark bg-light mb-3" >
+  <div class="card-header text-center">Tutor&iacute;as</div>
   <div class="card-body">
-    <h5 class="card-title">Sistema de Tutor&iacute;as de la Licenciatura en Relaciones Internacionales</h5>
+    <h5 class="card-title text-dark">Sistema de Tutor&iacute;as de la Licenciatura en Relaciones Internacionales</h5>
     <p class="card-text"><a href="http://sige.cucsh.udg.mx/tutorias/public">Sistema de Tutor&iacute;as</a></p>
   </div>
 </div>
     
 </div>
 
- <div class="col-md-6">
+ <div class="col-md-4">
 
-<div class="card text-dark bg-light mb-3" style="max-width: 18rem;">
-  <div class="card-header">Investigaci&oacute;n</div>
+<div class="card text-dark bg-light mb-3">
+  <div class="card-header text-center">Investigaci&oacute;n</div>
   <div class="card-body">
-    <h5 class="card-title">Sistema de Registro de Proyectos de Investigaci&oacute;n</h5>
+    <h5 class="card-title text-dark">Sistema de Registro de Proyectos de Investigaci&oacute;n</h5>
     <p class="card-text"><a href="http://sige.cucsh.udg.mx/investigacion/public">Sistema de Registro de Proyectos de Investigaci&oacute;n</a></p>
   </div>
 </div>

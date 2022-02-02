@@ -320,7 +320,42 @@ Route::get('/estadisticas', array(
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\InventarioController@dashboard_inventario'
 ));
-Route::get('/servicios_inicio', array(
-    'as' => 'servicios_inicio',
+Route::get('/lista_servicios', array(
+    'as' => 'lista_servicios',
     'uses' => 'App\Http\Controllers\ServicioController@inicio'
+));
+
+
+/* Apartado de Subredes e IP´S*/
+Route::resource('subredes', 'App\Http\Controllers\SubredController');
+Route::resource('ips', 'App\Http\Controllers\IpController');
+Route::get('/delete-subred/{subred_id}', array(
+    'as' => 'deletesubred',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\SubredController@delete_subred'
+));
+Route::post('/filtroSubredes', array(
+    'as' => 'filtroSubredes',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\SubredController@filtroSubredes'
+));
+Route::post('/filtroIps', array(
+    'as' => 'filtroIps',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\IpController@filtroIps'
+));
+Route::post('/filtroIpsasig', array(
+    'as' => 'filtroIpsasig',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\IpController@filtroIpsasig'
+));
+Route::get('/asignadas', array(
+    'as' => 'asignadas',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\IpController@asignadas'
+));
+Route::get('/delete-ip/{ip_id}', array(
+    'as' => 'delete-ip',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\IpController@delete_ip'
 ));
