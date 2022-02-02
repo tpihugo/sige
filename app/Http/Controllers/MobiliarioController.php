@@ -22,7 +22,8 @@ class MobiliarioController extends Controller
     {
         $Vsmobiliarios = VsMobiliario::where('activo', '=', 1)->get();
         $mobiliarios = $this->cargarDT($Vsmobiliarios );
-        return view('mobiliario.index')->with('mobiliarios', $mobiliarios);
+        $user = Auth::user()->role;
+        return view('mobiliario.index',compact('mobiliarios','user'));
     }
     public function cargarDT($consulta)
     {
@@ -33,20 +34,20 @@ class MobiliarioController extends Controller
             $ruta = "eliminar".$value['id'];
             $eliminar = route('delete-mobiliario', $value['id']);
             $actualizar =  route('mobiliarios.edit', $value['id']);
-         
 
-            $acciones = '
+            if(Auth::user()->role != 'general') {
+                $acciones = '
                 <div class="btn-acciones">
                     <div class="btn-circle">
-                        <a href="'.$actualizar.'" class="btn btn-success" title="Actualizar">
+                        <a href="' . $actualizar . '" class="btn btn-success" title="Actualizar">
                             <i class="far fa-edit"></i>
                         </a>
-                        <a href="#'.$ruta.'" role="button" class="btn btn-danger" data-toggle="modal" title="Eliminar">
+                        <a href="#' . $ruta . '" role="button" class="btn btn-danger" data-toggle="modal" title="Eliminar">
                             <i class="far fa-trash-alt"></i>
                         </a>
                     </div>
                 </div>
-                <div class="modal fade" id="'.$ruta.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="' . $ruta . '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -58,32 +59,49 @@ class MobiliarioController extends Controller
                     <div class="modal-body">
                       <p class="text-primary">
                         <small> 
-                            '.$value['id'].', '.$value['descripcion'].'                 </small>
+                            ' . $value['id'] . ', ' . $value['descripcion'] . '                 </small>
                       </p>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <a href="'.$eliminar.'" type="button" class="btn btn-danger">Eliminar</a>
+                      <a href="' . $eliminar . '" type="button" class="btn btn-danger">Eliminar</a>
                     </div>
                   </div>
                 </div>
               </div>
             ';
+                $mobiliario[$key] = array(
+                    $acciones,
+                    $value['id'],
+                    $value['id_udg'],
+                    $value['id_resguardante'],
+                    $value['nombre'],
+                    $value['area_id'],
+                    $value['area'],
+                    $value['descripcion'],
+                    $value['fecha_adquisicion'],
+                    $value['ubicacion'],
+                    $value['estatus_sici'],
+                    $value['localizado_sici']
+                );
+            }
+            else{
+                $mobiliario[$key] = array(
+                    $value['id'],
+                    $value['id_udg'],
+                    $value['id_resguardante'],
+                    $value['nombre'],
+                    $value['area_id'],
+                    $value['area'],
+                    $value['descripcion'],
+                    $value['fecha_adquisicion'],
+                    $value['ubicacion'],
+                    $value['estatus_sici'],
+                    $value['localizado_sici']
+                );
+            }
 
-            $mobiliario[$key] = array(
-                $acciones,
-                $value['id'],
-                $value['id_udg'],
-                $value['id_resguardante'],
-                $value['nombre'],
-                $value['area_id'],
-                $value['area'],
-                $value['descripcion'],
-                $value['fecha_adquisicion'],
-                $value['ubicacion'],
-                $value['estatus_sici'],
-                $value['localizado_sici']
-            );
+
 
         }
 

@@ -4,7 +4,7 @@
 <div class="content">
     <div class="container">
     <div class="row align-items-center">
-@if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='auxiliar' || Auth::user()->role =='redes' || Auth::user()->role =='aulas'))
+@if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='auxiliar' || Auth::user()->role =='redes' || Auth::user()->role =='aulas' || Auth::user()->role =='general' ))
  <div class="col-md-12">
         <div class="card card-chart">
             <div class="card-header card-header-success">
@@ -62,7 +62,7 @@
             </div>
 <div class="row m-1">
 
-    @if (Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='auxiliar' || Auth::user()->role =='redes'))
+    @if (Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='auxiliar' || Auth::user()->role =='redes' ))
        <div class="col-lg-4 col-md-6 col-sm-6">
         <div class="card card-stats ">
             <div class="card-header card-header-warning card-header-icon">
@@ -171,10 +171,10 @@
         </div>
 @endif
 <!-- Apartado de Cursos   -->
-	@if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='aulas' || Auth::user()->role =='redes' || Auth::user()->role =='auxiliar'))
+	@if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='aulas' || Auth::user()->role =='redes' || Auth::user()->role =='auxiliar' || Auth::user()->role == 'general'))
 
-        <div class="col-lg-4 col-md-6 col-sm-6">
-        <div class="card card-stats">
+        <div class="col-lg-4 col-md-6 col-sm-6 ">
+        <div class="card card-stats ">
             <div class="card-header card-header-info card-header-icon">
             <div class="card-icon">
                 <i class="material-icons">school</i>
@@ -186,7 +186,9 @@
             </div>
             <div class="card-footer">
             <div class="stats">
-		<i class="material-icons">spellcheck</i><a href="{{ route('cursos.create') }}" >Capturar</a> 
+                @if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='aulas' || Auth::user()->role =='redes' || Auth::user()->role =='auxiliar' ))
+		<i class="material-icons">spellcheck</i><a href="{{ route('cursos.create') }}" >Capturar</a>
+                @endif
                 <i class="material-icons">update</i><a  href="{{ url('cursos/2021B') }}">Todos</a>
 
             </div>
@@ -218,18 +220,21 @@
     
         
 @endif
-    @if (Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='auxiliar' || Auth::user()->role =='redes'))
-       <div class="col-lg-4 col-md-6 col-sm-6">
-        <div class="card card-stats">
+    @if (Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='auxiliar' || Auth::user()->role =='redes' || Auth::user()->role =='general'))
+       <div class="col-lg-4 col-md-6 col-sm-6 ">
+        <div class="card card-stats ">
             <div class="card-header card-header-danger card-header-icon">
             <div class="card-icon">
                 <i class="material-icons">chair</i>
             </div>
- 	     <h3 class="card-title">Mobiliario</h3>            
+                <h3 class="card-title">Mobiliario</h3>
+            @if (Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='auxiliar' || Auth::user()->role =='redes'))
+
              <a class="btn btn-outline-success" href="{{ route('mobiliarios.create') }}">Captura Mobiliário</a>
+                @endif
  	     <a href="{{ route('mobiliarios.index') }}" class="btn btn-outline-danger">Consulta Mobiliários</a>
             </div>
-            <div class="card-footer">
+            <div class="card-footer ">
             <div class="stats">
                 <i class="material-icons">info</i>
             </div>

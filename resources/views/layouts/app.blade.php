@@ -77,7 +77,7 @@
                         </li>
 			@endif		    
 		@endif
-		@if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='auxiliar' || Auth::user()->role =='redes'))
+		@if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='auxiliar' || Auth::user()->role =='redes' || Auth::user()->role =='general' ))
 
 			@if(Auth::check())                        
 			<li class="nav-item dropdown">
@@ -85,7 +85,9 @@
                                 Mobiliario
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                @if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='auxiliar' || Auth::user()->role =='redes'))
                                 <li><a class="dropdown-item" href="{{ route('mobiliarios.create') }}">Captura Mobiliário</a></li>
+                                @endif
                                 <li><a class="dropdown-item" href="{{ route('mobiliarios.index') }}">Consulta Mobiliários</a></li>
                             </ul>
                         </li>
@@ -137,7 +139,7 @@
 			@endif
 		@endif
 
-		 @if(Auth::check() && (Auth::user()->role =='admin'|| Auth::user()->role =='cta' || Auth::user()->role =='auxiliar' || Auth::user()->role =='redes' || Auth::user()->role =='aulas'))
+		 @if(Auth::check() && (Auth::user()->role =='admin'|| Auth::user()->role =='cta' || Auth::user()->role =='auxiliar' || Auth::user()->role =='redes' || Auth::user()->role =='aulas' || Auth::user()->role =='general'))
 
 			@if(Auth::check())
  			<li class="nav-item dropdown">
@@ -145,7 +147,9 @@
                                 Cursos
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                @if(Auth::check() && Auth::user()->role !='general')
                                 <li><a class="dropdown-item" href="{{ route('cursos.create') }}" >Capturar</a></li>
+                                @endif
 				<li><a class="dropdown-item" href="{{ url('cursos/2021B') }}">Todos</a></li>
 				<li><a class="dropdown-item" href="{{ route('cursos-laboratorios', '2021B') }}">Laboratorios</a></li>
 				<li><a class="dropdown-item" href="{{ route('cursos-presenciales', '2021B') }}">Presenciales</a></li>

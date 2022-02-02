@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="container">
-        @if (Auth::check())
+        @if (Auth::check() && (Auth::user()->role =="admin" || Auth::user()->role =="auxiliar" || Auth::user()->role =="cta"))
             @if (session('message'))
                 <div class="alert alert-success">
                     <h2>{{ session('message') }}</h2>
@@ -32,36 +32,38 @@
                         @endif
                         <br>
                         <div class="row align-items-center">
-                            <div class="col-md-3">
-                                <label class="font-weight-bold" for="nombre">Nombre del servicio </label>
-                                <textarea name="nombre" id="nombre" rows="10" cols="50"></textarea>
+
+                            <div class="col-md-12">
+                                <label class="font-weight-bold form-label" for="nombre">Nombre del servicio </label>
+                                <input name="nombre" id="nombre"  class="form-control">
                                 
                             </div>
-                            <div class="col-md-3">
-                                <label class="font-weight-bold" for="categoria">Categoria </label>
-                                <input type="text" name="categoria" id="categoria">
+                            <div class="col-md-12">
+                                <label class="font-weight-bold" for="categoria" class="form-label">Categoria </label>
+                                <input type="text" name="categoria" id="categoria" class="form-control">
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-12">
+                                <label class="font-weight-bold" for="contacto" class="form-label">Contacto </label>
+                                <textarea name="contacto" id="contacto" rows="5" cols="50" class="form-control"></textarea>
+                            </div>
+                            <div class="col-md-12">
                                 <label class="font-weight-bold" for="descripcion">Descripcion </label>
-                                <textarea name="descripcion" id="descripcion" rows="10" cols="50"></textarea>
+                                <textarea class="form-control" name="descripcion" id="descripcion" rows="5" cols="50"></textarea>
                             </div>
-                            <div class="col-md-3">
-                                <label class="font-weight-bold" for="contacto">Contacto </label>
-                                <textarea name="contacto" id="contacto" rows="10" cols="50"></textarea>
+
+                            <div class="col-md-12">
+                                <label class="font-weight-bold" for="requisitos" class="form-label">Requisitos </label>
+                                <textarea name="requisitos" id="requisitos" rows="5" cols="50" class="form-control"></textarea>
                             </div>
-                            <div class="col-md-3">
-                                <label class="font-weight-bold" for="requisitos">Requisitos </label>
-                                <textarea name="requisitos" id="requisitos" rows="10" cols="50"></textarea>
+                            <div class="col-md-12">
+                                <label class="font-weight-bold" for="procedimiento" class="form-label">Procedimiento </label>
+                                <textarea name="procedimiento" id="procedimiento" rows="5" cols="50" class="form-control"></textarea>
                             </div>
-                            <div class="col-md-3">
-                                <label class="font-weight-bold" for="procedimiento">Procedimiento </label>
-                                <textarea name="procedimiento" id="procedimiento" rows="10" cols="50"></textarea>
+                            <div class="col-md-12">
+                                <label class="font-weight-bold form-label" for="tiempo_de_respuesta">Tiempo de respuesta </label>
+                                <input type="text" name="tiempo_de_respuesta" id="tiempo_de_respuesta" class="form-control">
                             </div>
-                            <div class="col-md-3">
-                                <label class="font-weight-bold" for="tiempo_de_respuesta">Tiempo de respuesta </label>
-                                <input type="text" name="tiempo_de_respuesta" id="tiempo_de_respuesta">
-                            </div>
-                            
+
                         </div>
                         
                         <div class="row align-items-center">

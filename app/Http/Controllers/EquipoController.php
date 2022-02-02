@@ -296,30 +296,29 @@ public function busquedaEquiposPrestamo(Request $request){
 	    $historial = route('historial', $value['id']);
 	    $ruta = "eliminar".$value['id'];
             $eliminar = route('delete-equipo', $value['id']);
-
-
-            $acciones = '
+            if(Auth::user()->role != 'general') {
+                $acciones = '
 			<div class="btn-acciones">
                     	    <div class="btn-circle">
-				<a href="'.$actualizar.'" title="Actualizar">                          
+				<a href="' . $actualizar . '" title="Actualizar">                          
 				<span class="text-success"><span class="material-icons">edit</span></span>
                         	</a>
-                        	<a href="'.$prestamo.'"  title="Prestamo">
+                        	<a href="' . $prestamo . '"  title="Prestamo">
                             	<span class="text-info"><span class="material-icons">feed</span></span>
                         	</a>
-				<a href="'.$cambiarubicacion.'"  title="Reubicar">
+				<a href="' . $cambiarubicacion . '"  title="Reubicar">
                             	<span class="text-danger"><span class="material-icons">location_on</span></span>                        
 				</a>
-				<a href="'.$historial.'"  title="Historial">
+				<a href="' . $historial . '"  title="Historial">
                             	<span class="text-secondary"><span class="material-icons">history</span></span>                        
 				</a>
-				<a href="#'.$ruta.'" role="button" class="btn btn-danger" data-toggle="modal" title="Eliminar">
+				<a href="#' . $ruta . '" role="button" class="btn btn-danger" data-toggle="modal" title="Eliminar">
                             	<i class="far fa-trash-alt"></i>
                         	</a>
 			     </div>
                 	</div>
 
-			<div class="modal fade" id="'.$ruta.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal fade" id="' . $ruta . '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                		    <div class="modal-dialog" role="document">
                                <div class="modal-content">
                                   <div class="modal-header">
@@ -331,18 +330,19 @@ public function busquedaEquiposPrestamo(Request $request){
                     		 <div class="modal-body">
 		                    <p class="text-primary">
                 		      <small> 
-                                          Marca: '.$value['marca'].', Modelo:'.$value['modelo'].', N/S: '.$value['numero_serie'].'
+                                          Marca: ' . $value['marca'] . ', Modelo:' . $value['modelo'] . ', N/S: ' . $value['numero_serie'] . '
 		                      </small>
                      	 	   </p>
                     		 </div>
 	                         <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		                    <a href="'.$eliminar.'" type="button" class="btn btn-danger">Eliminar</a>
+		                    <a href="' . $eliminar . '" type="button" class="btn btn-danger">Eliminar</a>
                     		 </div>
                   	      </div>
                 	    </div>
               		</div>             
             ';
+            }
 		$localizado_en_sici='';
 		if($value['resguardante']=='CTA'){
                                 
@@ -352,7 +352,7 @@ public function busquedaEquiposPrestamo(Request $request){
                                     $localizado_en_sici.='No localizado';
                                 
                 }
-
+        if(Auth::user()->role != 'general'){
             $equipos[$key] = array(
                 $acciones,
                 $value['id'],
@@ -364,6 +364,19 @@ public function busquedaEquiposPrestamo(Request $request){
                 $value['detalles'].' SICI: '.$localizado_en_sici,
                 $value['area']
             );
+        }else{
+            $equipos[$key] = array(
+                $value['id'],
+                $value['udg_id'],
+                $value['tipo_equipo'],
+                $value['marca'],
+                $value['modelo'],
+                $value['numero_serie'],
+                $value['detalles'].' SICI: '.$localizado_en_sici,
+                $value['area']
+            );
+        }
+
 
         }
 
@@ -382,7 +395,7 @@ public function busquedaEquiposPrestamo(Request $request){
             $log = new Log();
         $log->tabla = "Equipos";
         $mov="";
-        $mov=$mov."Eliminación lógica del Equipo: ".$equipo_id;
+        $mov=$mov."Eliminaciï¿½n lï¿½gica del Equipo: ".$equipo_id;
         $log->movimiento = $mov;
         $log->usuario_id = Auth::user()->id;
         $log->acciones = "Borrrado";

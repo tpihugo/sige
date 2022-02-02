@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-@if(Auth::check() && (  Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='auxiliar' || Auth::user()->role =='redes'))
+@if(Auth::check() && (  Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='auxiliar' || Auth::user()->role =='redes' || Auth::user()->role =='general' ))
 
     <div class="container-fluid">
         <div class="row">
@@ -13,13 +13,17 @@
             <h2>Listado de Mobiliario </h2>
             <br>
                 <p align="right">
+                    @if(Auth::check() && Auth::user()->role !='general'))
                     <a href="{{ route('mobiliarios.create') }}" class="btn btn-success">Capturar Mobiliario</a>
+                    @endif
                     <a href="{{ route('home') }}" class="btn btn-primary">< Regresar</a>
                 </p>
             <table id="example" class="table table-striped table-bordered" style="width:100%">
                 <thead>
                 <tr>
+                    @if(Auth::check() && Auth::user()->role !='general')
                     <th>Acciones</th>
+                    @endif
                     <th>Id Mobiliário</th>
                     <th>Id UdeG</th>
                     <th>Id Resguardante</th>
@@ -54,8 +58,10 @@
 
 <script type="text/javascript">
     var data = @json($mobiliarios);
+    console.log(data);
 
     $(document).ready(function() {
+
         $('#example').DataTable({
             "data": data,
             "pageLength": 100,

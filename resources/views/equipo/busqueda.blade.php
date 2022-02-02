@@ -1,7 +1,7 @@
 {{--@extends('layouts.appdash', ['activePage' => 'dashboard', 'titlePage' => __('Dashboard')])--}}
 @extends('layouts.app')
 @section('content')
-@if(Auth::check())
+@if(Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'cta' || Auth::user()->role == 'admin' || Auth::user()->role == 'auxiliar' || Auth::user()->role == 'redes' || Auth::user()->role == 'general'))
 
     <div class="container-fluid">
        
@@ -43,7 +43,9 @@
                                 	</div>
                                 	<div class="col-md-5">
                                     		<button type="submit" class="btn btn-success">Buscar</button>
+                                        @if(Auth::user()->role != 'general')
 						<a href="{{ route('equipos.create') }}" class="btn btn-outline-success">Capturar Equipo</a>
+                                        @endif
 						<a href="{{ route('home') }}" class="btn btn-outline-primary"><i class="fas fa-chevron-circle-left"></i> Regresar</a>
                                		</div>
                             	</div>
@@ -66,7 +68,9 @@
             			<table id="example" class="table table-striped table-bordered" style="width:100%;font-size:14;padding-right: 30px;">
 			                <thead >
 				                <tr>
-				                    <th width="10%">Acciones</th>	
+                                    @if(Auth::user()->role != 'general')
+				                    <th width="10%">Acciones</th>
+                                    @endif
 				                    <th>ID</th>
 				                    <th>Id UdeG</th>
 				                    <th>Tipo Equipo</th>

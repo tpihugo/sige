@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @if (Auth::check() && (Auth::user()->role =='admin' ||  Auth::user()->role =='cta' || Auth::user()->role =='aulas' || Auth::user()->role =='redes' || Auth::user()->role =='auxiliar'))
+    @if (Auth::check() && (Auth::user()->role =='admin' ||  Auth::user()->role =='cta' || Auth::user()->role =='aulas' || Auth::user()->role =='redes' || Auth::user()->role =='auxiliar' || Auth::user()->role =='general'))
 
         <div class="container-fluid">
             <div class="row g-3 align-items-center">
@@ -92,7 +92,9 @@
                     <table id="example" class="table table-striped table-bordered" cellspacing="2" width="100%">
                         <thead>
                             <tr>
+                                @if(Auth::user()->role != 'general')
                                 <th>Acción</th>
+                                @endif
                                 <th>Tipo</th>
                                 <th>Curso</th>
                                 <th>Departamento</th>
