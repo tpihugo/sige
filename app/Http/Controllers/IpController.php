@@ -58,9 +58,9 @@ class IpController extends Controller
             $acciones = '
                 <div class="btn-acciones">
                     <div class="btn-circle">
-                        <a href="'.$actualizar.'" role="button" class="btn btn-success" data-toggle="modal" title="Actualizar">
-                            <i class="fa fa-edit"></i>
-                        </a>
+                    <a href="' . $actualizar . '" class="btn btn-success" title="Actualizar">
+                    <i class="far fa-edit"></i>
+                </a>
                         <a href="'.$ruta.'" role="button" class="btn btn-danger" data-toggle="modal" title="Eliminar">
                             <i class="far fa-trash-alt"></i>
                         </a>
@@ -125,7 +125,7 @@ class IpController extends Controller
             $acciones = '
                 <div class="btn-acciones">
                     <div class="btn-circle">
-                        <a href="' . $actualizar . '" class="btn btn-success" title="Actualizar">
+                        <a href="' . $actualizar . '"  class="btn btn-success" title="Actualizar"">
                             <i class="far fa-edit"></i>
                         </a>
                         <a href="'.$eliminar.'" role="button" class="btn btn-danger" data-toggle="modal" title="Eliminar">
@@ -196,6 +196,7 @@ class IpController extends Controller
         $ip->ip = $request->input('ip');
         $ip->disponible = $request->input('disponible');
         $ip->save();
+
         return redirect('ips')->with(array(
             'message'=>'Ip añadida'
         ));
