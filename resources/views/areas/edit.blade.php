@@ -58,6 +58,7 @@
                                     <option value="Belenes" >Belenes</option>
                                     <option value="La Normal">La Normal</option>
                                     <option value="Juan Manuel 130">Juan Manuel 130</option>
+                                    <option value="C.U. DE CS. SOCIALES Y HUMANIDADES">C.U. DE CS. SOCIALES Y HUMANIDADES</option>
 					    <option value="Papirolas">Papirolas</option>
 					    <option value="FIL">FIL Expo</option>
 				<option value="Prestamo Externo">Pr&eacute;stamo Externo</option>
@@ -121,12 +122,12 @@
                                     <option value="División de Estudios Históricos y Humanos">División de Estudios
                                         Históricos y Humanos</option>
                                     <option value="División de Estudios Jurídicos">División de Estudios Jurídicos</option>
-                                    <option value="División de Estudios de la Cultura">División de Estudios Históricos y
-                                        Humanos</option>
-                                    <option value="División de Estudios Políticos y Sociales">División de Estudios Jurídicos
+                                    <option value="División de Estudios de la Cultura">División de la Cultura</option>
+                                    <option value="División de Estudios Políticos y Sociales">División de Estudios Politicos y Sociales
                                     </option>
-                                    <option value="División de Estudios de Estado y Sociedad">División de Estudios Jurídicos
+                                    <option value="División de Estudios de Estado y Sociedad">División de Estudios de Estado y sociedad
                                     </option>
+                                    <option value="C.U. DE CS. SOCIALES Y HUMANIDADES">C.U. DE CS. SOCIALES Y HUMANIDADES</option>
                                 </select>
                             </div>
                             <div class="col-md-6">
@@ -149,8 +150,8 @@
                                     <option value='Contraloría'>Contraloría</option>
                                     <option value='Control Escolar'>Control Escolar</option>
                                     <option value='CTA'>CTA</option>
-                                    <option value='CTA'>CTA</option>
                                     <option value='CTA - Espacion comunes'>CTA - Espacion comunes</option>
+                                    <option value="C.U. DE CS. SOCIALES Y HUMANIDADES">C.U. DE CS. SOCIALES Y HUMANIDADES</option>
                                     <option value='Departamento de Estudios de Lenguas Modernas'>Departamento de Estudios de
                                         Lenguas Modernas</option>
                                     <option value='Departamento de Estudios del Pacífico'>Departamento de Estudios del
@@ -179,8 +180,6 @@
                                         Derecho, Departamento de</option>
                                     <option value='División de Estudios de Estado y Sociedad'>División de Estudios de Estado
                                         y Sociedad</option>
-                                    <option value='División de Estudios de la Cultura'>División de Estudios de la Cultura
-                                    </option>
                                     <option value='División de Estudios de la Cultura'>División de Estudios de la Cultura
                                     </option>
                                     <option value='División de Estudios Históricos y Humanos'>División de Estudios
