@@ -50,7 +50,7 @@
                             <div class="row g-3 align-items-center">
                                 <div class="col-md-12">
                                         <label for="ciclo_inicio">Ciclo de Inicio</label>
-                                        <textarea class="form-control" id="ciclo_inicio" name="ciclo_inicio">{{$tecnico->ciclo_incio}} </textarea>
+                                        <textarea class="form-control" id="ciclo_inicio" name="ciclo_inicio">{{$tecnico->ciclo_inicio}} </textarea>
                                 </div>
                             </div>
                             <div class="row g-3 align-items-center">

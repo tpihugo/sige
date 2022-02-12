@@ -179,12 +179,13 @@ class TecnicoController extends Controller
 
         $tecnico = Tecnico::find($id);
         $tecnico->nombre = $request->input('nombre');
+        $tecnico->ciclo_inicio = $request->input('ciclo_inicio');
         $tecnico->telefono = $request->input('telefono');
         $tecnico->telefono_emergencia = $request->input('telefono_emergencia');
         $tecnico->asistencia = $request->input('asistencia');
         $tecnico->carrera = $request->input('carrera');
         $tecnico->institucion = $request->input('institucion');
-        $tecnico->ciclo_inicio = $request->input('ciclo_inicio');
+        
 
         $tecnico->update();
 	//
