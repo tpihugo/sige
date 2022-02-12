@@ -1,4 +1,4 @@
-@extends('layouts.appdash')
+@extends('layouts.app')
 
 @section('content')
 @if(Auth::check() && ( Auth::user()->role == 'admin' || Auth::user()->role == 'rh' || Auth::user()->role == 'redes' || Auth::user()->role == 'cta'))

@@ -39,12 +39,12 @@
                     <th>Acciones</th>
                     <th>Id</th>
                     <th>Nombre</th>
-                    <th>Categoria</th>
-                    <th>Descripcion</th>
+                    <th>Categoría</th>
+                    <th>Descripción</th>
                     <th>Requisitos</th>
                     <th>Procedimiento</th>
                     <th>Contacto</th>
-                    <th>tiempo_de_respuesta</th>
+                    <th>Tiempo de respuesta</th>
 
                 </tr>
                 </thead>
