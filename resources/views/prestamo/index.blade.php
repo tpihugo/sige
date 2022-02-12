@@ -14,7 +14,7 @@
             <h2>Pr&eacute;stamos / Traslados de Equipos</h2>
             <br>
                 <p align="right">
-                    {{--<a href="{{ route('prestamos.create') }}" class="btn btn-success">Capturar Préstamo</a>--}}
+                    {{--<a href="{{ route('prestamos.create') }}" class="btn btn-success">Capturar Prï¿½stamo</a>--}}
                     <a href="{{ route('home') }}" class="btn btn-primary">< Regresar</a>
                 </p>
 
@@ -49,9 +49,9 @@
                 <a href="{{ route('home') }}" class="btn btn-primary">< Regresar</a>
             </p>
 </div>
-{{--@extends('layouts.loader')--}}
+@extends('layouts.loader')
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs4-4.1.1/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/r-2.2.7/datatables.min.js"></script>
 
@@ -69,7 +69,7 @@
                 "sProcessing": "Procesando...",
                 "sLengthMenu": "Mostrar _MENU_ registros",
                 "sZeroRecords": "No se encontraron resultados",
-                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sEmptyTable": "Ningï¿½n dato disponible en esta tabla",
                 "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
                 "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
                 "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
@@ -80,7 +80,7 @@
                 "sLoadingRecords": "Cargando...",
                 "oPaginate": {
                     "sFirst": "Primero",
-                    "sLast": "Último",
+                    "sLast": "ï¿½ltimo",
                     "sNext": "Siguiente",
                     "sPrevious": "Anterior"
                 },
@@ -115,12 +115,12 @@
             var u = 'u';
             var c = 'c';
             var special_letters = {
-                "Á": a, "á": a, "Ã": a, "ã": a, "À": a, "à": a,
-                "É": e, "é": e, "Ê": e, "ê": e,
-                "Í": i, "í": i, "Î": i, "î": i,
-                "Ó": o, "ó": o, "Õ": o, "õ": o, "Ô": o, "ô": o,
-                "Ú": u, "ú": u, "Ü": u, "ü": u,
-                "ç": c, "Ç": c
+                "ï¿½": a, "ï¿½": a, "ï¿½": a, "ï¿½": a, "ï¿½": a, "ï¿½": a,
+                "ï¿½": e, "ï¿½": e, "ï¿½": e, "ï¿½": e,
+                "ï¿½": i, "ï¿½": i, "ï¿½": i, "ï¿½": i,
+                "ï¿½": o, "ï¿½": o, "ï¿½": o, "ï¿½": o, "ï¿½": o, "ï¿½": o,
+                "ï¿½": u, "ï¿½": u, "ï¿½": u, "ï¿½": u,
+                "ï¿½": c, "ï¿½": c
             };
             for (var val in special_letters)
                 data = data.split(val).join(special_letters[val]).toLowerCase();
@@ -140,6 +140,6 @@
 
 
 
-    Acceso No válido
+    Acceso No vï¿½lido
 @endif
 @endsection
