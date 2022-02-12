@@ -256,7 +256,7 @@
                               Administrador
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                              <a class="dropdown-item" href="#"><strong>Users</a>
+                              <a class="dropdown-item" href="#"><strong>Usuarios</a>
                               <a class="dropdown-item" href="{{ route('usuarios.index') }}">Administrar Usuarios</a>
                               <div class="dropdown-divider"></div>
                               <a class="dropdown-item" href="#"><strong>Logs</a>
@@ -264,6 +264,9 @@
                               <div class="dropdown-divider"></div>
                               <a class="dropdown-item" href="#"><strong>Estadisticas</a>
                               <a class="dropdown-item" href="{{ route('estadisticas') }}">Generales</a>
+                              <div class="dropdown-divider"></div>
+                              <a class="dropdown-item" href="#"><strong>Técnicos</a>
+                                <a class="dropdown-item" href="{{ route('tecnicos.index') }}">Administrar Técnicos</a>
                             </div>
                           </li>
 		@endif
