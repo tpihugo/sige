@@ -1,6 +1,14 @@
 @extends('layouts.app')
 @section('content')
+    <script type="text/javascript">
 
+        $(document).ready(function() {
+            $('#js-example-basic-single').select2();
+
+        });
+        //var dateControl = document.querySelector('input[type="date"]');
+        //dateControl.value = '2017-06-01';
+    </script>
     <div class="container">
         @if (Auth::check() && (Auth::user()->role =='admin' ||  Auth::user()->role =='cta' || Auth::user()->role =='aulas' || Auth::user()->role =='redes' || Auth::user()->role =='auxiliar'))
             @if (session('message'))

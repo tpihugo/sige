@@ -1,6 +1,14 @@
 @extends('layouts.app')
 @section('content')
+    <script type="text/javascript">
 
+        $(document).ready(function() {
+            $('#js-example-basic-single').select2();
+
+        });
+        //var dateControl = document.querySelector('input[type="date"]');
+        //dateControl.value = '2017-06-01';
+    </script>
     <div class="container">
         @if (Auth::check() && (Auth::user()->role =='admin' ||  Auth::user()->role =='cta' || Auth::user()->role =='aulas' || Auth::user()->role =='redes' || Auth::user()->role =='auxiliar'))
             @if (session('message'))
@@ -57,6 +65,7 @@
                                     <select class="form-control" id="dia" name="dia">
                                         <option disabled>Elegir</option>
                                         <option value="2021A" selected>2021A</option>
+                                        <option value="2022A" selected>2022A</option>
                                     </select>
                                 </div>
                             </div>
@@ -73,6 +82,7 @@
                                                 {{ $area->coordinacion }} - {{ $area->area }}</option>
                                         @endforeach
                                     </select>
+
                                 </div>
                                 <div class="col-md-3">
                                     <label class="font-weight-bold" for="horario">Horario </label>
