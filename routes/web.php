@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Routing\Route as RoutingRoute;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -47,6 +48,7 @@ Route::resource('cursos', 'App\Http\Controllers\CursoController');
 Route::resource('logs', 'App\Http\Controllers\LogController');
 Route::resource('licencias', 'App\Http\Controllers\LicenciaController');
 Route::resource('servicios', 'App\Http\Controllers\ServicioController');
+Route::resource('tecnicos', 'App\Http\Controllers\TecnicoController');
 Route::get('/cambiar-ubicacion/{equipo_id}/{tipo?}', array(
     'as' => 'cambiar-ubicacion',
     'middleware' => 'auth',
@@ -358,4 +360,13 @@ Route::get('/delete-ip/{ip_id}', array(
     'as' => 'delete-ip',
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\IpController@delete_ip'
+));
+Route::get('/lista_de_tecnicos', array(
+    'as' => 'lista_de_tecnicos',
+    'uses' => 'App\Http\Controllers\TecnicoController@index'
+));
+Route::get('/delete-tecnico/{tecnico_id}', array(
+    'as' => 'delete-tecnico',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\TecnicoController@delete_tecnico'
 ));

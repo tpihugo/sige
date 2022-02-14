@@ -27,10 +27,10 @@
 <div class="row">
 		<div class="col-12">
 
-            <h2>Listado de servicios </h2>
+            <h2>Listado de Técnicos </h2>
             <br>
                 <p align="right">
-                    <a href="{{ route('servicios.create') }}" class="btn btn-success">Capturar servicio</a>
+                    {{-- <a href="{{ route('') }}" class="btn btn-success">Capturar servicio</a> --}}
                     <a href="{{ route('home') }}" class="btn btn-primary">< Regresar</a>
                 </p>
             <table id="example" class="table table-striped table-bordered" style="width:100%">
@@ -38,13 +38,14 @@
                 <tr>
                     <th>Acciones</th>
                     <th>Id</th>
+                    <th>Ciclo</th>
                     <th>Nombre</th>
-                    <th>Categoría</th>
-                    <th>Descripción</th>
-                    <th>Requisitos</th>
-                    <th>Procedimiento</th>
-                    <th>Contacto</th>
-                    <th>Tiempo de respuesta</th>
+                    <th>Teléfono de contacto</th>
+                    <th>Teléfono de emergencia</th>
+                    <th>Asistencia</th>
+                    <th>Carrera</th>
+                    <th>Institución</th>
+                    <th>Orden</th>
 
                 </tr>
                 </thead>
@@ -67,7 +68,7 @@
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs4-4.1.1/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/r-2.2.7/datatables.min.js"></script>
 
 <script type="text/javascript">
-    var data = @json($servicios);
+    var data = @json($tecnicos);
 
     $(document).ready(function() {
         $('#example').DataTable({

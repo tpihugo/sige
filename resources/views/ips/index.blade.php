@@ -45,26 +45,64 @@
 
                 <div class="row align-items-end">
                     <div class="col-md-4 pl-0">
-                        <label for=id">Subred </label>
+                        <label for="id">Subred </label>
                         <select class="form-control" id="id" name="id">
                             @if (isset($subredElegida->id) && !is_null($subredElegida->id))
                                 <option value="{{ $subredElegida->id }}" selected>
-                                  Subred Filtrada: {{ $subredElegida->subred }} /
-                                    Mascara: {{ $subredElegida->mascara }} /
-                                   Gateway: {{ $subredElegida->gateway }} /
+                                  Subred Filtrada: {{ $subredElegida->subred }} 
                                 </option>
-                                <option disabled>Elegir</option>
+                                <option value="0" disabled>Elegir</option>
                             @else
-                                <option disabled selected>Elegir</option>
+                                <option disabled value="0" selected>Elegir</option>
                             @endif
                             @foreach ($subredes as $subred)
                                 <option value="{{ $subred->id }}">
-                                    ID: {{$subred->id}} /
-                                    Subred: {{ $subred->subred }} /
-                                    Mascara: {{ $subred->mascara }} /
-                                    Gateway: {{ $subred->gateway }}
+                                    Subred: {{ $subred->subred }} 
                                 </option>
                             @endforeach
+
+                        </select>
+                    </div>
+                    <div class="col-md-4 pl-0">
+                        <label for="disponibles">Disponibles </label>
+                        <select class="form-control" id="disponibles" name="disponibles">
+                            @if (isset($disponibleElegida) && !is_null($disponibleElegida))
+                                @if ($disponibleElegida=="1")
+                                    <option value="1" selected>
+                                        Disponible
+                                    </option>
+                                    <option value="2" >
+                                        No disponible
+                                    </option>
+                                    <option value="0" >Todos</option>
+                                @elseif ($disponibleElegida=="2")
+                                    <option value="1" >
+                                        Disponible
+                                    </option>
+                                    <option value="2" selected>
+                                        No disponible
+                                    </option>
+                                    <option value="0" >Todos</option>
+                                @else
+                                    <option value="1" >
+                                        Disponible
+                                    </option>
+                                    <option value="2" >
+                                        No disponible
+                                    </option>
+                                    <option value="0"  selected>Todos</option>
+                                @endif
+                                
+                                
+                            @else
+                                <option  value="0" selected>Todos</option>
+                                <option value="1" >
+                                    Disponible
+                                </option>
+                                <option value="2" >
+                                    No disponible
+                                </option>
+                            @endif
 
                         </select>
                     </div>
@@ -91,6 +129,10 @@
                             <th>Acciones</th>
                             <th>IP</th>
                             <th>Disponible</th>
+                            <th>Subred</th>
+                            <th>Mascara</th>
+                            <th>Gateway</th>
+
 
                         </tr>
                         </thead>

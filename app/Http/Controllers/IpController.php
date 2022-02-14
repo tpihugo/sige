@@ -6,6 +6,7 @@ use App\Models\Equipo;
 use App\Models\Ip;
 use App\Models\Subred;
 use App\Models\VsIps;
+use App\Models\Vs_Ips_Subredes;
 use Illuminate\Http\Request;
 
 class IpController extends Controller
@@ -19,7 +20,7 @@ class IpController extends Controller
     {
         $subred = Subred::where('activo','=',1)
             ->get();
-        $ip= Ip::where('activo','=',1)
+        $ip= Vs_Ips_Subredes::where('activo','=',1)
             ->get();
         $ips = $this->cargarDTall($ip);
 
@@ -163,7 +164,9 @@ class IpController extends Controller
                 $acciones,
                 $value['ip'],
                 $value['disponible'],
-                $value['id subred'],
+                $value['subred'],
+                $value['mascara'],
+                $value['gateway'],
 
 
 
@@ -280,28 +283,51 @@ class IpController extends Controller
     }
 
     public function filtroIps(Request $request){
+        if($request->input('id')==0){
+            return redirect()->route('ips.index')->with(array(
+                "message" => "Filtros no seleccionados"
+            ));
+        }
         $subredes= Subred::where('activo','=',1)
             ->get();
         $subred = $request->input('id');
         //$estatus = $request->input('estatus');
         $subredElegida = Subred::find($subred);
-
+        $disponibleElegida=$request->input('disponibles');
 
         if((isset($subred) && !is_null($subred))){
-            $filtro = Ip::where('id_subred','=',$subred)
+            if($disponibleElegida==0){
+                $filtro = Vs_Ips_Subredes::where('subred','=',$subredElegida->subred)
                 ->where('activo','=', 1)
                 ->get();
 
-            $ips = $this->cargarDTall($filtro);
+                $ips = $this->cargarDTall($filtro);
+            }else if($disponibleElegida==1){
+                $filtro = Vs_Ips_Subredes::where('subred','=',$subredElegida->subred)
+                ->where('activo','=', 1)
+                ->where('disponible','=','si')
+                ->get();
+
+                $ips = $this->cargarDTall($filtro);
+            }
+            else{
+                $filtro = Vs_Ips_Subredes::where('subred','=',$subredElegida->subred)
+                ->where('activo','=', 1)
+                ->where('disponible','=','no')
+                ->get();
+
+                $ips = $this->cargarDTall($filtro);
+            }
 
         } else {
-            $ips = Ip::where('activo','=',1)->get();
+            $ips = Vs_Ips_Subredes::where('activo','=',1)->get();
         }
 
         return view('ips.index')
             ->with('ips',$ips)
             ->with('subredes',$subredes)
-            ->with('subredElegida',$subredElegida);
+            ->with('subredElegida',$subredElegida)
+            ->with('disponibleElegida',$disponibleElegida);
 
     }
     public function filtroIpsasig(Request $request){

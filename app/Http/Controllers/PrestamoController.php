@@ -45,7 +45,7 @@ $acciones = '';
                 <div class="btn-acciones">
                     <div class="btn-circle">
                         <a href="'.$actualizar.'" class="btn btn-success" title="Actualizar">
-                            <i class="fa fa-edit"></i>
+                            <i class="far fa-edit"></i>
                         </a>
                         <a href="'.$prestamo.'" class="btn btn-primary"  title="Formato de Prestamo" target="_blank">
                             <i class="far fa-file-alt"></i>
@@ -216,7 +216,7 @@ $acciones = '';
         $log->save();
         //
         return redirect('prestamos')->with(array(
-            'message'=>'El pr�stamo se guardo Correctamente'
+            'message'=>'El préstamo se guardo Correctamente'
         ));
     }
 
