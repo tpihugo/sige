@@ -19,6 +19,10 @@
                         $('#js-example-basic-single').select2();
 
                     });
+                    $(document).ready(function() {
+                        $('#js-example-basic-single2').select2();
+
+                    });
                     n =  new Date();
                     //Año
                     y = n.getFullYear();
@@ -92,7 +96,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="tecnico_id">Técnico </label>
-                                <select class="form-control" id="tecnico_id" name="tecnico_id" required>
+                                <select class="form-control" id="js-example-basic-single2" name="tecnico_id" required>
                                     <option disabled >Elegir</option>
                                     @foreach($tecnicos as $tecnico)
                                         <option value="{{$tecnico->id}}">{{$tecnico->nombre}}</option>

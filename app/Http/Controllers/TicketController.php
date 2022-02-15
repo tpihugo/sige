@@ -305,7 +305,8 @@ class TicketController extends Controller
     public function recepcionEquipo($ticket_id){
         $ticket = VsTicket::find($ticket_id);
         $equipoPorTickets = VsEquiposPorTicket::where('ticket_id','=', $ticket_id)->get();
-        return view('ticket.agregarEquiposTicket')->with('ticket', $ticket)->with('ticket_id', $ticket_id)->with('equipoPorTickets', $equipoPorTickets);
+        $cuentaEquipoPorTickets = VsEquiposPorTicket::where('ticket_id','=', $ticket_id)->count();
+        return view('ticket.agregarEquiposTicket')->with('ticket', $ticket)->with('ticket_id', $ticket_id)->with('equipoPorTickets', $equipoPorTickets)->with('cuentaEquipoPorTickets', $cuentaEquipoPorTickets);
     }
     public function registrarEquipoTicket($equipo_id, $ticket_id){
          $equipoTicket = new EquipoTicket();

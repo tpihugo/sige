@@ -49,7 +49,7 @@
                             </div>
                             <div class="col-md-5">
                                 <label for="id_resguardante">Resguardante</label>
-                                <select class="form-control" id="id_resguardante" name="id_resguardante">
+                                <select class="form-control" id="js-example-basic-single" name="id_resguardante">
                                     <option value="No Aplica" selected>No Aplica</option>
                                     @foreach($empleados as $empleado)
                                         <option value="{{$empleado->id}}">{{$empleado->nombre}} {{$empleado->codigo}}</option>
@@ -97,7 +97,7 @@
 			<br>
                         <div class="row align-items-center">
                             <div class="col-md-6">
-                                <label for="resguardante">Resguardante</label>
+                                <label for="resguardante">Dependencia Resguardante</label>
                                 <select name="resguardante" id="resguardante" class="form-control">
 				    <option disable selected>Elegir</option>
                                     <option value="Otra dependencia">Otra dependencia</option>

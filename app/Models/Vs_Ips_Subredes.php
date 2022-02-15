@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Vs_Ips_Subredes extends Model
 {
     use HasFactory;
-    protected $table = 'vs_ips_subredes';
+    protected $table = 'vs_ips';
 }

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @if(Auth::check() && Auth::user()->role =='admin')
+    @if(Auth::check() && Auth::user()->role =='admin' || Auth::user()->role =='cta')
 
     <div class="container">
         <div class="row">
@@ -39,8 +39,8 @@
                 </table>
 
             <br>
-
-                <h5><p align="center">Equipo ya Registrado</p></h5>
+            @if($cuentaEquipoPorTickets>0)
+                <h5><p align="center">Equipo ya Registrado </p></h5>
                 <table class="table table-bordered" style="width:100%">
                     <thead>
                     <tr>
@@ -110,7 +110,7 @@
 
                     </tbody>
                 </table>
-
+            @endif
                 <h5><p align="center">Agregar Equipos</p></h5>
                 <form action="{{route('busquedaEquiposTicket')}}" method="POST" enctype="multipart/form-data" class="col-12">
                     {!! csrf_field() !!}

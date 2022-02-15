@@ -137,7 +137,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="font-weight-bold" for="coordinacion">Coordinación </label>
-                                <select class="form-control" id="coordinacion" name="coordinacion">
+                                <select class="form-control" id="js-example-basic-single" name="coordinacion">
                                     <option disabled selected>Elegir</option>
                                     <option value='Auditorio Belenes'>Auditorio Belenes</option>
                                     <option value='Auditorio Salvador Allende'>Auditorio Salvador Allende</option>
@@ -170,7 +170,9 @@
                                     </option>
                                     <option value='Derecho Privado, Departamento de '>Derecho Privado, Departamento de
                                     </option>
-                                    <option value='Derecho Público, Departamento de'>Derecho Público, Departamento de
+                                    <option value='Departamento de Derecho Público, '>Derecho Público, Departamento de
+                                    </option>
+                                    <option value='Departamento de Criminología, '>Departamento de Criminología
                                     </option>
                                     <option value='Derecho Social, Departamento de'>Derecho Social, Departamento de</option>
                                     <option value='Desarrollo local y territorio, Maestría'>Desarrollo local y territorio,
@@ -260,9 +262,21 @@
                                 </select>
                             </div>
                         </div>
+
+                        <div class="row align-items-center mt-4">
+                            <div class="col-md-12">
+                                <label class="font-weight-bold" for="area">Área</label>
+                                <input type="text" class="form-control" id="area" name="area" value="{{ old('area') }}">
+                            </div>
+                        </div>
                         <br>
                         <div class="row align-items-center">
+                            <div class="col-md-12">
+                                <label class="font-weight-bold" for="imagen_1">Exclusivo para aulas o laboratorios</label>
+                            </div>
+
                             <div class="col-md-4">
+
                                 <label class="font-weight-bold" for="imagen_1">Imagen 1</label>
                                 <div class="custom-file">
                                     <input name="imagen_1" type="file" class="custom-file-input" id="customFileLang"
@@ -288,12 +302,6 @@
                                     <option value="Proyector, computadora">Proyector y Computadora</option>
                                     <option value="Proyector, computadora, videoconferencia">Proyector, Computadora y Videoconferencia</option>
                                 </select>
-                            </div>
-                        </div>
-                        <div class="row align-items-center mt-4">
-                            <div class="col-md-12">
-                                <label class="font-weight-bold" for="area">Área</label>
-                                <input type="text" class="form-control" id="area" name="area" value="{{ old('area') }}">
                             </div>
                         </div>
                         <br>
