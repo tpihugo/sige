@@ -19,6 +19,10 @@
                         $('#js-example-basic-single').select2();
 
                     });
+                    $(document).ready(function() {
+                        $('#js-example-basic-single2').select2();
+
+                    });
                     var dateControl = document.querySelector('input[type="date"]');
                     dateControl.value = '2017-06-01';
                 </script>
@@ -97,7 +101,7 @@
                         <div class="row g-3 align-items-center">
                             <div class="col-md-3">
                                 <label for="tecnico_id">Técnico </label>
-                                <select class="form-control" id="js-example-basic-singleTecnico" name="tecnico_id" required>
+                                <select class="form-control" id="js-example-basic-single2" name="tecnico_id" required>
                                     <option value="{{$ticket->tecnico_id}}" selected>{{$ticket->tecnico}}</option>
                                     <option disabled >Elegir</option>
                                     @foreach($tecnicos as $tecnico)
