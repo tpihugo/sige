@@ -92,8 +92,17 @@
                             </div>
                             <div class="col-md-4">
                                 <label for="ip">IP </label>
-                                <input type="text" class="form-control" id="ip" name="ip" value="{{$equipo->ip}}" >
-                            </div>
+				<select class="form-control" id="ip" name="ip">
+						<option value="{{$equipo->ip}}" selected>{{$equipo->ip}}</option>
+					@if($equipo->ip != 'No Especificado')
+						<option value="No Especificado">No Especificado</option>
+					@endif
+					@foreach($ips as $ip)
+						@if($equipo->ip != $ip->ip)
+							<option value="{{$ip->ip}}">{{$ip->ip}}</option>
+						@endif
+					@endforeach
+				</select>                            </div>
                             <div class="col-md-4">
                                 <label for="tipo_conexion">Tipo de Conexión</label>
                                 <select class="form-control" id="tipo_conexion" name="tipo_conexion">

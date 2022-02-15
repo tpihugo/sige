@@ -49,8 +49,8 @@ $img = '/img/';
       </div>
     </nav>
 	<div class="row justify-content-center">
-		<div class="col-auto">
-			<img src="{{asset("img/imagen-inicio.jpg")}}" > 
+		<div class="col-md-6 col-sm-12 text-center">
+			<img src="{{asset("img/mediatecacusch.png")}}" class="w-50" > 
 		</div> 
 	</div>
     <div class="d-flex p-5 mt-3 justify-content-center text-center">
