@@ -39,7 +39,7 @@
                 </table>
 
             <br>
-            @if($cuentaEquipoPorTickets>0)
+            {{--@if($cuentaEquipoPorTickets>0)--}}
                 <h5><p align="center">Equipo ya Registrado </p></h5>
                 <table class="table table-bordered" style="width:100%">
                     <thead>
@@ -110,7 +110,7 @@
 
                     </tbody>
                 </table>
-            @endif
+            {{--@endif--}}
                 <h5><p align="center">Agregar Equipos</p></h5>
                 <form action="{{route('busquedaEquiposTicket')}}" method="POST" enctype="multipart/form-data" class="col-12">
                     {!! csrf_field() !!}

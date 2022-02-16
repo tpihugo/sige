@@ -17,7 +17,10 @@
                         $('#js-example-basic-single').select2();
 
                     });
+                    $(document).ready(function() {
+                        $('#js-example-basic-single2').select2();
 
+                    });
                 </script>
 
             </div>
@@ -123,8 +126,8 @@
                         <br>
                         <div class="row align-items-center">
                             <div class="col-md-12">
-                                <label for="area_id">Areas</label>
-                                <select class="form-control" class="form-control" id="js-example-basic-single" name="id_area">
+                                <label for="area_id">&Aacute;reas</label>
+                                <select class="form-control" class="form-control" id="js-example-basic-single2" name="id_area">
                                     <option value="No Aplica" selected>No Aplica</option>
                                     @foreach($areas as $area)
                                         <option value="{{$area->id}}">{{$area->sede}} - {{$area->division}} - {{$area->coordinacion}} - {{$area->area}}</option>
