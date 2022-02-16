@@ -16,7 +16,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Log;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\Ip;
 
 
 class EquipoController extends Controller
@@ -34,7 +34,8 @@ class EquipoController extends Controller
         $empleados = Empleado::all()->sortBy('nombre');
         $areas = Area::all();
 	$tipo_equipos = Equipo::distinct()->orderby('tipo_equipo','asc')->get(['tipo_equipo']);
-        return view('equipo.create')->with('empleados', $empleados)->with('areas', $areas)->with('tipo_equipos', $tipo_equipos);
+	$ip = Ip::select('ip')->where('disponible','=','si')->get();
+        return view('equipo.create')->with('empleados', $empleados)->with('areas', $areas)->with('tipo_equipos', $tipo_equipos)->with('ips',$ip);
     }
 
     public function store(Request $request)
@@ -51,6 +52,7 @@ class EquipoController extends Controller
             'detalles'=>'required'
             ]);
         $equipo = new equipo();
+	$equipo_ip = $equipo->ip;
         $equipo->udg_id = $request->input('udg_id');
         $equipo->tipo_equipo = $request->input('tipo_equipo');
         $equipo->marca = $request->input('marca');
@@ -64,6 +66,20 @@ class EquipoController extends Controller
 	$equipo->resguardante = $request->input('resguardante');
         $equipo->localizado_sici = $request->input('localizado_sici');
         $equipo->save();
+
+	return $request->input('ip');
+	$ip = Ip::where('ip','=',$request->input('ip'))->get()[0];
+
+	if($ip->ip != $equipo_ip ){
+		$ip->disponible = 'no';
+		$ip->save();
+		$ip_vieja = Ip::where('ip','=',$equipo_ip)->get()[0];
+		$ip_vieja->disponible = 'si';
+		$ip_vieja->update();
+	}	
+	
+
+
 	$ultimo_id_equipo = $equipo->id;
 	$movimiento_equipo = new MovimientoEquipo;
 	$movimiento_equipo->id_equipo = $ultimo_id_equipo;
@@ -103,6 +119,7 @@ class EquipoController extends Controller
     {
         $empleados = Empleado::all()->sortBy('nombre');
 	$tipo_equipos = Equipo::distinct()->orderby('tipo_equipo','asc')->get(['tipo_equipo']);
+	$ip = Ip::select('ip')->where('disponible','=','si')->get();
 
         $equipo = VsEquipo::find($id);
         if($equipo){
@@ -111,7 +128,7 @@ class EquipoController extends Controller
                 $idResguardante=39;
             }
             $resguardante = Empleado::find($idResguardante);
-            return view('equipo.edit')->with('equipo', $equipo)->with('empleados', $empleados)->with('resguardante',$resguardante)->with('tipo_equipos', $tipo_equipos);
+            return view('equipo.edit')->with('equipo', $equipo)->with('empleados', $empleados)->with('resguardante',$resguardante)->with('tipo_equipos', $tipo_equipos)->with('ips',$ip);
         }else{
             return redirect('home')->with(array(
                 'message'=>'El Id que desea modificar no existe'
@@ -136,6 +153,7 @@ class EquipoController extends Controller
             'detalles'=>'required'
         ]);
         $equipo = Equipo::find($id);
+	$equipo_ip = $equipo->ip;
         $equipo->udg_id = $request->input('udg_id');
         $equipo->tipo_equipo = $request->input('tipo_equipo');
         $equipo->marca = $request->input('marca');
@@ -148,8 +166,27 @@ class EquipoController extends Controller
         $equipo->id_resguardante = $request->input('id_resguardante');
 	$equipo->resguardante = $request->input('resguardante');
         $equipo->localizado_sici = $request->input('localizado_sici');
+	$equipo->update();
 
-        $equipo->update();
+	if($request->input('ip') != 'No Especificado'){
+	$ip = Ip::where('ip','=',$request->input('ip'))->get()[0];
+	if($ip->ip != $equipo_ip ){
+		$ip->disponible = 'no';
+		$ip->save();
+		if($equipo_ip != 'No Especificado'){
+			$ip_vieja = Ip::where('ip','=',$equipo_ip)->get()[0];
+			$ip_vieja->disponible = 'si';
+			$ip_vieja->update();
+		}
+	}	
+	}else{
+		if($equipo_ip != 'No Especificado'){
+			$ip_vieja = Ip::where('ip','=',$equipo_ip)->get()[0];
+			$ip_vieja->disponible = 'si';
+			$ip_vieja->update();
+		}
+	}	
+	
 	//
         $log = new Log();
         $log->tabla = "equipos";

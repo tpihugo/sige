@@ -24,6 +24,7 @@
                 </script>
 
             </div>
+
             <form action="{{route('equipos.store')}}" method="post" enctype="multipart/form-data" class="col-12">
                 <div class="row">
                     <div class="col">
@@ -84,7 +85,15 @@
                             </div>
                             <div class="col-md-4">
                                 <label for="ip">IP </label>
-                                <input type="text" class="form-control" id="ip" name="ip" value="No aplica/No Especificado" >
+				
+                                <select class="form-control" for="ip" name="ip">
+					 <option value="No Aplica" selected>No aplica/No Especificado</option>
+				@foreach($ips as $ip)
+                                    <option value="{{$ip->ip}}" selected>{{$ip->ip}}</option>
+				@endforeach
+                                </select>
+                                <!--<input type="text" class="form-control" id="ip" name="ip" value="No aplica/No Especificado" >-->
+				
                             </div>
                             <div class="col-md-4">
                                 <label for="tipo_conexion">Tipo de Conexión</label>
