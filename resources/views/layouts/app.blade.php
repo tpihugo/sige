@@ -218,9 +218,9 @@
                             </ul>
                         </li>  	
 			@endif 
-            @if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='rh' || Auth::user()->role =='cta')) 
 
-			@if(Auth::check())
+
+			@if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='redes' || Auth::user()->role =='cta'))
 	
 			<li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -232,7 +232,7 @@
                             </ul>
                         </li>
 			@endif 
-		@endif
+
         @if(Auth::check() && (Auth::user()->role =='admin' ||  Auth::user()->role =='cta' || Auth::user()->role =='redes'))
 			@if(Auth::check()) 
                         <li class="nav-item dropdown">
