@@ -1,8 +1,4 @@
-<?php
 
-header('Location: http://sige.cucsh.udg.mx/public/');
-exit;
-?>
 <!DOCTYPE html>
 <html lang="es">
 <head>

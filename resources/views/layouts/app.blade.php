@@ -67,7 +67,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
 		@if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='rh' || Auth::user()->role =='cta' || Auth::user()->role =='redes'))
-			@if(Auth::check()) 
+
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 Áreas
@@ -77,11 +77,11 @@
                                 <li><a class="dropdown-item" href="{{ route('areas.index') }}">Consulta Áreas</a></li>
                             </ul>
                         </li>
-			@endif		    
+
 		@endif
 		@if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='auxiliar' || Auth::user()->role =='redes' || Auth::user()->role =='general' ))
 
-			@if(Auth::check())                        
+
 			<li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 Mobiliario
@@ -93,11 +93,11 @@
                                 <li><a class="dropdown-item" href="{{ route('mobiliarios.index') }}">Consulta Mobiliários</a></li>
                             </ul>
                         </li>
-		  @endif
+
 		 @endif
 
 		@if(Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'cta' || Auth::user()->role == 'auxiliar' || Auth::user()->role == 'redes'))
-			@if(Auth::check())                        
+
 			<li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 Equipos y Préstamos
@@ -109,10 +109,10 @@
                                 <li><a class="dropdown-item" href="{{ route('prestamos.index') }}">Consultar Préstamos</a></li>
                             </ul>
                         </li>
-			@endif
+
 		@endif
                @if(Auth::check() && (Auth::user()->role =='admin'))
- 	       		@if(Auth::check())   
+
 			{{-- <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 Estadisticas
@@ -121,12 +121,12 @@
                                 <li><a class="dropdown-item" href="{{ route('estadisticas') }}">Generales</a></li>
                             </ul>
                         </li> --}}
-		 	@endif
+
 		 @endif
 
 		@if(Auth::check() && (Auth::user()->role =='admin'|| Auth::user()->role =='cta' || Auth::user()->role =='auxiliar' || Auth::user()->role =='redes'))
 
- 			 @if(Auth::check())  
+
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 Tickets
@@ -138,12 +138,12 @@
                             </ul>
 
                         </li>
-			@endif
+
 		@endif
 
 		 @if(Auth::check() && (Auth::user()->role =='admin'|| Auth::user()->role =='cta' || Auth::user()->role =='auxiliar' || Auth::user()->role =='redes' || Auth::user()->role =='aulas' || Auth::user()->role =='general'))
 
-			@if(Auth::check())
+
  			<li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 Cursos
@@ -158,12 +158,12 @@
                             </ul>
 
                         </li>
-			@endif
+
 		@endif
 
 
 		 @if(Auth::check() && (Auth::user()->role =='admin'))
-			@if(Auth::check())
+
 			{{-- <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 Usuarios
@@ -173,10 +173,10 @@
                                
                             </ul>
 
-                        </li> --}}			@endif
+                        </li> --}}
 		@endif
 		@if(Auth::check() && (Auth::user()->role =='admin')) 
-			@if(Auth::check())
+
 		
 			{{-- <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -188,11 +188,11 @@
                             </ul>
 
                         </li> --}}			
-			@endif 
+
 		@endif
 		 @if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='redes')) 
 
-			@if(Auth::check())
+
 	
 			<li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -203,11 +203,11 @@
                                 <li><a class="dropdown-item" href="{{ route('proyectos.index') }}">Consultar Proyectos</a></li>
                             </ul>
                         </li>
-			@endif 
+
 		@endif
 
 		 @if(Auth::check() && (Auth::user()->role =='admin')) 
-			@if(Auth::check())
+
 			<li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 Licencias
@@ -217,24 +217,24 @@
                                 <li><a class="dropdown-item" href="{{ route('licencias.index') }}">Consultar licencia</a></li>
                             </ul>
                         </li>  	
-			@endif 
+			@endif
 
 
-			@if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='redes' || Auth::user()->role =='cta'))
-	
-			<li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                Servicios
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="{{ route('servicios.create') }}">Capturar servicio</a></li>
-                                <li><a class="dropdown-item" href="{{ route('servicios.index') }}">Consultar servicios</a></li>
-                            </ul>
-                        </li>
-			@endif 
+                @if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='redes'))
+                    <li class="nav-item dropdown">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            Servicios
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{{ route('servicios.create') }}">Capturar servicio</a></li>
+                            <li><a class="dropdown-item" href="{{ route('servicios.index') }}">Consultar servicios</a></li>
+                        </ul>
+                    </li>
+
+                @endif
 
         @if(Auth::check() && (Auth::user()->role =='admin' ||  Auth::user()->role =='cta' || Auth::user()->role =='redes'))
-			@if(Auth::check()) 
+
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 Subredes e IP's
@@ -246,10 +246,11 @@
                                 <li><a class="dropdown-item" href="{{ route('ips.index') }}">Consulta IP</a></li>
                             </ul>
                         </li>
-			@endif		    
+
 		@endif
+
 		@if(Auth::check() && (Auth::user()->role =='admin'))
-		@if(Auth::check())
+
 			{{-- ADMIN NAVBAR-MKII --}}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -269,10 +270,11 @@
                                 <a class="dropdown-item" href="{{ route('tecnicos.index') }}">Administrar Técnicos</a>
                             </div>
                           </li>
+
 		@endif
-		@endif
-		@endif 
+
                     </ul>
+
                     
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
