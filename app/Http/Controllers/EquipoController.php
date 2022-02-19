@@ -67,7 +67,7 @@ class EquipoController extends Controller
         $equipo->localizado_sici = $request->input('localizado_sici');
         $equipo->save();
 
-	return $request->input('ip');
+	//return $request->input('ip');
 	$ip = Ip::where('ip','=',$request->input('ip'))->get()[0];
 
 	if($ip->ip != $equipo_ip ){

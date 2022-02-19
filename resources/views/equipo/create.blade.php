@@ -86,7 +86,7 @@
                             <div class="col-md-4">
                                 <label for="ip">IP </label>
 				
-                                <select class="form-control" for="ip" name="ip">
+                                <select class="form-control" id="ip" name="ip">
 					 <option value="No Aplica" selected>No aplica/No Especificado</option>
 				@foreach($ips as $ip)
                                     <option value="{{$ip->ip}}" selected>{{$ip->ip}}</option>
