@@ -62,7 +62,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label class="font-weight-bold" for="ciclo">Ciclo </label>
-                                    <select class="form-control" id="dia" name="dia">
+                                    <select class="form-control" id="ciclo" name="ciclo">
                                         <option disabled>Elegir</option>
                                         <option value="2021A" selected>2021A</option>
                                         <option value="2022A" selected>2022A</option>
