@@ -7,6 +7,7 @@ use App\Models\Curso;
 use App\Models\VsCurso;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Log;
 
 class CursoController extends Controller
 {
@@ -282,7 +283,7 @@ public function cargarDTLabs($consulta)
     public function store(Request $request)
     {
         $validateData = $this->validate($request,[
-             'id_area'=>'required',
+             'id_area'=>'required|integer',
              'ciclo'=>'required',
              'tipo'=>'required',
              'dia'=>'required',
@@ -319,14 +320,14 @@ public function cargarDTLabs($consulta)
         $curso->save();
 	//
         $log = new Log();
-        $log->tablas = 'cursos';
-        $log->movimimiento = "�rea: ".$curso->id_area."Ciclo: ".$curso->ciclo."Tipo: ".$curso->tipo."D�a: ".$curso->dia."Aula: ".$curso->aula."CRN: ". $curso->crn."Curso: ".$curso->curso."C�digo: ".$curso->codigo."Profesor: ".$curso->profesor."Cupo: ".$curso->cupo."Alumnos: ".$curso->alumno."PE: ".$curso->pe."Departamento: ".$curso->departamento."Observaciones: ".$curso->observaciones;
+        $log->tabla = 'cursos';
+        $log->movimiento = "�rea: ".$curso->id_area."Ciclo: ".$curso->ciclo."Tipo: ".$curso->tipo."D�a: ".$curso->dia."Aula: ".$curso->aula."CRN: ". $curso->crn."Curso: ".$curso->curso."C�digo: ".$curso->codigo."Profesor: ".$curso->profesor."Cupo: ".$curso->cupo."Alumnos: ".$curso->alumno."PE: ".$curso->pe."Departamento: ".$curso->departamento."Observaciones: ".$curso->observaciones;
         $log->usuario_id = Auth::user()->id;
         $log->acciones = 'Insertar';
-        $curso->save();
+        $log->save();
         //
-        return redirect('cursos')->with(array(
-            'message'=>'Curso añadido'
+        return redirect('cursos/'.$curso->ciclo)->with(array(
+            "message" => "Curso añadido"
         ));
 
     }
@@ -383,7 +384,7 @@ public function cargarDTLabs($consulta)
     public function update(Request $request, $id)
     {
         $validateData = $this->validate($request,[
-            'id_area'=>'required',
+            'id_area'=>'required|integer',
             'ciclo'=>'required',
             'tipo'=>'required',
             'dia'=>'required',
@@ -428,9 +429,9 @@ public function cargarDTLabs($consulta)
        $log->acciones = "Edicion";
        $log->save();
        //
-       return redirect()->back()->with(array(
-           'message'=>'Curso actualizado'
-       ));
+       return redirect('cursos/'.$curso->ciclo)->with(array(
+        "message" => "Curso actualizadogit "
+    ));
 
     }
 
