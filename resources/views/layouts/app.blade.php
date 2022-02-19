@@ -152,9 +152,9 @@
                                 @if(Auth::check() && Auth::user()->role !='general')
                                 <li><a class="dropdown-item" href="{{ route('cursos.create') }}" >Capturar</a></li>
                                 @endif
-				<li><a class="dropdown-item" href="{{ url('cursos/2021B') }}">Todos</a></li>
-				<li><a class="dropdown-item" href="{{ route('cursos-laboratorios', '2021B') }}">Laboratorios</a></li>
-				<li><a class="dropdown-item" href="{{ route('cursos-presenciales', '2021B') }}">Presenciales</a></li>
+				<li><a class="dropdown-item" href="{{ url('cursos/2022A') }}">Todos</a></li>
+				<li><a class="dropdown-item" href="{{ route('cursos-laboratorios', '2022A') }}">Laboratorios</a></li>
+				<li><a class="dropdown-item" href="{{ route('cursos-presenciales', '2022A') }}">Presenciales</a></li>
                             </ul>
 
                         </li>
