@@ -66,7 +66,7 @@ class EquipoController extends Controller
 	$equipo->resguardante = $request->input('resguardante');
         $equipo->localizado_sici = $request->input('localizado_sici');
         $equipo->save();
-
+/*
 	//return $request->input('ip');
 	$ip = Ip::where('ip','=',$request->input('ip'))->get()[0];
 
@@ -77,7 +77,7 @@ class EquipoController extends Controller
 		$ip_vieja->disponible = 'si';
 		$ip_vieja->update();
 	}	
-	
+	*/
 
 
 	$ultimo_id_equipo = $equipo->id;
