@@ -15,7 +15,7 @@ class MaterialController extends Controller
      */
     public function index()
     {
-        $materiales = Material::all();
+        $materiales = Material::where('activo','=','1')->orderBy('id','desc')->get();
         return view('material.index')->with('materials',$materiales);
 
 
@@ -23,7 +23,7 @@ class MaterialController extends Controller
 
     public function material()
     {
-        $materiales = Material::all();
+        $materiales = Material::where('activo','=','1')->orderBy('id','desc')->get();
         return view('views.home')->with('materials',$materiales);
 
     }
