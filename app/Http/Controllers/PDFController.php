@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\VsEquiposPorTicket;
+use App\Models\VsMantenimiento;
 use App\Models\VsPrestamo;
 use App\Models\VsTicket;
 use Illuminate\Http\Request;
@@ -22,6 +23,14 @@ class PDFController extends Controller
         $pdf = \PDF::loadView('ticket.formatoEquipoRecibido', compact('ticket', 'equipoPorTickets'));
 
         return $pdf->stream('formatoRecibo.pdf');
+
+    }
+    public function imprimirMantenimiento($id){
+        $mantenimiento = VsMantenimiento::where('id','=',$id)->first();
+        $mantenimiento = VsMantenimiento::where('id','=', $id)->get();
+        $pdf = \PDF::loadView('mantenimiento.formatoMantenimiento', compact('mantenimiento'));
+
+        return $pdf->stream('formatoMantenimiento.pdf');
 
     }
 }

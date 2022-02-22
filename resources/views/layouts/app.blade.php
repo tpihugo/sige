@@ -268,6 +268,9 @@
                               <div class="dropdown-divider"></div>
                               <a class="dropdown-item" href="#"><strong>Técnicos</a>
                                 <a class="dropdown-item" href="{{ route('tecnicos.index') }}">Administrar Técnicos</a>
+                                <div class="dropdown-divider"></div>
+                              <a class="dropdown-item" href="#"><strong>Mantenimiento</a>
+                                <a class="dropdown-item" href="{{ route('mantenimiento.index') }}">Consultar Mantenimiento</a>
                             </div>
                           </li>
 

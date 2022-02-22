@@ -25,7 +25,6 @@
 
             </div>
 
-           {{-- <form action="{{route ('guardar-nuevo-prestamo')}}" method="post" enctype="multipart/form-data" class="col-12">--}}
                 <form action="{{route ('guardar-nuevo-prestamo')}}" method="post" enctype="multipart/form-data" class="col-12">
                 <div class="row">
                     <div class="col">

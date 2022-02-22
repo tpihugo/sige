@@ -10,32 +10,26 @@
                     {{ session('message') }}
                 </div>
             @endif
-            <h3>Pr&eacutestamo {{$prestamo_id}}.</h3> <br>
+            <h3>Mantenimiento - {{$id}}</h3> <br>
                 <table class="table table-success" style="width:100%">
                     <thead>
                     <tr>
                         <th>Folio</th>
-                        <th>Solicitante</th>
-                        <th>Cargo</th>
-                        <th>&Aacuterea</th>
+                        <th>Fecha de Mantenimiento</th>
+                        <th>T&eacutecnico</th>
                         <th>Contacto</th>
-                        <th>Estatus</th>
-                        <th>Fecha</th>
-                        <th>Observaciones</th>
-<th></th>
+                        <th>&Aacuterea</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        <td>{{$prestamo->id}}</td>
-                        <td>{{$prestamo->solicitante}}</td>
-                        <td>{{$prestamo->cargo}}</td>
-                        <td>{{$prestamo->lugar}}</td>
-                        <td>{{$prestamo->contacto}}</td>
-                        <td>{{$prestamo->estado}}</td>
-                        <td>{{$prestamo->fecha_inicio}}</td>
-			<td>{{$prestamo->observaciones}}</td>
-                        <td><a class="btn btn-outline-success" href="{{ route('imprimirPrestamo', $prestamo->id)}}" target="blank">Formato</a></td>
+                        <td>{{$mantenimiento->id}}</td>
+                        <td>{{$mantenimiento->fecha_mantenimiento}}</td>
+                        <td>{{$mantenimiento->nombre}}</td>
+                        <td>{{$mantenimiento->telefono}}</td>
+                        <td>{{$mantenimiento->sede. ' - ' . $mantenimiento->edificio. ' - '. $mantenimiento->piso. ' - '. $mantenimiento->division. ' - '. $mantenimiento->coordinacion. ' - '. $mantenimiento->area}}</td>
+			            
+                        {{-- <td><a class="btn btn-outline-success" href="{{ route('imprimirMantenimiento', $mantenimiento->id)}}" target="blank">Formato</a></td> --}}
                     </tr>
                     </tbody>
                 </table>
@@ -55,6 +49,7 @@
                         <th>Detalles</th>
                         <th>Comentarios</th>
                         <th>Accesorios</th>
+                        <th>Acciones</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -94,7 +89,7 @@
                                                     </div>
                                                 @endif
                                                 <input type="hidden" name="equipo_id" id="equipo_id" value="{{$equipoPorPrestam->id_equipo}}">
-                                                <input type="hidden" name="prestamo_id" id="prestamo_id" value="{{$prestamo_id}}">
+                                                <input type="hidden" name="id" id="id" value="{{$id}}">
                                                 <input type="text" name="comentarios" id="comentarios" value="{{$equipoPorPrestam->accesorios}}">
                                                 <br><br>
                                                 <input type="submit" class="btn btn-outline-success" value="Agregar">
@@ -103,7 +98,7 @@
                                     </form>
                                 </td>
                                 </br>
-                                <td><a href="{{route('eliminarEquipoPrestamo', [$equipoPorPrestam->id_equipo, $prestamo_id])}}" class="btn btn-outline-danger">Quitar</a></td>
+                                <td><a href="{{route('eliminarEquipoPrestamo', [$equipoPorPrestam->id_equipo, $id])}}" class="btn btn-outline-danger">Quitar</a></td>
 
 
 
@@ -130,7 +125,7 @@
                         </div>
                         <div class="col-md-5">
                             <input type="text" class="form-control" id="busqueda" name="busqueda" >
-                            <input type="hidden" class="form-control" id="prestamo_id" name="prestamo_id" value="{{$prestamo_id}}" readonly>
+                            <input type="hidden" class="form-control" id="id" name="id" value="{{$id}}" readonly>
                         </div>
                         <div class="col-md-1">
 
@@ -181,7 +176,7 @@
                             @endif
                         </td>
                         <td>{{$equipo->area}}</td>
-                        <td><p><a href="{{route('registrarEquipoPrestamo', [$equipo->id, $prestamo_id])}}" class="btn btn-outline-success">Agregar</a></p></td>
+                        <td><p><a href="{{route('registrarEquipoPrestamo', [$equipo->id, $id])}}" class="btn btn-outline-success">Agregar</a></p></td>
                     </tr>
                 @endforeach
 @endif

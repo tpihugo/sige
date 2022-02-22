@@ -309,6 +309,7 @@ public function busquedaEquiposPrestamo(Request $request){
         }
 
     }
+    
     public function inventario_cta(){
         //Se hace la ruta, la ruta manda llamar el método y el método manda llamar la plantilla
         $vsequipos = VsEquipo::where('activo', '=', 1)
