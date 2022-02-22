@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Routing\Route as RoutingRoute;
 use Illuminate\Support\Facades\Route;
 
@@ -49,6 +50,7 @@ Route::resource('logs', 'App\Http\Controllers\LogController');
 Route::resource('licencias', 'App\Http\Controllers\LicenciaController');
 Route::resource('servicios', 'App\Http\Controllers\ServicioController');
 Route::resource('tecnicos', 'App\Http\Controllers\TecnicoController');
+Route::resource('mantenimiento', 'App\Http\Controllers\MantenimientoController');
 Route::get('/cambiar-ubicacion/{equipo_id}/{tipo?}', array(
     'as' => 'cambiar-ubicacion',
     'middleware' => 'auth',
@@ -361,6 +363,9 @@ Route::get('/delete-ip/{ip_id}', array(
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\IpController@delete_ip'
 ));
+
+
+// Tecnicos
 Route::get('/lista_de_tecnicos', array(
     'as' => 'lista_de_tecnicos',
     'uses' => 'App\Http\Controllers\TecnicoController@index'
@@ -370,3 +375,30 @@ Route::get('/delete-tecnico/{tecnico_id}', array(
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\TecnicoController@delete_tecnico'
 ));
+
+
+// Mantenimiento
+Route::get('/lista_de_mantenimiento', array(
+    'as' => 'lista_de_mantenimiento',
+    'uses' => 'App\Http\Controllers\MantenimientoController@index'
+));
+Route::get('/delete-mantenimiento/{id}', array(
+    'as' => 'delete-mantenimiento',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\MantenimientoController@delete_mantenimiento'
+));
+Route::get('/update-mantenimiento', array(
+    'as' => 'update-mantenimiento',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\MantenimientoController@update'
+));
+Route::post('/busquedaEquiposMantenimiento', array(
+    'as' => 'busquedaEquiposMantenimiento',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\MantenimientoController@busquedaEquiposMantenimiento'
+));
+// Route::get('/imprimirMantenimiento/{id}', array(
+//     'as' => 'imprimirMantenimiento',
+//     'middleware' => 'auth',
+//     'uses' => 'App\Http\Controllers\PDFController@imprimirMantenimiento'
+// ));

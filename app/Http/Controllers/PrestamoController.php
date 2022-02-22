@@ -67,7 +67,7 @@ $acciones = '';
                 $value['estado'],
                 $value['lista_equipos'],
                 $value['fecha_actualizacion'],
-                $value['observaciones'],
+                $value['obser   vaciones'],
                 $value['documento']
                 
 
@@ -354,7 +354,7 @@ $acciones = '';
         $prestamo_id = Prestamo::latest('id')->first();
 
         return redirect('prestamos/'.$prestamo_id->id)->with(array(
-            'message'=>'El Equipo se quit  Correctamente al Préstamo'
+            'message'=>'El Equipo se quitó  Correctamente al Préstamo'
         ));
     }
     public function agregarAccesorio(Request $request){
