@@ -38,7 +38,7 @@ class categoriaController extends Controller
     }
     public function todos_los_videos()
     {
-        $todos_los_videos = Material::all();
+        $todos_los_videos = Material::where('activo','=','1')->orderBy('id','desc')->get();
         return view('categorias.categorias',  ['titulo' => 'Todos los videos'])->with('categorias',$todos_los_videos);
     }
 

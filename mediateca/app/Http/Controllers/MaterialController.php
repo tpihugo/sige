@@ -59,20 +59,20 @@ class MaterialController extends Controller
         $materiales->participantes = $request->get('participantes');
         if($request->hasfile('file')){
 
-            $nombre = strtr($request->file->getClientOriginalName(), array( " " => "_", "ñ" => "n", "Ñ" => "N", "á" => "a", "Í" => "A", "é" => "e", "É" => "E", "í" => "i", "A�" => "�", "ó" => "o", 'Ó' => "O", "ú" => "u", "Ú" => "U" , "�" => "_", "!"=> "_","#"=> "_","$"=> "_","%"=> "_","&"=> "_","("=> "_",")"=> "_","="=> "_","'"=> "_","+"=> "_","{"=> "_","}"=> "_","["=> "_","]"=> "_","-"=> "_"));            
+            $nombre = strtr($request->file->getClientOriginalName(), array( " " => "_", "ñ" => "n", "Ñ" => "N", "á" => "a", "Í" => "A", "é" => "e", "É" => "E", "í" => "i", "A�" => "�", "ó" => "o", 'Ó' => "O", "ú" => "u", "Ú" => "U" , "�" => "_", "!"=> "_","#"=> "_","$"=> "_","%"=> "_","&"=> "_","("=> "_",")"=> "_","="=> "_","'"=> "_","+"=> "_","{"=> "_","}"=> "_","["=> "_","]"=> "_","-"=> "_"));
             $file= 'http://148.202.212.210:9000/rpc/cat/archivos/videos/'.$nombre;
             $materiales->file = $file;
-	    
+
         }
 
         if($request->hasfile('file_preview')){
-            $nombre = strtr($request->file('file_preview')->getClientOriginalName(), array( " " => "_", "ñ" => "n", "Ñ" => "N", "á" => "a", "Í" => "A", "é" => "e", "É" => "E", "í" => "i", "A�" => "�", "ó" => "o", 'Ó' => "O", "ú" => "u", "Ú" => "U" , "�" => "_", "!"=> "_","#"=> "_","$"=> "_","%"=> "_","&"=> "_","("=> "_",")"=> "_","="=> "_","'"=> "_","+"=> "_","{"=> "_","}"=> "_","["=> "_","]"=> "_","-"=> "_"));            
+            $nombre = strtr($request->file('file_preview')->getClientOriginalName(), array( " " => "_", "ñ" => "n", "Ñ" => "N", "á" => "a", "Í" => "A", "é" => "e", "É" => "E", "í" => "i", "A�" => "�", "ó" => "o", 'Ó' => "O", "ú" => "u", "Ú" => "U" , "�" => "_", "!"=> "_","#"=> "_","$"=> "_","%"=> "_","&"=> "_","("=> "_",")"=> "_","="=> "_","'"=> "_","+"=> "_","{"=> "_","}"=> "_","["=> "_","]"=> "_","-"=> "_"));
 	$file= 'http://148.202.212.210:9000/rpc/cat/archivos/imagenes_videos/'.$nombre;
             $materiales->file_preview = $file;
         }
-	    
 
-        
+
+
         $ftp_server="148.202.212.210";
         $ftp_usuario="admin";
         $ftp_password="50p0rt3NAS";
@@ -80,18 +80,18 @@ class MaterialController extends Controller
         ftp_login($conex_id, $ftp_usuario, $ftp_password);
 
 		$source_file=$_FILES['file']['tmp_name'];
-		
+
 		$destino="/mnt/array1/archivos/videos";
 		$nombre=$_FILES["file"]['name'];
 
-		
-        $nombre = strtr($request->file->getClientOriginalName(), array( " " => "_", "ñ" => "n", "Ñ" => "N", "á" => "a", "Í" => "A", "é" => "e", "É" => "E", "í" => "i", "A�" => "�", "ó" => "o", 'Ó' => "O", "ú" => "u", "Ú" => "U" , "�" => "_", "!"=> "_","#"=> "_","$"=> "_","%"=> "_","&"=> "_","("=> "_",")"=> "_","="=> "_","'"=> "_","+"=> "_","{"=> "_","}"=> "_","["=> "_","]"=> "_","-"=> "_"));            
+
+        $nombre = strtr($request->file->getClientOriginalName(), array( " " => "_", "ñ" => "n", "Ñ" => "N", "á" => "a", "Í" => "A", "é" => "e", "É" => "E", "í" => "i", "A�" => "�", "ó" => "o", 'Ó' => "O", "ú" => "u", "Ú" => "U" , "�" => "_", "!"=> "_","#"=> "_","$"=> "_","%"=> "_","&"=> "_","("=> "_",")"=> "_","="=> "_","'"=> "_","+"=> "_","{"=> "_","}"=> "_","["=> "_","]"=> "_","-"=> "_"));
         ftp_put($conex_id, $destino.'/'.$nombre, $source_file, FTP_BINARY);
 
         $source_file=$_FILES['file_preview']['tmp_name'];
 		$destino="/mnt/array1/archivos/imagenes_videos";
 		$nombre=$_FILES["file_preview"]['name'];
-        $nombre = strtr($request->file('file_preview')->getClientOriginalName(), array( " " => "_", "ñ" => "n", "Ñ" => "N", "á" => "a", "Í" => "A", "é" => "e", "É" => "E", "í" => "i", "A�" => "�", "ó" => "o", 'Ó' => "O", "ú" => "u", "Ú" => "U" , "�" => "_", "!"=> "_","#"=> "_","$"=> "_","%"=> "_","&"=> "_","("=> "_",")"=> "_","="=> "_","'"=> "_","+"=> "_","{"=> "_","}"=> "_","["=> "_","]"=> "_","-"=> "_"));            
+        $nombre = strtr($request->file('file_preview')->getClientOriginalName(), array( " " => "_", "ñ" => "n", "Ñ" => "N", "á" => "a", "Í" => "A", "é" => "e", "É" => "E", "í" => "i", "A�" => "�", "ó" => "o", 'Ó' => "O", "ú" => "u", "Ú" => "U" , "�" => "_", "!"=> "_","#"=> "_","$"=> "_","%"=> "_","&"=> "_","("=> "_",")"=> "_","="=> "_","'"=> "_","+"=> "_","{"=> "_","}"=> "_","["=> "_","]"=> "_","-"=> "_"));
         ftp_put($conex_id, $destino.'/'.$nombre, $source_file, FTP_BINARY);
 	$materiales->save();
 
@@ -244,7 +244,7 @@ class MaterialController extends Controller
 
     }
 
-    //SOLO BORRADO L�GICO
+    //SOLO BORRADO L�GICO
     /*
      *public function delete_ticket($ticket_id){
     $ticket = Ticket::find($ticket_id);

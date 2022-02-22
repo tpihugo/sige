@@ -104,7 +104,7 @@
                                 <input type="text" class="form-control" name="participantes" id="participantes"
                                     aria-describedby="Participantes" required>
                             </div>
-                            <div class="text-center"><b>** No usar caracteres especiales (Ejemplos: &#193;, &#241;, &#243;, &#163;, &#169;, @)</b></div>
+                            <div class="text-center"><b>** NOTA: No usar ningun tipo de caracter especial (Ejemplos: &#193;, &#241;, &#243;, &#163;, &#169;, @)</b></div>
                             <div class="file-loading">
 
                                 <label for="file" class="form-label">Video</label>
@@ -196,7 +196,7 @@
 
                                             </div>
 
-                                        </form>        
+                                        </form>
 				    </div>
 
                                     <div>
