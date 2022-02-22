@@ -52,7 +52,7 @@ class MantenimientoController extends Controller
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">¿Seguro que deseas eliminar este curso?</h5>
+                      <h5 class="modal-title" id="exampleModalLabel">¿Seguro que deseas eliminar este mantenimiento?</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -195,7 +195,7 @@ class MantenimientoController extends Controller
     $log->save();
         //
         return redirect('mantenimiento')->with(array(
-            'message'=>'El préstamo se guardo Correctamente'
+            'message'=>'El mantenimiento se guardó Correctamente'
         ));
     }
 
