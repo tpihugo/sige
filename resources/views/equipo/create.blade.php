@@ -84,13 +84,12 @@
                                 <input type="text" class="form-control" id="mac" name="mac" value="No aplica/No Especificado" >
                             </div>
                             <div class="col-md-4">
-                                <label for="ip">IP </label>
-				
-                                <select class="form-control" id="ip" name="ip">
-					 <option value="No Aplica" selected>No aplica/No Especificado</option>
-				@foreach($ips as $ip)
-                                    <option value="{{$ip->ip}}" selected>{{$ip->ip}}</option>
-				@endforeach
+                                <label for="ip_id">IP</label>
+                                <select class="form-control" id="ip_id" name="ip_id">
+                                    <option value="null" selected>No aplica/No Especificado</option>
+                                    @foreach($ips as $ip)
+                                        <option value="{{$ip->id}}" >{{$ip->ip}}</option>
+                                    @endforeach
                                 </select>
                                 <!--<input type="text" class="form-control" id="ip" name="ip" value="No aplica/No Especificado" >-->
 				
@@ -136,7 +135,7 @@
                         <div class="row align-items-center">
                             <div class="col-md-12">
                                 <label for="area_id">&Aacute;reas</label>
-                                <select class="form-control" class="form-control" id="js-example-basic-single2" name="id_area">
+                                <select class="form-control" class="form-control" id="js-example-basic-single2" name="area_id">
                                     <option value="No Aplica" selected>No Aplica</option>
                                     @foreach($areas as $area)
                                         <option value="{{$area->id}}">{{$area->sede}} - {{$area->division}} - {{$area->coordinacion}} - {{$area->area}}</option>
