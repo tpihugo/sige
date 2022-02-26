@@ -11,35 +11,34 @@
                 </div>
             @endif
             <div class="row">
-                <h2>Edición de Técnico {{$tecnico->id}}</h2>
+                <h2>Captura de Técnico</h2>
                 <hr>
                 <script type="text/javascript">
 
                     $(document).ready(function() {
                         $('#js-example-basic-single').select2();
-
+                        $('#js-example-basic-single2').select2();
+                        $('#equipos').select2();
                     });
-                    var dateControl = document.querySelector('input[type="date"]');
-                    dateControl.value = '2017-06-01';
+
                 </script>
 
             </div>
-            <form action="{{route('tecnicos.update', $tecnico->id)}}" method="post" enctype="multipart/form-data" class="col-12">
-		@method('PUT')
+            <form action="{{route('tecnicos.store')}}" method="post" enctype="multipart/form-data" class="col-12">
                 <div class="row">
                     <div class="col">
                         {!! csrf_field() !!}
                         @if($errors->any())
                             <div class="alert alert-danger">
                                 <ul>
-                                    @foreach($errors->all() as $error)
-                                        <li>{{$error}}</li>
-                                    @endforeach
+                                        @foreach($errors->all() as $error)
+                                            <li>{{$error}}</li>
+                                        @endforeach
                                 </ul>
                             </div>
                         @endif
                         <br>
-                        <br>
+
                         <div class="row g-3 align-items-center">
                             <div class="row g-3 align-items-center">
                                 <div class="col-md-12">
