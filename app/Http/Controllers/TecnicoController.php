@@ -72,7 +72,7 @@ class TecnicoController extends Controller
                 $value['carrera'],
                 $value['institucion'],
                 $value['orden'],
-                $value['comentario'],
+                $value['comentarios'],
             );
 
         }
@@ -117,7 +117,7 @@ class TecnicoController extends Controller
         $tecnico->carrera = $request->input('carrera');
         $tecnico->institucion = $request->input('institucion');
         $tecnico->ciclo_inicio = $request->input('ciclo_inicio');
-        $tecnico->comentario = $request->input('comentario');
+        $tecnico->comentarios = $request->input('comentarios');
 
         $tecnico->save();
 	//
@@ -125,7 +125,7 @@ class TecnicoController extends Controller
         $log->tabla = "tecnicos";
         $mov="";
         $mov=$mov." nombre:".$tecnico->nombre ." telefono:". $tecnico->telefono ." telefono_emergencia" .$tecnico->telefono_emergencia;
-        $mov=$mov." asistencia:".$tecnico->asistencia ." carrera:". $tecnico->carrera ." institucion" .$tecnico->institucion ." ciclo_inicio" .$tecnico->ciclo_inicio. " comentario" .$tecnico->comentario;
+        $mov=$mov." asistencia:".$tecnico->asistencia ." carrera:". $tecnico->carrera ." institucion" .$tecnico->institucion ." ciclo_inicio" .$tecnico->ciclo_inicio. " comentarios" .$tecnico->comentarios;
         $log->movimiento = $mov;
         $log->usuario_id = Auth::user()->id;
         $log->acciones = "Insercion";
@@ -187,7 +187,7 @@ class TecnicoController extends Controller
         $tecnico->asistencia = $request->input('asistencia');
         $tecnico->carrera = $request->input('carrera');
         $tecnico->institucion = $request->input('institucion');
-        $tecnico->comentario = $request->input('comentario');
+        $tecnico->comentarios = $request->input('comentarios');
         
 
         $tecnico->update();
@@ -196,7 +196,7 @@ class TecnicoController extends Controller
         $log->tabla = "tecnicos";
         $mov="";
         $mov=$mov." nombre:".$tecnico->nombre ." telefono:". $tecnico->telefono ." telefono_emergencia" .$tecnico->telefono_emergencia;
-        $mov=$mov." asistencia".$tecnico->asistencia ." carrera:". $tecnico->carrera ." institucion" .$tecnico->institucion . " ciclo_inicio" .$tecnico->ciclo_inicio. " comentario" .$tecnico->comentario;
+        $mov=$mov." asistencia".$tecnico->asistencia ." carrera:". $tecnico->carrera ." institucion" .$tecnico->institucion . " ciclo_inicio" .$tecnico->ciclo_inicio. " comentarios" .$tecnico->comentarios;
         $log->movimiento = $mov;
         $log->usuario_id = Auth::user()->id;
         $log->acciones = "Edicion";
@@ -229,7 +229,7 @@ class TecnicoController extends Controller
         $log->tabla = "tecnicos";
         $mov="";
         $mov=$mov." nombre:".$tecnico->nombre ." telefono:". $tecnico->telefono ." telefono_emergencia" .$tecnico->telefono_emergencia;
-        $mov=$mov." asistencia".$tecnico->asistencia ." carrera:". $tecnico->carrera ." institucion" .$tecnico->institucion ." ciclo_inicio" .$tecnico->ciclo_inicio. " comentario" .$tecnico->comentario;
+        $mov=$mov." asistencia".$tecnico->asistencia ." carrera:". $tecnico->carrera ." institucion" .$tecnico->institucion ." ciclo_inicio" .$tecnico->ciclo_inicio. " comentarios" .$tecnico->comentarios;
             $log->movimiento = $mov;
             $log->usuario_id = Auth::user()->id;
             $log->acciones = "Borrado";
