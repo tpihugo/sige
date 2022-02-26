@@ -47,6 +47,7 @@
                     <th>Carrera</th>
                     <th>Institución</th>
                     <th>Orden</th>
+                    <th>Programa/Comentario</th>
 
                 </tr>
                 </thead>
