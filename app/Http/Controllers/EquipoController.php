@@ -117,6 +117,7 @@ class EquipoController extends Controller
 
     public function edit($id)
     {
+        
         $empleados = Empleado::all()->sortBy('nombre');
 	$tipo_equipos = Equipo::distinct()->orderby('tipo_equipo','asc')->get(['tipo_equipo']);
 	$ip = Ip::select('ip')->where('disponible','=','si')->get();
