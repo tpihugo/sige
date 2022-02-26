@@ -101,12 +101,11 @@ class TecnicoController extends Controller
         $validateData = $this->validate($request,[
             'nombre'=>'required',
             'telefono'=>'required',
-            'telefono_emergencia'=>'required',
             'asistencia'=>'required',
             'carrera'=>'required',
             'institucion'=>'required',
             'ciclo_inicio'=>'required',
-            'comentario'=>'required',
+            
     
         ]);
 
@@ -172,12 +171,11 @@ class TecnicoController extends Controller
         $validateData = $this->validate($request,[
             'nombre'=>'required',
             'telefono'=>'required',
-            'telefono_emergencia'=>'required',
             'asistencia'=>'required',
             'carrera'=>'required',
             'institucion'=>'required',
             'ciclo_inicio'=>'required',
-            'comentario'=>'required',
+            
     
         ]);
 
