@@ -32,6 +32,7 @@
                 <p align="right">
                     {{-- <a href="{{ route('') }}" class="btn btn-success">Capturar servicio</a> --}}
                     <a href="{{ route('home') }}" class="btn btn-primary">< Regresar</a>
+                    <a href="{{ route('tecnicos.create') }}" class="btn btn-success">< Capturar Técnico</a>
                 </p>
             <table id="example" class="table table-striped table-bordered" style="width:100%">
                 <thead>
@@ -46,6 +47,7 @@
                     <th>Carrera</th>
                     <th>Institución</th>
                     <th>Orden</th>
+                    <th>Programa/Comentario</th>
 
                 </tr>
                 </thead>
