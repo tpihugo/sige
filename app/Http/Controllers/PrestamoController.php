@@ -67,8 +67,8 @@ $acciones = '';
                 $value['estado'],
                 $value['lista_equipos'],
                 $value['fecha_actualizacion'],
-                $value['obser   vaciones'],
-                $value['documento']
+                $value['observaciones'],
+                $value['documento'],
                 
 
 
@@ -226,7 +226,7 @@ $acciones = '';
         //
     }
     public function generarPrestamo($equipo_id){
-        $areas = Area::where('activo','=', 1);
+        $areas = Area::where('activo','=', 1)->get();
         $equipoPrestamo = Equipo::find($equipo_id);
         return view('prestamo.create')->with('areas', $areas)->with('equipoPrestamo', $equipoPrestamo);
     }
