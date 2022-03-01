@@ -24,7 +24,6 @@ class PrestamoController extends Controller
     public function index()
     {
         $prestamos1 = VsPrestamo::where('activo','=',1)
-	->where('estado','=','En prestamo')
 	->get();
         $prestamos = $this->cargarDT($prestamos1);
         return view('prestamo.index')->with('prestamos',$prestamos);
