@@ -83,6 +83,12 @@
                                         <textarea class="form-control" id="institucion" name="institucion">{{$tecnico->institucion}} </textarea>
                                 </div>
                             </div>
+                            <div class="row g-3 align-items-center">
+                                <div class="col-md-12">
+                                        <label for="comentarios">Programa/Comentario</label>
+                                        <textarea class="form-control" id="comentarios" name="comentarios">{{$tecnico->comentarios}}</textarea>
+                                </div>
+                            </div>
                             
 
                         </div>

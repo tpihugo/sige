@@ -11,6 +11,33 @@
 
                 </div>
             @endif
+            <form action="{{route('busquedaEquiposMantenimiento')}}" method="POST" enctype="multipart/form-data" class="col-12">
+                    {!! csrf_field() !!}
+                    @if($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                Debe de escribir un criterio de búsqueda
+                            </ul>
+                        </div>
+                    @endif
+                    <br>
+                    <div class="row g-3 align-items-center">
+                        <div class="col-md-2">
+                            <label>Búsqueda</label>
+                        </div>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" id="busqueda" name="busqueda" >
+                            <input type="hidden" class="form-control" id="id" name="id" value="{{$vsmantenimiento->id}}" readonly>
+                        </div>
+                        <div class="col-md-1">
+                            <button type="submit" class="btn btn-success">Buscar</button>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="{{ route('mantenimiento.create') }}" class="btn btn-outline-success">Capturar Mantenimiento</a>
+                        </div>
+                    </div>
+                    <br>
+                </form>
             <div class="row">
                 <h2>Edición de Mantenimiento. Folio: {{$vsmantenimiento->id}}</h2>
                 <hr>
@@ -51,44 +78,42 @@
             
 
                         <h5><p align="center">Mantenimiento ya Registrado</p></h5>
+                        <h2> <p align="center">Selección de Equipo </p></h2>
                 <table class="table table-bordered" style="width:100%">
                     <thead>
                     <tr>
-                        <th>Item Prestamo</th>
+                        <th>ID Equipo</th>
                         <th>Id UdeG</th>
                         <th>Tipo Equipo</th>
                         <th>Marca</th>
                         <th>Modelo</th>
                         <th>Núm. Serie</th>
                         <th>Detalles</th>
-                        <th>Accesorios</th>
-                       <th>Operaciones</th> 
+                        <th>ID Área</th>
+                       <th>Sistema Operativo (SO)</th>
+                       <th>Selección</th>
+
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($equiposPorPrestamo as $equipoPorPrestamo)
+                    @foreach($relmantenimiento as $relmantenimiento)
                         <tr>
-                            <td>{{$equipoPorPrestamo->id}}</td>
-                            <td>
-                                {{$equipoPorPrestamo->udg_id}}
-                            </td>
-                            <td>{{$equipoPorPrestamo->tipo_equipo}}</td>
-                            <td>{{$equipoPorPrestamo->marca}}</td>
-                            <td>{{$equipoPorPrestamo->modelo}}</td>
-                            <td>{{$equipoPorPrestamo->numero_serie}}</td>
-                            <td>{{$equipoPorPrestamo->detalles}}.<br><br>
-                                @if($equipoPorPrestamo->resguardante=='CTA')
-                                    Equipo de CTA.<br>
-                                    @if($equipoPorPrestamo->localizado_sici=='S')
-                                        Localizado.
-                                    @else
-                                        No localizado.
-                                    @endif
-                                @endif
-                            </td>
+                            <td>{{$relmantenimiento->id_equipo}}</td>
+                            <td>{{$relmantenimiento->udg_id}}</td>
+                            <td>{{$relmantenimiento->tipo_equipo}}</td>
+                            <td>{{$relmantenimiento->marca}}</td>
+                            <td>{{$relmantenimiento->modelo}}</td>
+                            <td>{{$relmantenimiento->numero_serie}}</td>
+                            <td>{{$relmantenimiento->detalles}}</td>
+                            <td>{{$relmantenimiento->area_id}}</td>
+                            <td>{{$relmantenimiento->so}}</td>
+                              
+                            
+                            
+                             
                             <td>
                                 {{--{{route('agregar-comentario')}}--}}
-                                <form action="{{route('agregar-accesorio')}}" method="POST" enctype="multipart/form-data" >
+                                {{-- <form action="{{route('agregar-accesorio')}}" method="POST" enctype="multipart/form-data" > --}}
                                     {!! csrf_field() !!}
                                     <div class="row">
                                         <div class="col">
@@ -102,17 +127,14 @@
                                                     </ul>
                                                 </div>
                                             @endif
-                                            <input type="hidden" name="filaprestamo_id" id="filaprestamo_id" value="{{$equipoPorPrestamo->id}}">
-                                            <input type="hidden" name="prestamo_id" id="prestamo_id" value="{{$equipoPorPrestamo->id_prestamo}}">
-                                            <input type="text" name="accesorios" id="accesorios" value="{{$equipoPorPrestamo->accesorios}}">
-                                            <br><br>
-                                            <input type="submit" class="btn btn-outline-success" value="Agregar">
+                                            <label><input type="checkbox" id="cbox1" value="checkbox"> Agregar equipo</label><br>
                                         </div>
                                     </div>
                                 </form>
                             </td>
+                            
 
-                            <td><a href="{{route('eliminarEquipoPrestamo', $equipoPorPrestamo->id)}}" class="btn btn-outline-danger">Quitar</a></td>
+                            {{-- <td><a href="{{route('relmantenimiento', $relmantenimiento->id)}}" class="btn btn-outline-danger">Quitar</a></td> --}}
 
 
 
@@ -122,37 +144,17 @@
                     </tbody>
                 </table>
         </div>
-        <div class="row">
-                <h5>Agregar Mantenimiento</h5>
-
-                <form action="{{route('busquedaEquiposMantenimiento')}}" method="POST" enctype="multipart/form-data" class="col-12">
-                    {!! csrf_field() !!}
-                    @if($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                Debe de escribir un criterio de búsqueda
-                            </ul>
-                        </div>
-                    @endif
-                    <br>
-                    <div class="row g-3 align-items-center">
-                        <div class="col-md-2">
-                            <label>Búsqueda</label>
-                        </div>
-                        <div class="col-md-5">
-                            <input type="text" class="form-control" id="busqueda" name="busqueda" >
-                            <input type="hidden" class="form-control" id="id" name="id" value="{{$vsmantenimiento->id}}" readonly>
-                        </div>
-                        <div class="col-md-1">
-
-                            <button type="submit" class="btn btn-success">Buscar</button>
-                        </div>
-                        <div class="col-md-3">
-                            <a href="{{ route('mantenimiento.create') }}" class="btn btn-outline-success">Capturar Mantenimiento</a>
-                        </div>
-                    </div>
-                    <br>
-                </form>
+        <div class="col-md-1">
+            <button type="submit" class="btn btn-success">Save</button>
+        </div>
+        <div class="col-md-1">
+          <button type="submit" class="btn btn-success">{{$relmantenimiento->udg_id}}-{{$relmantenimiento->tipo_equipo}}-{{$relmantenimiento->numero_serie}}</button>
+      </div>
+      {{-- <h2>Equipos para mantenimiento</h2>
+            @foreach($relmantenimiento as $relmantenimiento)
+            <p>
+              <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target={{"#multiCollapseExample".$relmantenimiento->udg_id}} aria-expanded="false" aria-controls={{"#multiCollapseExample".$relmantenimiento->udg_id}}>ID UdeG:{{$relmantenimiento->udg_id}} - Tipo Equipo:{{$relmantenimiento->tipo_equipo}} - Número de Serie: {{$relmantenimiento->numero_serie}} </button>
+            @endforeach  --}}
                 <table id="example" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                     <tr>

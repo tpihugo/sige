@@ -397,8 +397,8 @@ Route::post('/busquedaEquiposMantenimiento', array(
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\MantenimientoController@busquedaEquiposMantenimiento'
 ));
-// Route::get('/imprimirMantenimiento/{id}', array(
-//     'as' => 'imprimirMantenimiento',
+// Route::post('/agregar-equipomantenimiento', array(
+//     'as' => 'agregar-equipomantenimiento',
 //     'middleware' => 'auth',
-//     'uses' => 'App\Http\Controllers\PDFController@imprimirMantenimiento'
+//     'uses' => 'App\Http\Controllers\PrestamoController@agregarAccesorio'
 // ));
