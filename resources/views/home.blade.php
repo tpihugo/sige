@@ -346,8 +346,6 @@
             </div>
  	     <h3 class="card-title">Logs</h3>          
              <a class="btn btn-outline-success" href="{{ route('logs.index') }}">Consultar Logs</a>
-
- 	     
             </div>
             <div class="card-footer">
             <div class="stats">
@@ -359,7 +357,29 @@
         </div>
 
     @endif
-    
+
+{{-- Apartado de Mantenimiento --}}    
+    @if (Auth::check() && (Auth::user()->role =='admin'|| Auth::user()->role =='cta'))
+       <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="card card-stats">
+            <div class="card-header card-header-success card-header-icon">
+            <div class="card-icon">
+                <i class="material-icons">handyman</i>
+            </div>
+ 	     <h3 class="card-title">Mantenimiento</h3>            
+             <a class="btn btn-outline-success" href="{{ route('mantenimiento.index') }}">Consultar Mantenimientos</a>
+             <a class="btn btn-outline-danger" href="{{ route('mantenimiento.create') }}">Capturar Mantenimientos</a>
+            </div>
+            <div class="card-footer">
+            <div class="stats">
+                <i class="material-icons">devices</i>
+            </div>
+            </div>
+
+        </div>
+        </div>
+
+    @endif
 </div>
 </div>
 </div>{{-- fin del container --}}

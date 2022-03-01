@@ -93,14 +93,17 @@
                             <div class="col-md-4">
                                 <label for="ip">IP </label>
 				<select class="form-control" id="ip" name="ip">
-						<option value="{{$equipo->ip}}" selected>{{$equipo->ip}}</option>
-					@if($equipo->ip != 'No Especificado')
-						<option value="No Especificado">No Especificado</option>
-					@endif
+                        @if ($ip_equipo!=null)
+                            <option value="{{$ip_equipo->id}}" selected>{{$ip_equipo->ip}}</option>
+                            <option value="null">No Especificado</option>
+                        @else
+                            <option value="null" selected>No Especificado</option>
+                        @endif
+						
+						
+					
 					@foreach($ips as $ip)
-						@if($equipo->ip != $ip->ip)
-							<option value="{{$ip->ip}}">{{$ip->ip}}</option>
-						@endif
+						<option value="{{$ip->id}}">{{$ip->ip}}</option>			
 					@endforeach
 				</select>                            </div>
                             <div class="col-md-4">

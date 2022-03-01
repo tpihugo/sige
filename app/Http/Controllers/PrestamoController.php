@@ -67,7 +67,7 @@ $acciones = '';
                 $value['lista_equipos'],
                 $value['fecha_actualizacion'],
                 $value['observaciones'],
-                $value['documento']
+                $value['documento'],
                 
 
 
@@ -225,7 +225,7 @@ $acciones = '';
         //
     }
     public function generarPrestamo($equipo_id){
-        $areas = Area::where('activo','=', 1);
+        $areas = Area::where('activo','=', 1)->get();
         $equipoPrestamo = Equipo::find($equipo_id);
         return view('prestamo.create')->with('areas', $areas)->with('equipoPrestamo', $equipoPrestamo);
     }
@@ -353,7 +353,7 @@ $acciones = '';
         $prestamo_id = Prestamo::latest('id')->first();
 
         return redirect('prestamos/'.$prestamo_id->id)->with(array(
-            'message'=>'El Equipo se quit  Correctamente al Préstamo'
+            'message'=>'El Equipo se quitó  Correctamente al Préstamo'
         ));
     }
     public function agregarAccesorio(Request $request){

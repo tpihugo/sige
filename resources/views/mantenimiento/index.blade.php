@@ -1,76 +1,56 @@
 @extends('layouts.app')
 
 @section('content')
-@if(Auth::check())
+    @if(Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'cta' || Auth::user()->role == 'auxiliar' || Auth::user()->role == 'redes'))
+<div class="container-fluid">
 
-    <div class="container-fluid">
-        <div class="row">
-		<div class="col-12">
+{{--dd($prestamos)--}}
 
             @if (session('message'))
                 <div class="alert alert-success">
                     {{ session('message') }}
                 </div>
             @endif
- @if($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach($errors->all() as $error)
-                                        <li>{{$error}}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-                        <br>
-	</div>
-    </div>
-<div class="row">
-		<div class="col-12">
-
-            <h2>Listado de Técnicos </h2>
+            <h2>Listado de Mantenimiento</h2>
             <br>
                 <p align="right">
-                    {{-- <a href="{{ route('') }}" class="btn btn-success">Capturar servicio</a> --}}
+                    <a href="{{ route('mantenimiento.create') }}" class="btn btn-success">Capturar Mantenimiento</a>
                     <a href="{{ route('home') }}" class="btn btn-primary">< Regresar</a>
-                    <a href="{{ route('tecnicos.create') }}" class="btn btn-success">< Capturar Técnico</a>
                 </p>
+
+
             <table id="example" class="table table-striped table-bordered" style="width:100%">
                 <thead>
                 <tr>
                     <th>Acciones</th>
                     <th>Id</th>
-                    <th>Ciclo</th>
-                    <th>Nombre</th>
-                    <th>Teléfono de contacto</th>
-                    <th>Teléfono de emergencia</th>
-                    <th>Asistencia</th>
-                    <th>Carrera</th>
-                    <th>Institución</th>
-                    <th>Orden</th>
-                    <th>Programa/Comentario</th>
-
+                    <th>Fecha de mantenimiento</th>
+                    <th>T&eacutecnico</th>
+                    <th>Tel&eacutefono</th>
+                    <th>&Aacuterea</th>
+                    
+                    
                 </tr>
                 </thead>
                 <tbody>
 
-               
                 </tbody>
 
             </table>
- </div>
-        </div>
-        <p>
-            <a href="{{ route('home') }}" class="btn btn-primary">< Regresar</a>
-        </p>
-    </div>
-    @extends('layouts.loader')
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+
+            <p>
+                <a href="{{ route('home') }}" class="btn btn-primary">< Regresar</a>
+            </p>
+</div>
+@extends('layouts.loader')
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs4-4.1.1/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/r-2.2.7/datatables.min.js"></script>
 
 <script type="text/javascript">
-    var data = @json($tecnicos);
+    var data = @json($mantenimientos);
 
     $(document).ready(function() {
         $('#example').DataTable({
@@ -94,7 +74,7 @@
                 "sLoadingRecords": "Cargando...",
                 "oPaginate": {
                     "sFirst": "Primero",
-                    "sLast": "Último",
+                    "sLast": "�ltimo",
                     "sNext": "Siguiente",
                     "sPrevious": "Anterior"
                 },
@@ -129,12 +109,12 @@
             var u = 'u';
             var c = 'c';
             var special_letters = {
-                "Á": a, "á": a, "Ã": a, "ã": a, "À": a, "à": a,
-                "É": e, "é": e, "Ê": e, "ê": e,
-                "Í": i, "í": i, "Î": i, "î": i,
-                "Ó": o, "ó": o, "Õ": o, "õ": o, "Ô": o, "ô": o,
-                "Ú": u, "ú": u, "Ü": u, "ü": u,
-                "ç": c, "Ç": c
+                "�": a, "�": a, "�": a, "�": a, "�": a, "�": a,
+                "�": e, "�": e, "�": e, "�": e,
+                "�": i, "�": i, "�": i, "�": i,
+                "�": o, "�": o, "�": o, "�": o, "�": o, "�": o,
+                "�": u, "�": u, "�": u, "�": u,
+                "�": c, "�": c
             };
             for (var val in special_letters)
                 data = data.split(val).join(special_letters[val]).toLowerCase();
@@ -151,6 +131,9 @@
 
     </script>
 @else
-    Acceso No válido
+
+
+
+    Acceso No v�lido
 @endif
 @endsection
