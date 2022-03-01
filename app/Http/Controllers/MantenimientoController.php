@@ -10,6 +10,7 @@ use App\Models\EquipoPorPrestamo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Log;
+use App\Models\Vs_Relmantenimiento;
 use App\Models\VsEquipo;
 use App\Models\VsMantenimiento;
 
@@ -141,10 +142,9 @@ class MantenimientoController extends Controller
     public function show($id)
     {
         $vsmantenimiento = VsMantenimiento::find($id);
-        $equiposPorPrestamo = EquipoPorPrestamo::where('activo', '=', 1)
-            ->where('id_prestamo','=',$id)->get();
+        $relmantenimiento = Vs_Relmantenimiento::all();
         return view('mantenimiento.agregarMantenimientoEdit')
-            ->with('vsmantenimiento', $vsmantenimiento)->with('equiposPorPrestamo', $equiposPorPrestamo);
+            ->with('vsmantenimiento', $vsmantenimiento)->with('relmantenimiento', $relmantenimiento);
     }
 
     /**
@@ -156,11 +156,10 @@ class MantenimientoController extends Controller
     public function edit($id)
     {
         $mantenimiento = Mantenimiento::find($id);
-        $equiposPrestados = EquipoPorPrestamo::where('activo', '=', 1)
-            ->where('id_prestamo','=',$id)->get();
+        $relmantenimiento = Vs_Relmantenimiento::all();
         $areas = Area::all();
         $tecnicos = Tecnico::where('activo',1)->get();
-        return view('mantenimiento.edit')->with('mantenimiento',$mantenimiento)->with('equiposPrestados', $equiposPrestados)->with('areas',$areas)->with('tecnicos',$tecnicos);
+        return view('mantenimiento.edit')->with('mantenimiento',$mantenimiento)->with('relmantenimiento', $relmantenimiento)->with('areas',$areas)->with('tecnicos',$tecnicos);
     }
 
     /**
