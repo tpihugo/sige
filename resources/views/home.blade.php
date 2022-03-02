@@ -75,30 +75,14 @@
                 <a href="{{ route('nuevo-prestamo') }}" class="btn btn-outline-warning">nuevo prestamo</a>
 		<a href="{{ route('prestamos.index') }}" class="btn btn-outline-danger">Consultar Préstamos</a>
             </div>
-            <div class="card-footer">
+             <div class="card-footer">
             <div class="stats">
                 <i class="material-icons text-dark">important_devices</i>
 		 <!-- Botón en HTML (lanza el modal en Bootstrap) -->
-                                    <a href="#info1" data-toggle="modal">Crear Préstamo</a>
-                                    <!-- Modal / Ventana / Overlay en HTML -->
-                                    <div id="info1" class="modal fade">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><h5>X</h5></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <h5>Para Generar un Préstamo, primero busque el equipo, y seleccione la opción Préstamo en el respectivo elemento</h5>
-                                                    <h3 class="text-warning"></h3>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <a href="{{ route('nuevo-prestamo') }}">Crear Préstamo</a>
+                                   
             </div>
-            </div>
+            </div> 
 
         </div>
         </div>
@@ -230,9 +214,9 @@
                 <h3 class="card-title">Mobiliario</h3>
             @if (Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='auxiliar' || Auth::user()->role =='redes'))
 
-             <a class="btn btn-outline-success" href="{{ route('mobiliarios.create') }}">Captura Mobiliário</a>
+             <a class="btn btn-outline-success" href="{{ route('mobiliarios.create') }}">Captura Mobiliario</a>
                 @endif
- 	     <a href="{{ route('mobiliarios.index') }}" class="btn btn-outline-danger">Consulta Mobiliários</a>
+ 	     <a href="{{ route('mobiliarios.index') }}" class="btn btn-outline-danger">Consulta Mobiliarios</a>
             </div>
             <div class="card-footer ">
             <div class="stats">
