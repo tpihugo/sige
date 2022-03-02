@@ -53,11 +53,7 @@
                             <div class="col-md-4">
                                 <label for="prioridad">Estado </label>
                                 <select class="form-control" id="estado" name="estado">
-                                    <option disabled >Elegir</option>
                                     <option value="En préstamo" selected>En préstamo</option>
-                                    <option value="Por Entregar">Por Entregar</option>
-                                    <option value="Devuelto">Devuelto</option>
-                                    <option value="Traslado">Traslado</option>
                                 </select>
                             </div>
 
