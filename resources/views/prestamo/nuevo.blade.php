@@ -1,7 +1,5 @@
 @extends('layouts.app')
 @section('content')
-
-
     <div class="container">
         @if(Auth::check())
             @if (session('message'))
@@ -50,12 +48,12 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-md-4">
-                                <label for="prioridad">Estado </label>
-                                <select class="form-control" id="estado" name="estado">
+                            <!-- <div class="col-md-4"> -->
+                                <!-- <label for="prioridad">Estado </label> -->
+                                <select hidden class="form-control" id="estado" name="estado">
                                     <option value="En préstamo" selected>En préstamo</option>
                                 </select>
-                            </div>
+                            <!-- </div> -->
 
                         </div>
                         <br>
@@ -69,7 +67,6 @@
                                 <input type="text" class="form-control" id="cargo" name="cargo" value="{{old('cargo')}}" required>
                             </div>
 
-
                         </div>
                         <br>
                         <div class="row g-3 align-items-center">
@@ -82,10 +79,10 @@
                                 <input type="text" class="form-control" id="correo" name="correo" value="{{old('correo')}}" required>
                             </div>
 
-                            <div class="col-md-4">
-                                <label for="fecha_inicio">Fecha:</label>
-                                <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" value="{{old('fecha_inicio')}}" required>
-                            </div>
+                            <!-- <div class="col-md-4"> -->
+                                <!-- <label for="fecha_inicio">Fecha:</label> -->
+                                <input type="hidden" class="form-control" id="fecha_inicio" name="fecha_inicio" value="{{Carbon\Carbon::now()}}" required>
+                            <!-- </div> -->
                             
                         </div>
 
@@ -120,7 +117,6 @@
 
             </div>
     </div>
-
     
 
     @else
