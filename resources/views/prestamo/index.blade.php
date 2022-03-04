@@ -33,8 +33,6 @@
                     <th>Fecha</th>
                     <th>Observaciones</th>
 		            <th>Documento</th>
-                    
-
 
                 </tr>
                 </thead>
