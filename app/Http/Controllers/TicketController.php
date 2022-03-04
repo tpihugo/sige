@@ -27,8 +27,7 @@ class TicketController extends Controller
      public function index()
     {
         $vstickets = VsTicket::where('activo','=',1)
-            ->where('estatus','=','Abierto')
-            ->where('categoria','<>','Reporte de aula')->get();
+            ->where('estatus','=','Abierto')->get();
 
         $tecnicos = Tecnico::where('activo','=',1)->get();
         $tickets = $this->cargarDT($vstickets);
