@@ -339,6 +339,7 @@ $acciones = '';
             'fecha_inicio'=>'required',
             'observaciones'=>'required'
         ]);
+        // dd("" . $request->input('fecha_inicio'));
         $prestamo = new Prestamo();
         $prestamo->id_area = $request->input('id_area');
         $prestamo->telefono = $request->input('telefono');
