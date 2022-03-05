@@ -1,7 +1,5 @@
 @extends('layouts.app')
 @section('content')
-
-
     <div class="container">
         @if(Auth::check())
             @if (session('message'))
@@ -43,23 +41,17 @@
                         <div class="row g-3 align-items-center">
                             <div class="col-md-8">
                                 <label for="id_area">Área para préstamo o traslado</label>
-                                <select class="form-control" class="form-control" id="js-example-basic-single" name="id_area">
-                                    <option value="No Aplica" selected>No Aplica</option>
+                                <select class="form-control" class="form-control" id="js-example-basic-single" name="id_area" required>
+                                    <option value="" selected>No Aplica</option>
                                     @foreach($areas as $area)
                                         <option value="{{$area->id}}">{{$area->sede}} - {{$area->division}} - {{$area->coordinacion}} - {{$area->area}}</option>
                                     @endforeach
-                                </select>
+                                </select> 
                             </div>
-                            <div class="col-md-4">
-                                <label for="prioridad">Estado </label>
-                                <select class="form-control" id="estado" name="estado">
-                                    <option disabled >Elegir</option>
-                                    <option value="En préstamo" selected>En préstamo</option>
-                                    <option value="Por Entregar">Por Entregar</option>
-                                    <option value="Devuelto">Devuelto</option>
-                                    <option value="Traslado">Traslado</option>
-                                </select>
-                            </div>
+                            
+                            <select hidden class="form-control" id="estado" name="estado">
+                                <option value="En préstamo" selected>En préstamo</option>
+                            </select>
 
                         </div>
                         <br>
@@ -73,7 +65,6 @@
                                 <input type="text" class="form-control" id="cargo" name="cargo" value="{{old('cargo')}}" required>
                             </div>
 
-
                         </div>
                         <br>
                         <div class="row g-3 align-items-center">
@@ -86,10 +77,7 @@
                                 <input type="text" class="form-control" id="correo" name="correo" value="{{old('correo')}}" required>
                             </div>
 
-                            <div class="col-md-4">
-                                <label for="fecha_inicio">Fecha:</label>
-                                <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" value="{{old('fecha_inicio')}}" required>
-                            </div>
+                            <input type="hidden" class="form-control" id="fecha_inicio" name="fecha_inicio" value="{{Carbon\Carbon::now()}}" required>
                             
                         </div>
 
@@ -124,7 +112,6 @@
 
             </div>
     </div>
-
     
 
     @else

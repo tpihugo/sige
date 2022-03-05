@@ -36,6 +36,8 @@
                         <th>Estado</th>
                         <th>Fecha</th>
                         <th>Observaciones</th>
+                        <th>Acciones</th>
+                        
                     </tr>
                     </thead>
                     <tbody>
@@ -49,12 +51,11 @@
                         <td>{{$prestamo->estado}}</td>
                         <td>{{$prestamo->fecha_inicio}}</td>
                         <td>{{$prestamo->observaciones}}</td>
-
+                        <td><a class="btn btn-outline-success" href="{{ route('imprimirPrestamo', $prestamo->id)}}" target="blank">Formato</a></td>
                     </tr>
                     </tbody>
                 </table>
             
-
                         <h5><p align="center">Equipo ya Registrado</p></h5>
                 <table class="table table-bordered" style="width:100%">
                     <thead>

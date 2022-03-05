@@ -149,6 +149,20 @@ Route::get('/imprimirPrestamo/{prestamo_id}', array(
     'uses' => 'App\Http\Controllers\PDFController@imprimirPrestamo'
 ));
 
+/////////
+Route::get('/borrarPrestamo/{prestamo_id}', array(
+    'as' => 'borrarPrestamo',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\PrestamoController@delete_Prestamo'
+));
+
+Route::get('/devolverPrestamo/{prestamo_id}', array(
+    'as' => 'devolverPrestamo',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\PrestamoController@devolver_prestamo'
+));
+//////////
+
 Route::get('/revisionTickets', array(
     'as' => 'revisionTickets',
     'middleware' => 'auth',
