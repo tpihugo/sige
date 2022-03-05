@@ -59,7 +59,12 @@ class EquipoController extends Controller
         $equipo->modelo = $request->input('modelo');
         $equipo->numero_serie = $request->input('numero_serie');
         $equipo->mac = $request->input('mac');
-        $equipo->ip_id = $request->input('ip_id');
+        if($request->input('ip_id')=="null"){
+            $equipo->ip_id = null;
+        }else{
+            $equipo->ip_id = $request->input('ip_id');
+        }
+        
 	$equipo->tipo_conexion = $request->input('tipo_conexion');
         $equipo->detalles = $request->input('detalles');
         $equipo->id_resguardante = $request->input('id_resguardante');
@@ -166,8 +171,12 @@ class EquipoController extends Controller
         $equipo->numero_serie = $request->input('numero_serie');
         $equipo->mac = $request->input('mac');
 
-
-        $equipo->ip_id = $request->input('ip');
+        if($request->input('ip')=="null"){
+            $equipo->ip_id = null;
+        }else{
+            $equipo->ip_id = $request->input('ip');
+        }
+        
 
         $equipo->tipo_conexion = $request->input('tipo_conexion');
         $equipo->detalles = $request->input('detalles');
