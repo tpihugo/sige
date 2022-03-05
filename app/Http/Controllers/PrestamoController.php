@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Area;
 use App\Models\Equipo;
+use Illuminate\Http\Request;
 use App\Models\EquipoPorPrestamo;
 use App\Models\PrestamoEquipo;
-use Illuminate\Http\Request;
 use App\Models\Prestamo;
 use App\Models\VsPrestamo;
 use Illuminate\Support\Facades\Storage;
@@ -37,6 +37,8 @@ class PrestamoController extends Controller
             $cambiarubicacion = route('cambiar-ubicacion', $value['id']);
             $actualizar =  route('prestamos.edit', $value['id']);      
 	    $prestamo = route('imprimirPrestamo', $value['id']);
+        $borrarPrestamo = route('borrarPrestamo', $value['id']);
+        $devolverPrestamo = route('devolverPrestamo', $value['id']);
 	   
 $acciones = '';
 
@@ -48,6 +50,14 @@ $acciones = '';
                         </a>
                         <a href="'.$prestamo.'" class="btn btn-primary"  title="Formato de Prestamo" target="_blank">
                             <i class="far fa-file-alt"></i>
+                        </a>
+
+                        <a href="'.$borrarPrestamo.'" class="btn btn-danger"  title="Borrar Prestamo">
+                            <i class="fas fa-eraser"></i>
+                        </a>
+
+                        <a href="'.$devolverPrestamo.'" class="btn btn-success"  title="Borrar Prestamo">
+                        <i class="fas fa-check"></i>
                         </a>
 			
 
@@ -150,7 +160,6 @@ $acciones = '';
      */
     public function show($id)
     {
-
         $prestamo = VsPrestamo::find($id);
         $equiposPorPrestamo = EquipoPorPrestamo::where('activo', '=', 1)
             ->where('id_prestamo','=',$id)->get();
@@ -174,6 +183,9 @@ $acciones = '';
         $areas = Area::all();
         return view('prestamo.edit')->with('prestamo',$prestamo)->with('vsPrestamo',$vsPrestamo)->with('equiposPrestados',$equiposPrestados)->with('areas',$areas);
     }
+
+    ////////////////////////////////////////////////////////////////
+    
 
 
     public function update(Request $request, $id)
@@ -222,7 +234,7 @@ $acciones = '';
 
     public function destroy($id)
     {
-        //
+        
     }
     public function generarPrestamo($equipo_id){
         $areas = Area::where('activo','=', 1)->get();
@@ -272,7 +284,38 @@ $acciones = '';
                 "message" => "El prestamo que trata de eliminar no existe"
             ));
         }
+    }
 
+    public function devolver_prestamo($id) {
+        $prestamo = Prestamo::find($id);
+        // dd($prestamo);
+        if($prestamo){
+            $prestamo->estado = 'Devuelto';
+            $prestamo->update();
+
+            //
+            $log = new Log();
+            $log->tabla = "Prestamo";
+            $mov="";
+            $mov=$mov." id_area:".$prestamo->id_area ." telefono:". $prestamo->telefono ." solicitante" .$prestamo->solicitante;
+            $mov=$mov." correo:".$prestamo->correo ." cargo:". $prestamo->cargo ." estado:". $prestamo->estado ;
+            $mov=$mov." fecha_inicio:".$prestamo->fecha_inicio ." observaciones:". $prestamo->observaciones . ".";
+            $log->movimiento = $mov;
+            $log->usuario_id = Auth::user()->id;
+            $log->acciones = "Marcado como devuelto";
+            $log->save();
+            //
+
+            return redirect()->route('prestamos.index')->with(array(
+                'message'=>'El préstamo se ha cambiado de estado a devuelto Correctamente'
+            ));
+        }else{
+            return redirect()->route('prestamos.index')->with(array(
+                "message" => "El prestamo que trata de devolver no existe"
+            ));
+        }
+        
+        
     }
 
     public function obtenerdocumento($filename){
