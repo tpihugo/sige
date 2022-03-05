@@ -59,7 +59,6 @@ $acciones = '';
                         <a href="'.$devolverPrestamo.'" class="btn btn-success"  title="Borrar Prestamo">
                         <i class="fas fa-check"></i>
                         </a>
-			
 
                     </div>
                 </div>
