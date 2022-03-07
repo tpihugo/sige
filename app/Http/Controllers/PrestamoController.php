@@ -24,6 +24,7 @@ class PrestamoController extends Controller
     public function index()
     {
         $prestamos1 = VsPrestamo::where('activo','=',1)
+            ->where('estado','En préstamo')
 	->get();
         $prestamos = $this->cargarDT($prestamos1);
         return view('prestamo.index')->with('prestamos',$prestamos);
@@ -406,5 +407,10 @@ $acciones = '';
         return redirect('prestamos/'.$request->input('prestamo_id'))->with(array(
             'message'=>'El Equipo se agregó Correctamente al prestamo'
         ));
+    }
+    public function prestamos_all(){
+        $vsprestamos = VsPrestamo::where('activo',1)->get();
+        $prestamos = $this->cargarDT($vsprestamos);
+        return view('prestamo.indexall')->with('prestamos', $prestamos );
     }
 }

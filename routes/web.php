@@ -96,7 +96,11 @@ Route::post('/busquedaEquiposPrestamo', array(
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\EquipoController@busquedaEquiposPrestamo'
 ));
-
+Route::get('/prestamos-all', array(
+    'as' => 'prestamos-all',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\PrestamoController@prestamos_all'
+));
 Route::get('/busquedaAvanzada', array(
     'as' => 'busquedaAvanzada',
     'middleware' => 'auth',
