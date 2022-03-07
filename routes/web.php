@@ -414,8 +414,18 @@ Route::post('/busquedaEquiposMantenimiento', array(
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\MantenimientoController@busquedaEquiposMantenimiento'
 ));
-// Route::post('/agregar-equipomantenimiento', array(
-//     'as' => 'agregar-equipomantenimiento',
-//     'middleware' => 'auth',
-//     'uses' => 'App\Http\Controllers\PrestamoController@agregarAccesorio'
-// ));
+Route::get('/agregarequipomantenimiento/{mantenimiento_id}/{equipo_id}', array(
+    'as' => 'agregarequipomantenimiento',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\MantenimientoController@agregarequipomantenimiento'
+));
+Route::get('/eliminarequipomantenimiento/{mantenimiento_id}/{equipo_id}', array(
+    'as' => 'eliminarequipomantenimiento',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\MantenimientoController@eliminarequipomantenimiento'
+));
+Route::get('/estadoMantenimiento/{mantenimiento_id}/{equipo_id}', array(
+    'as' => 'estadoMantenimiento',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\MantenimientoController@estadoMantenimiento'
+));

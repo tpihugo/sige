@@ -10,9 +10,11 @@ use App\Models\EquipoPorPrestamo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Log;
+use App\Models\RelMttoEquipo;
 use App\Models\Vs_Relmantenimiento;
 use App\Models\VsEquipo;
 use App\Models\VsMantenimiento;
+use App\Models\VsPrestamo;
 
 class MantenimientoController extends Controller
 {
@@ -141,10 +143,11 @@ class MantenimientoController extends Controller
      */
     public function show($id)
     {
-        $vsmantenimiento = VsMantenimiento::find($id);
-        $relmantenimiento = Vs_Relmantenimiento::all();
+        $infomantenimiento=VsMantenimiento::find($id);
+        
+        $equipos_en_este_mantenimiento = Vs_Relmantenimiento::where('id_mantenimiento','=',$id)->get();
         return view('mantenimiento.agregarMantenimientoEdit')
-            ->with('vsmantenimiento', $vsmantenimiento)->with('relmantenimiento', $relmantenimiento);
+            ->with('vsmantenimiento',$infomantenimiento)->with('equipos_en_este_mantenimiento',$equipos_en_este_mantenimiento);
     }
 
     /**
@@ -156,10 +159,10 @@ class MantenimientoController extends Controller
     public function edit($id)
     {
         $mantenimiento = Mantenimiento::find($id);
-        $relmantenimiento = Vs_Relmantenimiento::all();
+        $equiposmantenimiento = Vs_Relmantenimiento::all();
         $areas = Area::all();
         $tecnicos = Tecnico::where('activo',1)->get();
-        return view('mantenimiento.edit')->with('mantenimiento',$mantenimiento)->with('relmantenimiento', $relmantenimiento)->with('areas',$areas)->with('tecnicos',$tecnicos);
+        return view('mantenimiento.edit')->with('mantenimiento',$mantenimiento)->with('equiposmantenimiento', $equiposmantenimiento)->with('areas',$areas)->with('tecnicos',$tecnicos);
     }
 
     /**
@@ -214,12 +217,14 @@ class MantenimientoController extends Controller
         $validateData = $this->validate($request,[
             'busqueda'=>'required'
         ]);
-
-        $busqueda = $request->input('busqueda');
-        $id = $request->input('id');
-        $mantenimiento = VsMantenimiento::find($id);
+        $busqueda=$request->input('busqueda');
+        
         if(isset($busqueda) && !is_null($busqueda)){
-            $equipos = VsEquipo::where('id','=',$busqueda)
+            $id = $request->input('id');
+        $mantenimiento = Mantenimiento::find($id);
+        $infomantenimiento=VsMantenimiento::find($id);
+        $equipos=VsEquipo::where('id_area','=',$mantenimiento->area_id)
+                ->where('id','LIKE','%'.$busqueda.'%')
                 ->orWhere('udg_id','LIKE','%'.$busqueda.'%')
                 ->orWhere('marca','LIKE','%'.$busqueda.'%')
                 ->orWhere('marca','LIKE','%'.$busqueda.'%')
@@ -230,15 +235,53 @@ class MantenimientoController extends Controller
                 ->orWhere('tipo_conexion','LIKE','%'.$busqueda.'%')
                 ->orWhere('tipo_equipo','LIKE','%'.$busqueda.'%')
                 ->orWhere('area','LIKE','%'.$busqueda.'%')->get();
-            $equipoPorPrestamo = EquipoPorPrestamo::where('id','=',$id)->get();
-            return view('mantenimiento.agregarEquiposMantenimiento')->with('busqueda', $busqueda)->with('equipos',$equipos)
-                ->with('mantenimiento', $mantenimiento )->with('id', $id)->with('equipoPorPrestamo', $equipoPorPrestamo);
+
+        $equipos_en_este_mantenimiento = Vs_Relmantenimiento::where('id_mantenimiento','=',$id)->get();
+
+        return view('mantenimiento.agregarMantenimientoEdit')
+            ->with('vsmantenimiento',$infomantenimiento)->with('equipos_en_este_mantenimiento',$equipos_en_este_mantenimiento)->with('equipos',$equipos);
         }else{
             return redirect('home')->with(array(
                 'message'=>'Debe introducir un término de búsqueda'
             ));
         }
+
+
+       
     }
+     public function agregarequipomantenimiento( $mantenimiento_id,$equipo_id){
+
+        $relmantenimientoequipo = new RelMttoEquipo();
+        $relmantenimientoequipo->mantenimiento_id = $mantenimiento_id;
+        $relmantenimientoequipo->equipo_id =$equipo_id;
+        $relmantenimientoequipo->save();
+
+     return redirect('mantenimiento/'.$mantenimiento_id)->with(array(
+            'message'=>'El Equipo se agregó Correctamente al mantenimiento'
+         ));
+    }
+    public function eliminarequipomantenimiento( $mantenimiento_id,$equipo_id){
+        
+        $relmantenimientoequipo = RelMttoEquipo::where('mantenimiento_id','=',$mantenimiento_id)->where('equipo_id','=',$equipo_id);
+        $relmantenimientoequipo->delete();
+
+    return redirect('mantenimiento/'.$mantenimiento_id)->with(array(
+            'message'=>'El Equipo se quitó Correctamente del mantenimiento'
+        ));
+    }
+    public function estadoMantenimiento( $mantenimiento_id,$equipo_id){
+        
+        $relmantenimientoequipo = RelMttoEquipo::where('mantenimiento_id','=',$mantenimiento_id)->where('equipo_id','=',$equipo_id)->first();
+        $bool=$relmantenimientoequipo->terminado;
+        
+        $relmantenimientoequipo->terminado =!$bool; 
+        $relmantenimientoequipo->update();
+
+    return redirect('mantenimiento/'.$mantenimiento_id)->with(array(
+            'message'=>'El Equipo se modificó correctamente del mantenimiento'
+        ));
+    }
+    
 
  public function delete_mantenimiento($id){
     $mantenimiento = Mantenimiento::find($id);
@@ -264,6 +307,11 @@ class MantenimientoController extends Controller
            "message" => "El mantenimiento que trata de eliminar no existe"
         ));
     }
+
+
+
+
+    
 
     
 
