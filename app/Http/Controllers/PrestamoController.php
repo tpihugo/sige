@@ -24,16 +24,13 @@ class PrestamoController extends Controller
      */
     public function index()
     {
-        // $prestamos1 = VsPrestamo::where('activo','=',1)
-        // ->get();
 
-        // YHN: Prioridad de visualizacion de la lista para "en prestamos [con acento o no]"
-        $prestamos1 = DB::table('vs_prestamos')->where('activo','=',1)->orderByRaw("FIELD(estado , 'En préstamo', 'Por entregar', 'Traslado', 'Trasladado', 'Devuelto') ASC")
-        ->get();
-        $arrayConvert_prestamos1 = json_decode($prestamos1, true);
+        $vsprestamos = VsPrestamo::where('activo','=',1)
+            ->where('estado','En préstamo')
+	->get();
+        $prestamos = $this->cargarDT($vsprestamos);
 
-        $prestamos = $this->cargarDT($arrayConvert_prestamos1);
-        return view('prestamo.index')->with('prestamos',$prestamos);
+       return view('prestamo.index')->with('prestamos',$prestamos);
     }
     public function cargarDT($consulta)
     {
@@ -410,5 +407,10 @@ class PrestamoController extends Controller
         return redirect('prestamos/'.$request->input('prestamo_id'))->with(array(
             'message'=>'El Equipo se agregó Correctamente al prestamo'
         ));
+    }
+    public function prestamos_all(){
+        $vsprestamos = VsPrestamo::where('activo',1)->get();
+        $prestamos = $this->cargarDT($vsprestamos);
+        return view('prestamo.indexall')->with('prestamos', $prestamos );
     }
 }

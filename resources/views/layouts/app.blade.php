@@ -107,6 +107,7 @@
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="{{ route('nuevo-prestamo') }}">Crear Préstamo </a></li>
                                 <li><a class="dropdown-item" href="{{ route('prestamos.index') }}">Consultar Préstamos</a></li>
+                                <li><a class="dropdown-item" href="{{ route('prestamos-all') }}">Historial Préstamos</a></li>
                             </ul>
                         </li>
 
