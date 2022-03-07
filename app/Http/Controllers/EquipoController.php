@@ -343,6 +343,10 @@ public function busquedaEquiposPrestamo(Request $request){
 
     }
 
+    public function inventario_express(){
+        dd("new iv express");
+    }
+
     public function cargarDT($consulta)
     {
         $equipos = [];
@@ -438,7 +442,7 @@ public function busquedaEquiposPrestamo(Request $request){
 
 
         }
-
+        dd("No equipoController");
         return $equipos;
     }
 

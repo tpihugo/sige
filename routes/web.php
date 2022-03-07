@@ -15,27 +15,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Route::get('/home2', function(){
+// 	return view('home2');
+// });
+
+// Route::middleware(['auth:sanctum', 'verified'])->get('/', function () {
+//     return view('home');
+// })->name('dashboard');
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/home2', function(){
-	return view('home2');
-});
-
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('home');
-})->name('dashboard');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Auth::routes();
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Auth::routes();
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Auth::routes();
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::resource('usuarios','App\Http\Controllers\UsuariosController');
 Route::resource('equipos', 'App\Http\Controllers\EquipoController');
@@ -66,6 +61,14 @@ Route::get('/inventario-cta', array(
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\EquipoController@inventario_cta'
 ));
+///Prueba Inventario express////
+Route::get('/new-inventario-express', array(
+    'as' => 'new-inventario-express',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\EquipoController@inventario_express'
+));
+///Prueba Inventario express////
+
 Route::post('/equipo-encontrado/{origen?}', array(
     'as' => 'equipo-encontrado',
     'middleware' => 'auth',

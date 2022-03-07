@@ -39,9 +39,9 @@
                         <br>
 
                         <div class="row g-3 align-items-center">
-                            <div class="col-md-8">
+                            <div class="col-md-12">
                                 <label for="id_area">Área para préstamo o traslado</label>
-                                <select class="form-control" class="form-control" id="js-example-basic-single" name="id_area" required>
+                                <select class="form-control input-group" id="js-example-basic-single" name="id_area" required>
                                     <option value="" selected>No Aplica</option>
                                     @foreach($areas as $area)
                                         <option value="{{$area->id}}">{{$area->sede}} - {{$area->division}} - {{$area->coordinacion}} - {{$area->area}}</option>
@@ -49,10 +49,6 @@
                                 </select> 
                             </div>
                             
-                            <select hidden class="form-control" id="estado" name="estado">
-                                <option value="En préstamo" selected>En préstamo</option>
-                            </select>
-
                         </div>
                         <br>
                         <div class="row g-3 align-items-center">
@@ -72,7 +68,7 @@
                                 <label for="telefono">Teléfono</label>
                                 <input type="text" class="form-control" id="telefono" name="telefono" value="{{old('telefono')}}" required>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-8">
                                 <label for="correo">Correo</label>
                                 <input type="text" class="form-control" id="correo" name="correo" value="{{old('correo')}}" required>
                             </div>
@@ -88,20 +84,23 @@
                             </div>
                         </div>
 			<br>
-			<div class="row g-3 align-items-center">
-                        	<div class="col-md-6">
-                           
-                                    <!-- <a href="{{ route('home') }}" class="btn btn-primary">< Regresar</a> -->
-        
-                            		<a href="{{ route('home') }}" class="btn btn-danger">Cancelar</a>
-                            		<button type="submit" class="btn btn-success">Guardar datos</button>
-                        	</div>
-                    	</div>
+			    <div class="row g-3 align-items-center">
+                    <div class="col-md-6"> 
+                    <!-- <a href="{{ route('home') }}" class="btn btn-primary">< Regresar</a> -->
 
-                    </div>
+                    <a href="{{ route('home') }}" class="btn btn-danger">Cancelar</a>
+                    <button type="submit" class="btn btn-success">Siguiente</button>
+                </div>
+            </div>
+
+            </div>
                     <br>
                     
                 </div>
+
+                <select hidden class="form-control" id="estado" name="estado">
+                        <option value="En préstamo" selected>En préstamo</option>
+                </select>
             </form>
             <br>
             <div class="row g-3 align-items-center">
