@@ -58,7 +58,6 @@
                                     <option value="En préstamo" >En préstamo</option>
                                     <option value="Por Entregar">Por Entregar</option>
                                     <option value="Devuelto">Devuelto</option>
-                                    <option value="Trasladado">Trasladado</option>
                                 </select>
                             </div>
 

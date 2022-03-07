@@ -108,6 +108,7 @@
         </div>
         </div>
 @endif
+
 <!-- Apartado de Inventario   -->
 	@if(Auth::check() && (Auth::user()->role =='admin'))
 
@@ -126,6 +127,7 @@
             <div class="stats">
 		<i class="material-icons">inventory</i><a href="{{ route('inventario-cta') }}" >Inventario General</a>
 		<i class="material-icons">location_searching</i><a href="{{ route('inventario-localizado') }}" >Inventario Localizado</a>
+        <i class="material-icons">inventory</i><a href="{{ route('new-inventario-express') }}" >Nuevo Inventario express</a>
             </div>
             </div>
         </div>

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PrestamoController extends Controller
 {
@@ -23,9 +24,15 @@ class PrestamoController extends Controller
      */
     public function index()
     {
-        $prestamos1 = VsPrestamo::where('activo','=',1)
-	->get();
-        $prestamos = $this->cargarDT($prestamos1);
+        // $prestamos1 = VsPrestamo::where('activo','=',1)
+        // ->get();
+
+        // YHN: Prioridad de visualizacion de la lista para "en prestamos [con acento o no]"
+        $prestamos1 = DB::table('vs_prestamos')->where('activo','=',1)->orderByRaw("FIELD(estado , 'En préstamo', 'Por entregar', 'Traslado', 'Trasladado', 'Devuelto') ASC")
+        ->get();
+        $arrayConvert_prestamos1 = json_decode($prestamos1, true);
+
+        $prestamos = $this->cargarDT($arrayConvert_prestamos1);
         return view('prestamo.index')->with('prestamos',$prestamos);
     }
     public function cargarDT($consulta)
@@ -34,56 +41,53 @@ class PrestamoController extends Controller
 
         foreach ($consulta as $key => $value){
            
-            $cambiarubicacion = route('cambiar-ubicacion', $value['id']);
-            $actualizar =  route('prestamos.edit', $value['id']);      
+        $cambiarubicacion = route('cambiar-ubicacion', $value['id']);
+        $actualizar =  route('prestamos.edit', $value['id']);      
 	    $prestamo = route('imprimirPrestamo', $value['id']);
         $borrarPrestamo = route('borrarPrestamo', $value['id']);
         $devolverPrestamo = route('devolverPrestamo', $value['id']);
 	   
-$acciones = '';
+        $acciones = '';
 
-            $acciones = '
-                <div class="btn-acciones">
-                    <div class="btn-circle">
-                        <a href="'.$actualizar.'" class="btn btn-success" title="Actualizar">
-                            <i class="far fa-edit"></i>
-                        </a>
-                        <a href="'.$prestamo.'" class="btn btn-primary"  title="Formato de Prestamo" target="_blank">
-                            <i class="far fa-file-alt"></i>
-                        </a>
+        $acciones = '
+            <div class="btn-acciones">
+                <div class="btn-circle">
+                    <a href="'.$actualizar.'" class="btn btn-success" title="Actualizar">
+                        <i class="far fa-edit"></i>
+                    </a>
+                    <a href="'.$prestamo.'" class="btn btn-primary"  title="Formato de Prestamo" target="_blank">
+                        <i class="far fa-file-alt"></i>
+                    </a>
 
-                        <a href="'.$borrarPrestamo.'" class="btn btn-danger"  title="Borrar Prestamo">
-                            <i class="fas fa-eraser"></i>
-                        </a>
+                    <a href="'.$borrarPrestamo.'" class="btn btn-danger"  title="Borrar Prestamo">
+                        <i class="fas fa-eraser"></i>
+                    </a>
 
-                        <a href="'.$devolverPrestamo.'" class="btn btn-success"  title="Borrar Prestamo">
-                        <i class="fas fa-check"></i>
-                        </a>
+                    <a href="'.$devolverPrestamo.'" class="btn btn-success"  title="Borrar Prestamo">
+                    <i class="fas fa-check"></i>
+                    </a>
 
-                    </div>
                 </div>
-               
-            ';
+            </div>
+            
+        ';
 
-            $prestamos[$key] = array(
-                $acciones,
-                $value['id'],
-                $value['solicitante'],
-                $value['cargo'],
-                $value['lugar'],
-                $value['contacto'],
-                $value['estado'],
-                $value['lista_equipos'],
-                $value['fecha_actualizacion'],
-                $value['observaciones'],
-                $value['documento'],
-                
-
-
-            );
+        $prestamos[$key] = array(
+            $acciones,
+            $value['id'],
+            $value['solicitante'],
+            $value['cargo'],
+            $value['lugar'],
+            $value['contacto'],
+            $value['estado'],
+            $value['lista_equipos'],
+            $value['fecha_actualizacion'],
+            $value['observaciones'],
+            $value['documento'],
+            
+        );
 
         }
-	
         return $prestamos;
     }
 

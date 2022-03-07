@@ -88,9 +88,9 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 @if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='auxiliar' || Auth::user()->role =='redes'))
-                                <li><a class="dropdown-item" href="{{ route('mobiliarios.create') }}">Captura Mobiliário</a></li>
+                                <li><a class="dropdown-item" href="{{ route('mobiliarios.create') }}">Captura Mobiliario</a></li>
                                 @endif
-                                <li><a class="dropdown-item" href="{{ route('mobiliarios.index') }}">Consulta Mobiliários</a></li>
+                                <li><a class="dropdown-item" href="{{ route('mobiliarios.index') }}">Consulta Mobiliarios</a></li>
                             </ul>
                         </li>
 
@@ -105,7 +105,7 @@
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="{{ route('equipos.create') }}">Captura Equipo</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                {{--<li><a class="dropdown-item" href="#">Crear Préstamo </a></li>--}}
+                                <li><a class="dropdown-item" href="{{ route('nuevo-prestamo') }}">Crear Préstamo </a></li>
                                 <li><a class="dropdown-item" href="{{ route('prestamos.index') }}">Consultar Préstamos</a></li>
                             </ul>
                         </li>
@@ -301,15 +301,17 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                    
+                                <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Salir') }}
-                                    </a>
+                                </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
+                                
                                 </div>
                             </li>
                         @endguest

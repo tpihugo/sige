@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @if(Auth::check() && Auth::user()->role =='admin')
+    @if(Auth::check() && Auth::user()->role =='admin' || Auth::user()->role =='cta')
 
     <div class="container">
         <div class="row">
@@ -34,7 +34,7 @@
                         <td>{{$prestamo->contacto}}</td>
                         <td>{{$prestamo->estado}}</td>
                         <td>{{$prestamo->fecha_inicio}}</td>
-			<td>{{$prestamo->observaciones}}</td>
+			            <td>{{$prestamo->observaciones}}</td>
                         <td><a class="btn btn-outline-success" href="{{ route('imprimirPrestamo', $prestamo->id)}}" target="blank">Formato</a></td>
                     </tr>
                     </tbody>
