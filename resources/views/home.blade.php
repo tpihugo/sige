@@ -127,7 +127,8 @@
             <div class="stats">
 		<i class="material-icons">inventory</i><a href="{{ route('inventario-cta') }}" >Inventario General</a>
 		<i class="material-icons">location_searching</i><a href="{{ route('inventario-localizado') }}" >Inventario Localizado</a>
-        <i class="material-icons">inventory</i><a href="{{ route('new-inventario-express') }}" >Nuevo Inventario express</a>
+        <!-- <i class="material-icons">inventory</i><a href="{{ route('inventario-express-detalle') }}" >Nuevo Inventario express</a>
+        <i class="material-icons">inventory</i><a href="{{ route('inventario-express-detalle2') }}" >Nuevo Inventario express2</a> -->
             </div>
             </div>
         </div>
