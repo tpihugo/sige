@@ -35,7 +35,7 @@
                             <td>{{ $listadoEquipo->numero_serie }}</td>
                             <td>{{ $listadoEquipo->detalles }}<br> {{ $listadoEquipo->resguardante }} <br> {{ $listadoEquipo->localizado_sici }}</td>
                             <td>{{ $listadoEquipo->area }}</td>
-                            <td><p><a class="btn btn-success" href="{{ route('registro-inventario', ['equipo_id' => $listadoEquipo->id, 'revisor_id' => Auth::user()->id, 'inventario' => '2021A', 'origen'=>'express']) }}" >Registrar Equipo</a></p>
+                            <td><p><a class="btn btn-success" href="{{ route('registro-inventario', ['equipo_id' => $listadoEquipo->id, 'revisor_id' => Auth::user()->id, 'inventario' => '2022A', 'origen'=>'express']) }}" >Registrar Equipo</a></p>
                             <p><a href="{{ route('cambiar-ubicacion', ['equipo_id' => $listadoEquipo->id, 'tipo' => 'inventario']) }}" class="btn btn-primary">Cambiar Ubicación</a></p></td>
                             <td><!-- Botón en HTML (lanza el modal en Bootstrap) -->
                                 <a href="#eliminar{{$listadoEquipo->id}}" role="button" class="btn btn-danger" data-toggle="modal">Agregar Nota</a>

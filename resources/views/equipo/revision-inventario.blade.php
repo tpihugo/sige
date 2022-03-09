@@ -11,9 +11,9 @@
             </div>
             <div class="card-body">
 
-                @if(session('message1'))
-                    <div class="alert alert-success"> dd
-                        {{session('message1')}}
+                @if(session('message'))
+                    <div class="alert alert-success">
+                        {{session('message')}}
                     </div>
                 @endif
                 <hr>

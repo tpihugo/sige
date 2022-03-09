@@ -183,6 +183,119 @@ class InventarioController extends Controller
 
         return $inventario_localizado;
     }
+
+    public function inventario_express(){
+
+        return view('inventario.inventario_express');
+    }
+
+    public function inventario_express2(){
+
+        // $total_objSICI = DB::table('vs_cuentainventariables')
+        //     ->join('vs_cuentaencontrados', 'vs_cuentainventariables.id_area', '=', 'vs_cuentaencontrados.IdArea')
+        //     ->select('vs_cuentainventariables.cuentaInventariables')
+        //     ->get();
+
+        // $total_areas = DB::table('vs_cuentainventariables')
+        // ->join('vs_cuentaencontrados', 'vs_cuentainventariables.id_area', '=', 'vs_cuentaencontrados.IdArea')
+        // ->select('vs_cuentainventariables.area')
+        // ->get();
+
+        // $total_ids_areas = DB::table('vs_cuentainventariables')
+        // ->join('vs_cuentaencontrados', 'vs_cuentainventariables.id_area', '=', 'vs_cuentaencontrados.IdArea')
+        // ->select('vs_cuentainventariables.id_area')
+        // ->get();
+
+        $total_SICI = DB::table('equipos')
+            ->select(DB::raw('count(*) as count'))
+            ->where('localizado_sici', '=', 'si')
+            ->where('resguardante', '=', 'CTA')
+            ->groupBy('localizado_sici')
+            ->first();
+
+        $total_SICI_falta = DB::table('equipos')
+            ->select(DB::raw('count(*) as count'))
+            ->where('localizado_sici', '=', 'no')
+            ->where('resguardante', '=', 'CTA')
+            ->groupBy('localizado_sici')
+            ->first();
+        
+            //Detalle IV
+        $total_detalleInventario = DB::table('inventariodetalle')
+            ->select(DB::raw('count(*) as count'))
+            ->where('estatus', '=', 'localizado')
+            ->where('inventario', '=', '2021A')
+            ->first();
+
+        // $total_detalleInventario_falta = DB::table('inventariodetalle')
+        //     ->select(DB::raw('count(*) as count'))
+        //     ->where('localizado_sici', '=', 'si')
+        //     ->where('resguardante', '=', 'CTA')
+        //     ->first();
+        // /
+
+        $dataTable = DB::table('vs_cuentainventariables')
+            ->join('vs_cuentaencontrados', 'vs_cuentainventariables.id_area', '=', 'vs_cuentaencontrados.IdArea')
+            ->select('vs_cuentainventariables.cuentaInventariables as cuentaInventariables','vs_cuentaencontrados.cuentaEncontrados as cuentaEncontrados','vs_cuentainventariables.area as area','vs_cuentainventariables.id_area as id_area')
+            ->get();
+
+        $total_equipos = DB::table('equipos')
+            ->select(DB::raw('COUNT(*) as cuenta_equipos'))
+            ->where('resguardante', '=', 'CTA')
+            ->first();
+
+        // $equipos_en_sici = DB::table('vs_equipos')
+        //     ->select(DB::raw('COUNT(*) as cuenta_equipos'))
+        //     ->where('resguardante', '=', 'CTA')
+        //     ->where('id_area', '=', $area_id)
+        //     ->first();
+
+        // /*Total equipos_localizados_sici*/
+        // $equipos_en_sici_localizados = DB::table('vs_equipos')
+        //     ->select(DB::raw('COUNT(*) as cuenta_equipos'))
+        //     ->where('resguardante', '=', 'CTA')
+        //     ->where('localizado_sici', '=', 'S')
+        //     ->where('id_area', '=', $area_id)
+        //     ->first();
+
+        // /*Total equipos_no_localizados_sici*/
+        // $equipos_en_sici_no_localizados = DB::table('vs_equipos')
+        //     ->select(DB::raw('COUNT(*) as cuenta_equipos'))
+        //     ->where('resguardante', '=', 'CTA')
+        //     ->where('localizado_sici', '=', 'No Encontrado')
+        //     ->where('id_area', '=', $area_id)
+        //     ->first();
+        // /* Localizados inventario Express*/
+        // $total_equipos_localizados = DB::table('inventariodetalle')
+        //     ->select(DB::raw('COUNT(*) as localizados'))
+        //     ->where('estatus', '=', 'Localizado')
+        //     ->where('IdArea', '=', $area_id)
+        //     ->first();
+        // /* Localizados*/
+        
+        // /* Revisi�n con Nota*/
+        // $total_equipos_revision = DB::table('inventariodetalle')
+        //     ->select(DB::raw('COUNT(*) as revisiones'))
+        //     ->where('estatus', '=', 'Revision')
+        //     ->where('IdArea', '=', $area_id)
+        //     ->first();
+
+        // $dataTable = json_decode(json_encode($data), true);
+
+        $total_SICI = $total_SICI->count;
+        $total_SICI_falta = $total_SICI_falta->count;
+        $total_equipos = $total_equipos->cuenta_equipos;
+        $total_detalleInventario = $total_detalleInventario->count;
+        
+        return view('inventario.inventario_express2')
+        ->with('dataTable',$dataTable)
+        ->with('total_SICI',$total_SICI)
+        ->with('total_SICI_falta',$total_SICI_falta)
+        ->with('total_equipos',$total_equipos)
+        ->with('total_detalleInventario',$total_detalleInventario);
+        
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -220,13 +333,13 @@ class InventarioController extends Controller
             $log->acciones = "Insercion";
             $log->save();
             //
-            $mensaje = 'El art�culo se registro como Localizado con Nota';
+            $mensaje = 'El articulo se registro como Localizado con Nota';
         }else{
-            $mensaje = 'El art�culo ya se hab�a registrado como Localizado';
+            $mensaje = 'El articulo ya se habia registrado como Localizado';
         }
-
         return redirect('revision-inventario')->with(array(
-               "message1" => "El área que trata de eliminar no existe"
+            //    "message1" => "El área que trata de eliminar no existe"
+                "message" => "El área que trata de eliminar no existe"
             ));
     }
 
@@ -351,11 +464,12 @@ class InventarioController extends Controller
             $nota='-';
         }
         $origen=$request->input('origen');
+
         return view('equipo.equipo-encontrado', array(
+            "message" => "El equipo se registro correctamente 2022A",
             'listadoEquipos' => $listadoEquipos,
             'nota' => $nota,
             'origen' => $origen
-
         ));
     }
     public function registroInventario($equipo_id, $revisor_id, $inventario, $origen='revision-inventario'){
@@ -383,14 +497,17 @@ class InventarioController extends Controller
             $log->acciones = "Insercion";
             $log->save();
             //
-            $mensaje = 'El art�culo se registro como Localizado';
+            $mensaje = 'El articulo se registro como Localizado';
         }else{
-            $mensaje = 'El art�culo ya se hab�a registrado como Localizado';
+            $mensaje = 'El articulo ya se habia registrado como Localizado';
         }
+        
         //if($origen='inventario-area'){
           //  return redirect()->route('inventario-por-area', $listadoEquipos->id_area)->with(array('message' => $mensaje));
         //}else{
-            return redirect()->route('revision-inventario')->with(array('message' => $mensaje));
+            return redirect()->route('revision-inventario')->with(array(
+                "message" => $mensaje
+            ));
         //}
     }
     public function actualizacion_inventario($area_id)
