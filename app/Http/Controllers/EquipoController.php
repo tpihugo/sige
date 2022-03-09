@@ -342,20 +342,6 @@ public function busquedaEquiposPrestamo(Request $request){
         ));
 
     }
-
-    public function inventario_express(){
-        $total_equipos = Equipo::where('activo', 1)->get();
-
-        return view('inventario.inventario_express', array(
-            'total_equipos' => $total_equipos
-        ));
-    }
-
-    public function inventario_express2(){
-        // $total_equipos = Equipo::where('activo', 1)->get();
-
-        return view('inventario.inventario_express2');
-    }
     
 
     public function cargarDT($consulta)

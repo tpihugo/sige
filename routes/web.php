@@ -65,13 +65,13 @@ Route::get('/inventario-cta', array(
 Route::get('/inventario-express-detalle', array(
     'as' => 'inventario-express-detalle',
     'middleware' => 'auth',
-    'uses' => 'App\Http\Controllers\EquipoController@inventario_express'
+    'uses' => 'App\Http\Controllers\InventarioController@inventario_express'
 ));
 
 Route::get('/inventario-express-detalle2', array(
     'as' => 'inventario-express-detalle2',
     'middleware' => 'auth',
-    'uses' => 'App\Http\Controllers\EquipoController@inventario_express2'
+    'uses' => 'App\Http\Controllers\InventarioController@inventario_express2'
 ));
 ///Prueba Inventario express////
 
