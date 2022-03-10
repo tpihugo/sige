@@ -137,7 +137,9 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="font-weight-bold" for="coordinacion">Coordinación </label>
-                                <select class="form-control" id="js-example-basic-single" name="coordinacion">
+                                    <input type="text" class="form-control" id="coordinacion" name="coordinacion" value="{{ old('coordinacion') }}">
+                                </div>
+                                <!--<select class="form-control" id="js-example-basic-single" name="coordinacion">
                                     <option disabled selected>Elegir</option>
                                     <option value='Auditorio Belenes'>Auditorio Belenes</option>
                                     <option value='Auditorio Salvador Allende'>Auditorio Salvador Allende</option>
@@ -166,15 +168,14 @@
                                         Estudios Ibéricos y Latinoamericanos</option>
                                     <option value='Departamento de Estudios Socio Urbanos'>Departamento de Estudios Socio
                                         Urbanos</option>
-                                    <option value='Derecho Global, Departamento de '>Derecho Global, Departamento de
+                                    <option value='Departamento de Derecho Global'>Departamento de Derecho Global                                    </option>
+                                    <option value='Departamento de Derecho Privado'>Departamento de Derecho Privado
                                     </option>
-                                    <option value='Derecho Privado, Departamento de '>Derecho Privado, Departamento de
-                                    </option>
-                                    <option value='Departamento de Derecho Público, '>Derecho Público, Departamento de
+                                    <option value='Departamento de Derecho Público, '>Departamento de Derecho Público
                                     </option>
                                     <option value='Departamento de Criminología, '>Departamento de Criminología
                                     </option>
-                                    <option value='Derecho Social, Departamento de'>Derecho Social, Departamento de</option>
+                                    <option value='Derecho Social, Departamento de'>Departamento de Derecho Social, </option>
                                     <option value='Desarrollo local y territorio, Maestría'>Desarrollo local y territorio,
                                         Maestría</option>
                                     <option value='Desarrollo Social , Departamento de'>Desarrollo Social , Departamento de
@@ -259,7 +260,7 @@
                                     <option value='Vinculación'>Vinculación</option>
                                     
 
-                                </select>
+                                </select>-->
                             </div>
                         </div>
 
