@@ -55,12 +55,26 @@
                                                 <p class="text-center">-</p>
                                             </td>
                                         </tr>
+
+                                        <tr>
+                                            <td><a href="#">Detalle inventario</a></td>
+                                            <td class="stat-cell">{{$total_detalleInventario}}</td>
+                                            <td class="stat-cell">
+                                            <p class="text-center">-</p>
+                                            </td>
+
+                                            <td>
+                                                <p class="text-center">-</p>
+                                            </td>
+                                        </tr>
+
+
                                         <tr>
 
 
                                         <tr>
                                             <td><a href="#">SICI</a></td>
-                                            <td class="stat-cell">{{$total_SICI}}</td>
+                                            <td class="stat-cell">{{$total_SICI_localizados}}</td>
                                             <td class="stat-cell">
                                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-down text-danger" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
@@ -69,19 +83,10 @@
                                             </td>
 
                                             <td>
-                                            <?php echo $Percentage_SICI = round((($total_SICI_falta / $total_SICI) * 100));?>%
+                                            <?php echo $Percentage_SICI = round((($total_SICI_falta / $total_SICI_localizados) * 100));?>%
                                             </td>
                                         </tr>
-                                        <tr>
-                                        <td><a href="#">Detalle inventario </a></td>
-                                            <td class="stat-cell">{{$total_detalleInventario}}</td>
-                                            <td class="stat-cell">
-                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-down text-danger" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
-                                </svg>
-                                                0 <!-- ?? -->
-                                            </td>
-                                        </tr>
+                                        
                                         
                                     </tbody>
                                 </table>
@@ -135,12 +140,12 @@
                     </thead>
                     <tbody>
 
-                    <?php $cont=1; ?>
+                    @php ( $cont=1 )
+                    @php ( $bar_indicatorColor="success" )
 
-                    <?php $bar_indicatorColor="success"; ?>
                     @foreach($dataTable as $OneDataRow)
 
-                    <?php $ToRoundedValue = round((($OneDataRow->cuentaEncontrados / $OneDataRow->cuentaInventariables) * 100));?>
+                    @php ($ToRoundedValue = round((($OneDataRow->cuentaEncontrados / $OneDataRow->cuentaInventariables) * 100)) )
                     @if( $ToRoundedValue < '100')
 
                         @if( $ToRoundedValue < '50' )
@@ -167,7 +172,7 @@
                                 <div class="container-fluid wd-200">
                                         <div class="row no-gutters align-items-center">
                                             
-                                            <p><small><strong> Localizados </strong></small></p>
+                                            <p class="text-center"><small><strong> Localizados </strong></small></p>
                                             <div class="h6 mb-0 mr-1 text-center text-gray-800"> <strong>{{$ToRoundedValue}}% </strong> </div>
                                             
                                             <div class="col">
@@ -189,7 +194,8 @@
                                 
                             </td>
                             <td>
-                                <p><a href="{{ route('inventario-por-area', $OneDataRow->id_area ) }}" class="btn btn-primary">Detalle</a></p>
+                            {{-- <p><a href="{{ route('inventario-por-area', $OneDataRow->id_area ) }}" class="btn btn-primary">Detalle</a></p> --}}
+                                 <p><a href="{{ route('inventario-express-detalle3', $OneDataRow->id_area ) }}" class="btn btn-primary">Detalle</a></p> 
                                 <p><a href="{{ route('actualizacion-inventario', $OneDataRow->id_area) }}" class="btn btn-success">Revisado</a></p>
                             </td>
                         </tr>
@@ -281,8 +287,9 @@
             $('#js-example-basic-single').select2();
         });
 
-        const js_total_sici = {!! json_encode($total_SICI) !!};
-        const js_total_sici_falta = {!! json_encode($total_SICI_falta) !!};
+        const js_total_sici = {!! json_encode($total_SICI_localizados) !!};
+        const js_total_sici_falta = {!! json_encode($total_detalleInventario) !!};
+        
 
         const ctx = document.getElementById('chart-pie').getContext('2d');
         const ctx2 = document.getElementById('chart-pie2').getContext('2d');
@@ -290,7 +297,7 @@
         const myChart = new Chart(ctx, {
             type: 'pie',
             data: {
-                labels: ['Total localizados SICI CTA', 'Total localizados inventario detalle'],
+                labels: ['localizados SICI CTA', 'localizados inventario detalle'],
                 datasets: [{
                     // label: '# of Votes',
                     data: [js_total_sici, js_total_sici_falta],
@@ -307,13 +314,20 @@
             },
         });
 
+        let ciclosArray = [];
+        let index = 0;
+        for (let item of {!! json_encode($total_detalleInventario_PorCiclo ) !!}){
+            ciclosArray[index] = item['total_por_ciclo'];
+            index++;           
+        }        
+        
         const myChart2 = new Chart(ctx2, {
             type: 'pie',
             data: {
-                labels: ['SICI Total', 'SICI faltantes'],
+                labels: ['Ciclo 2021A', 'Ciclo 2022A'],
                 datasets: [{
                     // label: '# of Votes',
-                    data: [js_total_sici, js_total_sici_falta],
+                    data: ciclosArray,
                     backgroundColor: [
                         'rgb(92,184,92)',
                         'rgb(240,173,78)',

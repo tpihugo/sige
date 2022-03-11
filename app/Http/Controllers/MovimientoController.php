@@ -86,7 +86,7 @@ class MovimientoController extends Controller
             ));
         }
         else{
-            return redirect('home')->with(array(
+            return redirect('/')->with(array(
                 'message'=>'El equipo se cambió de ubicación correctamente'
             ));
         }

@@ -189,24 +189,57 @@ class InventarioController extends Controller
         return view('inventario.inventario_express');
     }
 
+    public function inventario_express3($area_id){
+
+        $equipos_sici_no_localizados = DB::table('vs_equipos')
+            ->select(DB::raw('COUNT(*) as cuenta_equipos'))
+            ->where('resguardante', '=', 'CTA')
+            ->where('localizado_sici', '=', 'No')
+            ->where('id_area', '=', $area_id)
+            ->first();
+        // /* Localizados inventario Express*/
+        $total_equipos_localizados = DB::table('inventariodetalle')
+            ->select(DB::raw('COUNT(*) as localizados'))
+            ->where('estatus', '=', 'Localizado')
+            ->where('IdArea', '=', $area_id)
+            ->first();
+
+        $total_areas = DB::table('vs_cuentainventariables')
+            ->join('vs_cuentaencontrados', 'vs_cuentainventariables.id_area', '=', 'vs_cuentaencontrados.IdArea')
+            ->select('vs_cuentainventariables.area')
+            ->get();
+    
+        $total_ids_areas = DB::table('vs_cuentainventariables')
+            ->join('vs_cuentaencontrados', 'vs_cuentainventariables.id_area', '=', 'vs_cuentaencontrados.IdArea')
+            ->select('vs_cuentainventariables.id_area')
+            ->get();
+            
+        $equipos_en_sici_localizados = DB::table('vs_equipos')
+            ->select(DB::raw('COUNT(*) as cuenta_equipos'))
+            ->where('resguardante', '=', 'CTA')
+            ->where('localizado_sici', '=', 'S')
+            ->where('id_area', '=', $area_id)
+            ->first();
+
+         $total_equipos_revision = DB::table('inventariodetalle')
+            ->select(DB::raw('COUNT(*) as revisiones'))
+            ->where('estatus', '=', 'Revision')
+            ->where('IdArea', '=', $area_id)
+            ->first();
+
+        $equipos_en_sici = DB::table('vs_equipos')
+            ->select(DB::raw('COUNT(*) as cuenta_equipos'))
+            ->where('resguardante', '=', 'CTA')
+            ->where('id_area', '=', $area_id)
+            ->first();
+
+        return view('inventario.inventario_express3');
+    }
+
     public function inventario_express2(){
+       
 
-        // $total_objSICI = DB::table('vs_cuentainventariables')
-        //     ->join('vs_cuentaencontrados', 'vs_cuentainventariables.id_area', '=', 'vs_cuentaencontrados.IdArea')
-        //     ->select('vs_cuentainventariables.cuentaInventariables')
-        //     ->get();
-
-        // $total_areas = DB::table('vs_cuentainventariables')
-        // ->join('vs_cuentaencontrados', 'vs_cuentainventariables.id_area', '=', 'vs_cuentaencontrados.IdArea')
-        // ->select('vs_cuentainventariables.area')
-        // ->get();
-
-        // $total_ids_areas = DB::table('vs_cuentainventariables')
-        // ->join('vs_cuentaencontrados', 'vs_cuentainventariables.id_area', '=', 'vs_cuentaencontrados.IdArea')
-        // ->select('vs_cuentainventariables.id_area')
-        // ->get();
-
-        $total_SICI = DB::table('equipos')
+        $total_SICI_localizados = DB::table('equipos')
             ->select(DB::raw('count(*) as count'))
             ->where('localizado_sici', '=', 'si')
             ->where('resguardante', '=', 'CTA')
@@ -224,15 +257,14 @@ class InventarioController extends Controller
         $total_detalleInventario = DB::table('inventariodetalle')
             ->select(DB::raw('count(*) as count'))
             ->where('estatus', '=', 'localizado')
-            ->where('inventario', '=', '2021A')
             ->first();
 
-        // $total_detalleInventario_falta = DB::table('inventariodetalle')
-        //     ->select(DB::raw('count(*) as count'))
-        //     ->where('localizado_sici', '=', 'si')
-        //     ->where('resguardante', '=', 'CTA')
-        //     ->first();
-        // /
+        $total_detalleInventario_PorCiclo = DB::table('inventariodetalle')
+            ->select(DB::raw('count(*) as total_por_ciclo', 'inventario'))
+            ->groupBy('inventario')
+            ->get();
+
+        // dd($total_detalleInventario_PorCiclo);
 
         $dataTable = DB::table('vs_cuentainventariables')
             ->join('vs_cuentaencontrados', 'vs_cuentainventariables.id_area', '=', 'vs_cuentaencontrados.IdArea')
@@ -244,54 +276,17 @@ class InventarioController extends Controller
             ->where('resguardante', '=', 'CTA')
             ->first();
 
-        // $equipos_en_sici = DB::table('vs_equipos')
-        //     ->select(DB::raw('COUNT(*) as cuenta_equipos'))
-        //     ->where('resguardante', '=', 'CTA')
-        //     ->where('id_area', '=', $area_id)
-        //     ->first();
-
-        // /*Total equipos_localizados_sici*/
-        // $equipos_en_sici_localizados = DB::table('vs_equipos')
-        //     ->select(DB::raw('COUNT(*) as cuenta_equipos'))
-        //     ->where('resguardante', '=', 'CTA')
-        //     ->where('localizado_sici', '=', 'S')
-        //     ->where('id_area', '=', $area_id)
-        //     ->first();
-
-        // /*Total equipos_no_localizados_sici*/
-        // $equipos_en_sici_no_localizados = DB::table('vs_equipos')
-        //     ->select(DB::raw('COUNT(*) as cuenta_equipos'))
-        //     ->where('resguardante', '=', 'CTA')
-        //     ->where('localizado_sici', '=', 'No Encontrado')
-        //     ->where('id_area', '=', $area_id)
-        //     ->first();
-        // /* Localizados inventario Express*/
-        // $total_equipos_localizados = DB::table('inventariodetalle')
-        //     ->select(DB::raw('COUNT(*) as localizados'))
-        //     ->where('estatus', '=', 'Localizado')
-        //     ->where('IdArea', '=', $area_id)
-        //     ->first();
-        // /* Localizados*/
-        
-        // /* Revisi�n con Nota*/
-        // $total_equipos_revision = DB::table('inventariodetalle')
-        //     ->select(DB::raw('COUNT(*) as revisiones'))
-        //     ->where('estatus', '=', 'Revision')
-        //     ->where('IdArea', '=', $area_id)
-        //     ->first();
-
-        // $dataTable = json_decode(json_encode($data), true);
-
-        $total_SICI = $total_SICI->count;
+        $total_SICI_localizados = $total_SICI_localizados->count;
         $total_SICI_falta = $total_SICI_falta->count;
         $total_equipos = $total_equipos->cuenta_equipos;
         $total_detalleInventario = $total_detalleInventario->count;
         
         return view('inventario.inventario_express2')
         ->with('dataTable',$dataTable)
-        ->with('total_SICI',$total_SICI)
+        ->with('total_SICI_localizados',$total_SICI_localizados)
         ->with('total_SICI_falta',$total_SICI_falta)
         ->with('total_equipos',$total_equipos)
+        ->with('total_detalleInventario_PorCiclo',$total_detalleInventario_PorCiclo)
         ->with('total_detalleInventario',$total_detalleInventario);
         
     }
