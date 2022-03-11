@@ -73,6 +73,12 @@ Route::get('/inventario-express-detalle2', array(
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\InventarioController@inventario_express2'
 ));
+
+Route::get('/inventario-express-detalle3/{area_id}', array(
+    'as' => 'inventario-express-detalle3',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\InventarioController@inventario_express3'
+));
 ///Prueba Inventario express////
 
 Route::post('/equipo-encontrado/{origen?}', array(
