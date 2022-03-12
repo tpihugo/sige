@@ -110,7 +110,7 @@
 @endif
 
 <!-- Apartado de Inventario   -->
-	@if(Auth::check() && (Auth::user()->role =='admin'))
+	@if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' ))
 
         <div class="col-lg-4 col-md-6 col-sm-12">
         <div class="card card-stats">
