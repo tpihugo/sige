@@ -146,7 +146,7 @@
                         <th>Numero de objetos inventariables o SISI.</th>
                         <th class="text-center">Area</th>
                         <th>Progreso</th>
-                        <th> <p class="text-center">Valores </p> </th>
+                        <th> <p class="text-center">Valores <a href="#Help_info" class="text-reset" data-toggle="modal"> <strong> ? </strong> </a> </p> </th>
                                 
                         <th>Acciones</th>
                     </tr>
@@ -196,7 +196,6 @@
                             
                             <td style="width: 10%">
                                 <p class="text-dark text-center">{{$OneDataRow->cuentaEncontrados}} / {{$OneDataRow->cuentaInventariables}} </p>
-                                 <p class="text-muted text-center"> <a href="#Help_info" class="text-reset" data-toggle="modal"> <strong> ? </strong> </a> </p>
                             </td>
                                 
                             </td>
@@ -220,7 +219,7 @@
                                                 <h4>Info</h4>
                                                 <div class="row g-3 align-items-center">
                                                     <div class="col-md-12">
-                                                    <p class="text-dark text-center">Valor 1 / Valor 2 </p>
+                                                    <p class="text-dark text-center">{{$OneDataRow->cuentaEncontrados}} / {{$OneDataRow->cuentaInventariables}} </p>
                                                     </div>
 
                                                     <div class="container">
