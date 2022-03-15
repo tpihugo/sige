@@ -216,15 +216,31 @@ class InventarioController extends Controller
             ->where('inventario', '=', '2022A')
             ->first();
 
-        // $total_detalleInventario_PorCiclo = DB::table('inventariodetalle')
-        //     ->select(DB::raw('count(*) as total_por_ciclo', 'inventario'))
-        //     ->groupBy('inventario')
+            
+            // $total_detalleInventario_PorCiclo = DB::table('inventariodetalle')
+            //     ->select(DB::raw('count(*) as total_por_ciclo', 'inventario'))
+            //     ->groupBy('inventario')
+            //     ->get();
+            
+            // Query con porcentajes equipos_econtrados vs equipos_inventariables por area
+        // $dataTable = DB::table('vs_cuentainventariables')
+        //     ->join('vs_cuentaencontrados', 'vs_cuentainventariables.id_area', '=', 'vs_cuentaencontrados.IdArea')
+        //     ->select(DB::raw('ROUND((vs_cuentaencontrados.cuentaEncontrados / vs_cuentainventariables.cuentaInventariables) * 100)'. 'as PercentageValue'),
+        //     'vs_cuentainventariables.cuentaInventariables as cuentaInventariables',
+        //     'vs_cuentaencontrados.cuentaEncontrados as cuentaEncontrados',
+        //     'vs_cuentainventariables.area as area',
+        //     'vs_cuentainventariables.id_area as id_area',
+        //     )->where(DB::raw('ROUND((vs_cuentaencontrados.cuentaEncontrados / vs_cuentainventariables.cuentaInventariables) * 100)'),'<','100')
         //     ->get();
-
         $dataTable = DB::table('vs_cuentainventariables')
             ->join('vs_cuentaencontrados', 'vs_cuentainventariables.id_area', '=', 'vs_cuentaencontrados.IdArea')
-            ->select('vs_cuentainventariables.cuentaInventariables as cuentaInventariables','vs_cuentaencontrados.cuentaEncontrados as cuentaEncontrados','vs_cuentainventariables.area as area','vs_cuentainventariables.id_area as id_area')
-            ->get();
+            ->select('vs_cuentainventariables.cuentaInventariables as cuentaInventariables',
+            'vs_cuentaencontrados.cuentaEncontrados as cuentaEncontrados',
+            'vs_cuentainventariables.area as area',
+            'vs_cuentainventariables.id_area as id_area',
+            )->get();
+
+            // dd($dataTable);
 
         $total_equipos = DB::table('vs_equipos')
             ->select(DB::raw('COUNT(*) as cuenta_equipos'))
