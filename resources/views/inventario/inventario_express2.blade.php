@@ -32,7 +32,7 @@
                             </div><!--//row-->
                         </div><!--//app-card-header-->
                         <div class="app-card-body p-3 p-lg-4">
-                            <div class="table-responsive">
+                            <div class="table{{---responsive--}}">
                                 <table class="table table-borderless mb-0">
                                     <thead>
                                         <tr>
@@ -57,8 +57,20 @@
                                         </tr>
 
                                         <tr>
-                                            <td><a href="#">Detalle inventario</a></td>
+                                            <td><a href="#">Equipos detalle-inventario</a></td>
                                             <td class="stat-cell">{{$total_detalleInventario}}</td>
+                                            <td class="stat-cell">
+                                            <p class="text-center">-</p>
+                                            </td>
+
+                                            <td>
+                                                <p class="text-center">-</p>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><a href="#">Equipos detalle-inventario 22A</a></td>
+                                            <td class="stat-cell">{{$total_22A_detalleInventario}}</td>
                                             <td class="stat-cell">
                                             <p class="text-center">-</p>
                                             </td>
@@ -73,7 +85,7 @@
 
 
                                         <tr>
-                                            <td><a href="#">SICI</a></td>
+                                            <td><a href="#">Localizados SICI</a></td>
                                             <td class="stat-cell">{{$total_SICI_localizados}}</td>
                                             <td class="stat-cell">
                                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-down text-danger" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -141,20 +153,16 @@
                     <tbody>
 
                     @php ( $cont=1 )
-                    @php ( $bar_indicatorColor="success" )
-
+                    
                     @foreach($dataTable as $OneDataRow)
-
+                    
                     @php ($ToRoundedValue = round((($OneDataRow->cuentaEncontrados / $OneDataRow->cuentaInventariables) * 100)) )
                     @if( $ToRoundedValue < '100')
-
+                        @php ( $bar_indicatorColor="success" )
                         @if( $ToRoundedValue < '50' )
                             @php ( $bar_indicatorColor= "danger")
                         @elseif( $ToRoundedValue < '90' )
                             @php ( $bar_indicatorColor= "warning")
-                        @else
-                        @php ( $bar_indicatorColor= "success")
-
                         @endif
 
                         <tr>
@@ -172,7 +180,7 @@
                                 <div class="container-fluid wd-200">
                                         <div class="row no-gutters align-items-center">
                                             
-                                            <p class="text-center"><small><strong> Localizados </strong></small></p>
+                                            
                                             <div class="h6 mb-0 mr-1 text-center text-gray-800"> <strong>{{$ToRoundedValue}}% </strong> </div>
                                             
                                             <div class="col">
@@ -187,15 +195,55 @@
                             
                             <td style="width: 10%">
 
-                            <p class="text-dark text-center">{{$OneDataRow->cuentaEncontrados}} / {{$OneDataRow->cuentaInventariables}} </p>
                                 
+                                <p class="text-dark text-center">{{$OneDataRow->cuentaEncontrados}} / {{$OneDataRow->cuentaInventariables}} </p>
+                                
+                                <p class="text-muted text-center"> <a href="#Help_info" class="text-reset" data-toggle="modal">?</a> </p>
+
+                                <div id="Help_info" class="modal fade">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <form action="" method="POST">
+                                            
+                                            <div class="modal-body">
+
+                                                <h4>Info</h4>
+
+
+
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-md-12">
+                                                    <p class="text-dark text-center">{{$OneDataRow->cuentaEncontrados}} / {{$OneDataRow->cuentaInventariables}} </p>
+                                                    </div>
+
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="col-sm">
+                                                                <p class="text-muted text-center"> <strong> {{$OneDataRow->cuentaEncontrados}}:</strong> Cantidad de equipos localizados</p>
+                                                            </div>
+                                                            <div class="col-sm">
+                                                                <p class="text-muted text-center"> <strong> {{$OneDataRow->cuentaInventariables}}:</strong> Cantidad de equipos inventariables </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+                                            </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
 
                             </td>
                                 
                             </td>
                             <td>
-                            {{-- <p><a href="{{ route('inventario-por-area', $OneDataRow->id_area ) }}" class="btn btn-primary">Detalle</a></p> --}}
-                                 <p><a href="{{ route('inventario-express-detalle3', $OneDataRow->id_area ) }}" class="btn btn-primary">Detalle</a></p> 
+                            <p><a href="{{ route('inventario-por-area', $OneDataRow->id_area ) }}" class="btn btn-primary">Detalle</a></p>
+                                 
                                 <p><a href="{{ route('actualizacion-inventario', $OneDataRow->id_area) }}" class="btn btn-success">Revisado</a></p>
                             </td>
                         </tr>
@@ -287,8 +335,8 @@
             $('#js-example-basic-single').select2();
         });
 
-        const js_total_sici = {!! json_encode($total_SICI_localizados) !!};
-        const js_total_sici_falta = {!! json_encode($total_detalleInventario) !!};
+        const total_sici_localizados = {!! json_encode($total_SICI_localizados) !!};
+        const total_22A_detalleInventario = {!! json_encode($total_22A_detalleInventario) !!};
         
 
         const ctx = document.getElementById('chart-pie').getContext('2d');
@@ -297,13 +345,13 @@
         const myChart = new Chart(ctx, {
             type: 'pie',
             data: {
-                labels: ['localizados SICI CTA', 'localizados inventario detalle'],
+                labels: ['localizados SICI CTA', 'localizados detalle inventario 22A'],
                 datasets: [{
                     // label: '# of Votes',
-                    data: [js_total_sici, js_total_sici_falta],
+                    data: [total_sici_localizados, total_22A_detalleInventario],
                     backgroundColor: [
-                        'rgb(92,184,92)',
                         'rgb(240,173,78)',
+                        'rgb(92,184,92)',
                     ],
                     borderColor: [
                         'rgba(255, 99, 132, 1)',
@@ -314,23 +362,29 @@
             },
         });
 
+        {{-- 
         let ciclosArray = [];
         let index = 0;
         for (let item of {!! json_encode($total_detalleInventario_PorCiclo ) !!}){
             ciclosArray[index] = item['total_por_ciclo'];
             index++;           
-        }        
+        } 
+        --}}      
+        
+        const total_equipos = {!! json_encode($total_equipos) !!};
+        
+
         
         const myChart2 = new Chart(ctx2, {
             type: 'pie',
             data: {
-                labels: ['Ciclo 2021A', 'Ciclo 2022A'],
+                labels: ['Total equipos', 'localizados detalle inventario 22A'],
                 datasets: [{
                     // label: '# of Votes',
-                    data: ciclosArray,
+                    data: [total_equipos, total_22A_detalleInventario],
                     backgroundColor: [
-                        'rgb(92,184,92)',
                         'rgb(240,173,78)',
+                        'rgb(92,184,92)',
                     ],
                     borderColor: [
                         'rgba(255, 99, 132, 1)',
