@@ -302,7 +302,7 @@ class InventarioController extends Controller
         $equipo_id = $request->input('equipo_id');
         $area_id = $request->input('area_id');
         $user_id = $request->input('user_id');
-        $inventario = '2021A';
+        $inventario = '2022A';
         $nota = $request->input('nota');
         $articulosRegistrados=InventarioDetalle::where([['IdEquipo','=',$equipo_id], ['inventario','=', $inventario]])->count();
         if($articulosRegistrados==0) {
@@ -333,8 +333,7 @@ class InventarioController extends Controller
             $mensaje = 'El articulo ya se habia registrado como Localizado';
         }
         return redirect('revision-inventario')->with(array(
-            //    "message1" => "El área que trata de eliminar no existe"
-                "message" => "El área que trata de eliminar no existe"
+                "message" => $mensaje
             ));
     }
 
@@ -449,7 +448,9 @@ class InventarioController extends Controller
             ->with('area_id',$area_id);
     }
     public function listarEquipoEncontrado(Request $request){
+
         //Se hace la ruta, la ruta manda llamar el m�todo y el m�todo manda llamar la plantilla
+        //La busqueda puede ser por: id, udg_id or NumeroDeSerie
         $listadoEquipos = VsEquipo::where('id', '=', $request->input('id'))
             ->orWhere('udg_id', '=', $request->input('id'))
             ->orWhere('numero_serie', 'like', '%'.$request->input('id').'%')->get();
