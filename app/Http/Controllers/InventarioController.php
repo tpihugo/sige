@@ -206,10 +206,10 @@ class InventarioController extends Controller
             ->first();
         
             //Detalle IV
-        $total_detalleInventario = DB::table('inventariodetalle')
-            ->select(DB::raw('count(*) as count'))
-            ->where('estatus', '=', 'localizado')
-            ->first();
+        // $total_detalleInventario = DB::table('inventariodetalle')
+        //     ->select(DB::raw('count(*) as count'))
+        //     ->where('estatus', '=', 'localizado')
+        //     ->first();
 
         $total_22A_detalleInventario = DB::table('inventariodetalle')
             ->select(DB::raw('count(*) as count'))
@@ -232,15 +232,16 @@ class InventarioController extends Controller
         //     'vs_cuentainventariables.id_area as id_area',
         //     )->where(DB::raw('ROUND((vs_cuentaencontrados.cuentaEncontrados / vs_cuentainventariables.cuentaInventariables) * 100)'),'<','100')
         //     ->get();
-        $dataTable = DB::table('vs_cuentainventariables')
-            ->join('vs_cuentaencontrados', 'vs_cuentainventariables.id_area', '=', 'vs_cuentaencontrados.IdArea')
+        $dataTable = DB::table('vs_cuentaencontrados')
+            ->join('vs_cuentainventariables','vs_cuentainventariables.id_area', '=', 'vs_cuentaencontrados.IdArea')
             ->select('vs_cuentainventariables.cuentaInventariables as cuentaInventariables',
             'vs_cuentaencontrados.cuentaEncontrados as cuentaEncontrados',
             'vs_cuentainventariables.area as area',
-            'vs_cuentainventariables.id_area as id_area',
-            )->get();
+            'vs_cuentainventariables.id_area as id_area')
+            ->where('vs_cuentaencontrados.inventario', '=', '2022A')
+            ->get();
 
-            // dd($dataTable);
+        // dd($dataTable);
 
         $total_equipos = DB::table('vs_equipos')
             ->select(DB::raw('COUNT(*) as cuenta_equipos'))
@@ -250,16 +251,17 @@ class InventarioController extends Controller
         $total_SICI_localizados = $total_SICI_localizados->count;
         $total_SICI_falta = $total_SICI_falta->count;
         $total_equipos = $total_equipos->cuenta_equipos;
-        $total_detalleInventario = $total_detalleInventario->count;
+        // $total_detalleInventario = $total_detalleInventario->count;
         $total_22A_detalleInventario = $total_22A_detalleInventario->count;
         
         return view('inventario.inventario_express2')
         ->with('dataTable',$dataTable)
         ->with('total_SICI_localizados',$total_SICI_localizados)
-        ->with('total_SICI_falta',$total_SICI_falta)
+        // ->with('total_SICI_falta',$total_SICI_falta)
         ->with('total_equipos',$total_equipos)
         ->with('total_22A_detalleInventario',$total_22A_detalleInventario)
-        ->with('total_detalleInventario',$total_detalleInventario);
+        // ->with('total_detalleInventario',$total_detalleInventario)
+        ;
     }
 
     /**
@@ -388,16 +390,29 @@ class InventarioController extends Controller
         $total_equipos_localizados = DB::table('inventariodetalle')
             ->select(DB::raw('COUNT(*) as localizados'))
             ->where('estatus', '=', 'Localizado')
+            ->where('inventario', '=', '2022A')
             ->where('IdArea', '=', $area_id)
             ->first();
 
 
-        /* Revisi�n con Nota*/
+        /* Revisi�n con Nota*/ 
+        
+        // $total_equipos_revision = DB::table('inventariodetalle')
+        //     ->select(DB::raw('COUNT(*) as revisiones'))
+        //     ->where('estatus', '=', 'Revision')
+        //     ->where('IdArea', '=', $area_id)
+        //     ->first();
+
         $total_equipos_revision = DB::table('inventariodetalle')
             ->select(DB::raw('COUNT(*) as revisiones'))
-            ->where('estatus', '=', 'Revision')
+            ->where('estatus', '=', 'Localizado')
             ->where('IdArea', '=', $area_id)
             ->first();
+        // $total_equipos_revision = DB::table('inventariodetalle')
+        //     ->select(DB::raw('COUNT(*) as revisiones'))
+        //     ->where('estatus', '=', 'Localizado')
+        //     ->where('IdArea', '=', $area_id)
+        //     ->first();
 
         /*AREAS*/
 
@@ -405,7 +420,14 @@ class InventarioController extends Controller
 
         /*DATA TABLE*/
 
-        $equipos= Vs_Equipo_Detalle::where('id_area','=',$area_id)->get();
+        // $equipos= Vs_Equipo_Detalle::where('id_area','=',$area_id)->get();
+
+        $equipos= Vs_Equipo_Detalle::
+        where('id_area','=',$area_id)
+        ->where('resguardante','=','CTA')
+        
+        ->get();
+
         $total_equipos = count($equipos);
         return view('inventario.inventario-area')
             ->with('total_equipos',$total_equipos)

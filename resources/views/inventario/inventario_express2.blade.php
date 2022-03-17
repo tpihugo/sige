@@ -48,54 +48,44 @@
                                             <td><a href="#">Total equipos</a></td>
                                             <td class="stat-cell">{{$total_equipos}}</td>
                                             <td class="stat-cell">
-                                            <p class="text-center">-</p>
+                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-down text-danger" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
+                                </svg>
+                                    {{($total_equipos - $total_SICI_localizados)}}
                                             </td>
 
                                             <td>
-                                                <p class="text-center">-</p>
+                                                <?php echo $Percentage_SICI = round(100-((($total_equipos - $total_SICI_localizados) / ($total_equipos)) * 100),2);?>%
                                             </td>
                                         </tr>
-
-                                        <tr>
-                                            <td><a href="#">Equipos detalle-inventario</a></td>
-                                            <td class="stat-cell">{{$total_detalleInventario}}</td>
-                                            <td class="stat-cell">
-                                            <p class="text-center">-</p>
-                                            </td>
-
-                                            <td>
-                                                <p class="text-center">-</p>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td><a href="#">Equipos detalle-inventario 22A</a></td>
-                                            <td class="stat-cell">{{$total_22A_detalleInventario}}</td>
-                                            <td class="stat-cell">
-                                            <p class="text-center">-</p>
-                                            </td>
-
-                                            <td>
-                                                <p class="text-center">-</p>
-                                            </td>
-                                        </tr>
-
 
                                         <tr>
 
 
                                         <tr>
                                             <td><a href="#">Localizados SICI</a></td>
-                                            <td class="stat-cell">{{$total_SICI_localizados}}</td>
+                                            <td class="stat-cell">{{$total_SICI_localizados }}</td>
                                             <td class="stat-cell">
                                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-down text-danger" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
                                 </svg>
-                                {{$total_SICI_falta}}
+                                {{($total_SICI_localizados - $total_22A_detalleInventario)}}
                                             </td>
 
                                             <td>
-                                            <?php echo $Percentage_SICI = round((($total_SICI_falta / $total_SICI_localizados) * 100));?>%
+                                            <?php echo $Percentage_SICI = round(100-((($total_SICI_localizados - $total_22A_detalleInventario) / ($total_SICI_localizados)) * 100),2);?>%
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><a href="#">Revision inventario 2022A</a></td>
+                                            <td class="stat-cell">{{$total_22A_detalleInventario}}</td>
+                                            <td class="stat-cell">
+                                            <p class="text-center">{{-- --}} </p>
+                                            </td>
+
+                                            <td>
+                                                <p class="text-center">{{-- --}} </p>
                                             </td>
                                         </tr>
                                         
@@ -111,7 +101,7 @@
                     <div class="col-4 col-lg-3">		        
 				        <div class="app-card app-card-chart h-100 shadow-sm">
 					        <div class="app-card-header p-3 border-0">
-						        <p class="app-card-title text-center">Diagrama de pastel</p>
+						        <p class="app-card-title text-center">Equipos localizados</p>
 					        </div><!--//app-card-header-->
 					        <div class="app-card-body p-12">					   
 						        <div class="chart-container">
@@ -125,7 +115,7 @@
                     <div class="col-4 col-lg-3">		        
 				        <div class="app-card app-card-chart h-100 shadow-sm">
 					        <div class="app-card-header p-3 border-0">
-                            <p class="app-card-title text-center">Diagrama de pastel</p>
+                            <p class="app-card-title text-center">Avance general</p>
 					        </div><!--//app-card-header-->
 					        <div class="app-card-body p-12">					   
 						        <div class="chart-container">
@@ -143,10 +133,9 @@
                     <thead>
                     <tr>
                         <th>Núm.</th>
-                        <th>Numero de objetos inventariables o SISI.</th>
-                        <th class="text-center">Area</th>
+                        <th class="text-center">Área</th>
                         <th>Progreso</th>
-                        <th> <p class="text-center">Valores </p> </th>
+                        <th> Avances <a href="#Help_info" class="text-reset" data-toggle="modal"> <strong> ? </strong> </a> </th>
                                 
                         <th>Acciones</th>
                     </tr>
@@ -168,9 +157,6 @@
 
                         <tr>
                             <td>{{$cont++}}</td>
-                            <td>
-                                {{ $OneDataRow->cuentaInventariables }}
-                            </td>
                             <td>
                                 
                             <p class="font-weight-normal">{{ $OneDataRow->area }}</p>                            
@@ -196,7 +182,6 @@
                             
                             <td style="width: 10%">
                                 <p class="text-dark text-center">{{$OneDataRow->cuentaEncontrados}} / {{$OneDataRow->cuentaInventariables}} </p>
-                                 <p class="text-muted text-center"> <a href="#Help_info" class="text-reset" data-toggle="modal"> <strong> ? </strong> </a> </p>
                             </td>
                                 
                             </td>
