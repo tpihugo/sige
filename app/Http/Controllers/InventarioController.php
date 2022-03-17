@@ -198,12 +198,12 @@ class InventarioController extends Controller
             ->groupBy('localizado_sici')
             ->first();
 
-        $total_SICI_falta = DB::table('equipos')
-            ->select(DB::raw('count(*) as count'))
-            ->where('localizado_sici', '=', 'no')
-            ->where('resguardante', '=', 'CTA')
-            ->groupBy('localizado_sici')
-            ->first();
+        // $total_SICI_falta = DB::table('equipos')
+        //     ->select(DB::raw('count(*) as count'))
+        //     ->where('localizado_sici', '=', 'no')
+        //     ->where('resguardante', '=', 'CTA')
+        //     ->groupBy('localizado_sici')
+        //     ->first();
         
             //Detalle IV
         // $total_detalleInventario = DB::table('inventariodetalle')
@@ -249,7 +249,7 @@ class InventarioController extends Controller
             ->first();
 
         $total_SICI_localizados = $total_SICI_localizados->count;
-        $total_SICI_falta = $total_SICI_falta->count;
+        // $total_SICI_falta = $total_SICI_falta->count;
         $total_equipos = $total_equipos->cuenta_equipos;
         // $total_detalleInventario = $total_detalleInventario->count;
         $total_22A_detalleInventario = $total_22A_detalleInventario->count;
@@ -502,7 +502,7 @@ class InventarioController extends Controller
     {
         $area = Area::find($area_id);
         if ($area) {
-            $area->ultimo_inventario = '2021';
+            $area->ultimo_inventario = '2022';
             $area->update();
 	    //
             $log = new Log();
