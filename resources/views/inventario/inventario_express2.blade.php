@@ -16,7 +16,7 @@
 
         <div class="container-fluid">
             <div class="row">
-            <h2 class="text-muted">Graficas</h2>
+            <h2 class="text-muted">Gráficas</h2>
             <div class="col-6 col-lg-6">
                     <div class="app-card app-card-stats-table h-10 shadow-sm">
                         <div class="app-card-header p-3">
