@@ -147,7 +147,7 @@
                     @foreach($dataTable as $OneDataRow)
                     
                     @php ($ToRoundedValue = round((($OneDataRow->cuentaEncontrados / $OneDataRow->cuentaInventariables) * 100)) )
-                    @if( $ToRoundedValue < '100')
+                    {{--@if( $ToRoundedValue < '100')--}}
                         @php ( $bar_indicatorColor="success" )
                         @if( $ToRoundedValue < '50' )
                             @php ( $bar_indicatorColor= "danger")
@@ -191,7 +191,7 @@
                                 <p><a href="{{ route('actualizacion-inventario', $OneDataRow->id_area) }}" class="btn btn-success">Revisado</a></p>
                             </td>
                         </tr>
-                        @endif
+                        {{--@endif--}}
                     @endforeach
                 
                     
