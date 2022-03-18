@@ -13,7 +13,7 @@
             <h2>Listado de Mobiliario </h2>
             <br>
                 <p align="right">
-                    @if(Auth::check() && Auth::user()->role !='general'))
+                    @if(Auth::check() && Auth::user()->role !='general')
                     <a href="{{ route('mobiliarios.create') }}" class="btn btn-success">Capturar Mobiliario</a>
                     @endif
                     <a href="{{ route('home') }}" class="btn btn-primary">< Regresar</a>

@@ -249,7 +249,7 @@
             </div>
         </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
 
@@ -260,11 +260,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"></script> -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script ript type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4-4.1.1/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/r-2.2.7/datatables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.js" integrity="sha512-CWVDkca3f3uAWgDNVzW+W4XJbiC3CH84P2aWZXj+DqI6PNbTzXbl1dIzEHeNJpYSn4B6U8miSZb/hCws7FnUZA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-
-    </script>
-    <script>
+        
         $(document).ready(function() {
             $('#example').DataTable( {
                 "pageLength": 100,
@@ -301,13 +303,12 @@
                         orientation: 'landscape',
                         pageSize:'LETTER',
                     }
-
                 ]
             } );
         } );
     </script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.js" integrity="sha512-CWVDkca3f3uAWgDNVzW+W4XJbiC3CH84P2aWZXj+DqI6PNbTzXbl1dIzEHeNJpYSn4B6U8miSZb/hCws7FnUZA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
     <script type="text/javascript">
 
         $(document).ready(function() {
@@ -340,19 +341,8 @@
                 }]
             },
         });
-
-        {{-- 
-        let ciclosArray = [];
-        let index = 0;
-        for (let item of {!! json_encode($total_detalleInventario_PorCiclo ) !!}){
-            ciclosArray[index] = item['total_por_ciclo'];
-            index++;           
-        } 
-        --}}      
         
         const total_equipos = {!! json_encode($total_equipos) !!};
-        
-
         
         const myChart2 = new Chart(ctx2, {
             type: 'pie',
@@ -374,46 +364,9 @@
             },
         });
 
-        // const myChart2 = new Chart(ctx2, {
-        //     type: 'bar',
-        //     data: {
-        //         labels: ['SICI total','SICI faltante'],
-        //         datasets: [{
-        //             label: 'SICI',
-        //             data: [js_total_sici, js_total_sici_falta],
-        //             barPercentage: 0.5,
-        //             barThickness: 90,
-        //             maxBarThickness: 100,
-        //             minBarLength: 2,
-        //             backgroundColor: [
-        //                 'rgb(66, 186, 150)',
-        //                 'rgb(255, 193, 7)',
-        //                 // 'rgb(255, 0, 0)',
-        //                 // 'rgba(255, 206, 86, 0.2)',
-        //                 // 'rgba(153, 102, 255, 0.2)'
-        //             ],
-                    
-        //             borderColor: [
-        //                 'rgba(255, 99, 132, 1)',
-        //                 'rgba(54, 162, 235, 1)',
-        //                 // 'rgba(255, 206, 86, 1)',
-        //                 // 'rgba(153, 102, 255, 1)'
-        //             ],
-        //             borderWidth: 1
-        //         }]
-        //     },
-        //     options: {
-        //         scales: {
-        //             y: {
-        //                 // beginAtZero: true                        
-        //             }
-        //         }
-        //     }
-        // });
-
-    
-
     </script>
+
+
 
     @else
         El periodo de Registro de Proyectos a terminado
