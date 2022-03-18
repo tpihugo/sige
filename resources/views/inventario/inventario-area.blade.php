@@ -118,7 +118,7 @@
                             </td>
                             <td>{{$equipo->area}}</td>
                             <td>
-                                <p><a class="btn btn-outline-success" href="{{ route('registro-inventario', ['equipo_id' => $equipo->id, 'revisor_id' => Auth::user()->id, 'inventario' => '2021A', 'origen'=>$origen]) }}" >Localizado</a></p>
+                                <p><a class="btn btn-outline-success" href="{{ route('registro-inventario', ['equipo_id' => $equipo->id, 'revisor_id' => Auth::user()->id, 'inventario' => '2022A', 'origen'=>$origen]) }}" >Localizado</a></p>
                                 <p><a href="{{ route('cambiar-ubicacion', ['equipo_id' => $equipo->id, 'tipo' => 'inventario']) }}" class="btn btn-outline-primary">Reubicar</a></p>
                                 <p><a href="{{ route('equipos.edit', $equipo->id) }}" class="btn btn-outline-secondary">Editar</a></p>
 
