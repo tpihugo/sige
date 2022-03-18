@@ -227,11 +227,11 @@ class InventarioController extends Controller
             )
             ->get();
 
-        foreach($dataTable as $dataRow){
-            if ((float)$dataRow->PercentageValue >= 100 ){
-                $this->AutomaticallyUpdateArea($dataRow->id_area);
-            }
-        }
+        // foreach($dataTable as $dataRow){
+        //     if ((float)$dataRow->PercentageValue >= 100 ){
+        //         $this->AutomaticallyUpdateArea($dataRow->id_area);
+        //     }
+        // }
 
         // $dataTable = DB::table('vs_cuentaencontrados')
         //     ->join('vs_cuentainventariables','vs_cuentainventariables.id_area', '=', 'vs_cuentaencontrados.IdArea')

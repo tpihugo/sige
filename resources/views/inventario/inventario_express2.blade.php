@@ -235,7 +235,7 @@
             </div>
 
             <p>
-                <a href="{{ route('home') }}" class="btn btn-primary">< Regresar</a>
+                <a href="{{ route('/') }}" class="btn btn-primary">< Regresar</a>
             </p>
 
             <br>
