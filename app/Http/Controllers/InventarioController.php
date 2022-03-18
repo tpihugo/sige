@@ -444,7 +444,6 @@ class InventarioController extends Controller
         $equipos= Vs_Equipo_Detalle::
         where('id_area',$area_id)
         ->where('resguardante','CTA')
-        ->where('inventario','2022A')
         ->get();
 
         $total_equipos = count($equipos);
