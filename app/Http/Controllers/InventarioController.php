@@ -232,7 +232,7 @@ class InventarioController extends Controller
         //         $this->AutomaticallyUpdateArea($dataRow->id_area);
         //     }
         // }
-        
+
 
         // $dataTable = DB::table('vs_cuentaencontrados')
         //     ->join('vs_cuentainventariables','vs_cuentainventariables.id_area', '=', 'vs_cuentaencontrados.IdArea')
@@ -442,8 +442,9 @@ class InventarioController extends Controller
         // $equipos= Vs_Equipo_Detalle::where('id_area','=',$area_id)->get();
 
         $equipos= Vs_Equipo_Detalle::
-        where('id_area','=',$area_id)
-        ->where('resguardante','=','CTA')
+        where('id_area',$area_id)
+        ->where('resguardante','CTA')
+        ->where('inventario','2022A')
         ->get();
 
         $total_equipos = count($equipos);
