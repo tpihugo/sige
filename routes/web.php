@@ -253,7 +253,7 @@ Route::get('/delete-mobiliario/{mobiliario_id}', array(
 Route::get('/panel-inventario/{area_id?}', array(
     'as' => 'panel-inventario',
     'middleware' => 'auth',
-    'uses' => 'App\Http\Controllers\InventarioController@index'
+    'uses' => 'App\Http\Controllers\InventarioController@inventario_express2'
 ));
 Route::post('/panel-inventario/{area_id?}', array(
     'as' => 'panel-prueba',
