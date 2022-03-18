@@ -146,12 +146,12 @@
                     
                     @foreach($dataTable as $OneDataRow)
                     
-                    @php ($ToRoundedValue = round((($OneDataRow->cuentaEncontrados / $OneDataRow->cuentaInventariables) * 100)) )
-                    {{--@if( $ToRoundedValue < '100')--}}
+                    {{--@php ($ToRoundedValue = round((($OneDataRow->cuentaEncontrados / $OneDataRow->cuentaInventariables) * 100)) ) --}}
+                    @if( $OneDataRow->PercentageValue < '100')
                         @php ( $bar_indicatorColor="success" )
-                        @if( $ToRoundedValue < '50' )
+                        @if( $OneDataRow->PercentageValue < '50' )
                             @php ( $bar_indicatorColor= "danger")
-                        @elseif( $ToRoundedValue < '90' )
+                        @elseif( $OneDataRow->PercentageValue < '90' )
                             @php ( $bar_indicatorColor= "warning")
                         @endif
 
@@ -168,12 +168,12 @@
                                         <div class="row no-gutters align-items-center">
                                             
                                             
-                                            <div class="h6 mb-0 mr-1 text-center text-gray-800"> <strong>{{$ToRoundedValue}}% </strong> </div>
+                                            <div class="h6 mb-0 mr-1 text-center text-gray-800"> <strong>{{$OneDataRow->PercentageValue}}% </strong> </div>
                                             
                                             <div class="col">
                                                 <div class="progress progress-sm mr-2">
                                                     <div class="progress-bar bg-<?php echo $bar_indicatorColor ?>" role="progressbar"
-                                                        style="width: {{$ToRoundedValue}}%" aria-valuenow="50" aria-valuemin="0"
+                                                        style="width: {{$OneDataRow->PercentageValue}}%" aria-valuenow="50" aria-valuemin="0"
                                                         aria-valuemax="100"></div>
                                                 </div>
                                             </div>
@@ -188,10 +188,10 @@
                             <td>
                             <p><a href="{{ route('inventario-por-area', $OneDataRow->id_area ) }}" class="btn btn-primary">Detalle</a></p>
                                  
-                                <p><a href="{{ route('actualizacion-inventario', $OneDataRow->id_area) }}" class="btn btn-success">Revisado</a></p>
+                                {{--<p><a href="{{ route('actualizacion-inventario', $OneDataRow->id_area) }}" class="btn btn-success">Revisado</a></p>--}}
                             </td>
                         </tr>
-                        {{--@endif--}}
+                        @endif
                     @endforeach
                 
                     
