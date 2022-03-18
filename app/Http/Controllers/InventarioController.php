@@ -232,6 +232,7 @@ class InventarioController extends Controller
         //         $this->AutomaticallyUpdateArea($dataRow->id_area);
         //     }
         // }
+        
 
         // $dataTable = DB::table('vs_cuentaencontrados')
         //     ->join('vs_cuentainventariables','vs_cuentainventariables.id_area', '=', 'vs_cuentaencontrados.IdArea')
