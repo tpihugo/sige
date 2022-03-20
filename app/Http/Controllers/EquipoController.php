@@ -140,7 +140,7 @@ class EquipoController extends Controller
             $resguardante = Empleado::find($idResguardante);
             return view('equipo.edit')->with('equipo', $equipo)->with('empleados', $empleados)->with('resguardante',$resguardante)->with('tipo_equipos', $tipo_equipos)->with('ips',$ip)->with('ip_equipo',$ip_equipo);
         }else{
-            return redirect('home')->with(array(
+            return redirect('/')->with(array(
                 'message'=>'El Id que desea modificar no existe'
             ));
         }
