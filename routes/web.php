@@ -35,10 +35,15 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/', [App\Http\Controllers\
 Route::resource('usuarios','App\Http\Controllers\UsuariosController');
 Route::resource('roles','App\Http\Controllers\RolesController');
 Route::resource('permisos','App\Http\Controllers\PermisosController');
-Route::get('asignar-permisos', array(
+Route::get('asignar-permisos/{id}', array(
     'as' => 'asignar_permisos',
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\RolesController@relacionar'
+));
+Route::post('guardar-relacion-permisos', array(
+    'as' => 'guardar_relacion_permisos',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\RolesController@guardarRelacion'
 ));
 
 Route::resource('equipos', 'App\Http\Controllers\EquipoController');
@@ -99,7 +104,7 @@ Route::get('/delete-equipo/{equipo_id}', array(
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\EquipoController@delete_equipo'
 ));
-Route::get('/registro-inventario/{equipo_id}/{revisor_id}/{inventario}/{origen}', array(
+Route::get('/registro-inventario/{equipo_id}/¨/{inventario}/{origen}', array(
     'as' => 'registro-inventario',
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\InventarioController@registroInventario'
