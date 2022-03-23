@@ -35,11 +35,13 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/', [App\Http\Controllers\
 Route::resource('usuarios','App\Http\Controllers\UsuariosController');
 Route::resource('roles','App\Http\Controllers\RolesController');
 Route::resource('permisos','App\Http\Controllers\PermisosController');
-Route::get('asignar-permisos/{id}', array(
+
+Route::get('asignar-permisos', array(
     'as' => 'asignar_permisos',
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\RolesController@relacionar'
 ));
+
 Route::post('guardar-relacion-permisos', array(
     'as' => 'guardar_relacion_permisos',
     'middleware' => 'auth',

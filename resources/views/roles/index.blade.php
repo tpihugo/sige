@@ -25,7 +25,7 @@
                         @csrf
                         <button type="submit" class="btn btn-primary">
                             {{ __('Nuevo Rol') }}
-                        </button>                      
+                        </button>
                     </form>
                 </div>
             </div>
