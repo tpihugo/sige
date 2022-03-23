@@ -11,6 +11,12 @@
                 <h2>Administración de Roles</h2>
             </div>
 
+            @if( isset($success))
+                <div class="alert alert-success">
+                    {{ $success }}
+                </div>
+            @endif
+
             <div class="row">
                 <div class="col-auto mb-1">
                     <br>
@@ -56,6 +62,7 @@
                                         <button type="submit" class="btn btn-info">
                                             {{ __('Editar') }}
                                         </button>
+                                        <a href="{{ route('asignar_permisos',$role->id) }}"><button type="button" class="btn btn-success">Relacionar Permisos</button> </a>
                                     </form>
                                 </td>
                             </tr>

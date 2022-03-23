@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Spatie\Permission\Models\Permission;
 
 class RolesController extends Controller
 {
@@ -143,7 +145,37 @@ class RolesController extends Controller
         //
     }
 
-    public function relacionar()
+    public function relacionar($id)
     {
+        $rol = Role::findOrFail($id);
+        $permisos = Permission::orderBy('name')->get();
+        $dataReturn = [];
+        foreach ($permisos as $permiso) {
+            $tmp = explode("#", strtolower($permiso->name));
+            $push['id'] = $permiso->id;
+            $push['modulo'] = str_replace("_"," ",$tmp[0]);
+            $push['modulo'] = Str::title($tmp[0]);
+            $push['permiso'] = str_replace("_"," ",$tmp[1]);
+            $push['permiso'] = Str::ucfirst($tmp[1]);
+            $push['valor'] = $permiso->name;
+            $dataReturn[] = $push;
+        }
+
+        return view('roles.relacionar')
+            ->with('permisos', $dataReturn)
+            ->with('rol',$rol);
+    }
+
+    public function guardarRelacion(Request $request)
+    {
+        //echo "<pre>";
+        //print_r($request->all());
+        $permisos = $request->get('permisos');
+        $role = Role::findOrFail($request->get('role_id'));
+        //$role->givePermissionTo($permisos);
+        $role->syncPermissions($permisos);
+
+        $roles = Role::all();
+        return view('roles.index')->with('roles', $roles)->with('success', 'Permisos asignados correctamente.');
     }
 }

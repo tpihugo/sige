@@ -58,7 +58,7 @@ class PermisosController extends Controller
             $push['modulo'] = str_replace("_"," ",$tmp[0]);
             $push['modulo'] = Str::title($tmp[0]);
             $push['permiso'] = str_replace("_"," ",$tmp[1]);
-            $push['permiso'] = Str::ucfirst($tmo[1]);
+            $push['permiso'] = Str::ucfirst($tmp[1]);
             $dataReturn[] = $push;
         }
         return view('permisos.index')->with('permisos', $dataReturn);
