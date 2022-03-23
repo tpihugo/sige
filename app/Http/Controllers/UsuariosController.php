@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\user;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Spatie\Permission\Models\Role;
 
 class UsuariosController extends Controller
 {
@@ -86,7 +87,10 @@ class UsuariosController extends Controller
     public function edit($id)
     {
         $usuario = User::where('id', $id)->get();
-        return view('usuarios.edit')->with('usuario', $usuario);
+        $roles = Role::orderBy('name')->get();
+        return view('usuarios.edit')
+            ->with('usuario', $usuario)
+            ->with('roles', $roles);
     }
 
     /**
@@ -98,27 +102,32 @@ class UsuariosController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $data = [];
+        $usuarios = User::all();
         $retorno = array('Error'    => array(),
                          'Success'  => array());
 
         # Validar que las contraseñas sean las mimsas
-        if( $request['password'] != $request['password_confirmation'])
-            $retorno['Error'][] = "La contraseña y la confirmacion de contraseña no son iguales.";
-
-        if( !count($retorno['Error']) > 0){
-            $nuevo = User::where('id', $id)->update([
-                                                        'email'     => $request['email'],
-                                                        'name'      => $request['name'],
-                                                        'password'  => Hash::make($request['password']),
-                                                    ]);
-
-            $retorno['Success'][] = "Usuario {$request['email']} Actualizado";
+        if ($request['password'] &&  $request['password_confirmation']) {
+            if ($request['password'] != $request['password_confirmation']) {
+                $retorno['Error'][] = "La contraseña y la confirmacion de contraseña no son iguales.";
+            } else {
+                $data['password'] = Hash::make($request['password']);
+            }
         }
 
-        $usuarios = User::orderBy('name')->get();
+        if (! count($retorno['Error']) > 0) {
+            $user = User::findOrFail($id);
+            $data['email'] = $request['email'];
+            $data['name'] = $request['name'];
+            $user->save();
+            $user->syncRoles(); # Se borran todos los anteriores
+            $user->syncRoles([$request['rol']]); # se asignan todos lo que esten en el array
+        }
 
-        return view('usuarios.index')->with('usuarios', $usuarios)
-                                    ->with('retorno', $retorno);
+        return view('usuarios.index')
+            ->with('usuarios', $usuarios)
+            ->with('retorno', $retorno);
     }
 
     /**
