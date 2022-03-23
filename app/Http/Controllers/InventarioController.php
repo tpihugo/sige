@@ -189,56 +189,21 @@ class InventarioController extends Controller
         return view('inventario.inventario_express');
     }
 
-    public function inventario_express3($area_id){
-
-        $equipos_sici_no_localizados = DB::table('vs_equipos')
-            ->select(DB::raw('COUNT(*) as cuenta_equipos'))
-            ->where('resguardante', '=', 'CTA')
-            ->where('localizado_sici', '=', 'No')
-            ->where('id_area', '=', $area_id)
-            ->first();
-        // /* Localizados inventario Express*/
-        $total_equipos_localizados = DB::table('inventariodetalle')
-            ->select(DB::raw('COUNT(*) as localizados'))
-            ->where('estatus', '=', 'Localizado')
-            ->where('IdArea', '=', $area_id)
-            ->first();
-
-        $total_areas = DB::table('vs_cuentainventariables')
-            ->join('vs_cuentaencontrados', 'vs_cuentainventariables.id_area', '=', 'vs_cuentaencontrados.IdArea')
-            ->select('vs_cuentainventariables.area')
-            ->get();
-    
-        $total_ids_areas = DB::table('vs_cuentainventariables')
-            ->join('vs_cuentaencontrados', 'vs_cuentainventariables.id_area', '=', 'vs_cuentaencontrados.IdArea')
-            ->select('vs_cuentainventariables.id_area')
-            ->get();
-            
-        $equipos_en_sici_localizados = DB::table('vs_equipos')
-            ->select(DB::raw('COUNT(*) as cuenta_equipos'))
-            ->where('resguardante', '=', 'CTA')
-            ->where('localizado_sici', '=', 'S')
-            ->where('id_area', '=', $area_id)
-            ->first();
-
-         $total_equipos_revision = DB::table('inventariodetalle')
-            ->select(DB::raw('COUNT(*) as revisiones'))
-            ->where('estatus', '=', 'Revision')
-            ->where('IdArea', '=', $area_id)
-            ->first();
-
-        $equipos_en_sici = DB::table('vs_equipos')
-            ->select(DB::raw('COUNT(*) as cuenta_equipos'))
-            ->where('resguardante', '=', 'CTA')
-            ->where('id_area', '=', $area_id)
-            ->first();
-
-        return view('inventario.inventario_express3');
-    }
-
     public function inventario_express2(){
        
-
+        
+        // $total_SICI_falta = DB::table('equipos')
+        //     ->select(DB::raw('count(*) as count'))
+        //     ->where('localizado_sici', '=', 'no')
+        //     ->where('resguardante', '=', 'CTA')
+        //     ->groupBy('localizado_sici')
+        //     ->first();
+        
+        //Detalle IV
+        // $total_detalleInventario = DB::table('inventariodetalle')
+        //     ->select(DB::raw('count(*) as count'))
+        //     ->where('estatus', '=', 'localizado')
+        //     ->first();
         $total_SICI_localizados = DB::table('equipos')
             ->select(DB::raw('count(*) as count'))
             ->where('localizado_sici', '=', 'si')
@@ -246,49 +211,76 @@ class InventarioController extends Controller
             ->groupBy('localizado_sici')
             ->first();
 
-        $total_SICI_falta = DB::table('equipos')
+        $total_22A_detalleInventario = DB::table('inventariodetalle')
             ->select(DB::raw('count(*) as count'))
-            ->where('localizado_sici', '=', 'no')
-            ->where('resguardante', '=', 'CTA')
-            ->groupBy('localizado_sici')
-            ->first();
-        
-            //Detalle IV
-        $total_detalleInventario = DB::table('inventariodetalle')
-            ->select(DB::raw('count(*) as count'))
-            ->where('estatus', '=', 'localizado')
+            ->where('inventario', '=', '2022A')
             ->first();
 
-        $total_detalleInventario_PorCiclo = DB::table('inventariodetalle')
-            ->select(DB::raw('count(*) as total_por_ciclo', 'inventario'))
-            ->groupBy('inventario')
-            ->get();
-
-        // dd($total_detalleInventario_PorCiclo);
-
+            // Query con porcentajes equipos_econtrados vs equipos_inventariables por area
         $dataTable = DB::table('vs_cuentainventariables')
             ->join('vs_cuentaencontrados', 'vs_cuentainventariables.id_area', '=', 'vs_cuentaencontrados.IdArea')
-            ->select('vs_cuentainventariables.cuentaInventariables as cuentaInventariables','vs_cuentaencontrados.cuentaEncontrados as cuentaEncontrados','vs_cuentainventariables.area as area','vs_cuentainventariables.id_area as id_area')
+            ->select(DB::raw('ROUND((vs_cuentaencontrados.cuentaEncontrados / vs_cuentainventariables.cuentaInventariables) * 100)'. 'as PercentageValue'),
+            'vs_cuentainventariables.cuentaInventariables as cuentaInventariables',
+            'vs_cuentaencontrados.cuentaEncontrados as cuentaEncontrados',
+            'vs_cuentainventariables.area as area',
+            'vs_cuentainventariables.id_area as id_area',
+            )
             ->get();
 
-        $total_equipos = DB::table('equipos')
+        /* AUTOMATICO CHEQUEO DE AREAS A 'REVISADO' */
+        foreach($dataTable as $dataRow){
+            if ((float)$dataRow->PercentageValue >= 100 ){
+                $this->AutomaticallyUpdateArea($dataRow->id_area);
+            }
+        }
+
+        // $dataTable = DB::table('vs_cuentaencontrados')
+        //     ->join('vs_cuentainventariables','vs_cuentainventariables.id_area', '=', 'vs_cuentaencontrados.IdArea')
+        //     ->select('vs_cuentainventariables.cuentaInventariables as cuentaInventariables',
+        //     'vs_cuentaencontrados.cuentaEncontrados as cuentaEncontrados',
+        //     'vs_cuentainventariables.area as area',
+        //     'vs_cuentainventariables.id_area as id_area')
+        //     ->where('vs_cuentaencontrados.inventario', '=', '2022A')
+        //     ->get();
+
+        // dd($dataTable);
+
+        $total_equipos = DB::table('vs_equipos')
             ->select(DB::raw('COUNT(*) as cuenta_equipos'))
             ->where('resguardante', '=', 'CTA')
             ->first();
 
         $total_SICI_localizados = $total_SICI_localizados->count;
-        $total_SICI_falta = $total_SICI_falta->count;
         $total_equipos = $total_equipos->cuenta_equipos;
-        $total_detalleInventario = $total_detalleInventario->count;
+        $total_22A_detalleInventario = $total_22A_detalleInventario->count;
+        // $total_detalleInventario = $total_detalleInventario->count;
+        // $total_SICI_falta = $total_SICI_falta->count;
         
         return view('inventario.inventario_express2')
         ->with('dataTable',$dataTable)
         ->with('total_SICI_localizados',$total_SICI_localizados)
-        ->with('total_SICI_falta',$total_SICI_falta)
         ->with('total_equipos',$total_equipos)
-        ->with('total_detalleInventario_PorCiclo',$total_detalleInventario_PorCiclo)
-        ->with('total_detalleInventario',$total_detalleInventario);
-        
+        ->with('total_22A_detalleInventario',$total_22A_detalleInventario)
+        // ->with('total_SICI_falta',$total_SICI_falta)
+        // ->with('total_detalleInventario',$total_detalleInventario)
+        ;
+    }
+
+    public function AutomaticallyUpdateArea($area_id){
+        $area = Area::find($area_id);
+        if ($area) {
+            $area->ultimo_inventario = '2022';
+            $area->update();
+	    //
+            $log = new Log();
+            $log->tabla = "area";
+            $mov="";
+            $mov=$mov." IdEquipo:".$area->ultimo_inventario ."se modifico desde:actualizacion_inventario.";
+            $log->movimiento = $mov;
+            $log->usuario_id = Auth::user()->id;
+            $log->acciones = "Edicion";
+            $log->save();
+        }
     }
 
     /**
@@ -302,7 +294,7 @@ class InventarioController extends Controller
         $equipo_id = $request->input('equipo_id');
         $area_id = $request->input('area_id');
         $user_id = $request->input('user_id');
-        $inventario = '2021A';
+        $inventario = '2022A';
         $nota = $request->input('nota');
         $articulosRegistrados=InventarioDetalle::where([['IdEquipo','=',$equipo_id], ['inventario','=', $inventario]])->count();
         if($articulosRegistrados==0) {
@@ -333,8 +325,7 @@ class InventarioController extends Controller
             $mensaje = 'El articulo ya se habia registrado como Localizado';
         }
         return redirect('revision-inventario')->with(array(
-            //    "message1" => "El área que trata de eliminar no existe"
-                "message" => "El área que trata de eliminar no existe"
+                "message" => $mensaje
             ));
     }
 
@@ -418,16 +409,29 @@ class InventarioController extends Controller
         $total_equipos_localizados = DB::table('inventariodetalle')
             ->select(DB::raw('COUNT(*) as localizados'))
             ->where('estatus', '=', 'Localizado')
+            ->where('inventario', '=', '2022A')
             ->where('IdArea', '=', $area_id)
             ->first();
 
 
-        /* Revisi�n con Nota*/
-        $total_equipos_revision = DB::table('inventariodetalle')
-            ->select(DB::raw('COUNT(*) as revisiones'))
-            ->where('estatus', '=', 'Revision')
-            ->where('IdArea', '=', $area_id)
-            ->first();
+        /* Revisi�n con Nota*/ 
+        
+        // $total_equipos_revision = DB::table('inventariodetalle')
+        //     ->select(DB::raw('COUNT(*) as revisiones'))
+        //     ->where('estatus', '=', 'Revision')
+        //     ->where('IdArea', '=', $area_id)
+        //     ->first();
+
+        // $total_equipos_revision = DB::table('inventariodetalle')
+        //     ->select(DB::raw('COUNT(*) as revisiones'))
+        //     ->where('estatus', '=', 'Localizado')
+        //     ->where('IdArea', '=', $area_id)
+        //     ->first();
+        // $total_equipos_revision = DB::table('inventariodetalle')
+        //     ->select(DB::raw('COUNT(*) as revisiones'))
+        //     ->where('estatus', '=', 'Localizado')
+        //     ->where('IdArea', '=', $area_id)
+        //     ->first();
 
         /*AREAS*/
 
@@ -435,12 +439,18 @@ class InventarioController extends Controller
 
         /*DATA TABLE*/
 
-        $equipos= Vs_Equipo_Detalle::where('id_area','=',$area_id)->get();
+        // $equipos= Vs_Equipo_Detalle::where('id_area','=',$area_id)->get();
+
+        $equipos= Vs_Equipo_Detalle::
+        where('id_area',$area_id)
+        ->where('resguardante','CTA')
+        ->get();
+
         $total_equipos = count($equipos);
         return view('inventario.inventario-area')
             ->with('total_equipos',$total_equipos)
             ->with('total_equipos_localizados',$total_equipos_localizados)
-            ->with('total_equipos_revision',$total_equipos_revision)
+            // ->with('total_equipos_revision',$total_equipos_revision)
             ->with('equipos',$equipos)
             ->with('equipos_en_sici', $equipos_en_sici)
             ->with('equipos_en_sici_localizados', $equipos_en_sici_localizados)
@@ -449,6 +459,7 @@ class InventarioController extends Controller
             ->with('area_id',$area_id);
     }
     public function listarEquipoEncontrado(Request $request){
+
         //Se hace la ruta, la ruta manda llamar el m�todo y el m�todo manda llamar la plantilla
         $listadoEquipos = VsEquipo::where('id', '=', $request->input('id'))
             ->orWhere('udg_id', '=', $request->input('id'))
@@ -509,7 +520,7 @@ class InventarioController extends Controller
     {
         $area = Area::find($area_id);
         if ($area) {
-            $area->ultimo_inventario = '2021';
+            $area->ultimo_inventario = '2022';
             $area->update();
 	    //
             $log = new Log();
@@ -521,8 +532,8 @@ class InventarioController extends Controller
             $log->acciones = "Edicion";
             $log->save();
             //
-            return redirect()->route('panel-inventario')->with(array(
-                "message" => "Se marco como �ltimo inventario 2021"
+            return redirect()->route('inventario-express-detalle2')->with(array(
+                "message" => "Se marco como último inventario 2022"
             ));
         }
     }

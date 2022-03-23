@@ -140,7 +140,7 @@ class EquipoController extends Controller
             $resguardante = Empleado::find($idResguardante);
             return view('equipo.edit')->with('equipo', $equipo)->with('empleados', $empleados)->with('resguardante',$resguardante)->with('tipo_equipos', $tipo_equipos)->with('ips',$ip)->with('ip_equipo',$ip_equipo);
         }else{
-            return redirect('home')->with(array(
+            return redirect('/')->with(array(
                 'message'=>'El Id que desea modificar no existe'
             ));
         }
@@ -352,6 +352,7 @@ public function busquedaEquiposPrestamo(Request $request){
            
             $cambiarubicacion = route('cambiar-ubicacion', $value['id']);
             $actualizar =  route('equipos.edit', $value['id']);
+            $expediente = "expediente/".$value['id'];
             $prestamo = route('generar-prestamo', $value['id']);
 	    $historial = route('historial', $value['id']);
 	    $ruta = "eliminar".$value['id'];
@@ -372,6 +373,9 @@ public function busquedaEquiposPrestamo(Request $request){
 				<a href="' . $historial . '"  title="Historial">
                             	<span class="text-secondary"><span class="material-icons">history</span></span>                        
 				</a>
+                <a href="'.$expediente.'" role="button" class="btn btn-success"  title="expediente">
+                               <i class="fas fa-clipboard"></i>
+                            </a>
 				<a href="#' . $ruta . '" role="button" class="btn btn-danger" data-toggle="modal" title="Eliminar">
                             	<i class="far fa-trash-alt"></i>
                         	</a>

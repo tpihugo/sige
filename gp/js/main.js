@@ -256,6 +256,10 @@
 	$('.appointment_time').timepicker();
 
 
+let cerrar = Document.jQuerySelectorAll(".close")[0];
+let abrir = Document.jQuerySelectorAll(".cta")[0];
+let modal = Document.jQuerySelectorAll(".modal")[0];
+let modalC = Document.jQuerySelectorAll(".modal-container")[0];
 
 
 })(jQuery);
