@@ -46,6 +46,10 @@ Route::resource('licencias', 'App\Http\Controllers\LicenciaController');
 Route::resource('servicios', 'App\Http\Controllers\ServicioController');
 Route::resource('tecnicos', 'App\Http\Controllers\TecnicoController');
 Route::resource('mantenimiento', 'App\Http\Controllers\MantenimientoController');
+
+Route::resource('expedientes', 'App\Http\Controllers\ExpedienteController');
+Route::resource('mantenimientoEquipos', 'App\Http\Controllers\mantenimientoEquipoController');
+
 Route::get('/cambiar-ubicacion/{equipo_id}/{tipo?}', array(
     'as' => 'cambiar-ubicacion',
     'middleware' => 'auth',
@@ -439,4 +443,9 @@ Route::get('/estadoMantenimiento/{mantenimiento_id}/{equipo_id}', array(
     'as' => 'estadoMantenimiento',
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\MantenimientoController@estadoMantenimiento'
+));
+Route::get('/expediente/{equipo_id}', array(
+    'as' => 'expediente',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\ExpedienteController@expediente'
 ));
