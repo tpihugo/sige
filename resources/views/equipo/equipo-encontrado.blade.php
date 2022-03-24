@@ -38,10 +38,10 @@
                             <td><p><a class="btn btn-success" href="{{ route('registro-inventario', ['equipo_id' => $listadoEquipo->id, 'revisor_id' => Auth::user()->id, 'inventario' => '2022A', 'origen'=>'express']) }}" >Registrar Equipo</a></p>
                             <p><a href="{{ route('cambiar-ubicacion', ['equipo_id' => $listadoEquipo->id, 'tipo' => 'inventario']) }}" class="btn btn-primary">Cambiar Ubicación</a></p></td>
                             <td><!-- Botón en HTML (lanza el modal en Bootstrap) -->
-                                <a href="#eliminar{{$listadoEquipo->id}}" role="button" class="btn btn-danger" data-toggle="modal">Agregar Nota</a>
+                                <a href="#AggNota{{$listadoEquipo->id}}" role="button" class="btn btn-danger" data-toggle="modal">Agregar Nota</a>
 
                                 <!-- Modal / Ventana / Overlay en HTML -->
-                                <div id="eliminar{{$listadoEquipo->id}}" class="modal fade">
+                                <div id="AggNota{{$listadoEquipo->id}}" class="modal fade">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <form action="{{route('inventario.store')}}" method="POST">
@@ -57,10 +57,10 @@
                                                 <div class="row g-3 align-items-center">
                                                     <div class="col-md-12">
 
-                                                        <input type="text" class="form-control" id="equipo_id" name="equipo_id" value="{{$listadoEquipo->id}}" >
-                                                        <input type="text" class="form-control" id="area_id" name="area_id" value="{{$listadoEquipo->id_area}}" >
-                                                        <input type="text" class="form-control" id="user_id" name="user_id" value="{{Auth::user()->id}}" >
-                                                        <textarea class="form-control" id="nota" name="nota">{{old('nota')}}</textarea>
+                                                        <input type="hidden" class="form-control" id="equipo_id" name="equipo_id" value="{{$listadoEquipo->id}}" >
+                                                        <input type="hidden" class="form-control" id="area_id" name="area_id" value="{{$listadoEquipo->id_area}}" >
+                                                        <input type="hidden" class="form-control" id="user_id" name="user_id" value="{{Auth::user()->id}}" >
+                                                        <textarea class="form-control" id="nota" name="nota" value="{{old('nota')}}"></textarea>
                                                     </div>
                                                 </div>
                                             </div>

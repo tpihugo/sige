@@ -39,7 +39,7 @@
             <br>
             <div class="row g-3 align-items-center">
                 <div class="col-md-4">
-                    <h5>Inventario 2021</h5>
+                    <h5>Inventario 2022A</h5>
                 </div>
             </div>
             <div class="row g-3 align-items-center">
@@ -48,14 +48,19 @@
                         <div class="card-body">Localizados: {{$total_equipos_localizados->localizados}}<b></b></div>
                     </div>
                 </div>
-                <div class="col-xl-3 col-md-6">
+                {{--<div class="col-xl-3 col-md-6">
                     <div class="card bg-warning text-white mb-3">
                         <div class="card-body">Con Incidente: {{ $total_equipos_revision->revisiones}}<b></b></div>
                     </div>
-                </div>
-                <div class="col-xl-3 col-md-6">
+                </div>--}}
+                {{--<div class="col-xl-3 col-md-6">
                     <div class="card bg-danger text-white mb-3">
                         <div class="card-body">No Localizados: {{$total_equipos-$total_equipos_localizados->localizados - $total_equipos_revision->revisiones}}<b></b></div>
+                    </div>
+                </div>--}}
+                <div class="col-xl-3 col-md-6">
+                    <div class="card bg-danger text-white mb-3">
+                        <div class="card-body">No Localizados: {{$total_equipos-$total_equipos_localizados->localizados}}<b></b></div>
                     </div>
                 </div>
 
@@ -113,7 +118,7 @@
                             </td>
                             <td>{{$equipo->area}}</td>
                             <td>
-                                <p><a class="btn btn-outline-success" href="{{ route('registro-inventario', ['equipo_id' => $equipo->id, 'revisor_id' => Auth::user()->id, 'inventario' => '2021A', 'origen'=>$origen]) }}" >Localizado</a></p>
+                                <p><a class="btn btn-outline-success" href="{{ route('registro-inventario', ['equipo_id' => $equipo->id, 'revisor_id' => Auth::user()->id, 'inventario' => '2022A', 'origen'=>$origen]) }}" >Localizado</a></p>
                                 <p><a href="{{ route('cambiar-ubicacion', ['equipo_id' => $equipo->id, 'tipo' => 'inventario']) }}" class="btn btn-outline-primary">Reubicar</a></p>
                                 <p><a href="{{ route('equipos.edit', $equipo->id) }}" class="btn btn-outline-secondary">Editar</a></p>
 
