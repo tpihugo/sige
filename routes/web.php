@@ -309,6 +309,16 @@ Route::post('/filtroCursos', array(
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\CursoController@filtroCursos'
 ));
+Route::post('/busqueda-Curso', array(
+    'as' => 'busqueda-curso',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\CursoController@busquedaCurso'
+));
+Route::post('/filtro-Curso', array(
+    'as' => 'filtro-curso',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\CursoController@filtroCurso'
+));
 Route::get('/delete-curso/{curso_id}', array(
     'as' => 'delete-curso',
     'middleware' => 'auth',

@@ -502,5 +502,105 @@ public function cargarDTLabs($consulta)
         }
 
     }
+    public function busquedaCurso(Request $request){
+        $validateData = $this->validate($request,[
+            'busqueda'=>'required'
+        ]);
+
+        $busqueda = $request->input('busqueda');
+        if(isset($busqueda) && !is_null($busqueda)){
+            $vscursos = VsCurso::where('activo','=',1)
+                ->orWhere('aula','LIKE','%'.$busqueda.'%')
+                ->orWhere('departamento','LIKE','%'.$busqueda.'%')
+                ->orWhere('edificio','LIKE','%'.$busqueda.'%')
+                ->orWhere('curso','LIKE','%'.$busqueda.'%')
+                ->orWhere('profesor','LIKE','%'.$busqueda.'%')
+                ->orWhere('lunes','LIKE','%'.$busqueda.'%')
+                ->orWhere('martes','LIKE','%'.$busqueda.'%')
+                ->orWhere('miercoles','LIKE','%'.$busqueda.'%')
+                ->orWhere('jueves','LIKE','%'.$busqueda.'%')
+                ->orWhere('viernes','LIKE','%'.$busqueda.'%')
+                ->orWhere('sabado','LIKE','%'.$busqueda.'%')
+                ->get();
+
+            $cursos = $this->cargarDT($vscursos);
+
+
+            return view('cursos.index')->with('cursos', $cursos)->with('busqueda', $busqueda);
+        }else{
+            return redirect('home')->with(array(
+                'message'=>'Debe introducir un término de búsqueda'
+            ));
+        }
+
+    }
+
+    public function filtroCurso(Request $request){
+        $validateData = $this->validate($request,[
+            'filtrodia'=>'required'
+        ]);
+
+
+        $filtrodia = $request->input('filtrodia');
+        $filtrotipo = $request->input('filtrotipo');
+        $filtrodepartamento = $request->input('filtrodepartamento');
+        if(isset($filtrodia) && !is_null($filtrodia)){
+            if(isset($filtrotipo) && !is_null($filtrotipo)){
+                if(isset($filtrodepartamento) && !is_null($filtrodepartamento)){
+                    $vscursos = VsCurso::select("*")
+                        ->where('tipo',$filtrotipo)
+                        ->where(function($query) use ($filtrodia){
+                            $query->where('lunes',$filtrodia)
+                                ->orwhere('martes',$filtrodia)
+                                ->orwhere('miercoles',$filtrodia)
+                                ->orwhere('jueves',$filtrodia)
+                                ->orwhere('viernes',$filtrodia)
+                                ->orwhere('sabado',$filtrodia);
+                        })
+                        ->where(function($query) use ($filtrodepartamento){
+                            $query->where('departamento',$filtrodepartamento);
+                        })
+                        ->get();
+
+                }}}
+        if(isset($filtrodia) && !is_null($filtrodia)){
+            if(isset($filtrotipo) && is_null($filtrotipo)){
+                if(isset($filtrodepartamento) && is_null($filtrodepartamento)){
+                    $vscursos = VsCurso::select("*")
+                        ->where('lunes',$filtrodia)
+                        ->orwhere('martes',$filtrodia)
+                        ->orwhere('miercoles',$filtrodia)
+                        ->orwhere('jueves',$filtrodia)
+                        ->orwhere('viernes',$filtrodia)
+                        ->orwhere('sabado',$filtrodia)
+                        ->get();
+
+                }}}
+        if(isset($filtrotipo) && !is_null($filtrotipo)){
+            if(isset($filtrodia) && is_null($filtrodia)){
+                if(isset($filtrodepartamento) && is_null($filtrodepartamento)){
+                    $vscursos = VsCurso::select("*")
+                        ->where('tipo',$filtrotipo)
+                        ->get();
+
+                }}}
+        if(isset($filtrodepartamento) && !is_null($filtrodepartamento)){
+            if(isset($filtrotipo) && is_null($filtrotipo)){
+                if(isset($filtrodia) && is_null($filtrodia)){
+                    $vscursos = VsCurso::select("*")
+                        ->where('departamento',$filtrodepartamento)
+
+                        ->get();
+
+                }}}
+
+        $cursos = $this->cargarDT($vscursos);
+
+
+
+        return view('cursos.index')->with('cursos', $cursos)->with('filtrotipo', $filtrotipo);
+
+
+    }
 
 }

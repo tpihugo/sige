@@ -85,6 +85,114 @@
                 <br>
             </form>
         </div>
+        <form action="{{route('busqueda-curso')}}" method="POST" enctype="multipart/form-data" class="col-12">
+            {!! csrf_field() !!}
+            @if($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        Debe de escribir un criterio de búsqueda
+                    </ul>
+                </div>
+            @endif
+            <br>
+            <div class="row align-items-center">
+                <div class="col-md-2 offset-md-1">
+                    <h3 class="card-title"> <span class="text-success"><i class="fa fa-search"></span></i> Búsqueda</3>
+                </div>
+                <div class="col-md-5">
+                    <input type="text" class="form-control" id="busqueda" name="busqueda" >
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-success">Filtrar</button>
+                </div>
+
+            </div>
+        </form>
+
+        <div class="row g-3 align-items-center">
+            <form action="{{route('filtro-curso')}}" method="POST" enctype="multipart/form-data" class="col-12">
+                {!! csrf_field() !!}
+                @if($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            Debe de escribir un criterio de búsqueda
+                        </ul>
+                    </div>
+                @endif
+                <br>
+                <div class="row g-3 align-items-center">
+
+
+
+
+
+                    <div class="col-md-1 offset-md-1">
+                        <h6 class="card-title"> <span class="text-success"><i class="fa fa-search"></span></i> Días</6>
+                        <select class="form-control" id="filtrodia" name="filtrodia">
+                            <option disabled selected >Elegir</option>
+                            <option value="Lunes" >Lunes</option>
+                            <option value="Martes" >Martes</option>
+                            <option value="Miercoles">Miercoles</option>
+                            <option value="Jueves">Jueves</option>
+                            <option value="Viernes">Viernes</option>
+                            <option value="Sabado">Sábado</option>
+                        </select>
+
+
+                    </div>
+
+                    <div class="col-md-2 offset-md-1">
+                        <h6 class="card-title"> <span class="text-success"><i class="fa fa-search"></span></i> Tipo</6>
+                    </div>
+                    <div class="col-md-1">
+                        <select class="form-control" id="filtrotipo" name="filtrotipo">
+                            <option  disabled selected>Elegir</option>
+                            <option value="Aula" >Aula</option>
+                            <option value="Laboratorio" >Laboratorio</option>
+
+                        </select>
+                    </div>
+
+                    <div class="col-md-2 offset-md-1">
+                        <h6 class="card-title"> <span class="text-success"><i class="fa fa-search"></span></i> Departamento</6>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-control" id="filtrodepartamento" name="filtrodepartamento">
+                            <option  disabled selected>Elegir</option>
+                            <option value="DEPTO. DE DERECHO SOCIAL Y DISCIPLINAS SOBRE EL DE" >DEPTO. DE DERECHO SOCIAL Y DISCIPLINAS SOBRE EL DE</option>
+                            <option value="DEPTO. DE DERECHO PUBLICO" >DEPTO. DE DERECHO PUBLICO</option>
+                            <option value="LICENCIATURA EN SOCIOLOGÍA" >LICENCIATURA EN SOCIOLOGÍA</option>
+                            <option value="LICENCIATURA EN ESTUDIOS INTERNACIONALES">LICENCIATURA EN ESTUDIOS INTERNACIONALES</option>
+                            <option value="DEPTO. DE DESARROLLO SOCIAL">DEPTO. DE DESARROLLO SOCIAL</option>
+                            <option value="DEPTO. DE LENGUAS MODERNAS">DEPTO. DE LENGUAS MODERNAS</option>
+                            <option value="DEPTO. DE FILOSOFIA">DEPTO. DE FILOSOFIA</option>
+                            <option value="DEPTO. DE DERECHO PRIVADO">DEPTO. DE DERECHO PRIVADO</option>
+                            <option value="DEPTO. DE HISTORIA ">DEPTO. DE HISTORIA</option>
+                            <option value="DEPTO. DE GEOGRAFIA Y ORDENACION TERRITORIAL">DEPTO. DE GEOGRAFIA Y ORDENACION TERRITORIAL</option>
+                            <option value="DEPTO. DE LETRAS ">DEPTO. DE LETRAS </option>
+                            <option value="DEPTO. DE ESTUDIOS DE LENGUAS INDIGENAS ">DEPTO. DE ESTUDIOS DE LENGUAS INDIGENAS </option>
+                            <option value="DEPTO. DE ESTUDIOS POLITICOS ">DEPTO. DE ESTUDIOS POLITICOS </option>
+                            <option value="DEPTO. DE ESTUDIOS DEL PACIFICO">DEPTO. DE ESTUDIOS DEL PACIFICO</option>
+                            <option value="DEPTO. DE ESTUDIOS INTERNACIONALES">DEPTO. DE ESTUDIOS INTERNACIONALES</option>
+                            <option value="DEPTO. DE TRABAJO SOCIAL">DEPTO. DE TRABAJO SOCIAL</option>
+                            <option value="LICENCIATURA EN ESCRITURA CREATIVA">LICENCIATURA EN ESCRITURA CREATIVA</option>
+                            <option value="DEPTO. DE ESTUDIOS LITERARIOS ">DEPTO. DE ESTUDIOS LITERARIOS </option>
+                            <option value="DEPTO. DE ESTUDIOS DE LA COMUNICACION SOCIAL  ">DEPTO. DE ESTUDIOS DE LA COMUNICACION SOCIAL  </option>
+                            <option value="DEPTO. DE ESTUDIOS SOCIO URBANOS ">DEPTO. DE ESTUDIOS SOCIO URBANOS </option>
+                            <option value="DEPTO. DE SOCIOLOGIA">DEPTO. DE SOCIOLOGIA</option>
+                            <option value="DEPTO. DE ESTUDIOS INTERDISCIPLINARES EN CIENCIAS">DEPTO. DE ESTUDIOS INTERDISCIPLINARES EN CIENCIAS</option>
+                            <option value="DEPTO. DE ESTUDIOS EN EDUCACION">DEPTO. DE ESTUDIOS EN EDUCACION</option>
+
+                        </select>
+                    </div>
+
+
+
+                    <div class="col-md-1">
+                        <button type="submit" class="btn btn-success">Filtrar</button>
+                    </div>
+                </div>
+            </form>
 
         <div class="container-fluid">
             <div class="row">
