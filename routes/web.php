@@ -33,6 +33,21 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/', [App\Http\Controllers\
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::resource('usuarios','App\Http\Controllers\UsuariosController');
+Route::resource('roles','App\Http\Controllers\RolesController');
+Route::resource('permisos','App\Http\Controllers\PermisosController');
+
+Route::get('asignar-permisos/{id}', array(
+    'as' => 'asignar_permisos',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\RolesController@relacionar'
+));
+
+Route::post('guardar-relacion-permisos', array(
+    'as' => 'guardar_relacion_permisos',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\RolesController@guardarRelacion'
+));
+
 Route::resource('equipos', 'App\Http\Controllers\EquipoController');
 Route::resource('areas', 'App\Http\Controllers\AreaController');
 Route::resource('movimientos', 'App\Http\Controllers\MovimientoController');
@@ -90,7 +105,7 @@ Route::get('/delete-equipo/{equipo_id}', array(
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\EquipoController@delete_equipo'
 ));
-Route::get('/registro-inventario/{equipo_id}/{revisor_id}/{inventario}/{origen}', array(
+Route::get('/registro-inventario/{equipo_id}/¨/{inventario}/{origen}', array(
     'as' => 'registro-inventario',
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\InventarioController@registroInventario'
@@ -130,7 +145,7 @@ Route::get('/generar-prestamo/{equipo_id}', array(
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\PrestamoController@generarPrestamo'
 ));
-Route::get('/nuevo-prestamo/', array(
+Route::get('/nuevo-prestamo', array(
     'as' => 'nuevo-prestamo',
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\PrestamoController@nuevoPrestamo'
@@ -145,7 +160,7 @@ Route::post('/busquedaEquiposPrestamo', array(
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\EquipoController@busquedaEquiposPrestamo'
 ));
-Route::post('/guardar-nuevo-prestamo/', array(
+Route::post('/guardar-nuevo-prestamo', array(
     'as' => 'guardar-nuevo-prestamo',
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\PrestamoController@guardarPrestamo'
@@ -406,7 +421,6 @@ Route::get('/delete-ip/{ip_id}', array(
     'uses' => 'App\Http\Controllers\IpController@delete_ip'
 ));
 
-
 // Tecnicos
 Route::get('/lista_de_tecnicos', array(
     'as' => 'lista_de_tecnicos',
@@ -417,7 +431,6 @@ Route::get('/delete-tecnico/{tecnico_id}', array(
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\TecnicoController@delete_tecnico'
 ));
-
 
 // Mantenimiento
 Route::get('/lista_de_mantenimiento', array(
