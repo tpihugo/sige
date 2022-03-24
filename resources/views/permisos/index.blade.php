@@ -38,7 +38,7 @@
                         {{ implode("\n",$retorno['Success']) }}
                     </div>
                 @endif
-            
+
             @endif
 
             <div class="row align-items-center">
@@ -56,7 +56,7 @@
                                 <td>{{$permiso['modulo']}}</td>
                                 <td>{{$permiso['permiso']}}</td>
                                 <td>
-                                    <form method="GET" action="{{ route('permisos.edit',$permiso['id']) }}">    
+                                    <form method="GET" action="{{ route('permisos.edit', $permiso['id']) }}">
                                         <button type="submit" class="btn btn-danger">
                                             {{ __('Eliminar') }}
                                         </button>

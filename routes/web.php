@@ -36,7 +36,7 @@ Route::resource('usuarios','App\Http\Controllers\UsuariosController');
 Route::resource('roles','App\Http\Controllers\RolesController');
 Route::resource('permisos','App\Http\Controllers\PermisosController');
 
-Route::get('asignar-permisos', array(
+Route::get('asignar-permisos/{id}', array(
     'as' => 'asignar_permisos',
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\RolesController@relacionar'
@@ -411,7 +411,6 @@ Route::get('/delete-ip/{ip_id}', array(
     'uses' => 'App\Http\Controllers\IpController@delete_ip'
 ));
 
-
 // Tecnicos
 Route::get('/lista_de_tecnicos', array(
     'as' => 'lista_de_tecnicos',
@@ -422,7 +421,6 @@ Route::get('/delete-tecnico/{tecnico_id}', array(
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\TecnicoController@delete_tecnico'
 ));
-
 
 // Mantenimiento
 Route::get('/lista_de_mantenimiento', array(
