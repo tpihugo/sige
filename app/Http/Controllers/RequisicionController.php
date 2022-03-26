@@ -33,13 +33,14 @@ class RequisicionController extends Controller
     public function cargarDT($consulta)
     {
         $requisiciones = [];
-        $index = 0;
+
+
         foreach ($consulta as $key => $value){
 
-            $req_articulos = Articulos_requisiones::where('requisicion_id',$value->id)->get();
-            // dd($req_articulos);
+            $req_articulos = Articulos_requisiones::where('requisicion_id', $value->id)->get();
+            $art_length  = count($req_articulos);
+            $index = 0;
             $actualizar =  route('requisicions.edit', $value['id']);
-            //$recibo = route('recepcionEquipo',  $value['id']);
 
             $acciones = '
                 <div class="btn-acciones">
@@ -52,20 +53,33 @@ class RequisicionController extends Controller
 
             ';
 
-            $vs_articulos = '
-                <td>
-                  <ul>
-                    <li>'+ $req_articulos->codigo +'</li>
-                    <li>'+ $req_articulos->cantidad +'</li>
-                    <li>'+ $req_articulos->descripcion +'</li>
-                    <li>'+ $req_articulos->observaciones +'</li>
-                  </ul>
-                </td>
-            ';
+            $vs_articulos_array = '';
+            if($index < $art_length){
+              // wrong! (for needed)
+
+              for ($i=0; $i < $art_length; $i++) {
+                  $vs_articulos = '
+                      <td>
+                        <p class="text-muted"> Articulo: '.($i+1).' </p>
+                        <ul >
+                          <li style="padding: 5px;"> <strong> Codigo</strong>: '. $codigo = $req_articulos[$i]->codigo .'</li>
+                          <li style="padding: 5px;"> <strong> Cantidad</strong>:'. $cantidad = $req_articulos[$i]->cantidad .'</li>
+                          <li style="padding: 5px;"> <strong> Descripcion</strong>: '. $descripcion = $req_articulos[$i]->descripcion .'</li>
+                          <li style="padding: 5px;"> <strong> Observaciones</strong>:'. $observaciones = $req_articulos[$i]->observaciones .'</li>
+                        </ul>
+                      </td>
+                  ';
+                  $vs_articulos_array =  $vs_articulos_array . $vs_articulos;
+              }
+
+
+            }
+
+
 
             $requisiciones[$key] = array(
                 $acciones,
-                $vs_articulos,
+                $vs_articulos_array,
                 // $value['req_articulos'],
                 $value['num_solicitud'],
                 $value['fecha'],
@@ -76,8 +90,10 @@ class RequisicionController extends Controller
                 $value['quien_recibio'],
                 $value['id']
             );
+            $index++;
 
         }
+        // dd($vs_articulos_array);
 
         return $requisiciones;
     }
@@ -126,15 +142,17 @@ class RequisicionController extends Controller
 
      $convertedArray = explode(',',$request->input('dataTable'));
 
-     $cont = 0;
+     $indexArray = 0;
      for ($i=0; $i < count($convertedArray)/4 ; $i++) {
          $articulo = new Articulos_requisiones();
          $articulo->requisicion_id = $requisicion->id;
-         $articulo->codigo = $convertedArray[0];
-         $articulo->cantidad = $convertedArray[1];
-         $articulo->descripcion = $convertedArray[2];
-         $articulo->observaciones = $convertedArray[3];
+         $articulo->codigo = $convertedArray[$indexArray];
+         // dd($convertedArray[1]);
+         $articulo->cantidad = $convertedArray[$indexArray];
+         $articulo->descripcion = $convertedArray[$indexArray];
+         $articulo->observaciones = $convertedArray[$indexArray];
          $articulo->save();
+         $indexArray++;
      }
      return redirect ('requisicions');
     }
