@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Requisicion;
+use App\Models\Articulos_requisiones;
 use App\Models\Area;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,18 +25,19 @@ class RequisicionController extends Controller
      */
     public function index()
     {
-      
-        $datosrequisiciones = Requisicion :: All ();
+
+        $datosrequisiciones = Requisicion::All();
         $requisiciones = $this->cargarDT($datosrequisiciones);
         return view('requisiciones.index')->with('requisiciones', $requisiciones);
     }
     public function cargarDT($consulta)
     {
         $requisiciones = [];
-
+        $index = 0;
         foreach ($consulta as $key => $value){
 
-            
+            $req_articulos = Articulos_requisiones::where('requisicion_id',$value->id)->get();
+            // dd($req_articulos);
             $actualizar =  route('requisicions.edit', $value['id']);
             //$recibo = route('recepcionEquipo',  $value['id']);
 
@@ -45,18 +47,26 @@ class RequisicionController extends Controller
                         <a href="'.$actualizar.'" class="btn btn-success" title="Actualizar">
                             <i class="far fa-edit"></i>
                         </a>
-			
-                        
-                
-                    
-                  </div>
+                    </div>
                 </div>
-              
+
+            ';
+
+            $vs_articulos = '
+                <td>
+                  <ul>
+                    <li>'+ $req_articulos->codigo +'</li>
+                    <li>'+ $req_articulos->cantidad +'</li>
+                    <li>'+ $req_articulos->descripcion +'</li>
+                    <li>'+ $req_articulos->observaciones +'</li>
+                  </ul>
+                </td>
             ';
 
             $requisiciones[$key] = array(
                 $acciones,
-                
+                $vs_articulos,
+                // $value['req_articulos'],
                 $value['num_solicitud'],
                 $value['fecha'],
                 $value['user_id'],
@@ -82,7 +92,7 @@ class RequisicionController extends Controller
         return view('requisiciones.create');
 
     }
-    
+
 
     /**
      * Store a newly created resource in storage.
@@ -93,10 +103,8 @@ class RequisicionController extends Controller
     public function store(Request $request)
     {
       $validateData = $this->validate($request,[
-        //  'id'=>'required',
          'num_solicitud'=>'required',
          'fecha'=>'required',
-        // 'user_id'=>'required',
          'proyecto'=>'required',
          'fondo'=>'required',
          'fecha_recibido'=>'required',
@@ -113,8 +121,22 @@ class RequisicionController extends Controller
      $requisicion->quien_recibio = $request->input('quien_recibio');
 
      $requisicion->save();
-     return redirect ('requisicions')->with('requisicion', $requisicion);
-     
+
+     //articulos_requision
+
+     $convertedArray = explode(',',$request->input('dataTable'));
+
+     $cont = 0;
+     for ($i=0; $i < count($convertedArray)/4 ; $i++) {
+         $articulo = new Articulos_requisiones();
+         $articulo->requisicion_id = $requisicion->id;
+         $articulo->codigo = $convertedArray[0];
+         $articulo->cantidad = $convertedArray[1];
+         $articulo->descripcion = $convertedArray[2];
+         $articulo->observaciones = $convertedArray[3];
+         $articulo->save();
+     }
+     return redirect ('requisicions');
     }
 
     /**
@@ -163,7 +185,7 @@ class RequisicionController extends Controller
     //  $requisicion->id = $request->input('id');
      $requisicion->num_solicitud = $request->input('num_solicitud');
      $requisicion->fecha = $request->input('fecha');
-     
+
      $requisicion->user_id = Auth::user()->id;
      $requisicion->proyecto = $request->input('proyecto');
      $requisicion->fondo = $request->input('fondo');
@@ -173,11 +195,11 @@ class RequisicionController extends Controller
      $requisicion->save();
      return redirect ('requisicions')->with('requisicion', $requisicion);
 
-    
-     
+
+
     }
 
-    
+
 
     /**
      * Remove the specified resource from storage.
@@ -190,10 +212,10 @@ class RequisicionController extends Controller
     }
 
     public function delete(){
-       
+
 
     }
 
-  
+
 
 }
