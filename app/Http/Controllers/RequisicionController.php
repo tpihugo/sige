@@ -55,7 +55,6 @@ class RequisicionController extends Controller
 
             $vs_articulos_array = '';
             if($index < $art_length){
-              // wrong! (for needed)
 
               for ($i=0; $i < $art_length; $i++) {
                   $vs_articulos = '
@@ -138,21 +137,20 @@ class RequisicionController extends Controller
 
      $requisicion->save();
 
-     //articulos_requision
+     //articulos_requision//
 
      $convertedArray = explode(',',$request->input('dataTable'));
 
-     $indexArray = 0;
+     $index_array = 0;
      for ($i=0; $i < count($convertedArray)/4 ; $i++) {
          $articulo = new Articulos_requisiones();
          $articulo->requisicion_id = $requisicion->id;
-         $articulo->codigo = $convertedArray[$indexArray];
+         $articulo->codigo = $convertedArray[$index_array++];
          // dd($convertedArray[1]);
-         $articulo->cantidad = $convertedArray[$indexArray];
-         $articulo->descripcion = $convertedArray[$indexArray];
-         $articulo->observaciones = $convertedArray[$indexArray];
+         $articulo->cantidad = $convertedArray[$index_array++];
+         $articulo->descripcion = $convertedArray[$index_array++];
+         $articulo->observaciones = $convertedArray[$index_array++];
          $articulo->save();
-         $indexArray++;
      }
      return redirect ('requisicions');
     }
@@ -177,7 +175,11 @@ class RequisicionController extends Controller
     public function edit($id)
     {
         $requisicion = Requisicion::find($id);
-        return view('requisiciones.edit')->with('requisicion', $requisicion);
+        $array_articles = Articulos_requisiones::where('requisicion_id', $requisicion->id)->get();
+        return view('requisiciones.edit')
+        ->with('requisicion', $requisicion)
+        ->with('array_articles', $array_articles)
+        ;
     }
 
     /**
@@ -189,32 +191,66 @@ class RequisicionController extends Controller
      */
     public function update(Request $request, $id)
     {
+      $convertedArray = explode(',',$request->input('dataTable'));
+      // dd($convertedArray);
+
         $validateData = $this->validate($request,[
-            //  'id'=>'required',
              'num_solicitud'=>'required',
              'fecha'=>'required',
-             //'user_id'=>'required',
              'proyecto'=>'required',
              'fondo'=>'required',
              'fecha_recibido'=>'required',
              'quien_recibio'=>'required'
          ]);
-         $requisicion = Requisicion::find($id);
-    //  $requisicion->id = $request->input('id');
-     $requisicion->num_solicitud = $request->input('num_solicitud');
-     $requisicion->fecha = $request->input('fecha');
+       $requisicion = Requisicion::find($id);
 
-     $requisicion->user_id = Auth::user()->id;
-     $requisicion->proyecto = $request->input('proyecto');
-     $requisicion->fondo = $request->input('fondo');
-     $requisicion->fecha_recibido = $request->input('fecha_recibido');
-     $requisicion->quien_recibio = $request->input('quien_recibio');
+       $requisicion->num_solicitud = $request->input('num_solicitud');
+       $requisicion->fecha = $request->input('fecha');
+       $requisicion->user_id = Auth::user()->id;
+       $requisicion->proyecto = $request->input('proyecto');
+       $requisicion->fondo = $request->input('fondo');
+       $requisicion->fecha_recibido = $request->input('fecha_recibido');
+       $requisicion->quien_recibio = $request->input('quien_recibio');
 
-     $requisicion->save();
-     return redirect ('requisicions')->with('requisicion', $requisicion);
+       $requisicion->update();
+
+     $index_array = 0;
+     $array_existedArray = [];
+     for ($i=0; $i < count($convertedArray)/5 ; $i++) {
+         $inputId = $convertedArray[$index_array++];
+
+         $ArticuledFinded = Articulos_requisiones::find($inputId);
+
+         if($ArticuledFinded){//update
+           $ArticuledFinded->requisicion_id = $requisicion->id;
+           $ArticuledFinded->codigo = $convertedArray[$index_array++];
+           $ArticuledFinded->cantidad = $convertedArray[$index_array++];
+           $ArticuledFinded->descripcion = $convertedArray[$index_array++];
+           $ArticuledFinded->observaciones = $convertedArray[$index_array++];
+           $array_existedArray[$i] = $ArticuledFinded->id;
+
+           $ArticuledFinded->update();
+
+         }else{ //create
+
+           $articulo = new Articulos_requisiones();
+           $articulo->requisicion_id = $requisicion->id;
+           $articulo->codigo = $convertedArray[$index_array++];
+           $articulo->cantidad = $convertedArray[$index_array++];
+           $articulo->descripcion = $convertedArray[$index_array++];
+           $articulo->observaciones = $convertedArray[$index_array++];
+           $articulo->save();
+
+           $array_existedArray[$i] = $articulo->id;
+
+         }
 
 
+     }
+     $arts_delete = Articulos_requisiones::where('requisicion_id',$requisicion->id)
+     ->whereNotIn('id',$array_existedArray)->delete();
 
+     return redirect ('requisicions');
     }
 
 

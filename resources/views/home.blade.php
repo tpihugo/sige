@@ -4,7 +4,7 @@
     <div class="content">
         <div class="container">
             <div class="row align-items-center">
-            
+
                 @if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='auxiliar' || Auth::user()->role =='redes' || Auth::user()->role =='aulas' || Auth::user()->role =='general' ))
                     <div class="col-md-12">
                         <div class="card card-chart">
@@ -24,13 +24,13 @@
 
                                 <form action="{{route('busqueda')}}" method="POST" enctype="multipart/form-data" class="col-12">
                                     {!! csrf_field() !!}
-                    
+
                                     @if($errors->any())
                                         <div class="alert alert-danger">
                                             <ul>Debe de escribir un criterio de búsqueda</ul>
                                         </div>
                                     @endif
-                                    
+
                                     <br>
                                     <div class="row align-items-center">
                                         <div class="col-md-3 offset-md-1 text-end">
@@ -72,10 +72,10 @@
                                                 <!-- Botón en HTML (lanza el modal en Bootstrap) -->
                                                 <a href="{{ route('nuevo-prestamo') }}">Crear Préstamo</a>
                                             </div>
-                                        </div> 
+                                        </div>
                                     </div>
                                 </div>
-                            @endif 
+                            @endif
 
                             <!-- Apartado de Tickets  -->
                             @if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='auxiliar' || Auth::user()->role =='redes'))
@@ -85,14 +85,14 @@
                                             <div class="card-icon">
                                                 <i class="material-icons">info_outline</i>
                                             </div>
-                                            <h3 class="card-title">Tickets</h3>            
+                                            <h3 class="card-title">Tickets</h3>
                                             <a class="btn btn-outline-success" href="{{ route('tickets.create') }}">Capturar Tickets</a>
                                             <a href="{{ route('tickets.index') }}" class="btn btn-outline-danger">Consultar Tickets</a>
                                         </div>
                                         <div class="card-footer">
                                             <div class="stats">
-                                                <i class="material-icons">local_offer</i> La Normal: {{$ticketsNormal}} 
-                                                <i class="material-icons">local_offer</i> Belenes: {{$ticketsBelenes}} 
+                                                <i class="material-icons">local_offer</i> La Normal: {{$ticketsNormal}}
+                                                <i class="material-icons">local_offer</i> Belenes: {{$ticketsBelenes}}
                                             </div>
                                         </div>
                                     </div>
@@ -132,7 +132,7 @@
                                             </div>
                                             <h3 class="card-title">Aulas y &Aacute;reas</h3>
                                             <a class="btn btn-outline-success" href="{{ route('areas.index') }}" >Listado &Aacute;reas</a>
-                                            <a class="btn btn-outline-danger" href="{{ route('area-ticket','Belenes') }}" >Detalle Aulas</a>            
+                                            <a class="btn btn-outline-danger" href="{{ route('area-ticket','Belenes') }}" >Detalle Aulas</a>
                                         </div>
                                         <div class="card-footer">
                                             <div class="stats">
@@ -151,7 +151,7 @@
                                             <div class="card-icon">
                                             <i class="material-icons">school</i>
                                             </div>
-                                            <h3 class="card-title">Cursos</h3>           
+                                            <h3 class="card-title">Cursos</h3>
                                             <a class="btn btn-outline-success" href="{{ route('cursos-presenciales', '2022A') }}">Presenciales</a>
                                             <a class="btn btn-outline-danger" href="{{ route('cursos-laboratorios', '2022A') }}">Laboratorios</a>
                                         </div>
@@ -175,7 +175,7 @@
                                             <div class="card-icon">
                                                 <i class="material-icons">people</i>
                                             </div>
-                                            <h3 class="card-title">Usuarios</h3>                   
+                                            <h3 class="card-title">Usuarios</h3>
                                             <a class="btn btn-outline-danger" href="{{ route('usuarios.index') }}">Administrar Usuarios</a>
                                             <a class="btn btn-outline-success" href="{{ route('roles.index') }}">Adm Roles</a>
                                             <a class="btn btn-outline-success" href="{{ route('permisos.index') }}">Adm Permisos</a>
@@ -209,7 +209,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            @endif 
+                            @endif
 
                             @if (Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='redes'))
                                 <div class="col-lg-4 col-md-6 col-sm-12">
@@ -218,7 +218,7 @@
                                             <div class="card-icon">
                                                 <i class="material-icons">build</i>
                                             </div>
-                                            <h3 class="card-title">Proyectos</h3>            
+                                            <h3 class="card-title">Proyectos</h3>
                                             <a class="btn btn-outline-success" href="{{ route('proyectos.create') }}">Capturar Proyecto</a>
                                             <a href="{{ route('proyectos.index') }}" class="btn btn-outline-danger">Consulta Proyectos</a>
                                         </div>
@@ -229,7 +229,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            @endif 
+                            @endif
 
                             @if (Auth::check() && (Auth::user()->role =='admin'))
                                 <div class="col-lg-4 col-md-6 col-sm-12">
@@ -238,7 +238,7 @@
                                             <div class="card-icon">
                                                 <i class="material-icons">info_outline</i>
                                             </div>
-                                            <h3 class="card-title">Licencias</h3>            
+                                            <h3 class="card-title">Licencias</h3>
                                             <a class="btn btn-outline-success" href="{{ route('licencias.create') }}">Capturar licencia</a>
                                             <a href="{{ route('licencias.index') }}" class="btn btn-outline-danger">Consultar licencia</a>
                                         </div>
@@ -249,7 +249,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            @endif 
+                            @endif
 
                             @if (Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='redes'))
                                 <div class="col-lg-4 col-md-6 col-sm-12">
@@ -279,7 +279,7 @@
                                             <div class="card-icon">
                                                 <i class="material-icons">dashboard</i>
                                             </div>
-                                            <h3 class="card-title">Estadisticas</h3>            
+                                            <h3 class="card-title">Estadisticas</h3>
                                             <a class="btn btn-outline-success" href="{{ route('estadisticas') }}">Consultar Estadisticas</a>
                                         </div>
                                         <div class="card-footer">
@@ -298,7 +298,7 @@
                                             <div class="card-icon">
                                                 <i class="material-icons">info_outline</i>
                                             </div>
-                                            <h3 class="card-title">Logs</h3>          
+                                            <h3 class="card-title">Logs</h3>
                                             <a class="btn btn-outline-success" href="{{ route('logs.index') }}">Consultar Logs</a>
                                         </div>
                                         <div class="card-footer">
@@ -310,7 +310,7 @@
                                 </div>
                             @endif
 
-                            {{-- Apartado de Mantenimiento --}}    
+                            {{-- Apartado de Mantenimiento --}}
                             @if (Auth::check() && (Auth::user()->role =='admin'|| Auth::user()->role =='cta'))
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="card card-stats">
@@ -318,7 +318,7 @@
                                             <div class="card-icon">
                                                 <i class="material-icons">handyman</i>
                                             </div>
-                                            <h3 class="card-title">Mantenimiento</h3>            
+                                            <h3 class="card-title">Mantenimiento</h3>
                                             <a class="btn btn-outline-success" href="{{ route('mantenimiento.index') }}">Consultar Mantenimientos</a>
                                             <a class="btn btn-outline-danger" href="{{ route('mantenimiento.create') }}">Capturar Mantenimientos</a>
                                         </div>
@@ -330,6 +330,29 @@
                                     </div>
                                 </div>
                             @endif
+
+                            @if(Auth::check() && (Auth::user()->role =='admin'))
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="card card-stats">
+                                        <div class="card-header card-header-success card-header-icon">
+                                            <div class="card-icon">
+                                                <i class="material-icons">fact_check</i>
+                                            </div>
+                                            <h3 class="card-title">Requisiciones</h3>
+                                            <a class="btn btn-outline-success" href="{{ route('requisicions.index') }}" >Consultar requisiciones</a>
+                                            <a class="btn btn-outline-danger" href="{{ route('requisicions.create') }}" >Crear requisición</a>
+                                        </div>
+                                        <div class="card-footer">
+                                            <div class="stats">
+                                                <i class="material-icons">inventory</i><a href="{{ route('inventario-cta') }}" >Inventario General</a>
+                                                <i class="material-icons">location_searching</i><a href="{{ route('inventario-localizado') }}" >Inventario Localizado</a>
+                                                <!-- <i class="material-icons">inventory</i><a href="{{ route('inventario-express-detalle2') }}" >Nuevo Inventario express2</a> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+
 
                         </div>
                     </div>
