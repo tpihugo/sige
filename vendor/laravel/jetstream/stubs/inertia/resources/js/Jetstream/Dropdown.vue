@@ -29,9 +29,9 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, onUnmounted, ref } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 
-export default defineComponent({
+export default {
     props: {
         align: {
             default: 'right'
@@ -48,7 +48,7 @@ export default defineComponent({
         let open = ref(false)
 
         const closeOnEscape = (e) => {
-            if (open.value && e.key === 'Escape') {
+            if (open.value && e.keyCode === 27) {
                 open.value = false
             }
         }
@@ -78,5 +78,5 @@ export default defineComponent({
             }
         },
     }
-})
+}
 </script>

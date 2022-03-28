@@ -29,7 +29,7 @@ class TestCommand extends Command
      */
     protected $signature = 'test
         {--without-tty : Disable output to TTY}
-        {--p|parallel : Indicates if the tests should run in parallel}
+        {--parallel : Indicates if the tests should run in parallel}
         {--recreate-databases : Indicates if the test databases should be re-created}
     ';
 
@@ -90,7 +90,10 @@ class TestCommand extends Command
             ),
             null,
             // Envs ...
-            $parallel ? $this->paratestEnvironmentVariables() : $this->phpunitEnvironmentVariables(),
+            $parallel ? [
+                'LARAVEL_PARALLEL_TESTING'                    => 1,
+                'LARAVEL_PARALLEL_TESTING_RECREATE_DATABASES' => $this->option('recreate-databases'),
+            ] : [],
         ))->setTimeout(null);
 
         try {
@@ -117,17 +120,23 @@ class TestCommand extends Command
      */
     protected function binary()
     {
-        if (class_exists(\Pest\Laravel\PestServiceProvider::class)) {
-            $command = $this->option('parallel') ? ['vendor/pestphp/pest/bin/pest', '--parallel'] : ['vendor/pestphp/pest/bin/pest'];
-        } else {
-            $command = $this->option('parallel') ? ['vendor/brianium/paratest/bin/paratest'] : ['vendor/phpunit/phpunit/phpunit'];
+        switch (true) {
+            case $this->option('parallel'):
+                $command = 'vendor/brianium/paratest/bin/paratest';
+                break;
+            case class_exists(\Pest\Laravel\PestServiceProvider::class):
+                $command = 'vendor/pestphp/pest/bin/pest';
+                break;
+            default:
+                $command = 'vendor/phpunit/phpunit/phpunit';
+                break;
         }
 
         if ('phpdbg' === PHP_SAPI) {
-            return array_merge([PHP_BINARY, '-qrr'], $command);
+            return [PHP_BINARY, '-qrr', $command];
         }
 
-        return array_merge([PHP_BINARY], $command);
+        return [PHP_BINARY, $command];
     }
 
     /**
@@ -163,7 +172,6 @@ class TestCommand extends Command
     {
         $options = array_values(array_filter($options, function ($option) {
             return !Str::startsWith($option, '--env=')
-                && !Str::startsWith($option, '-p')
                 && !Str::startsWith($option, '--parallel')
                 && !Str::startsWith($option, '--recreate-databases');
         }));
@@ -176,29 +184,6 @@ class TestCommand extends Command
             "--configuration=$file",
             "--runner=\Illuminate\Testing\ParallelRunner",
         ], $options);
-    }
-
-    /**
-     * Get the array of environment variables for running PHPUnit.
-     *
-     * @return array
-     */
-    protected function phpunitEnvironmentVariables()
-    {
-        return [];
-    }
-
-    /**
-     * Get the array of environment variables for running Paratest.
-     *
-     * @return array
-     */
-    protected function paratestEnvironmentVariables()
-    {
-        return [
-            'LARAVEL_PARALLEL_TESTING'                    => 1,
-            'LARAVEL_PARALLEL_TESTING_RECREATE_DATABASES' => $this->option('recreate-databases'),
-        ];
     }
 
     /**

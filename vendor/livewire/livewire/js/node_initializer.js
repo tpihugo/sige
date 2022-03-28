@@ -19,15 +19,6 @@ export default {
                     break
 
                 case 'model':
-                    if (! directive.value) {
-                        console.warn('Livewire: [wire:model] is missing a value.', el)
-                        break
-                    }
-
-                    el._x_modelable_hook = () => {
-                        return component.$wire.entangle(directive.value, directive.modifiers.includes('defer'))
-                    }
-
                     DOM.setInputValueFromModel(el, component)
 
                     this.attachModelListener(el, directive, component)
@@ -87,9 +78,7 @@ export default {
                 // We have to check for typeof e.detail here for IE 11.
                 && typeof e.detail != 'undefined'
                 && typeof window.document.documentMode == 'undefined'
-                    // With autofill in Safari, Safari triggers a custom event and assigns
-                    // the value to e.target.value, so we need to check for that value as well.
-                    ? e.detail || e.target.value
+                    ? e.detail
                     : DOM.valueFromInput(el, component)
 
             if (directive.modifiers.includes('defer')) {

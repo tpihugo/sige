@@ -33,8 +33,6 @@ class InviteTeamMemberTest extends TestCase
 
     public function test_team_member_invitations_can_be_cancelled()
     {
-        Mail::fake();
-
         $this->actingAs($user = User::factory()->withPersonalTeam()->create());
 
         // Add the team member...

@@ -12,7 +12,7 @@
             </div>
         </div>
 
-        <div class="flex flex-row justify-end px-6 py-4 bg-gray-100 text-right">
+        <div class="px-6 py-4 bg-gray-100 text-right">
             <slot name="footer">
             </slot>
         </div>
@@ -20,10 +20,9 @@
 </template>
 
 <script>
-    import { defineComponent } from 'vue'
-    import Modal from './Modal.vue'
+    import Modal from './Modal'
 
-    export default defineComponent({
+    export default {
         emits: ['close'],
 
         components: {
@@ -47,5 +46,5 @@
                 this.$emit('close')
             },
         }
-    })
+    }
 </script>

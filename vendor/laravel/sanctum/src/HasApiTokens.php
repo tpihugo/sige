@@ -31,7 +31,7 @@ trait HasApiTokens
      */
     public function tokenCan(string $ability)
     {
-        return $this->accessToken && $this->accessToken->can($ability);
+        return $this->accessToken ? $this->accessToken->can($ability) : false;
     }
 
     /**
@@ -49,7 +49,7 @@ trait HasApiTokens
             'abilities' => $abilities,
         ]);
 
-        return new NewAccessToken($token, $token->getKey().'|'.$plainTextToken);
+        return new NewAccessToken($token, $token->id.'|'.$plainTextToken);
     }
 
     /**

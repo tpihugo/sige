@@ -3,7 +3,6 @@
 namespace Illuminate\Console\Scheduling;
 
 use Cron\CronExpression;
-use DateTimeZone;
 use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
 
@@ -28,7 +27,6 @@ class ScheduleListCommand extends Command
      *
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
-     *
      * @throws \Exception
      */
     public function handle(Schedule $schedule)
@@ -39,9 +37,8 @@ class ScheduleListCommand extends Command
                 $event->expression,
                 $event->description,
                 (new CronExpression($event->expression))
-                            ->getNextRunDate(Carbon::now()->setTimezone($event->timezone))
-                            ->setTimezone(new DateTimeZone($this->option('timezone') ?? config('app.timezone')))
-                            ->format('Y-m-d H:i:s P'),
+                            ->getNextRunDate(Carbon::now())
+                            ->setTimezone($this->option('timezone', config('app.timezone'))),
             ];
         }
 

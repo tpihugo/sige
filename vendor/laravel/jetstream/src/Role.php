@@ -67,13 +67,12 @@ class Role implements JsonSerializable
      *
      * @return array
      */
-    #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return [
             'key' => $this->key,
-            'name' => __($this->name),
-            'description' => __($this->description),
+            'name' => $this->name,
+            'description' => $this->description,
             'permissions' => $this->permissions,
         ];
     }

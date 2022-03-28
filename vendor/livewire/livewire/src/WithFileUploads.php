@@ -51,16 +51,9 @@ trait WithFileUploads
         $this->emit('upload:errored', $name)->self();
 
         if (is_null($errorsInJson)) {
-            // Handle any translations/custom names
-            $translator = app()->make('translator');
-
-            $attribute = $translator->get("validation.attributes.{$name}");
-            if ($attribute === "validation.attributes.{$name}") $attribute = $name;
-
-            $message = trans('validation.uploaded', ['attribute' => $attribute]);
-            if ($message === 'validation.uploaded') $message = "The {$name} failed to upload.";
-
-            throw ValidationException::withMessages([$name => $message]);
+            $genericValidationMessage = trans('validation.uploaded', ['attribute' => $name]);
+            if ($genericValidationMessage === 'validation.uploaded') $genericValidationMessage = "The {$name} failed to upload.";
+            throw ValidationException::withMessages([$name => $genericValidationMessage]);
         }
 
         $errorsInJson = $isMultiple
