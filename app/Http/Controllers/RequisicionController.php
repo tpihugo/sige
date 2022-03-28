@@ -140,7 +140,7 @@ class RequisicionController extends Controller
      //articulos_requision//
 
      $convertedArray = explode(',',$request->input('dataTable'));
-
+ 
      $index_array = 0;
      for ($i=0; $i < count($convertedArray)/4 ; $i++) {
          $articulo = new Articulos_requisiones();
