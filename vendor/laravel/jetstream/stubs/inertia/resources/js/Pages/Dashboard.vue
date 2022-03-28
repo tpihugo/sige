@@ -1,5 +1,5 @@
 <template>
-    <app-layout title="Dashboard">
+    <app-layout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Dashboard
@@ -17,14 +17,13 @@
 </template>
 
 <script>
-    import { defineComponent } from 'vue'
-    import AppLayout from '@/Layouts/AppLayout.vue'
-    import Welcome from '@/Jetstream/Welcome.vue'
+    import AppLayout from '@/Layouts/AppLayout'
+    import Welcome from '@/Jetstream/Welcome'
 
-    export default defineComponent({
+    export default {
         components: {
             AppLayout,
             Welcome,
         },
-    })
+    }
 </script>

@@ -7,7 +7,6 @@ export default class extends Action {
         this.type = 'syncInput'
         this.name = name
         this.payload = {
-            id: this.signature,
             name,
             value,
         }

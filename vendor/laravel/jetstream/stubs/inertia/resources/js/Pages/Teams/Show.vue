@@ -1,5 +1,5 @@
 <template>
-    <app-layout title="Team Settings">
+    <app-layout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Team Settings
@@ -26,14 +26,13 @@
 </template>
 
 <script>
-    import { defineComponent } from 'vue'
-    import AppLayout from '@/Layouts/AppLayout.vue'
-    import DeleteTeamForm from '@/Pages/Teams/Partials/DeleteTeamForm.vue'
-    import JetSectionBorder from '@/Jetstream/SectionBorder.vue'
-    import TeamMemberManager from '@/Pages/Teams/Partials/TeamMemberManager.vue'
-    import UpdateTeamNameForm from '@/Pages/Teams/Partials/UpdateTeamNameForm.vue'
+    import TeamMemberManager from './TeamMemberManager'
+    import AppLayout from '@/Layouts/AppLayout'
+    import DeleteTeamForm from './DeleteTeamForm'
+    import JetSectionBorder from '@/Jetstream/SectionBorder'
+    import UpdateTeamNameForm from './UpdateTeamNameForm'
 
-    export default defineComponent({
+    export default {
         props: [
             'team',
             'availableRoles',
@@ -47,5 +46,5 @@
             TeamMemberManager,
             UpdateTeamNameForm,
         },
-    })
+    }
 </script>

@@ -2,7 +2,7 @@
 
 namespace Laravel\Jetstream;
 
-use Illuminate\Http\Response;
+use Illuminate\Http\RedirectResponse;
 
 trait RedirectsActions
 {
@@ -10,7 +10,7 @@ trait RedirectsActions
      * Get the redirect response for the given action.
      *
      * @param  mixed  $action
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function redirectPath($action)
     {
@@ -22,6 +22,6 @@ trait RedirectsActions
                                 : config('fortify.home');
         }
 
-        return $response instanceof Response ? $response : redirect($response);
+        return $response instanceof RedirectResponse ? $response : redirect($response);
     }
 }

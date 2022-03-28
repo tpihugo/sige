@@ -26,7 +26,7 @@ class SanctumServiceProvider extends ServiceProvider
             ], config('auth.guards.sanctum', [])),
         ]);
 
-        if (! app()->configurationIsCached()) {
+        if (! $this->app->configurationIsCached()) {
             $this->mergeConfigFrom(__DIR__.'/../config/sanctum.php', 'sanctum');
         }
     }
@@ -38,7 +38,7 @@ class SanctumServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (app()->runningInConsole()) {
+        if ($this->app->runningInConsole()) {
             $this->registerMigrations();
 
             $this->publishes([
@@ -74,7 +74,7 @@ class SanctumServiceProvider extends ServiceProvider
      */
     protected function defineRoutes()
     {
-        if (app()->routesAreCached() || config('sanctum.routes') === false) {
+        if ($this->app->routesAreCached() || config('sanctum.routes') === false) {
             return;
         }
 
@@ -96,7 +96,7 @@ class SanctumServiceProvider extends ServiceProvider
         Auth::resolved(function ($auth) {
             $auth->extend('sanctum', function ($app, $name, array $config) use ($auth) {
                 return tap($this->createGuard($auth, $config), function ($guard) {
-                    app()->refresh('request', $guard, 'setRequest');
+                    $this->app->refresh('request', $guard, 'setRequest');
                 });
             });
         });
@@ -105,15 +105,15 @@ class SanctumServiceProvider extends ServiceProvider
     /**
      * Register the guard.
      *
-     * @param  \Illuminate\Contracts\Auth\Factory  $auth
-     * @param  array  $config
+     * @param \Illuminate\Contracts\Auth\Factory  $auth
+     * @param array $config
      * @return RequestGuard
      */
     protected function createGuard($auth, $config)
     {
         return new RequestGuard(
             new Guard($auth, config('sanctum.expiration'), $config['provider']),
-            request(),
+            $this->app['request'],
             $auth->createUserProvider($config['provider'] ?? null)
         );
     }
@@ -125,7 +125,7 @@ class SanctumServiceProvider extends ServiceProvider
      */
     protected function configureMiddleware()
     {
-        $kernel = app()->make(Kernel::class);
+        $kernel = $this->app->make(Kernel::class);
 
         $kernel->prependToMiddlewarePriority(EnsureFrontendRequestsAreStateful::class);
     }

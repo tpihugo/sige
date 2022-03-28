@@ -6,7 +6,6 @@ use Illuminate\Container\BoundMethod;
 use Illuminate\Contracts\Routing\UrlRoutable as ImplicitlyBindable;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use ReflectionClass;
-use ReflectionNamedType;
 
 class ImplicitlyBoundMethod extends BoundMethod
 {
@@ -105,15 +104,7 @@ class ImplicitlyBoundMethod extends BoundMethod
     {
         $type = $parameter->getType();
 
-        if(!$type){
-            return null;
-        }
-
-        if(! $type instanceof ReflectionNamedType){
-            return null;
-        }
-
-        return (! $type->isBuiltin()) ? $type->getName() : null;
+        return ($type && ! $type->isBuiltin()) ? $type->getName() : null;
     }
 
     public static function implementsInterface($parameter)

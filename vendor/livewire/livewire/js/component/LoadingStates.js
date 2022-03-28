@@ -45,25 +45,7 @@ export default function () {
             .filter(action => {
                 return action.type === 'syncInput'
             })
-            .map(action => {
-                let name = action.payload.name
-                if (! name.includes('.')) {
-                    return name
-                }
-
-                let modelActions = []
-
-                modelActions.push(
-                    name.split('.').reduce((fullAction, part) => {
-                        modelActions.push(fullAction)
-
-                        return fullAction + '.' + part
-                    })
-                )
-
-                return modelActions
-            })
-            .flat()
+            .map(action => action.payload.name)
 
         setLoading(component, actions.concat(actionsWithParams).concat(models))
     })
@@ -174,7 +156,7 @@ function setLoading(component, actions) {
         .filter(el => el)
         .flat()
 
-    const allEls = removeDuplicates(component.genericLoadingEls.concat(actionTargetedEls))
+    const allEls = component.genericLoadingEls.concat(actionTargetedEls)
 
     startLoading(allEls)
 
@@ -185,7 +167,7 @@ export function setUploadLoading(component, modelName) {
     const actionTargetedEls =
         component.targetedLoadingElsByAction[modelName] || []
 
-    const allEls = removeDuplicates(component.genericLoadingEls.concat(actionTargetedEls))
+    const allEls = component.genericLoadingEls.concat(actionTargetedEls)
 
     startLoading(allEls)
 
@@ -244,7 +226,7 @@ function startLoading(els) {
 }
 
 function getDisplayProperty(directive) {
-    return (['inline', 'block', 'table', 'flex', 'grid', 'inline-flex']
+    return (['inline', 'block', 'table', 'flex', 'grid']
         .filter(i => directive.modifiers.includes(i))[0] || 'inline-block')
 }
 
@@ -253,28 +235,10 @@ function doAndSetCallbackOnElToUndo(el, directive, doCallback, undoCallback) {
         [doCallback, undoCallback] = [undoCallback, doCallback]
 
     if (directive.modifiers.includes('delay')) {
-        let duration = 200
-
-        let delayModifiers = {
-            'shortest': 50,
-            'shorter': 100,
-            'short': 150,
-            'long': 300,
-            'longer': 500,
-            'longest': 1000,
-        }
-
-        Object.keys(delayModifiers).some(key => {
-            if(directive.modifiers.includes(key)) {
-                duration = delayModifiers[key]
-                return true
-            }
-        })
-
         let timeout = setTimeout(() => {
             doCallback()
             el.__livewire_on_finish_loading.push(() => undoCallback())
-        }, duration)
+        }, 200)
 
         el.__livewire_on_finish_loading.push(() => clearTimeout(timeout))
     } else {
@@ -293,8 +257,4 @@ function endLoading(els) {
 
 function generateSignatureFromMethodAndParams(method, params) {
     return method + btoa(encodeURIComponent(params.toString()))
-}
-
-function removeDuplicates(arr) {
-    return Array.from(new Set(arr))
 }

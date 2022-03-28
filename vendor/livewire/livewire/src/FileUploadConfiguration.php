@@ -4,13 +4,12 @@ namespace Livewire;
 
 use Illuminate\Support\Facades\Storage;
 use League\Flysystem\Util;
-use League\Flysystem\WhitespacePathNormalizer;
 
 class FileUploadConfiguration
 {
     public static function storage()
     {
-        if (app()->runningUnitTests()) {
+        if (app()->environment('testing')) {
             // We want to "fake" the first time in a test run, but not again because
             // ::fake() whipes the storage directory every time its called.
             rescue(function () {
@@ -27,7 +26,7 @@ class FileUploadConfiguration
 
     public static function disk()
     {
-        if (app()->runningUnitTests()) {
+        if (app()->environment('testing')) {
             return 'tmp-for-tests';
         }
 
@@ -46,32 +45,15 @@ class FileUploadConfiguration
         return config('filesystems.disks.'.strtolower($diskBeforeTestFake).'.driver') === 's3';
     }
 
-    public static function isUsingGCS()
+    protected static function directory()
     {
-        $diskBeforeTestFake = config('livewire.temporary_file_upload.disk') ?: config('filesystems.default');
-
-        return config('filesystems.disks.'.strtolower($diskBeforeTestFake).'.driver') === 'gcs';
-    }
-
-    public static function normalizeRelativePath($path)
-    {
-        // Flysystem V2.0+ removed the Util class, so this checks for the new class first
-        if (class_exists("League\Flysystem\WhitespacePathNormalizer")) {
-            return (new WhitespacePathNormalizer)->normalizePath($path);
-        }
-
-        return Util::normalizeRelativePath($path);
-    }
-
-    public static function directory()
-    {
-        return static::normalizeRelativePath(config('livewire.temporary_file_upload.directory') ?: 'livewire-tmp');
+        return Util::normalizeRelativePath(config('livewire.temporary_file_upload.directory') ?: 'livewire-tmp');
     }
 
     protected static function s3Root()
     {
         return static::isUsingS3() && is_array(static::diskConfig()) && array_key_exists('root', static::diskConfig())
-            ? static::normalizeRelativePath(static::diskConfig()['root'])
+            ? Util::normalizeRelativePath(static::diskConfig()['root'])
             : '';
     }
 
@@ -79,20 +61,14 @@ class FileUploadConfiguration
     {
         $prefix = $withS3Root ? static::s3Root() : '';
         $directory = static::directory();
-        $path = static::normalizeRelativePath($path);
+        $path = Util::normalizeRelativePath($path);
 
         return $prefix.($prefix ? '/' : '').$directory.($path ? '/' : '').$path;
     }
 
     public static function mimeType($filename)
     {
-        // Flysystem V2.0+ changed the mimeType method, so this checks for the new inteface first
-        if (interface_exists("League\Flysystem\FilesystemAdapter")) {
-            $mimeType = static::storage()->mimeType(static::path($filename));
-        } else {
-            $mimeType = static::storage()->getMimeType(static::path($filename));
-        }
-
+        $mimeType = static::storage()->getMimeType(static::path($filename));
         return $mimeType === 'image/svg' ? 'image/svg+xml' : $mimeType;
     }
 

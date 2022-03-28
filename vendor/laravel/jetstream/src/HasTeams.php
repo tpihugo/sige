@@ -104,10 +104,6 @@ trait HasTeams
      */
     public function ownsTeam($team)
     {
-        if (is_null($team)) {
-            return false;
-        }
-
         return $this->id == $team->{$this->getForeignKey()};
     }
 
@@ -119,20 +115,16 @@ trait HasTeams
      */
     public function belongsToTeam($team)
     {
-        if (is_null($team)) {
-            return false;
-        }
-
-        return $this->ownsTeam($team) || $this->teams->contains(function ($t) use ($team) {
+        return $this->teams->contains(function ($t) use ($team) {
             return $t->id === $team->id;
-        });
+        }) || $this->ownsTeam($team);
     }
 
     /**
      * Get the role that the user has on the team.
      *
      * @param  mixed  $team
-     * @return \Laravel\Jetstream\Role|null
+     * @return \Laravel\Jetstream\Role
      */
     public function teamRole($team)
     {
@@ -144,13 +136,9 @@ trait HasTeams
             return;
         }
 
-        $role = $team->users
-            ->where('id', $this->id)
-            ->first()
-            ->membership
-            ->role;
-
-        return $role ? Jetstream::findRole($role) : null;
+        return Jetstream::findRole($team->users->where(
+            'id', $this->id
+        )->first()->membership->role);
     }
 
     /**
@@ -187,7 +175,7 @@ trait HasTeams
             return [];
         }
 
-        return (array) optional($this->teamRole($team))->permissions;
+        return $this->teamRole($team)->permissions;
     }
 
     /**

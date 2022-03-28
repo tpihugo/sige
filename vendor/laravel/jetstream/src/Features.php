@@ -2,6 +2,8 @@
 
 namespace Laravel\Jetstream;
 
+use Illuminate\Support\Arr;
+
 class Features
 {
     /**

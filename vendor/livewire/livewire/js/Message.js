@@ -44,11 +44,9 @@ export default class {
             if (update.type !== 'callMethod') return
 
             update.resolve(
-                returns[update.signature] !== undefined
-                    ? returns[update.signature]
-                    : (returns[update.method] !== undefined
-                        ? returns[update.method]
-                        : null)
+                returns[update.method] !== undefined
+                    ? returns[update.method]
+                    : null
             )
         })
     }

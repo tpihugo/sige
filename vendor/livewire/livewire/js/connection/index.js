@@ -3,34 +3,18 @@ import componentStore from '../Store'
 import { getCsrfToken } from '@/util'
 
 export default class Connection {
-    constructor() {
-        this.headers = {}
-    }
-
     onMessage(message, payload) {
         message.component.receiveMessage(message, payload)
     }
 
-    onError(message, status, response) {
+    onError(message, status) {
         message.component.messageSendFailed()
 
-        return componentStore.onErrorCallback(status, response)
-    }
-
-    showExpiredMessage(response, message) {
-        if (store.sessionHasExpiredCallback) {
-            store.sessionHasExpiredCallback(response, message)
-        } else {
-            confirm(
-                'This page has expired.\nWould you like to refresh the page?'
-            ) && window.location.reload()
-        }
+        return componentStore.onErrorCallback(status)
     }
 
     sendMessage(message) {
         let payload = message.payload()
-        let csrfToken = getCsrfToken()
-        let socketId = this.getSocketId()
 
         if (window.__testing_request_interceptor) {
             return window.__testing_request_interceptor(payload, this)
@@ -47,15 +31,12 @@ export default class Connection {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'text/html, application/xhtml+xml',
+                    'X-CSRF-TOKEN': getCsrfToken(),
+                    'X-Socket-ID': this.getSocketId(),
                     'X-Livewire': true,
-
-                    // set Custom Headers
-                    ...(this.headers),
 
                     // We'll set this explicitly to mitigate potential interference from ad-blockers/etc.
                     'Referer': window.location.href,
-                    ...(csrfToken && { 'X-CSRF-TOKEN': csrfToken }),
-                    ...(socketId && { 'X-Socket-ID': socketId })
                 },
             }
         )
@@ -70,14 +51,16 @@ export default class Connection {
                         }
                     })
                 } else {
-                    if (this.onError(message, response.status, response) === false) return
+                    if (this.onError(message, response.status) === false) return
 
                     if (response.status === 419) {
                         if (store.sessionHasExpired) return
 
                         store.sessionHasExpired = true
 
-                        this.showExpiredMessage(response, message)
+                        confirm(
+                            'This page has expired due to inactivity.\nWould you like to refresh the page?'
+                        ) && window.location.reload()
                     } else {
                         response.text().then(response => {
                             this.showHtmlModal(response)
