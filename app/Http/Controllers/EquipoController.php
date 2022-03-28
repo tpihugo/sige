@@ -64,7 +64,7 @@ class EquipoController extends Controller
         }else{
             $equipo->ip_id = $request->input('ip_id');
         }
-        
+
 	$equipo->tipo_conexion = $request->input('tipo_conexion');
         $equipo->detalles = $request->input('detalles');
         $equipo->id_resguardante = $request->input('id_resguardante');
@@ -77,9 +77,9 @@ class EquipoController extends Controller
         $ip->disponible = "no";
         $ip->update();
     }
-	
-	
-	
+
+
+
 
 
 	$movimiento_equipo = new MovimientoEquipo;
@@ -90,7 +90,7 @@ class EquipoController extends Controller
 	$movimiento_equipo->fecha = now();
 	$movimiento_equipo->comentarios = 'Alta equipo';
 	$movimiento_equipo->save();
-	
+
 	//
         $log = new Log();
         $log->tabla = "equipos";
@@ -120,17 +120,17 @@ class EquipoController extends Controller
     {
         $empleados = Empleado::all()->sortBy('nombre');
 	$tipo_equipos = Equipo::distinct()->orderby('tipo_equipo','asc')->get(['tipo_equipo']);
-    
-	
+
+
 
         $equipo = Equipo::find($id);
         $ip_equipo=null;
         if($equipo->id!=null){
-            
+
             $ip_equipo=Ip::where('id','=',$equipo->ip_id)->first();
-            
+
         }
-        
+
         $ip = Ip::where('disponible','=','si')->get();
         if($equipo){
             $idResguardante=$equipo->id_resguardante;
@@ -176,7 +176,7 @@ class EquipoController extends Controller
         }else{
             $equipo->ip_id = $request->input('ip');
         }
-        
+
 
         $equipo->tipo_conexion = $request->input('tipo_conexion');
         $equipo->detalles = $request->input('detalles');
@@ -200,15 +200,15 @@ class EquipoController extends Controller
                 $ip = Ip::where('id','=',$equipo->ip_id)->get()[0];
                 $ip->disponible = 'no';
                 $ip->update();
-            }  
+            }
         }
-        
-         
+
+
     }
 
 
-	
-	
+
+
 	//
         $log = new Log();
         $log->tabla = "equipos";
@@ -222,7 +222,7 @@ class EquipoController extends Controller
         $log->acciones = "Edicion";
         $log->save();
         //
-        return redirect('home')->with(array(
+        return redirect('/')->with(array(
             'message'=>'El equipo se actualizó correctamente'
         ));
     }
@@ -259,7 +259,7 @@ class EquipoController extends Controller
                ->orWhere('tipo_conexion','LIKE','%'.$busqueda.'%')
                ->orWhere('tipo_equipo','LIKE','%'.$busqueda.'%')
                ->orWhere('area','LIKE','%'.$busqueda.'%')->get();
-		
+
 	   $equipos = $this->cargarDT($vsequipos );
 
            return view('equipo.busqueda')->with('equipos',$equipos)->with('busqueda', $busqueda);
@@ -342,14 +342,14 @@ public function busquedaEquiposPrestamo(Request $request){
         ));
 
     }
-    
+
 
     public function cargarDT($consulta)
     {
         $equipos = [];
 
         foreach ($consulta as $key => $value){
-           
+
             $cambiarubicacion = route('cambiar-ubicacion', $value['id']);
             $actualizar =  route('equipos.edit', $value['id']);
             $expediente = "expediente/".$value['id'];
@@ -361,17 +361,17 @@ public function busquedaEquiposPrestamo(Request $request){
                 $acciones = '
 			<div class="btn-acciones">
                     	    <div class="btn-circle">
-				<a href="' . $actualizar . '" title="Actualizar">                          
+				<a href="' . $actualizar . '" title="Actualizar">
 				<span class="text-success"><span class="material-icons">edit</span></span>
                         	</a>
                         	<a href="' . $prestamo . '"  title="Prestamo">
                             	<span class="text-info"><span class="material-icons">feed</span></span>
                         	</a>
 				<a href="' . $cambiarubicacion . '"  title="Reubicar">
-                            	<span class="text-danger"><span class="material-icons">location_on</span></span>                        
+                            	<span class="text-danger"><span class="material-icons">location_on</span></span>
 				</a>
 				<a href="' . $historial . '"  title="Historial">
-                            	<span class="text-secondary"><span class="material-icons">history</span></span>                        
+                            	<span class="text-secondary"><span class="material-icons">history</span></span>
 				</a>
                 <a href="'.$expediente.'" role="button" class="btn btn-success"  title="expediente">
                                <i class="fas fa-clipboard"></i>
@@ -393,7 +393,7 @@ public function busquedaEquiposPrestamo(Request $request){
                                  </div>
                     		 <div class="modal-body">
 		                    <p class="text-primary">
-                		      <small> 
+                		      <small>
                                           Marca: ' . $value['marca'] . ', Modelo:' . $value['modelo'] . ', N/S: ' . $value['numero_serie'] . '
 		                      </small>
                      	 	   </p>
@@ -404,17 +404,17 @@ public function busquedaEquiposPrestamo(Request $request){
                     		 </div>
                   	      </div>
                 	    </div>
-              		</div>             
+              		</div>
             ';
             }
 		$localizado_en_sici='';
 		if($value['resguardante']=='CTA'){
-                                
+
                                 if($value['localizado_sici']=='Si')
                                      $localizado_en_sici.='Localizado';
                                 else
                                     $localizado_en_sici.='No localizado';
-                                
+
                 }
         if(Auth::user()->role != 'general'){
             $equipos[$key] = array(
@@ -448,7 +448,7 @@ public function busquedaEquiposPrestamo(Request $request){
     }
 
     public function delete_equipo($equipo_id){
-        
+
         $equipo = Equipo::find($equipo_id);
 
         if($equipo){
