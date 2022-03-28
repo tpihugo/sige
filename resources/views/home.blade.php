@@ -158,7 +158,8 @@
                                         <div class="card-footer">
                                             <div class="stats">
                                                 @if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='aulas' || Auth::user()->role =='redes' || Auth::user()->role =='auxiliar' ))
-                                                    <i class="material-icons">spellcheck</i><a href="{{ route('cursos.create') }}" >Capturar</a>
+                                                    <i class="material-icons">spellcheck</i>
+                                                      <a href="{{ route('cursos.create') }}" >Capturar</a>
                                                 @endif
                                                 <i class="material-icons">update</i><a  href="{{ url('cursos/2022A') }}">Todos</a>
                                             </div>
@@ -176,13 +177,13 @@
                                                 <i class="material-icons">people</i>
                                             </div>
                                             <h3 class="card-title">Usuarios</h3>
-                                            <a class="btn btn-outline-danger" href="{{ route('usuarios.index') }}">Administrar Usuarios</a>
-                                            <a class="btn btn-outline-success" href="{{ route('roles.index') }}">Adm Roles</a>
-                                            <a class="btn btn-outline-success" href="{{ route('permisos.index') }}">Adm Permisos</a>
+                                            <a class="btn btn-outline-danger" href="{{ route('usuarios.index') }}">Ad. Usuarios</a>
+                                            <a class="btn btn-outline-success" href="{{ route('permisos.index') }}">Ad. Permisos</a>
                                         </div>
                                         <div class="card-footer">
                                             <div class="stats">
                                                 <i class="material-icons">contact_phone</i>
+                                                  <a href="{{ route('roles.index') }}">Administrar roles</a>
                                             </div>
                                         </div>
                                     </div>
@@ -275,31 +276,13 @@
                             @if (Auth::check() && (Auth::user()->role =='admin'))
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="card card-stats">
-                                        <div class="card-header card-header-success card-header-icon">
-                                            <div class="card-icon">
-                                                <i class="material-icons">dashboard</i>
-                                            </div>
-                                            <h3 class="card-title">Estadisticas</h3>
-                                            <a class="btn btn-outline-success" href="{{ route('estadisticas') }}">Consultar Estadisticas</a>
-                                        </div>
-                                        <div class="card-footer">
-                                            <div class="stats">
-                                                <i class="material-icons">info</i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
-
-                            @if (Auth::check() && (Auth::user()->role =='admin'))
-                                <div class="col-lg-4 col-md-6 col-sm-12">
-                                    <div class="card card-stats">
                                         <div class="card-header card-header-primary card-header-icon">
                                             <div class="card-icon">
                                                 <i class="material-icons">info_outline</i>
                                             </div>
                                             <h3 class="card-title">Logs</h3>
-                                            <a class="btn btn-outline-success" href="{{ route('logs.index') }}">Consultar Logs</a>
+                                            <a class="btn btn-outline-success" href="{{ route('estadisticas') }}">Consultar Estadisticas</a>
+                                            <a class="btn btn-outline-danger" href="{{ route('logs.index') }}">Consultar Logs</a>
                                         </div>
                                         <div class="card-footer">
                                             <div class="stats">
