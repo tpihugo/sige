@@ -140,7 +140,7 @@
     	                 <div class="row g-3 align-items-center">
 
                          <div class="col-md-6">
-                             <a href="<?php echo e(route('home')); ?>" class="btn btn-danger">Cancelar</a>
+                             <a href="<?php echo e(route('requisicions.index')); ?>" class="btn btn-danger">Cancelar</a>
                              <button type="submit" id="submit" class="btn btn-success">
                                  Actualizar
                                  <i class="ml-1 fas fa-save"></i>

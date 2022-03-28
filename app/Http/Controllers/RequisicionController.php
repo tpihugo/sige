@@ -56,22 +56,27 @@ class RequisicionController extends Controller
             $vs_articulos_array = '';
             if($index < $art_length){
 
+              $vs_articulos1 = '
+                  <td>
+                    <p class="text-muted text-center"> Codigos de articulos: </p>';
+              $vs_articulos_array = $vs_articulos_array . $vs_articulos1;
+
               for ($i=0; $i < $art_length; $i++) {
-                  $vs_articulos = '
-                      <td>
-                        <p class="text-muted"> Articulo: '.($i+1).' </p>
-                        <ul >
-                          <li style="padding: 5px;"> <strong> Codigo</strong>: '. $codigo = $req_articulos[$i]->codigo .'</li>
-                          <li style="padding: 5px;"> <strong> Cantidad</strong>:'. $cantidad = $req_articulos[$i]->cantidad .'</li>
-                          <li style="padding: 5px;"> <strong> Descripcion</strong>: '. $descripcion = $req_articulos[$i]->descripcion .'</li>
-                          <li style="padding: 5px;"> <strong> Observaciones</strong>:'. $observaciones = $req_articulos[$i]->observaciones .'</li>
+                  $vs_articulos2 = '
+                        <ul>
+                          <li> <p class="text-muted"> '. $codigo = $req_articulos[$i]->codigo .' </p> </li>
                         </ul>
                       </td>
                   ';
-                  $vs_articulos_array =  $vs_articulos_array . $vs_articulos;
+                  $vs_articulos_array =  $vs_articulos_array . $vs_articulos2 ;
               }
-
-
+            }else if($art_length == 0){
+              $vs_articulos = '
+                  <td>
+                    <p class="text-muted text-center"> No hay articulos</p>
+                  </td>
+              ';
+              $vs_articulos_array =  $vs_articulos_array . $vs_articulos;
             }
 
 
@@ -140,17 +145,20 @@ class RequisicionController extends Controller
      //articulos_requision//
 
      $convertedArray = explode(',',$request->input('dataTable'));
- 
+
      $index_array = 0;
-     for ($i=0; $i < count($convertedArray)/4 ; $i++) {
-         $articulo = new Articulos_requisiones();
-         $articulo->requisicion_id = $requisicion->id;
-         $articulo->codigo = $convertedArray[$index_array++];
-         // dd($convertedArray[1]);
-         $articulo->cantidad = $convertedArray[$index_array++];
-         $articulo->descripcion = $convertedArray[$index_array++];
-         $articulo->observaciones = $convertedArray[$index_array++];
-         $articulo->save();
+     $count = count($convertedArray)/4;
+     if($count > 1){
+       for ($i=0; $i < $count ; $i++) {
+           $articulo = new Articulos_requisiones();
+           $articulo->requisicion_id = $requisicion->id;
+           $articulo->codigo = $convertedArray[$index_array++];
+           // dd($convertedArray[1]);
+           $articulo->cantidad = $convertedArray[$index_array++];
+           $articulo->descripcion = $convertedArray[$index_array++];
+           $articulo->observaciones = $convertedArray[$index_array++];
+           $articulo->save();
+       }
      }
      return redirect ('requisicions');
     }
@@ -216,23 +224,14 @@ class RequisicionController extends Controller
 
      $index_array = 0;
      $array_existedArray = [];
-     for ($i=0; $i < count($convertedArray)/5 ; $i++) {
-         $inputId = $convertedArray[$index_array++];
+     $count = intval(count($convertedArray)/5 );
+     $OldArticles = Articulos_requisiones::where('requisicion_id', $requisicion->id)->delete();
+     if($count > 0){
+       // dd($count);
+       for ($i=0; $i < $count ; $i++) {
+           $inputId = $convertedArray[$index_array++];
 
-         $ArticuledFinded = Articulos_requisiones::find($inputId);
-
-         if($ArticuledFinded){//update
-           $ArticuledFinded->requisicion_id = $requisicion->id;
-           $ArticuledFinded->codigo = $convertedArray[$index_array++];
-           $ArticuledFinded->cantidad = $convertedArray[$index_array++];
-           $ArticuledFinded->descripcion = $convertedArray[$index_array++];
-           $ArticuledFinded->observaciones = $convertedArray[$index_array++];
-           $array_existedArray[$i] = $ArticuledFinded->id;
-
-           $ArticuledFinded->update();
-
-         }else{ //create
-
+           $ArticuledFinded = Articulos_requisiones::find($inputId);
            $articulo = new Articulos_requisiones();
            $articulo->requisicion_id = $requisicion->id;
            $articulo->codigo = $convertedArray[$index_array++];
@@ -241,14 +240,36 @@ class RequisicionController extends Controller
            $articulo->observaciones = $convertedArray[$index_array++];
            $articulo->save();
 
-           $array_existedArray[$i] = $articulo->id;
+           // if($ArticuledFinded){//update
+           //   $ArticuledFinded->requisicion_id = $requisicion->id;
+           //   $ArticuledFinded->codigo = $convertedArray[$index_array++];
+           //   $ArticuledFinded->cantidad = $convertedArray[$index_array++];
+           //   $ArticuledFinded->descripcion = $convertedArray[$index_array++];
+           //   $ArticuledFinded->observaciones = $convertedArray[$index_array++];
+           //   $array_existedArray[$i] = $ArticuledFinded->id;
+           //
+           //   $ArticuledFinded->update();
+           //
+           // }else{ //create
+           //   // dd($convertedArray);
+           //   $articulo = new Articulos_requisiones();
+           //   $articulo->requisicion_id = $requisicion->id;
+           //   $articulo->codigo = $convertedArray[$index_array++];
+           //   $articulo->cantidad = $convertedArray[$index_array++];
+           //   $articulo->descripcion = $convertedArray[$index_array++];
+           //   $articulo->observaciones = $convertedArray[$index_array++];
+           //   $articulo->save();
+           //
+           //   $array_existedArray[$i] = $articulo->id;
+           //
+           // }
+           }
 
-         }
+       }
+       // $arts_delete = Articulos_requisiones::where('requisicion_id',$requisicion->id)
+       // ->whereNotIn('id',$array_existedArray)->delete();
 
 
-     }
-     $arts_delete = Articulos_requisiones::where('requisicion_id',$requisicion->id)
-     ->whereNotIn('id',$array_existedArray)->delete();
 
      return redirect ('requisicions');
     }
