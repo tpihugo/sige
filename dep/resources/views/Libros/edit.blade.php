@@ -2,7 +2,7 @@
 @section('titulo', 'Editar - Libro')
 
 @section('content')
-<form action="{{route('libros.update',$libros->clasificacion)}}" class="row justify-content-bettwen" method="POST">
+<form action="{{route('libros.update',$libros->id)}}" class="row justify-content-bettwen" method="POST">
     @csrf
     <div class="col-auto">
         <label for="clasificacion" class="form-label">Clasificación</label>
