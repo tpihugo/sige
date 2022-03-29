@@ -74,9 +74,16 @@ class RolesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    # AGARRE PARA ELIMINAR
     public function show($id)
     {
-        //
+        $role = Role::findOrFail($id);
+
+        if (! $role) {
+            return view('roles.index')->withErrors("El no existe.");
+        }
+
+        return view('roles.show')->with('rol', $role);
     }
 
     /**
@@ -142,7 +149,25 @@ class RolesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::beginTransaction();
+        try {
+            Role::destroy($id);
+            DB::commit();
+            $roles = Role::all();
+            return view('roles.index')
+                ->withSuccess("Rol Eliminado con éxito.")
+                ->with('roles', $roles);
+        } catch (Exception $e) {
+            Log::error($e);
+            DB::rollBack();
+            $roles = Role::all();
+            return view('roles.index')
+                ->withErrors("Error al eliminar el Rol.")
+                ->with('roles', $roles);
+        }
+
+
+
     }
 
     public function relacionar($id)
