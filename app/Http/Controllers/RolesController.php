@@ -172,6 +172,16 @@ class RolesController extends Controller
 
     public function relacionar($id)
     {
+        #Obteniendo permisos asignados al rol
+        $soloIdAsignados = [];
+        $asignados = DB::table('role_has_permissions')
+            ->where('role_id', $id)
+            ->get();
+        foreach ($asignados as $item) {
+            $soloIdAsignados[] = $item->permission_id;
+        }
+
+        #Obteninedo Roles y Permisos
         $rol = Role::findOrFail($id);
         $permisos = Permission::orderBy('name')->get();
         $dataReturn = [];
@@ -183,6 +193,7 @@ class RolesController extends Controller
             $push['permiso'] = str_replace("_"," ",$tmp[1]);
             $push['permiso'] = Str::ucfirst($tmp[1]);
             $push['valor'] = $permiso->name;
+            $push['checked'] = in_array($permiso->id, $soloIdAsignados) ? 'checked' : '';
             $dataReturn[] = $push;
         }
 
