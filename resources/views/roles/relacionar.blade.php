@@ -32,7 +32,7 @@
                                     <td>{{$permiso['modulo']}}</td>
                                     <td>{{$permiso['permiso']}}</td>
                                     <td>
-                                        <input type="checkbox" name="permisos[]" value="{{$permiso['valor']}}">
+                                        <input type="checkbox" name="permisos[]" value="{{$permiso['valor']}}" {{ $permiso['checked'] }} />
                                     </td>
                                 </tr>
                             @endforeach
