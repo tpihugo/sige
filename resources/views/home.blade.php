@@ -353,8 +353,8 @@
                                                     <i class="material-icons">info_outline</i>
                                                 </div>
                                                 <h3 class="card-title">Requisiciones</h3>
-                                                <a class="btn btn-outline-success" href="{{route('requisicions.create')}}">Capturar Requisición</a>
-                                                <a href="{{route('requisicions.index')}}" class="btn btn-outline-danger">Consultar Requisición</a>
+                                                <a class="btn btn-outline-success" href="#">Capturar Requisición</a>
+                                                <a href="#" class="btn btn-outline-danger">Consultar Requisición</a>
                                             </div>
                                             <div class="card-footer">
                                                 <div class="stats">
