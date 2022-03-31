@@ -375,8 +375,8 @@
                                                 <i class="material-icons">fact_check</i>
                                             </div>
                                             <h3 class="card-title">Requisiciones</h3>
-                                            <a class="btn btn-outline-success" href="{{ route('requisicions.index') }}" >Consultar requisiciones</a>
-                                            <a class="btn btn-outline-danger" href="{{ route('requisicions.create') }}" >Crear requisición</a>
+                                            <a class="btn btn-outline-success" href="#" >Consultar requisiciones</a>
+                                            <a class="btn btn-outline-danger" href="#" >Crear requisición</a>
                                         </div>
                                         <div class="card-footer">
                                             <div class="stats">
