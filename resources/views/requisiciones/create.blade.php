@@ -2,15 +2,49 @@
 @section('content')
 
 <div class="container">
+<<<<<<< HEAD
+        @if(Auth::check())
+            @if (session('message'))
+                <div class="alert alert-success">
+                    <h2>{{ session('message') }}</h2>
+
+                </div>
+            @endif
+
+
+            <div class="row">
+                <h2>Captura de requisición </h2>
+
+                <hr>
+                <script type="text/javascript">
+
+                    $(document).ready(function() {
+                        $('#js-example-basic-single').select2();
+                        $('#equipos').select2();
+                    });
+
+                </script>
+
+=======
     @if(Auth::check())
         @if (session('message'))
             <div class="alert alert-success">
                 <h2>{{ session('message') }}</h2>
+>>>>>>> 1448ce638473fea77923a53ab975230a86f4b1b7
 
             </div>
         @endif
 
 
+<<<<<<< HEAD
+                        <div class="row g-3 align-items-center">
+                            <div class="col-md-6">
+                                <label for="num_solicitud">Número Solicitud</label>
+                                <input type="text" class="form-control" id="num_solicitud" name="num_solicitud" value="{{old('num_solicitud')}}" required>
+                            </div>
+                            <div class="col-md-6">
+                            <label for="fecha_inicio">Fecha:</label>
+=======
         <div class="row">
             <h2>Captura de requisición </h2>
 
@@ -50,8 +84,16 @@
 
                         <div class="col-md-4">
                             <label for="fecha">Fecha</label>
+>>>>>>> 1448ce638473fea77923a53ab975230a86f4b1b7
                             <input type="date" class="form-control" id="fecha" name="fecha" value="{{old('fecha')}}" required>
                         </div>
+<<<<<<< HEAD
+                        <br>
+
+                            <div class="col-md-12">
+                                <label for="cargo">Proyecto</label>
+                                <input type="text" class="form-control" id="proyecto" name="proyecto" value="{{old('proyecto')}}" required>
+=======
 
                         <div class="col-md-4">
                             <label for="proyecto">Proyecto</label>
@@ -111,6 +153,7 @@
                             <div class="col-md-6">
                               <label for="all_descripciones">Descripción</label>
                               <input type="text" class="form-control" name="descripcion" id="all_descripciones">
+>>>>>>> 1448ce638473fea77923a53ab975230a86f4b1b7
                             </div>
 
                             <div class="col-md-6">
@@ -124,6 +167,49 @@
 
 
                         </div>
+<<<<<<< HEAD
+                        <br>
+                        <div class="row g-3 align-items-center">
+                            <div class="col-md-4">
+                                <label for="telefono">Fondo</label>
+                                <input type="text" class="form-control" id="fondo" name="fondo" value="{{old('fondo')}}" required>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="fecha_inicio">Fecha Recibido:</label>
+                                <input type="date" class="form-control" id="fecha_recibido" name="fecha_recibido" value="{{old('fecha_recibido')}}" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="correo">Recibido por:</label>
+                                <input type="text" class="form-control" id="quien_recibio" name="quien_recibio" value="{{old('quien_recibio')}}" required>
+                            </div>
+                           <!--  <div class="col-md-4">
+                                <label for="correo">ID:</label>
+                              {{--  <input type="text" class="form-control" id="id" name="id" value="{{old('id')}}" required>--}}
+                            </div>
+ -->
+
+
+                        </div>
+
+			<br>
+			<div class="row g-3 align-items-center">
+                        	<div class="col-md-6">
+
+
+                            		<a href="{{ route('home') }}" class="btn btn-danger">Cancelar</a>
+                            		<button type="submit" class="btn btn-success">Guardar datos</button>
+                        	</div>
+                    	</div>
+
+                    </div>
+                    <br>
+
+                </div>
+            </form>
+            <br>
+            <div class="row g-3 align-items-center">
+=======
                         <div class="modal-footer">
                           <button type="button" class="btn btn-success" id="ready-add-article" data-dismiss="modal">Listo</button>
                         </div>
@@ -132,6 +218,7 @@
                   </div>
 
                     </div>
+>>>>>>> 1448ce638473fea77923a53ab975230a86f4b1b7
 
                     <div class="row align-items-center" id="dataTableContainer" >
 
@@ -170,6 +257,9 @@
         </div>
     </div>
 
+<<<<<<< HEAD
+
+=======
     <script type="text/javascript">
 
       var dataMatrix = [];
@@ -246,6 +336,7 @@
 
 
     </script>
+>>>>>>> 1448ce638473fea77923a53ab975230a86f4b1b7
 
     @else
         El periodo de Registro de Proyectos a terminado

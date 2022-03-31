@@ -37,13 +37,13 @@ class PrestamoController extends Controller
         $prestamos = [];
 
         foreach ($consulta as $key => $value){
-           
+
         $cambiarubicacion = route('cambiar-ubicacion', $value['id']);
-        $actualizar =  route('prestamos.edit', $value['id']);      
+        $actualizar =  route('prestamos.edit', $value['id']);
 	    $prestamo = route('imprimirPrestamo', $value['id']);
         $borrarPrestamo = route('borrarPrestamo', $value['id']);
         $devolverPrestamo = route('devolverPrestamo', $value['id']);
-	   
+
         $acciones = '';
 
         $acciones = '
@@ -52,21 +52,21 @@ class PrestamoController extends Controller
                     <a href="'.$actualizar.'" class="btn btn-success" title="Actualizar">
                         <i class="far fa-edit"></i>
                     </a>
-                    <a href="'.$prestamo.'" class="btn btn-primary"  title="Formato de Prestamo" target="_blank">
+                    <a href="'.$prestamo.'" class="btn btn-primary"  title="Formato de Préstamo" target="_blank">
                         <i class="far fa-file-alt"></i>
                     </a>
 
-                    <a href="'.$borrarPrestamo.'" class="btn btn-danger"  title="Borrar Prestamo">
+                    <a href="'.$borrarPrestamo.'" class="btn btn-danger"  title="Borrar Préstamo">
                         <i class="fas fa-eraser"></i>
                     </a>
 
-                    <a href="'.$devolverPrestamo.'" class="btn btn-success"  title="Borrar Prestamo">
+                    <a href="'.$devolverPrestamo.'" class="btn btn-success"  title="Devolución de Préstamo">
                     <i class="fas fa-check"></i>
                     </a>
 
                 </div>
             </div>
-            
+
         ';
 
         $prestamos[$key] = array(
@@ -81,7 +81,7 @@ class PrestamoController extends Controller
             $value['fecha_actualizacion'],
             $value['observaciones'],
             $value['documento'],
-            
+
         );
 
         }
@@ -124,7 +124,7 @@ class PrestamoController extends Controller
         $prestamo->estado = $request->input('estado');
         $prestamo->fecha_inicio = $request->input('fecha_inicio');
         $prestamo->observaciones = $request->input('observaciones');
-        
+
 	$prestamo->save();
 
         $lastPrestamo = $prestamo->id;
@@ -185,7 +185,7 @@ class PrestamoController extends Controller
     }
 
     ////////////////////////////////////////////////////////////////
-    
+
 
 
     public function update(Request $request, $id)
@@ -234,7 +234,7 @@ class PrestamoController extends Controller
 
     public function destroy($id)
     {
-        
+
     }
     public function generarPrestamo($equipo_id){
         $areas = Area::where('activo','=', 1)->get();
@@ -314,8 +314,8 @@ class PrestamoController extends Controller
                 "message" => "El prestamo que trata de devolver no existe"
             ));
         }
-        
-        
+
+
     }
 
     public function obtenerdocumento($filename){

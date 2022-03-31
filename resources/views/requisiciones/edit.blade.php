@@ -43,7 +43,32 @@
                         @endif
                         <br>
 
+<<<<<<< HEAD
+                        <div class="row g-3 align-items-center">
+                            <div class="col-md-6">
+                                <label for="id_area">Número Solicitud</label>
+                                <input type="text" class="form-control" id="num_solicitud" name="num_solicitud" value="{{$requisicion->num_solicitud}}" required>
+                            </div>
+                            <div class="col-md-6">
+                            <label for="fecha_inicio">Fecha:</label>
+                            <input type="date" class="form-control" id="fecha" name="fecha" value="{{$requisicion->fecha}}" required>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row g-3 align-items-center">
+
+                            <div class="col-md-12">
+                                <label for="cargo">Proyecto</label>
+                                <input type="text" class="form-control" id="proyecto" name="proyecto" value="{{$requisicion->proyecto}}" required>
+                            </div>
+
+
+                        </div>
+                        <br>
+                        <div class="row g-3 align-items-center">
+=======
                         <div class="row align-items-center">
+>>>>>>> 1448ce638473fea77923a53ab975230a86f4b1b7
                             <div class="col-md-4">
                                 <label for="num_solicitud">Numero de solicitud</label>
                                 <input type="text" class="form-control" id="num_solicitud" name="num_solicitud" value="{{$requisicion->num_solicitud ?? ''}}" required>
@@ -66,6 +91,20 @@
                                 <input type="text" class="form-control" id="fondo" name="fondo" value="{{$requisicion->fondo ?? ''}}" required >
                             </div>
 
+<<<<<<< HEAD
+
+
+                        </div>
+
+			<br>
+			<div class="row g-3 align-items-center">
+                        	<div class="col-md-6">
+
+
+                            		<a href="{{ route('home') }}" class="btn btn-danger">Cancelar</a>
+                            		<button type="submit" class="btn btn-success">Guardar datos</button>
+                        	</div>
+=======
                             <div class="col-md-4">
                                 <label for="fecha_recibido">Fecha de recibo</label>
                                 <input type="date" class="form-control" id="fecha_recibido" name="fecha_recibido" value="{{$requisicion->fecha_recibido ?? ''}}" required >
@@ -147,6 +186,7 @@
                              </button>
                          </div>
 
+>>>>>>> 1448ce638473fea77923a53ab975230a86f4b1b7
                     	</div>
 
                     </div>
@@ -164,6 +204,9 @@
             </div>
     </div>
 
+<<<<<<< HEAD
+
+=======
         <script type="text/javascript">
 
           // console.log(ArrayArticles[0]['codigo']);
@@ -292,6 +335,7 @@
       });
 
     </script>
+>>>>>>> 1448ce638473fea77923a53ab975230a86f4b1b7
 
     @else
         El periodo de Registro de Proyectos a terminado
