@@ -31,7 +31,7 @@
                         <br>
                     </div>
                 </div>
-                
+
                 <div class="row">
                     <div class="col-md-3">
                         <label class="font-weight-bold" for="name">Rol</label>
@@ -50,11 +50,12 @@
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-6">
-                                <a href="{{ route('roles.index') }}" class="btn btn-danger">Regresar</a>
+                                <a href="{{ route('roles.index') }}" class="btn btn-info">Regresar</a>
                                 <button type="submit" class="btn btn-success">
                                     Actualizar
                                     <i class="ml-1 fas fa-save"></i>
                                 </button>
+                                <a href="{{ route('roles.show', $rol->id) }}" class="btn btn-danger">Eliminar</a>
                             </div>
                         </div>
                     </div>

@@ -74,9 +74,16 @@ class RolesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    # AGARRE PARA ELIMINAR
     public function show($id)
     {
-        //
+        $role = Role::findOrFail($id);
+
+        if (! $role) {
+            return view('roles.index')->withErrors("El no existe.");
+        }
+
+        return view('roles.show')->with('rol', $role);
     }
 
     /**
@@ -142,11 +149,39 @@ class RolesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::beginTransaction();
+        try {
+            Role::destroy($id);
+            DB::commit();
+            $roles = Role::all();
+            return view('roles.index')
+                ->withSuccess("Rol Eliminado con éxito.")
+                ->with('roles', $roles);
+        } catch (Exception $e) {
+            Log::error($e);
+            DB::rollBack();
+            $roles = Role::all();
+            return view('roles.index')
+                ->withErrors("Error al eliminar el Rol.")
+                ->with('roles', $roles);
+        }
+
+
+
     }
 
     public function relacionar($id)
     {
+        #Obteniendo permisos asignados al rol
+        $soloIdAsignados = [];
+        $asignados = DB::table('role_has_permissions')
+            ->where('role_id', $id)
+            ->get();
+        foreach ($asignados as $item) {
+            $soloIdAsignados[] = $item->permission_id;
+        }
+
+        #Obteninedo Roles y Permisos
         $rol = Role::findOrFail($id);
         $permisos = Permission::orderBy('name')->get();
         $dataReturn = [];
@@ -158,6 +193,7 @@ class RolesController extends Controller
             $push['permiso'] = str_replace("_"," ",$tmp[1]);
             $push['permiso'] = Str::ucfirst($tmp[1]);
             $push['valor'] = $permiso->name;
+            $push['checked'] = in_array($permiso->id, $soloIdAsignados) ? 'checked' : '';
             $dataReturn[] = $push;
         }
 

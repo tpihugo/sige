@@ -84,7 +84,7 @@ class LibrosController extends Controller
             'clasificacion' => 'required',
             'fecha_ingreso'=>'required',
         ]);
-        Libros::where('clasificacion',$libro)->update(
+        Libros::where('id',$libro)->update(
             ['clasificacion'=> $request->clasificacion,
             'titulo'=>$request->titulo,
             'autor'=>$request->autor ?? '',
@@ -101,7 +101,7 @@ class LibrosController extends Controller
             'space'=>$request->isbn_issn ?? '']);
 
 
-        Informacion::where('clasificacion',$libro)->where('tipo','Libros')->update(
+        Informacion::where('id',$libro)->where('tipo','Libros')->update(
             ['clasificacion'=> $request->clasificacion,
             'obtencion'=>$request->obtencion ?? '',
             'resguardo'=>$request->resguardo ?? '',
@@ -123,7 +123,7 @@ class LibrosController extends Controller
             'buscar' => 'required',
             'buscar_por' => 'required',
         ]);
-	
+
         return redirect()->route('libros.resultados',['buscar_por'=>$request->buscar_por,'buscar'=>$request->buscar]);
     }
     public function resultados($buscar_por,$buscar){

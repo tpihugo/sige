@@ -14,7 +14,15 @@
                     <h2>Requisiciones </h2>
                                         <p align="right">
 			@if (Auth::check() && Auth::user()->role == 'admin')
+<<<<<<< HEAD
                         	<a href="{{route('requisicions.create')}}" class="btn btn-success">
+=======
+                        	<!-- <a href="{{ route('cursos.create') }}" class="btn btn-success">
+                            		<i class="fa fa-plus"></i> Capturar Requisicion
+                        	</a> -->
+
+                          <a href="{{ route('requisicions.create') }}" class="btn btn-success">
+>>>>>>> 1448ce638473fea77923a53ab975230a86f4b1b7
                             		<i class="fa fa-plus"></i> Capturar Requisicion
                         	</a>
 			@endif
@@ -32,6 +40,7 @@
 
 
 <div class="container-fluid">
+<<<<<<< HEAD
             <div class="row">
                 <div class="col-12">
                     <table id="example" class="table table-striped table-bordered" cellspacing="2" width="100%">
@@ -65,8 +74,44 @@
 
                     </p>
                 </div>
+=======
+        <div class="row">
+          <div class="col-12">
+              <table id="example" class="table table-striped table-bordered" cellspacing="2" width="100%">
+                  <thead>
+                      <tr>
+                          <th>Acciones</th>
+                          <th>Articulos</th>
+                          <th>Número Solicitud</th>
+                          <th>Fecha</th>
+                          <th>ID Usuario</th>
+                          <th>Proyecto</th>
+                          <th>Fondo</th>
+                          <th>Fecha Recibido</th>
+                          <th>Recibido por</th>
+                          <th>Id</th>
+                      </tr>
+                  </thead>
+                  <tbody id="dataTable-tbody">
+
+
+
+                  </tbody>
+              </table>
+>>>>>>> 1448ce638473fea77923a53ab975230a86f4b1b7
             </div>
         </div>
+        <div class="row">
+            <div class="col-12">
+                <p>
+                    <a href="{{ route('home') }}" class="btn btn-primary">
+                        < Regresar</a>
+
+
+                </p>
+            </div>
+        </div>
+    </div>
 
         @extends('layouts.loader')
 
@@ -76,6 +121,7 @@
 
         <script type="text/javascript">
             var data = @json($requisiciones);
+            console.log(data);
 
             $(document).ready(function() {
                 $('#example').DataTable({
@@ -122,6 +168,11 @@
                     ]
                 })
                loader(false);
+
+               let newTd = document.createElement('td');
+               let tBody = document.getElementById('dataTable-tbody');
+               newTd.innerHTML = 'FFF';
+               tbody.children[0].appendChild(newTd);
             });
 
 

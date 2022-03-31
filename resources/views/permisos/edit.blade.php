@@ -8,7 +8,7 @@
                 </div>
             @endif
             <div class="row">
-                <h2>Eliminar Rol</h2>
+                <h2>Eliminar Permisos</h2>
             </div>
             <br>
             <hr>
@@ -20,7 +20,7 @@
                 @method('DELETE')
                 <div class="row">
                     <div class="col-mb-4">
-                        <label for="permiso" class="col-form-label text-md-right">{{ __('Nuevo Permiso') }}</label>
+                        <label for="permiso" class="col-form-label text-md-right">{{ __('Permiso') }}</label>
                     </div>
                     <div class="col-mb-4">
                         <input id="permiso" type="text" class="form-control" name="permiso" value="{{ $permiso->name}}" readonly>
@@ -30,7 +30,7 @@
                     </div>
                 </div>
             </form>
-            
+
         @else
             El periodo de Registro de Proyectos a terminado
         @endif
@@ -41,3 +41,4 @@
     >
     </script>
 @endsection
+
