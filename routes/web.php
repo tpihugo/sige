@@ -61,7 +61,7 @@ Route::resource('licencias', 'App\Http\Controllers\LicenciaController');
 Route::resource('servicios', 'App\Http\Controllers\ServicioController');
 Route::resource('tecnicos', 'App\Http\Controllers\TecnicoController');
 Route::resource('mantenimiento', 'App\Http\Controllers\MantenimientoController');
-
+Route::resource('requisicions', 'App\Http\Controllers\RequisicionController');
 Route::resource('expedientes', 'App\Http\Controllers\ExpedienteController');
 Route::resource('mantenimientoEquipos', 'App\Http\Controllers\mantenimientoEquipoController');
 
@@ -472,3 +472,10 @@ Route::get('/expediente/{equipo_id}', array(
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\ExpedienteController@expediente'
 ));
+Route::post('/crear_requisicion', array(
+    'as' => 'crear_requisicion',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\RequisicionController@store'
+));
+
+

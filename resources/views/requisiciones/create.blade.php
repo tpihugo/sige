@@ -13,7 +13,7 @@
 
             <div class="row">
                 <h2>Captura de requisición </h2>
-                
+
                 <hr>
                 <script type="text/javascript">
 
@@ -23,7 +23,7 @@
                     });
 
                 </script>
-            
+
 
             </div>
 
@@ -44,7 +44,7 @@
 
                         <div class="row g-3 align-items-center">
                             <div class="col-md-6">
-                                <label for="num_solicitud">Numero Solicitud</label>
+                                <label for="num_solicitud">Número Solicitud</label>
                                 <input type="text" class="form-control" id="num_solicitud" name="num_solicitud" value="{{old('num_solicitud')}}" required>
                             </div>
                             <div class="col-md-6">
@@ -53,12 +53,8 @@
                             </div>
                         </div>
                         <br>
-                        <div class="row g-3 align-items-center">
-                            <div class="col-md-6">
-                                <label for="solicitante">Número Usuario</label>
-                               
-                            </div>
-                            <div class="col-md-6">
+
+                            <div class="col-md-12">
                                 <label for="cargo">Proyecto</label>
                                 <input type="text" class="form-control" id="proyecto" name="proyecto" value="{{old('proyecto')}}" required>
                             </div>
@@ -85,15 +81,15 @@
                               {{--  <input type="text" class="form-control" id="id" name="id" value="{{old('id')}}" required>--}}
                             </div>
  -->
-                            
-                            
+
+
                         </div>
-            
+
 			<br>
 			<div class="row g-3 align-items-center">
                         	<div class="col-md-6">
 
-        
+
                             		<a href="{{ route('home') }}" class="btn btn-danger">Cancelar</a>
                             		<button type="submit" class="btn btn-success">Guardar datos</button>
                         	</div>
@@ -101,7 +97,7 @@
 
                     </div>
                     <br>
-                    
+
                 </div>
             </form>
             <br>
@@ -114,7 +110,7 @@
             </div>
     </div>
 
-    
+
 
     @else
         El periodo de Registro de Proyectos a terminado

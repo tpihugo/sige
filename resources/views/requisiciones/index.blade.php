@@ -14,7 +14,7 @@
                     <h2>Requisiciones </h2>
                                         <p align="right">
 			@if (Auth::check() && Auth::user()->role == 'admin')
-                        	<a href="{{ route('cursos.create') }}" class="btn btn-success">
+                        	<a href="{{route('requisicions.create')}}" class="btn btn-success">
                             		<i class="fa fa-plus"></i> Capturar Requisicion
                         	</a>
 			@endif
@@ -25,12 +25,12 @@
                 </div>
             </div>
             <br>
-            
 
-        
-                         
-                            
-                          
+
+
+
+
+
 <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
@@ -49,9 +49,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                        
-       
-   
+
+
+
                         </tbody>
                     </table>
                 </div>
@@ -61,8 +61,8 @@
                     <p>
                         <a href="{{ route('home') }}" class="btn btn-primary">
                             < Regresar</a>
-                            
-                          
+
+
                     </p>
                 </div>
             </div>
@@ -152,7 +152,7 @@
                     return ((a < b) ? 1 : ((a > b) ? -1 : 0));
                 }
             } );
-            //"columnDefs": [{ type: 'portugues', targets: "_all" }],            
+            //"columnDefs": [{ type: 'portugues', targets: "_all" }],
 
         </script>
     @else
