@@ -62,13 +62,8 @@ Route::resource('licencias', 'App\Http\Controllers\LicenciaController');
 Route::resource('servicios', 'App\Http\Controllers\ServicioController');
 Route::resource('tecnicos', 'App\Http\Controllers\TecnicoController');
 Route::resource('mantenimiento', 'App\Http\Controllers\MantenimientoController');
-<<<<<<< HEAD
-Route::resource('requisicions', 'App\Http\Controllers\RequisicionController');
-=======
 
-Route::resource('requisicions', 'App\Http\Controllers\RequisicionController');
 
->>>>>>> 1448ce638473fea77923a53ab975230a86f4b1b7
 Route::resource('expedientes', 'App\Http\Controllers\ExpedienteController');
 Route::resource('mantenimientoEquipos', 'App\Http\Controllers\mantenimientoEquipoController');
 
