@@ -11,7 +11,7 @@
 
                 </div>
             @endif
-            
+
             <div class="row">
                 <h2>Edición de Mantenimiento. Folio: {{$vsmantenimiento->id}}</h2>
                 <hr>
@@ -34,7 +34,7 @@
                         <th>Contacto</th>
                         <th>&Aacuterea</th>
                         <th>Fecha de Mantenimiento</th>
-        
+
                     </tr>
                     </thead>
                     <tbody>
@@ -49,74 +49,13 @@
                     </tr>
                     </tbody>
                 </table>
-            
+
 
                         <h5><p align="center">Mantenimiento ya Registrado</p></h5>
                 @if(isset($equipos))
                 <div class="row">
-                    @foreach ($equipos as $equipo)
-                    
-                        <div class="col-sm-4">
-                          <div class="card">
-                            <div class="card-body">
-                              <h5 class="card-title">ID UdeG: {{$equipo->udg_id}} - Equipo: {{$equipo->tipo_equipo}}</h5>
-                              <p class="card-text">Núm de serie:{{$equipo->numero_serie}} - Modelo: {{$equipo->modelo}} - Área: {{$equipo->area}}</p>
-                              <a href="{{route('agregarequipomantenimiento', [$vsmantenimiento->id, $equipo->id])}}" class="btn btn-outline-success">Agregar</a>
-                            </div>
-                          </div>
-                        </div>
-                    
-                    @endforeach
-                </div>
-                @endif 
-                        
-                {{-- <table class="table table-bordered" style="width:100%">
-                    <thead>
-                    <tr>
-                        <th>ID Equipo</th>
-                        <th>Id UdeG</th>
-                        <th>Tipo Equipo</th>
-                        <th>Marca</th>
-                        <th>Modelo</th>
-                        <th>Núm. Serie</th>
-                        <th>Detalles</th>
-                        <th>ID Área</th>
-                       <th>Terminado</th>
-
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($equipos_en_este_mantenimiento as $equipoactual)
-                        <tr>
-                            <td>{{$equipoactual->id_equipo}}</td>
-                            <td>{{$equipoactual->udg_id}}</td>
-                            <td>{{$equipoactual->tipo_equipo}}</td>
-                            <td>{{$equipoactual->marca}}</td>
-                            <td>{{$equipoactual->modelo}}</td>
-                            <td>{{$equipoactual->numero_serie}}</td>
-                            <td>{{$equipoactual->detalles}}</td>
-                            <td>{{$equipoactual->area_id}}</td>
-
-                            <td>
-                                @if ($equipoactual->terminado)
-                                    <a href="{{route('estadoMantenimiento', [$vsmantenimiento->id, $equipoactual->id_equipo])}}"  class="btn btn-outline-success">Terminado</a>
-                                @else
-                                    <a href="{{route('estadoMantenimiento', [$vsmantenimiento->id, $equipoactual->id_equipo])}}"  class="btn btn-outline-danger">Sin terminar </a>
-                                @endif
-                                <br>
-                                <a href="{{route('eliminarequipomantenimiento', [$vsmantenimiento->id, $equipoactual->id_equipo])}}" class="btn btn-outline-danger">Quitar</a>
-                                
-                            </td>
-                        </tr>
-                        
-                    @endforeach 
-
-                    </tbody>
-                </table> --}}
-                @if(isset($equipos))
-                <div class="row">
                     @foreach ($equipos_en_este_mantenimiento as $equipoactual)
-                    
+
                         <div class="col-sm-4">
                           <div class="card">
                             <div class="card-body">
@@ -131,11 +70,11 @@
                             </div>
                           </div>
                         </div>
-                    
+
                     @endforeach
                     @endif
                 </div>
-                
+
         </div>
         <div class=row>
             <form action="{{route('busquedaEquiposMantenimiento')}}" method="POST" enctype="multipart/form-data" class="col-12">
@@ -166,46 +105,10 @@
                 <br>
             </form>
         </div>
-        
-
-                {{-- <table id="example" class="table table-striped table-bordered" style="width:100%">
-                    <thead>
-                    <tr>
-                        <th>Id UdeG</th>
-                        <th>Marca</th>
-                        <th>Modelo</th>
-                        <th>Núm. Serie</th>
-                        <th>Detalles</th>
-                        <th>Área</th>
-                        <th>Tipo Equipo</th>
-                        <th>Acciones</th>
-
-                    </tr>
-                    </thead>
-                    <tbody>
-
-                    @if(isset($equipos))
-                        @foreach($equipos as $equipo)
-                            <tr>
-                                <td>{{$equipo->udg_id}}</td>
-                                <td>{{$equipo->marca}}</td>
-                                <td>{{$equipo->modelo}}</td>
-                                <td>{{$equipo->numero_serie}}</td>
-                                <td>{{$equipo->detalles}}</td>
-                                <td>{{$equipo->area}}</td>
-                                <td>{{$equipo->tipo_equipo}}</td>
-                                <td><p><a href="{{route('agregarequipomantenimiento', [$vsmantenimiento->id, $equipo->id])}}" class="btn btn-outline-success">Agregar</a></p></td>
-                            </tr>
-                        @endforeach
-                    @endif
-
-                    </tbody>
-
-                </table> --}}
                 @if(isset($equipos))
                 <div class="row">
                     @foreach ($equipos as $equipo)
-                    
+
                         <div class="col-sm-4">
                           <div class="card">
                             <div class="card-body">
@@ -215,21 +118,21 @@
                             </div>
                           </div>
                         </div>
-                    
+
                     @endforeach
                 </div>
-                @endif 
-        
+                @endif
+
         <div class="row">
                 <br>
                     <div class="row g-5 align-items-center">
                         <div class="col-md-6">
                             <a href="{{ route('home') }}" class="btn btn-danger">Cancelar</a>
-                           
+
                         </div>
                     </div>
                 </div>
-            
+
             <br>
             <div class="row g-5 align-items-center">
 
@@ -251,7 +154,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"></script>
-    
+
 
 
 
@@ -304,5 +207,5 @@
         El periodo de Registro de Proyectos a terminado
     @endif
 
-   
+
 @endsection
