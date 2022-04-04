@@ -212,6 +212,13 @@ class MantenimientoController extends Controller
         //
     }
 
+    // public function equiposareamantenimiento($area_id)
+    // {
+    //     $equiposarea = VsEquipo::where ('id_area','=',$area_id);
+    //     return view('mantenimiento.equiposareamantenimiento')->with('equiposarea',$equiposarea);
+    // }
+    
+
     public function busquedaEquiposMantenimiento(Request $request)
     {
         $validateData = $this->validate($request,[
@@ -223,17 +230,17 @@ class MantenimientoController extends Controller
             $id = $request->input('id');
         $mantenimiento = Mantenimiento::find($id);
         $infomantenimiento=VsMantenimiento::find($id);
-        $equipos=VsEquipo::where('id_area','=',$mantenimiento->area_id)
-                ->where('id','LIKE','%'.$busqueda.'%')
-                ->orWhere('udg_id','LIKE','%'.$busqueda.'%')
-                ->orWhere('marca','LIKE','%'.$busqueda.'%')
-                ->orWhere('marca','LIKE','%'.$busqueda.'%')
-                ->orWhere('modelo','LIKE','%'.$busqueda.'%')
-                ->orWhere('numero_serie','LIKE','%'.$busqueda.'%')
-                ->orWhere('mac','LIKE','%'.$busqueda.'%')
-                ->orWhere('ip','LIKE','%'.$busqueda.'%')
-                ->orWhere('tipo_conexion','LIKE','%'.$busqueda.'%')
-                ->orWhere('tipo_equipo','LIKE','%'.$busqueda.'%')
+        $equipos=VsEquipo::where('area','=',$mantenimiento->area_id)
+                // ->where('id','LIKE','%'.$busqueda.'%')
+                // ->orWhere('udg_id','LIKE','%'.$busqueda.'%')
+                // ->orWhere('marca','LIKE','%'.$busqueda.'%')
+                // ->orWhere('marca','LIKE','%'.$busqueda.'%')
+                // ->orWhere('modelo','LIKE','%'.$busqueda.'%')
+                // ->orWhere('numero_serie','LIKE','%'.$busqueda.'%')
+                // ->orWhere('mac','LIKE','%'.$busqueda.'%')
+                // ->orWhere('ip','LIKE','%'.$busqueda.'%')
+                // ->orWhere('tipo_conexion','LIKE','%'.$busqueda.'%')
+                // ->orWhere('tipo_equipo','LIKE','%'.$busqueda.'%')
                 ->orWhere('area','LIKE','%'.$busqueda.'%')->get();
 
         $equipos_en_este_mantenimiento = Vs_Relmantenimiento::where('id_mantenimiento','=',$id)->get();
