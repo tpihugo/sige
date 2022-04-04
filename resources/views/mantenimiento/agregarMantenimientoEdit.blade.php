@@ -52,8 +52,25 @@
             
 
                         <h5><p align="center">Mantenimiento ya Registrado</p></h5>
+                @if(isset($equipos))
+                <div class="row">
+                    @foreach ($equipos as $equipo)
+                    
+                        <div class="col-sm-4">
+                          <div class="card">
+                            <div class="card-body">
+                              <h5 class="card-title">ID UdeG: {{$equipo->udg_id}} - Equipo: {{$equipo->tipo_equipo}}</h5>
+                              <p class="card-text">Núm de serie:{{$equipo->numero_serie}} - Modelo: {{$equipo->modelo}} - Área: {{$equipo->area}}</p>
+                              <a href="{{route('agregarequipomantenimiento', [$vsmantenimiento->id, $equipo->id])}}" class="btn btn-outline-success">Agregar</a>
+                            </div>
+                          </div>
+                        </div>
+                    
+                    @endforeach
+                </div>
+                @endif 
                         
-                <table class="table table-bordered" style="width:100%">
+                {{-- <table class="table table-bordered" style="width:100%">
                     <thead>
                     <tr>
                         <th>ID Equipo</th>
@@ -95,7 +112,30 @@
                     @endforeach 
 
                     </tbody>
-                </table>
+                </table> --}}
+                @if(isset($equipos))
+                <div class="row">
+                    @foreach ($equipos_en_este_mantenimiento as $equipoactual)
+                    
+                        <div class="col-sm-4">
+                          <div class="card">
+                            <div class="card-body">
+                              <h5 class="card-title">ID UdeG: {{$equipoactual->udg_id}} - Equipo: {{$equipoactual->tipo_equipo}}</h5>
+                              <p class="card-text">Núm de serie:{{$equipoactual->numero_serie}} - Modelo: {{$equipoactual->modelo}} - Área: {{$vsmantenimiento->sede. ' - ' . $vsmantenimiento->edificio. ' - '. $vsmantenimiento->piso. ' - '. $vsmantenimiento->division. ' - '. $vsmantenimiento->coordinacion. ' - '. $vsmantenimiento->area}}</p>
+                              @if ($equipoactual->terminado)
+                                    <a href="{{route('estadoMantenimiento', [$vsmantenimiento->id, $equipoactual->id_equipo])}}"  class="btn btn-outline-success">Terminado</a>
+                                @else
+                                    <a href="{{route('estadoMantenimiento', [$vsmantenimiento->id, $equipoactual->id_equipo])}}"  class="btn btn-outline-danger">Sin terminar </a>
+                                @endif
+                                <a href="{{route('eliminarequipomantenimiento', [$vsmantenimiento->id, $equipoactual->id_equipo])}}" class="btn btn-outline-danger">Quitar</a>
+                            </div>
+                          </div>
+                        </div>
+                    
+                    @endforeach
+                    @endif
+                </div>
+                
         </div>
         <div class=row>
             <form action="{{route('busquedaEquiposMantenimiento')}}" method="POST" enctype="multipart/form-data" class="col-12">
@@ -128,7 +168,7 @@
         </div>
         
 
-                <table id="example" class="table table-striped table-bordered" style="width:100%">
+                {{-- <table id="example" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                     <tr>
                         <th>Id UdeG</th>
@@ -147,9 +187,7 @@
                     @if(isset($equipos))
                         @foreach($equipos as $equipo)
                             <tr>
-                                <td>
-                                    {{$equipo->udg_id}}
-                                </td>
+                                <td>{{$equipo->udg_id}}</td>
                                 <td>{{$equipo->marca}}</td>
                                 <td>{{$equipo->modelo}}</td>
                                 <td>{{$equipo->numero_serie}}</td>
@@ -163,12 +201,28 @@
 
                     </tbody>
 
-                </table>
-
-        </div>
+                </table> --}}
+                @if(isset($equipos))
+                <div class="row">
+                    @foreach ($equipos as $equipo)
+                    
+                        <div class="col-sm-4">
+                          <div class="card">
+                            <div class="card-body">
+                              <h5 class="card-title">ID UdeG: {{$equipo->udg_id}} - Equipo: {{$equipo->tipo_equipo}}</h5>
+                              <p class="card-text">Núm de serie:{{$equipo->numero_serie}} - Modelo: {{$equipo->modelo}} - Área: {{$equipo->area}}</p>
+                              <a href="{{route('agregarequipomantenimiento', [$vsmantenimiento->id, $equipo->id])}}" class="btn btn-outline-success">Agregar</a>
+                            </div>
+                          </div>
+                        </div>
+                    
+                    @endforeach
+                </div>
+                @endif 
+        
         <div class="row">
                 <br>
-                    <div class="row g-3 align-items-center">
+                    <div class="row g-5 align-items-center">
                         <div class="col-md-6">
                             <a href="{{ route('home') }}" class="btn btn-danger">Cancelar</a>
                            
@@ -177,7 +231,7 @@
                 </div>
             
             <br>
-            <div class="row g-3 align-items-center">
+            <div class="row g-5 align-items-center">
 
                 <br>
                 <h5>En caso de inconsistencias, favor de reportarlas a victor.ramirez@academicos.udg.mx</h5>
@@ -197,6 +251,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"></script>
+    
+
+
+
 
     <script>
 

@@ -85,7 +85,7 @@
                 </div>
             </form>
             <br>
-            <div class="row g-3 align-items-center">
+            <div class="row g-5 align-items-center">
 
                 <br>
                 <h5>En caso de inconsistencias, favor de reportarlas.</h5>
