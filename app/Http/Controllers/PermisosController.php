@@ -19,6 +19,7 @@ class PermisosController extends Controller
     public function index()
     {
         $permisos = Permission::all();
+        $dataReturn = [];
         foreach ($permisos as $permiso) {
             $tmp = explode("#", strtolower($permiso->name));
             $push['id'] = $permiso->id;
