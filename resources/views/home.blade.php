@@ -207,8 +207,9 @@
                                         </div>
                                         <div class="card-footer">
                                             <div class="stats">
-                                                <i class="material-icons">contact_phone</i>
-                                                  <a href="{{ route('roles.index') }}">Administrar roles</a>
+                                                <div class="stats">
+                                                    <i class="material-icons">info</i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -301,7 +302,6 @@
                             @if (Auth::check() && (Auth::user()->role =='admin'))
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="card card-stats">
-
                                         <div class="card-header card-header-success card-header-icon">
                                             <div class="card-icon">
                                                 <i class="material-icons">dashboard</i>
@@ -321,16 +321,14 @@
                             @if (Auth::check() && (Auth::user()->role =='admin'))
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="card card-stats">
-
                                         <div class="card-header card-header-primary card-header-icon">
                                             <div class="card-icon">
                                                 <i class="material-icons">info_outline</i>
                                             </div>
                                             <h3 class="card-title">Logs</h3>
-                                            <a class="btn btn-outline-success" href="{{ route('logs.index') }}">Consultar Logs</a>
-
-                                            <a class="btn btn-outline-success" href="{{ route('estadisticas') }}">Consultar Estadisticas</a>
                                             <a class="btn btn-outline-danger" href="{{ route('logs.index') }}">Consultar Logs</a>
+                                            <a class="btn btn-outline-success" href="{{ route('estadisticas') }}">Consultar Estadisticas</a>
+
                                         </div>
                                         <div class="card-footer">
                                             <div class="stats">
