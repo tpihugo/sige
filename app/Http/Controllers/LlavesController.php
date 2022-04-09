@@ -128,6 +128,7 @@ class LlavesController extends Controller
     public function seleccionarllave($id){
 
         $llave = Llaves::find($id);
+        $llave_usuario_anterior=$llave->id_usuario;
         $llave->id_usuario=Auth::user()->id;
         $llave->update();
         //
@@ -137,7 +138,12 @@ class LlavesController extends Controller
         $mov=$mov." nombre".$llave->nombre ." num_copias". $llave->num_copias ." comentarios" .$llave->comentarios;
         $log->movimiento = $mov;
         $log->usuario_id = Auth::user()->id;
-        $log->acciones = "Tomaste la Llave";
+        if($llave_usuario_anterior!=0){
+            $log->acciones = "Tomaste la Llave.";
+        }else{
+            $log->acciones = "Alguien te paso esta llave.";
+        }
+
         $log->save();
         //
         if (Auth::check()){
