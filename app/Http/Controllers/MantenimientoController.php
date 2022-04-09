@@ -15,6 +15,7 @@ use App\Models\Vs_Relmantenimiento;
 use App\Models\VsEquipo;
 use App\Models\VsMantenimiento;
 use App\Models\VsPrestamo;
+use Illuminate\Support\Facades\DB;
 
 class MantenimientoController extends Controller
 {
@@ -29,6 +30,24 @@ class MantenimientoController extends Controller
         $mantenimiento = $this->cargarDT($vsmantenimiento);
         return view('mantenimiento.index')->with('mantenimientos',$mantenimiento);
     }
+
+    public function mantenimiento_detalle(){
+        $total_area_equipos = DB::table('vs_equipos')->count();
+            // dd($total_area_equipos);
+        $total_area_belenes = DB::table('vs_equipos')
+        ->where('area','like','%Belenes%')
+            ->count();
+        $total_area_la_normal = DB::table('vs_equipos')
+            ->where('area','like','%Belenes%')
+            ->count();
+        $total_terminado = DB::table('vs_mantenimiento_equipo')
+            ->where('terminado')
+            ->count();
+            //return ($total_area_equipos->count);
+        return view('mantenimiento.mantenimiento_detalle')->with('total_area_equipos',$total_area_equipos)->with('total_area_belenes',$total_area_belenes)->with('total_area_la_normal',$total_area_la_normal)->with('total_terminado',$total_terminado);
+
+    }
+
 
     public function cargarDT($consulta)
     {
@@ -146,8 +165,17 @@ class MantenimientoController extends Controller
         $infomantenimiento=VsMantenimiento::find($id);
 
         $equipos_en_este_mantenimiento = Vs_Relmantenimiento::where('id_mantenimiento','=',$id)->get();
+        // return view('mantenimiento.agregarMantenimientoEdit')
+        //     ->with('vsmantenimiento',$infomantenimiento)->with('equipos_en_este_mantenimiento',$equipos_en_este_mantenimiento);
+        //     //
+
+
+        $mantenimiento = Mantenimiento::find($id);
+        $equipos=VsEquipo::where('area','=',$mantenimiento->area_id)->get();
+
         return view('mantenimiento.agregarMantenimientoEdit')
-            ->with('vsmantenimiento',$infomantenimiento)->with('equipos_en_este_mantenimiento',$equipos_en_este_mantenimiento);
+            ->with('vsmantenimiento',$infomantenimiento)->with('equipos_en_este_mantenimiento',$equipos_en_este_mantenimiento)->with('equipos',$equipos);
+
     }
 
     /**
@@ -306,6 +334,7 @@ class MantenimientoController extends Controller
            "message" => "El mantenimiento que trata de eliminar no existe"
         ));
     }
+
 
 
 

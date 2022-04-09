@@ -88,7 +88,7 @@
                                         <textarea class="form-control" id="comentarios" name="comentarios"></textarea>
                                 </div>
                             </div>
-                            
+
 
                         </div>
 
@@ -101,7 +101,7 @@
                     	</div>
                     </div>
                     <br>
-                    
+
                 </div>
             </form>
             <br>
@@ -113,10 +113,7 @@
 
             </div>
     </div>
-
-    @else
-        El periodo de Registro de Proyectos a terminado
-    @endif
-
-
+@else
+    Acceso No válido
+@endif
 @endsection

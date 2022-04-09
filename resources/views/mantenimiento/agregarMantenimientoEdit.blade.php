@@ -52,7 +52,7 @@
 
 
                         <h5><p align="center">Mantenimiento ya Registrado</p></h5>
-                @if(isset($equipos))
+                @if(isset($equipos_en_este_mantenimiento))
                 <div class="row">
                     @foreach ($equipos_en_este_mantenimiento as $equipoactual)
 

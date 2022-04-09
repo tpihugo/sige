@@ -47,7 +47,7 @@ class TecnicoController extends Controller
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">¿Seguro que deseas eliminar este curso?</h5>
+                      <h5 class="modal-title" id="exampleModalLabel">¿Seguro que deseas eliminar este técnico?</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -105,8 +105,8 @@ class TecnicoController extends Controller
             'carrera'=>'required',
             'institucion'=>'required',
             'ciclo_inicio'=>'required',
-            
-    
+
+
         ]);
 
         $tecnico = new Tecnico();
@@ -175,8 +175,8 @@ class TecnicoController extends Controller
             'carrera'=>'required',
             'institucion'=>'required',
             'ciclo_inicio'=>'required',
-            
-    
+
+
         ]);
 
         $tecnico = Tecnico::find($id);
@@ -188,7 +188,7 @@ class TecnicoController extends Controller
         $tecnico->carrera = $request->input('carrera');
         $tecnico->institucion = $request->input('institucion');
         $tecnico->comentarios = $request->input('comentarios');
-        
+
 
         $tecnico->update();
 	//
