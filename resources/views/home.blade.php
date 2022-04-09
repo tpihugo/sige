@@ -388,7 +388,15 @@
                                             <i class="material-icons">info_outline</i>
                                         </div>
                                         <h3 class="card-title">Exit</h3>
-                                        <a href="{{route('logout')}}" class="btn btn-outline-danger">Salir</a>
+                                        <a class="btn btn-outline-danger" href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();"
+                            >
+                                {{ __('Salir') }}
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
                                     <div class="card-footer">
                                     </div>
                                 </div>
