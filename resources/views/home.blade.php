@@ -98,6 +98,27 @@
                                     </div>
                                 </div>
                             @endif
+                            <!-- Apartado de LLaves   -->
+                            @if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='auxiliar' || Auth::user()->role =='redes'))
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="card card-stats">
+                                        <div class="card-header card-header-info card-header-icon">
+                                            <div class="card-icon">
+                                                <i class="material-icons">room_preferences</i>
+                                            </div>
+                                            <h3 class="card-title">Llaves</h3>
+                                            <a class="btn btn-outline-success" href="{{ route('llaves.create') }}">Capturar Llave</a>
+                                            <a href="{{ route('llaves.index') }}" class="btn btn-outline-danger">Consultar Llaves</a>
+                                            <a href="{{'/sige/public/agregarllaves'}}" class="btn btn-outline-info">Elegir Llaves</a>
+                                        </div>
+                                        <div class="card-footer">
+                                            <div class="stats">
+                                                <i class="material-icons">door_back</i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
 
                             <!-- Apartado de Inventario   -->
                             @if(Auth::check() && (Auth::user()->role =='admin'))
@@ -177,14 +198,12 @@
                                                 <i class="material-icons">people</i>
                                             </div>
                                             <h3 class="card-title">Usuarios</h3>
-<<<<<<< HEAD
                                             <a class="btn btn-outline-danger" href="{{ route('usuarios.index') }}">Administrar Usuarios</a>
                                             <a class="btn btn-outline-success" href="{{ route('roles.index') }}">Adm Roles</a>
                                             <a class="btn btn-outline-success" href="{{ route('permisos.index') }}">Adm Permisos</a>
-=======
+
                                             <a class="btn btn-outline-danger" href="{{ route('usuarios.index') }}">Ad. Usuarios</a>
                                             <a class="btn btn-outline-success" href="{{ route('permisos.index') }}">Ad. Permisos</a>
->>>>>>> 1448ce638473fea77923a53ab975230a86f4b1b7
                                         </div>
                                         <div class="card-footer">
                                             <div class="stats">
@@ -282,7 +301,7 @@
                             @if (Auth::check() && (Auth::user()->role =='admin'))
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="card card-stats">
-<<<<<<< HEAD
+
                                         <div class="card-header card-header-success card-header-icon">
                                             <div class="card-icon">
                                                 <i class="material-icons">dashboard</i>
@@ -302,19 +321,16 @@
                             @if (Auth::check() && (Auth::user()->role =='admin'))
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="card card-stats">
-=======
->>>>>>> 1448ce638473fea77923a53ab975230a86f4b1b7
+
                                         <div class="card-header card-header-primary card-header-icon">
                                             <div class="card-icon">
                                                 <i class="material-icons">info_outline</i>
                                             </div>
                                             <h3 class="card-title">Logs</h3>
-<<<<<<< HEAD
                                             <a class="btn btn-outline-success" href="{{ route('logs.index') }}">Consultar Logs</a>
-=======
+
                                             <a class="btn btn-outline-success" href="{{ route('estadisticas') }}">Consultar Estadisticas</a>
                                             <a class="btn btn-outline-danger" href="{{ route('logs.index') }}">Consultar Logs</a>
->>>>>>> 1448ce638473fea77923a53ab975230a86f4b1b7
                                         </div>
                                         <div class="card-footer">
                                             <div class="stats">
@@ -336,6 +352,7 @@
                                             <h3 class="card-title">Mantenimiento</h3>
                                             <a class="btn btn-outline-success" href="{{ route('mantenimiento.index') }}">Consultar Mantenimientos</a>
                                             <a class="btn btn-outline-danger" href="{{ route('mantenimiento.create') }}">Capturar Mantenimientos</a>
+                                            {{-- <a class="btn btn-outline-danger" href="{{ route('mantenimiento.mantenimiento_detalle') }}">Detalle de Mantenimientos</a> --}}
                                         </div>
                                         <div class="card-footer">
                                             <div class="stats">

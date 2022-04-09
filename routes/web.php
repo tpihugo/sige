@@ -62,6 +62,7 @@ Route::resource('licencias', 'App\Http\Controllers\LicenciaController');
 Route::resource('servicios', 'App\Http\Controllers\ServicioController');
 Route::resource('tecnicos', 'App\Http\Controllers\TecnicoController');
 Route::resource('mantenimiento', 'App\Http\Controllers\MantenimientoController');
+Route::resource('llaves', 'App\Http\Controllers\LlavesController');
 
 
 Route::resource('expedientes', 'App\Http\Controllers\ExpedienteController');
@@ -469,15 +470,42 @@ Route::get('/estadoMantenimiento/{mantenimiento_id}/{equipo_id}', array(
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\MantenimientoController@estadoMantenimiento'
 ));
+Route::get('/mantenimiento_detalle', array(
+    'as' => 'mantenimiento_detalle',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\MantenimientoController@mantenimiento_detalle'
+));
+//Expediente
 Route::get('/expediente/{equipo_id}', array(
     'as' => 'expediente',
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\ExpedienteController@expediente'
 ));
+//Requisicion
 Route::post('/crear_requisicion', array(
     'as' => 'crear_requisicion',
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\RequisicionController@store'
 ));
-
+//Llaves
+Route::get('/delete_llaves/{id}', array(
+    'as' => 'delete_llaves',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\LlavesController@delete_llaves'
+));
+Route::get('/agregarllaves', array(
+    'as' => 'agregarllaves',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\LlavesController@agregarllaves'
+));
+Route::get('/devolverllave/{llave_id}', array(
+    'as' => 'devolverllave',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\LlavesController@devolverllave'
+));
+Route::get('/seleccionarllave/{llave_id}', array(
+    'as' => 'seleccionarllave',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\LlavesController@seleccionarllave'
+));
 

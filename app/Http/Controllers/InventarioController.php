@@ -190,15 +190,15 @@ class InventarioController extends Controller
     }
 
     public function inventario_express2(){
-       
-        
+
+
         // $total_SICI_falta = DB::table('equipos')
         //     ->select(DB::raw('count(*) as count'))
         //     ->where('localizado_sici', '=', 'no')
         //     ->where('resguardante', '=', 'CTA')
         //     ->groupBy('localizado_sici')
         //     ->first();
-        
+
         //Detalle IV
         // $total_detalleInventario = DB::table('inventariodetalle')
         //     ->select(DB::raw('count(*) as count'))
@@ -255,7 +255,7 @@ class InventarioController extends Controller
         $total_22A_detalleInventario = $total_22A_detalleInventario->count;
         // $total_detalleInventario = $total_detalleInventario->count;
         // $total_SICI_falta = $total_SICI_falta->count;
-        
+
         return view('inventario.inventario_express2')
         ->with('dataTable',$dataTable)
         ->with('total_SICI_localizados',$total_SICI_localizados)
@@ -414,8 +414,8 @@ class InventarioController extends Controller
             ->first();
 
 
-        /* Revisi�n con Nota*/ 
-        
+        /* Revisi�n con Nota*/
+
         // $total_equipos_revision = DB::table('inventariodetalle')
         //     ->select(DB::raw('COUNT(*) as revisiones'))
         //     ->where('estatus', '=', 'Revision')
@@ -507,7 +507,7 @@ class InventarioController extends Controller
         }else{
             $mensaje = 'El articulo ya se habia registrado como Localizado';
         }
-        
+
         //if($origen='inventario-area'){
           //  return redirect()->route('inventario-por-area', $listadoEquipos->id_area)->with(array('message' => $mensaje));
         //}else{
@@ -659,7 +659,7 @@ class InventarioController extends Controller
         ->first();
 
         $total_equipos_no_localizados_sici = DB::table('equipos')
-        ->select(DB::raw('COUNT(*) as no_localizados_sici'))        
+        ->select(DB::raw('COUNT(*) as no_localizados_sici'))
 	->where('tipo_sici','equipo')
         ->where('localizado_sici', 'No')
         ->where('resguardante', 'CTA')

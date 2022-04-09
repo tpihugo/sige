@@ -9,7 +9,7 @@
                 </div>
             @endif
             <div class="row">
-            <h1 class="text-center">Inventario Detalle por ciclo 2022A</h1>
+            <h1 class="text-center">Inventario Detalle por Ciclo 2022A</h1>
                 <hr>
             </div>
             <br>
@@ -88,8 +88,8 @@
                                                 <p class="text-center">{{-- --}} </p>
                                             </td>
                                         </tr>
-                                        
-                                        
+
+
                                     </tbody>
                                 </table>
                             </div><!--//table-responsive-->
@@ -98,12 +98,12 @@
                     </div>
 
 
-                    <div class="col-4 col-lg-3">		        
+                    <div class="col-4 col-lg-3">
 				        <div class="app-card app-card-chart h-100 shadow-sm">
 					        <div class="app-card-header p-3 border-0">
 						        <p class="app-card-title text-center">Equipos localizados</p>
 					        </div><!--//app-card-header-->
-					        <div class="app-card-body p-12">					   
+					        <div class="app-card-body p-12">
 						        <div class="chart-container">
 				                    <canvas id="chart-pie"  ></canvas>
 						        </div>
@@ -111,20 +111,20 @@
 				        </div><!--//app-card-->
 		            </div><!--//col-->
 
-                    
-                    <div class="col-4 col-lg-3">		        
+
+                    <div class="col-4 col-lg-3">
 				        <div class="app-card app-card-chart h-100 shadow-sm">
 					        <div class="app-card-header p-3 border-0">
                             <p class="app-card-title text-center">Avance general</p>
 					        </div><!--//app-card-header-->
-					        <div class="app-card-body p-12">					   
+					        <div class="app-card-body p-12">
 						        <div class="chart-container">
 				                    <canvas id="chart-pie2" width="50" height="50" ></canvas>
 						        </div>
 					        </div>
 				        </div>
 		            </div><!--//col-->
-                    
+
 
                     <!-- <hr> -->
 
@@ -136,16 +136,16 @@
                         <th class="text-center">Área</th>
                         <th>Progreso</th>
                         <th> Avances <a href="#Help_info" class="text-reset" data-toggle="modal"> <strong> ? </strong> </a> </th>
-                                
+
                         <th>Acciones</th>
                     </tr>
                     </thead>
                     <tbody>
 
                     @php ( $cont=1 )
-                    
+
                     @foreach($dataTable as $OneDataRow)
-                    
+
                     {{--@php ($ToRoundedValue = round((($OneDataRow->cuentaEncontrados / $OneDataRow->cuentaInventariables) * 100)) ) --}}
                     @if( $OneDataRow->PercentageValue < '100')
                         @php ( $bar_indicatorColor="success" )
@@ -158,18 +158,18 @@
                         <tr>
                             <td>{{$cont++}}</td>
                             <td>
-                                
-                            <p class="font-weight-normal">{{ $OneDataRow->area }}</p>                            
-                            
+
+                            <p class="font-weight-normal">{{ $OneDataRow->area }}</p>
+
                             </td>
                             <td style="width: 20%">
 
                                 <div class="container-fluid wd-200">
                                         <div class="row no-gutters align-items-center">
-                                            
-                                            
+
+
                                             <div class="h6 mb-0 mr-1 text-center text-gray-800"> <strong>{{$OneDataRow->PercentageValue}}% </strong> </div>
-                                            
+
                                             <div class="col">
                                                 <div class="progress progress-sm mr-2">
                                                     <div class="progress-bar bg-<?php echo $bar_indicatorColor ?>" role="progressbar"
@@ -179,22 +179,22 @@
                                             </div>
                                         </div>
                                     </div>
-                            
+
                             <td style="width: 10%">
                                 <p class="text-dark text-center">{{$OneDataRow->cuentaEncontrados}} / {{$OneDataRow->cuentaInventariables}} </p>
                             </td>
-                                
+
                             </td>
                             <td>
                             <p><a href="{{ route('inventario-por-area', $OneDataRow->id_area ) }}" class="btn btn-primary">Detalle</a></p>
-                                 
+
                                 {{--<p><a href="{{ route('actualizacion-inventario', $OneDataRow->id_area) }}" class="btn btn-success">Revisado</a></p>--}}
                             </td>
                         </tr>
                         @endif
                     @endforeach
-                
-                    
+
+
                     </tbody>
 
                     <div id="Help_info" class="modal fade">
@@ -266,7 +266,7 @@
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs4-4.1.1/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/r-2.2.7/datatables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.js" integrity="sha512-CWVDkca3f3uAWgDNVzW+W4XJbiC3CH84P2aWZXj+DqI6PNbTzXbl1dIzEHeNJpYSn4B6U8miSZb/hCws7FnUZA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        
+
         $(document).ready(function() {
             $('#example').DataTable( {
                 "pageLength": 100,
@@ -308,7 +308,7 @@
         } );
     </script>
 
-    
+
     <script type="text/javascript">
 
         $(document).ready(function() {
@@ -317,7 +317,7 @@
 
         const total_sici_localizados = {!! json_encode($total_SICI_localizados) !!};
         const total_22A_detalleInventario = {!! json_encode($total_22A_detalleInventario) !!};
-        
+
 
         const ctx = document.getElementById('chart-pie').getContext('2d');
         const ctx2 = document.getElementById('chart-pie2').getContext('2d');
@@ -341,9 +341,9 @@
                 }]
             },
         });
-        
+
         const total_equipos = {!! json_encode($total_equipos) !!};
-        
+
         const myChart2 = new Chart(ctx2, {
             type: 'pie',
             data: {

@@ -2,7 +2,7 @@
 @section('content')
 <div class="content">
     <div class="container-fluid">
-    <h1 class="text-center">Inventario Detalle por ciclo 2022A</h1>
+    <h1 class="text-center">Inventario Detalle por Ciclo 2022A</h1>
         <div class="row">
             <h2 class="text-muted">Graficas</h2>
             <div class="col-6 col-lg-4">
@@ -38,7 +38,7 @@
                                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-down text-danger" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
                                 </svg>
-                                                30% 
+                                                30%
                                             </td>
                                         </tr>
                                         <tr>
@@ -48,10 +48,10 @@
                                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-down text-danger" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
                                 </svg>
-                                                10% 
+                                                10%
                                             </td>
                                         </tr>
-                                        
+
                                     </tbody>
                                 </table>
                             </div><!--//table-responsive-->
@@ -59,12 +59,12 @@
                     </div><!--//app-card-->
                     </div>
 
-                    <div class="col-4 col-lg-2">		        
+                    <div class="col-4 col-lg-2">
 				        <div class="app-card app-card-chart h-100 shadow-sm">
 					        <div class="app-card-header p-3 border-0">
 						        <p class="app-card-title">Diagrama de pastel</p>
 					        </div><!--//app-card-header-->
-					        <div class="app-card-body p-4">					   
+					        <div class="app-card-body p-4">
 						        <div class="chart-container">
 				                    <canvas id="chart-pie" width="150" height="150" ></canvas>
 						        </div>
@@ -72,21 +72,21 @@
 				        </div><!--//app-card-->
 		            </div><!--//col-->
 
-                    
-                    <div class="col-4 col-lg-2">		        
+
+                    <div class="col-4 col-lg-2">
 				        <div class="app-card app-card-chart h-100 shadow-sm">
 					        <div class="app-card-header p-3 border-0">
 						        <h5 class="app-card-title">Diagrama de Barra</h5>
 					        </div><!--//app-card-header-->
-					        <div class="app-card-body p-4">					   
+					        <div class="app-card-body p-4">
 						        <div class="chart-container">
 				                    <canvas id="chart-bar" width="50" height="50" ></canvas>
 						        </div>
 					        </div>
 				        </div>
 		            </div><!--//col-->
-                    
-                
+
+
 		            <!--  -->
                     <hr class="mt-3 mb-3">
                     <!--  -->
@@ -102,7 +102,7 @@
 
                     <hr class="mt-3 mb-3">
 
-                    
+
             <div class="row">
                 <h2 class="text-muted">Dispositivos</h2>
             <div class="col-lg-3 col-md-6 col-sm-6">
@@ -113,17 +113,17 @@
                         </div>
                         <p class="card-category">Equipos</p>
                         <h3 class="card-title">
-                            
+
                         </h3>
                     </div>
                     <div class="card-footer">
                         <div class="stats">
                             <i class="material-icons">desktop_windows</i> &nbsp;
-                            
+
                             <i class="material-icons">computer</i> &nbsp;
-                            
+
                             <i class="material-icons">print</i> &nbsp;
-                            
+
                         </div>
                     </div>
                 </div>
@@ -140,11 +140,11 @@
                     <div class="card-footer">
                         <div class="stats">
                             <i class="material-icons">desktop_windows</i> &nbsp;
-                            
+
                             <i class="material-icons">computer</i> &nbsp;
-                            
+
                             <i class="material-icons">print</i> &nbsp;
-                            
+
                         </div>
                     </div>
                 </div>
@@ -161,11 +161,11 @@
                     <div class="card-footer">
                         <div class="stats">
                             <i class="material-icons">desktop_windows</i> &nbsp;
-                            
+
                             <i class="material-icons">computer</i> &nbsp;
-                            
+
                             <i class="material-icons">print</i> &nbsp;
-                            
+
                         </div>
                     </div>
                 </div>
@@ -182,17 +182,17 @@
                     <div class="card-footer">
                         <div class="stats">
                             <i class="material-icons">tablet_android</i> &nbsp;
-                            
+
                             <i class="material-icons">tablet_mac</i> &nbsp;
-                            
+
                         </div>
                     </div>
                 </div>
             </div>
 
-            
-            
-       
+
+
+
 
     </div>
 
