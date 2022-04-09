@@ -381,30 +381,18 @@
                                     </div>
 
                                 @endif
-
-                            @if(Auth::check() && (Auth::user()->role =='admin'))
-                                <div class="col-lg-4 col-md-6 col-sm-12">
-                                    <div class="card card-stats">
-                                        <div class="card-header card-header-success card-header-icon">
-                                            <div class="card-icon">
-                                                <i class="material-icons">fact_check</i>
-                                            </div>
-                                            <h3 class="card-title">Requisiciones</h3>
-                                            <a class="btn btn-outline-success" href="#" >Consultar requisiciones</a>
-                                            <a class="btn btn-outline-danger" href="#" >Crear requisición</a>
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="card card-stats">
+                                    <div class="card-header card-header-success card-header-icon">
+                                        <div class="card-icon">
+                                            <i class="material-icons">info_outline</i>
                                         </div>
-                                        <div class="card-footer">
-                                            <div class="stats">
-                                                <i class="material-icons">inventory</i><a href="{{ route('inventario-cta') }}" >Inventario General</a>
-                                                <i class="material-icons">location_searching</i><a href="{{ route('inventario-localizado') }}" >Inventario Localizado</a>
-                                                <!-- <i class="material-icons">inventory</i><a href="{{ route('inventario-express-detalle2') }}" >Nuevo Inventario express2</a> -->
-                                            </div>
-                                        </div>
+                                        <h3 class="card-title">Exit</h3>
+                                        <a href="{{route('logout')}}" class="btn btn-outline-danger">Salir</a>
+                                    <div class="card-footer">
                                     </div>
                                 </div>
-                            @endif
-
-
+                            </div>
                         </div>
                     </div>
                 </div>
