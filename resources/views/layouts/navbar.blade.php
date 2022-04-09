@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ url('/') }}">SIGE CTA CUCSH</a>
-        <button 
+        <button
             class="navbar-toggler"
             type="button"
             data-toggle="collapse"
@@ -49,7 +49,7 @@
                         </ul>
                     </li>
                 @endif
-        
+
                 @if(Auth::check() && (Auth::user()->role =='admin'))
                     {{--
                         <li class="nav-item dropdown">
@@ -93,10 +93,10 @@
                             <li><a class="dropdown-item" href="{{ route('usuarios.index') }}">Administrar Usuarios</a></li>
                             <li><a class="dropdown-item" href="{{ route('usuarios.index') }}">Roles y Permisos</a></li>
                         </ul>
-                    </li> 
+                    </li>
                 @endif
 
-                @if(Auth::check() && (Auth::user()->role =='admin')) 
+                @if(Auth::check() && (Auth::user()->role =='admin'))
                     {{--
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Logs</a>
@@ -104,10 +104,10 @@
                                 <li><a class="dropdown-item" href="{{ route('logs.index') }}">Consultar Logs</a></li>
                             </ul>
                         </li>
-                    --}}			
+                    --}}
                 @endif
 
-                @if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='redes')) 
+                @if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='redes'))
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Proyectos</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -117,14 +117,14 @@
                     </li>
                 @endif
 
-                @if(Auth::check() && (Auth::user()->role =='admin')) 
+                @if(Auth::check() && (Auth::user()->role =='admin'))
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Licencias</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="{{ route('licencias.create') }}">Capturar licencia</a></li>
                             <li><a class="dropdown-item" href="{{ route('licencias.index') }}">Consultar licencia</a></li>
                         </ul>
-                    </li>  	
+                    </li>
                 @endif
 
                 @if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='redes'))
@@ -176,14 +176,14 @@
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
                 <!-- Authentication Links -->
-                @guest                    
+                @guest
                     @if (Route::currentRouteName() == 'register')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('login') }}">{{ __('Acceder') }}</a>
                         </li>
                     @endif
 
-                    @if (Route::currentRouteName() == 'login') 
+                    @if (Route::currentRouteName() == 'login')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('register') }}">{{ __('Registrarse') }}</a>
                         </li>
