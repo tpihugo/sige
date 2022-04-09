@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Llaves;
 use App\Http\Controllers\Controller;
 use App\Models\Log;
+use App\Models\Vs_llaves;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,7 +18,7 @@ class LlavesController extends Controller
      */
     public function index()
     {
-        $llaves = Llaves::where('activo','=',1)->get();
+        $llaves = Vs_llaves::where('activo','=',1)->get();
         $vsllaves = $this->cargarDT($llaves);
         return view('llaves.index')->with('llaves',$vsllaves);
     }
@@ -27,9 +28,9 @@ class LlavesController extends Controller
 
         foreach ($consulta as $key => $value){
 
-            $ruta = "eliminar".$value['id'];
-            $eliminar = route('delete_llaves', $value['id']);
-            $actualizar =  route('llaves.edit', $value['id']);
+            $ruta = "eliminar".$value['id_llave'];
+            $eliminar = route('delete_llaves', $value['id_llave']);
+            $actualizar =  route('llaves.edit', $value['id_llave']);
 
             $acciones = '
                 <div class="btn-acciones">
@@ -62,10 +63,11 @@ class LlavesController extends Controller
 
             $llaves[$key] = array(
                 $acciones,
-                $value['id'],
+                $value['id_llave'],
                 $value['area'],
                 $value['num_copias'],
                 $value['comentarios'],
+                $value['usuario'],
             );
 
         }

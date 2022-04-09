@@ -41,6 +41,7 @@
                     <th>Área de la Llave</th>
                     <th>Número de Llaves</th>
                     <th>Observaciones</th>
+                    <th>Usuario</th>
                 </tr>
                 </thead>
                 <tbody>
