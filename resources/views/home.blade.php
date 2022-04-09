@@ -201,9 +201,6 @@
                                             <a class="btn btn-outline-danger" href="{{ route('usuarios.index') }}">Administrar Usuarios</a>
                                             <a class="btn btn-outline-success" href="{{ route('roles.index') }}">Adm Roles</a>
                                             <a class="btn btn-outline-success" href="{{ route('permisos.index') }}">Adm Permisos</a>
-
-                                            <a class="btn btn-outline-danger" href="{{ route('usuarios.index') }}">Ad. Usuarios</a>
-                                            <a class="btn btn-outline-success" href="{{ route('permisos.index') }}">Ad. Permisos</a>
                                         </div>
                                         <div class="card-footer">
                                             <div class="stats">
