@@ -115,10 +115,7 @@ class LlavesController extends Controller
         $log->save();
         //
         if (Auth::check()){
-            $user= Auth::user()->name;
-            $llaves_disponibles= Llaves::where('activo','=',1)->where('id_usuario','=',0)->get();
-            $llaves_agregadas= Llaves::where('activo','=',1)->where('id_usuario','=',Auth::user()->id)->get();
-            return view('llaves.agregarllaves')->with('user',$user)->with('llaves_disponibles',$llaves_disponibles)->with('llaves_agregadas',$llaves_agregadas);
+            return redirect()->route('agregarllaves');
 
         }
         else{
@@ -142,10 +139,7 @@ class LlavesController extends Controller
         $log->save();
         //
         if (Auth::check()){
-            $user= Auth::user()->name;
-            $llaves_disponibles= Llaves::where('activo','=',1)->where('id_usuario','=',0)->get();
-            $llaves_agregadas= Llaves::where('activo','=',1)->where('id_usuario','=',Auth::user()->id)->get();
-            return view('llaves.agregarllaves')->with('user',$user)->with('llaves_disponibles',$llaves_disponibles)->with('llaves_agregadas',$llaves_agregadas);
+            return redirect()->route('agregarllaves');
 
         }
         else{
