@@ -109,7 +109,7 @@
                                             <h3 class="card-title">Llaves</h3>
                                             <a class="btn btn-outline-success" href="{{ route('llaves.create') }}">Capturar Llave</a>
                                             <a href="{{ route('llaves.index') }}" class="btn btn-outline-danger">Consultar Llaves</a>
-                                            <a href="{{'/sige/public/agregarllaves'}}" class="btn btn-outline-info">Elegir Llaves</a>
+                                            <a href="{{route('agregarllaves')}}" class="btn btn-outline-info">Elegir Llaves</a>
                                         </div>
                                         <div class="card-footer">
                                             <div class="stats">
