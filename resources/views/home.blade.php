@@ -191,7 +191,7 @@
                             @endcan
 
                             <!-- Apartado de Usuarios   -->
-                            @can('CURSOS#crear')
+                            @can('USUARIOS#crear')
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="card card-stats">
                                         <div class="card-header card-header-success card-header-icon">

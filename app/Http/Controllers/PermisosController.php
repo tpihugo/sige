@@ -24,7 +24,7 @@ class PermisosController extends Controller
             $tmp = explode("#", strtolower($permiso->name));
             $push['id'] = $permiso->id;
             $push['modulo'] = str_replace("_"," ",$tmp[0]);
-            $push['modulo'] = Str::title($tmp[0]);
+            $push['modulo'] = Str::title($push['modulo']);
             $push['permiso'] = str_replace("_"," ",$tmp[1]);
             $push['permiso'] = Str::ucfirst($tmp[1]);
             $dataReturn[] = $push;
