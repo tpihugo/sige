@@ -63,6 +63,7 @@ Route::resource('servicios', 'App\Http\Controllers\ServicioController');
 Route::resource('tecnicos', 'App\Http\Controllers\TecnicoController');
 Route::resource('mantenimiento', 'App\Http\Controllers\MantenimientoController');
 Route::resource('llaves', 'App\Http\Controllers\LlavesController');
+Route::resource('personal', 'App\Http\Controllers\PersonalController');
 
 
 Route::resource('expedientes', 'App\Http\Controllers\ExpedienteController');
@@ -508,4 +509,9 @@ Route::get('/seleccionarllave/{llave_id}', array(
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\LlavesController@seleccionarllave'
 ));
-
+//Personal
+Route::get('/delete-personal/{id}', array(
+    'as' => 'delete-personal',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\PersonalController@delete_personal'
+));
