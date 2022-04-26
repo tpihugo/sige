@@ -41,92 +41,69 @@
                         <br>
                         <br>
                         <div class="row g-3 align-items-center">
-                            <div class="row g-3 align-items-center">
-                                <div class="col-md-12">
-                                        <label for="NombreYApellidos">Nombre del Personal</label>
-                                        <textarea class="form-control" id="NombreYApellidos" name="NombreYApellidos">{{$personal->NombreYApellidos}}</textarea>
-                                </div>
-                            </div>
-                            <div class="row g-3 align-items-center">
-                                <div class="col-md-12">
-                                        <label for="Sexo">Sexo</label>
-                                        <textarea class="form-control" id="Sexo" name="Sexo">{{$personal->Sexo}}</textarea>
-                                </div>
-                            </div>
-                            <div class="row g-3 align-items-center">
-                                <div class="col-md-12">
-                                        <label for="RFC">RFC</label>
-                                        <textarea class="form-control" id="RFC" name="RFC">{{$personal->RFC}}</textarea>
-                                </div>
-                            </div>
-                            <div class="row g-3 align-items-center">
-                                <div class="col-md-12">
-                                        <label for="CURP">CURP</label>
-                                        <textarea class="form-control" id="CURP" name="CURP">{{$personal->CURP}}</textarea>
-                                </div>
-                            </div>
-                            <div class="row g-3 align-items-center">
-                                <div class="col-md-12">
-                                        <label for="Nacionalidad">Nacionalidad</label>
-                                        <textarea class="form-control" id="Nacionalidad" name="Nacionalidad">{{$personal->Nacionalidad}}</textarea>
-                                </div>
-                            </div>
-                            <div class="row g-3 align-items-center">
-                                <div class="col-md-12">
-                                        <label for="División">División</label>
-                                        <textarea class="form-control" id="División" name="División">{{$personal->División}}</textarea>
-                                </div>
-                            </div>
-                            <div class="row g-3 align-items-center">
-                                <div class="col-md-12">
-                                        <label for="DepartamentoAdscripcion">Departamento Adscripción</label>
-                                        <textarea class="form-control" id="DepartamentoAdscripcion" name="DepartamentoAdscripcion">{{$personal->DepartamentoAdscripcion}}</textarea>
-                                </div>
-                            </div>
-                            <div class="row g-3 align-items-center">
-                                <div class="col-md-12">
-                                        <label for="DepartamentoLabora">Departamento Laboral</label>
-                                        <textarea class="form-control" id="DepartamentoLabora" name="DepartamentoLabora">{{$personal->DepartamentoLabora}}</textarea>
-                                </div>
-                            </div>
-                            <div class="row g-3 align-items-center">
-                                <div class="col-md-12">
-                                        <label for="Categoria">Categoria</label>
-                                        <textarea class="form-control" id="Categoria" name="Categoria">{{$personal->Categoria}}</textarea>
-                                </div>
-                            </div>
-                            <div class="row g-3 align-items-center">
-                                <div class="col-md-12">
-                                        <label for="Domicilio">Domicilio</label>
-                                        <textarea class="form-control" id="Domicilio" name="Domicilio">{{$personal->Domicilio}}</textarea>
-                                </div>
-                            </div>
-                            <div class="row g-3 align-items-center">
-                                <div class="col-md-12">
-                                        <label for="Telefono">Teléfono</label>
-                                        <textarea class="form-control" id="Telefono" name="Telefono">{{$personal->Telefono}}</textarea>
-                                </div>
-                            </div>
-                            <div class="row g-3 align-items-center">
-                                <div class="col-md-12">
-                                        <label for="TelefonoCelular">Teléfono Celular</label>
-                                        <textarea class="form-control" id="TelefonoCelular" name="TelefonoCelular">{{$personal->TelefonoCelular}}</textarea>
-                                </div>
-                            </div>
-                            <div class="row g-3 align-items-center">
-                                <div class="col-md-12">
-                                        <label for="CodigoPostal">Código Postal</label>
-                                        <textarea class="form-control" id="CodigoPostal" name="CodigoPostal">{{$personal->CodigoPostal}}</textarea>
-                                </div>
-                            </div>
-                            <div class="row g-3 align-items-center">
-                                <div class="col-md-12">
-                                        <label for="comentarios">Correo Electrónico</label>
-                                        <textarea class="form-control" id="comentarios" name="comentarios">{{$personal->CorreoE}}</textarea>
-                                </div>
-                            </div>
-
+                            <div class="col-md-6">
+                                <label class="font-weight-bold" for="NombreYApellidos">Nombre del Personal</label>
+                                <input class="form-control" id="NombreYApellidos" name="NombreYApellidos" type="text" value="{{$personal->NombreYApellidos}}">
                         </div>
+                        <div class="col-md-3">
+                            <label class="font-weight-bold" for="Sexo">Sexo </label>
+                            <select class="form-control" id="Sexo" name="Sexo">
+                                <option disabled selected>Elegir</option>
+                                <option value="Masculino">Masculino</option>
+                                <option value="Femenino">Femenino</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="font-weight-bold" for="Domicilio">Domicilio</label>
+                            <input class="form-control" id="Domicilio" name="Domicilio" type="text" value="{{$personal->Domicilio}}">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="font-weight-bold" for="CodigoPostal">Código Postal</label>
+                            <input class="form-control" id="CodigoPostal" name="CodigoPostal" type="CodigoPostal" value="{{$personal->CodigoPostal}}">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="font-weight-bold" for="Nacionalidad">Nacionalidad</label>
+                            <input class="form-control" id="Nacionalidad" name="Nacionalidad" type="text" value="{{$personal->División}}">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="font-weight-bold" for="Telefono">Teléfono</label>
+                            <input class="form-control" id="Telefono" name="Telefono" type="text">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="font-weight-bold" for="TelefonoCelular">Teléfono Celular</label>
+                            <input class="form-control" id="TelefonoCelular" name="TelefonoCelular" type="text" value="{{$personal->TelefonoCelular}}">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="font-weight-bold" for="CorreoE">Correo Electrónico</label>
+                            <input class="form-control" id="CorreoE" name="CorreoE" type="text" value="{{$personal->CorreoE}}">
+                        </div>
+                        <div class="col-md-4">
+                                <label class="font-weight-bold" for="RFC">RFC</label>
+                                <input class="form-control" id="RFC" name="RFC" type="text" value="{{$personal->RFC}}">
+                        </div>
+                        <div class="col-md-4">
+                                <label class="font-weight-bold" for="CURP">CURP</label>
+                                <input class="form-control" id="CURP" name="CURP" type="text" value="{{$personal->CURP}}">
+                        </div>
+
+                        <div class="col-md-4">
+                                <label class="font-weight-bold" for="Division">División</label>
+                                <input class="form-control" id="Division" name="Division" type="text" value="{{$personal->Division}}">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="font-weight-bold" for="DepartamentoAdscripcion">Departamento Adscripción</label>
+                            <input class="form-control" id="DepartamentoAdscripcion" name="DepartamentoAdscripcion" type="text" value="{{$personal->DepartamentoAdscripcion}}">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="font-weight-bold" for="DepartamentoLabora">Departamento Laboral</label>
+                            <input class="form-control" id="DepartamentoLabora" name="DepartamentoLabora" type="text" value="{{$personal->DepartamentoLabora}}">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="font-weight-bold" for="Categoria">Categoria</label>
+                            <input class="form-control" id="Categoria" name="Categoria" type="text" value="{{$personal->Categoria}}">
+                        </div>
+
+                    </div>
 
                         <br>
 			<div class="row g-3 align-items-center">

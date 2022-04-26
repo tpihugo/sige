@@ -38,24 +38,13 @@
                 <thead>
                 <tr>
                     <th>Acciones</th>
-                    <th>Id</th>
                     <th>Código</th>
                     <th>Nombre</th>
                     <th>Sexo</th>
                     <th>RFC</th>
                     <th>CURP</th>
-                    <th>Nacionalidad</th>
-                    <th>Escolaridad</th>
-                    <th>División</th>
-                    <th>Departamento Adscrito</th>
-                    <th>Departamento Laboral</th>
-                    <th>Categoria</th>
-                    <th>Domicilio</th>
-                    <th>Teléfono</th>
-                    <th>Teléfono Celular</th>
-                    <th>Código Postal</th>
-                    <th>Correo Electrónico</th>
-
+                    <th>Adscribcion</th>
+                    <th>Contacto</th>
                 </tr>
                 </thead>
                 <tbody>

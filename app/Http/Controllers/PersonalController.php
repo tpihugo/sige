@@ -63,23 +63,13 @@ class PersonalController extends Controller
 
             $personal [$key] = array(
                 $acciones,
-                $value['id'],
                 $value['Codigo'],
                 $value['NombreYApellidos'],
                 $value['Sexo'],
                 $value['RFC'],
                 $value['CURP'],
-                $value['Nacionalidad'],
-                $value['Escolaridad'],
-                $value['Division'],
-                $value['DepartamentoAdscripcion'],
-                $value['DepartamentoLabora'],
-                $value['Categoria'],
-                $value['Domicilio'],
-                $value['Telefono'],
-                $value['TelefonoCelular'],
-                $value['CodigoPostal'],
-                $value['CorreoE'],
+                "Division: ".$value['Division']." "."Depto: ".$value['DepartamentoAdscripcion']." "."Depto Laboral: ".$value['DepartamentoLabora']." "."Categoría: ".$value['Categoria']." "."Observaciones: ".$value['OBSERVACIONES_1']." "."Nombramiento: ".$value['NombramientoDirectivoTemporal'],
+                "Domicilio: ".$value['Domicilio']." "."Telefono: ".$value['Telefono']." "."Telefono Celular: ".$value['TelefonoCelular']." "."CP: ".$value['CodigoPostal']." "."Correo Electrónico: ".$value['CorreoE'],
             );
 
         }
