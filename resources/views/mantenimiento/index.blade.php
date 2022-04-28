@@ -14,8 +14,8 @@
             <h2>Listado de Mantenimiento</h2>
             <br>
                 <p align="right">
-                    <a href="{{ route('mantenimiento.create') }}" class="btn btn-success">Capturar Mantenimiento</a>
-                    <a href="{{ route('home') }}" class="btn btn-primary">< Regresar</a>
+                    <a href="{{ route('mantenimiento.create') }}" class="btn btn-success"> <i class="fa fa-plus"></i> Capturar Mantenimiento</a>
+                    <a href="{{ route('home') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Regresar</a>
                 </p>
 
 
@@ -28,8 +28,8 @@
                     <th>T&eacutecnico</th>
                     <th>Tel&eacutefono</th>
                     <th>&Aacuterea</th>
-                    
-                    
+
+
                 </tr>
                 </thead>
                 <tbody>
@@ -127,7 +127,7 @@
             return ((a < b) ? 1 : ((a > b) ? -1 : 0));
         }
     } );
-    //"columnDefs": [{ type: 'portugues', targets: "_all" }],            
+    //"columnDefs": [{ type: 'portugues', targets: "_all" }],
 
     </script>
 @else

@@ -43,17 +43,17 @@
                         <div class="row g-3 align-items-center">
                             <div class="row g-3 align-items-center">
                                 <div class="col-md-4">
-                                        <label for="area">Área de la Llave</label>
-                                        <textarea class="form-control" id="area" name="area">{{$llaves->area}}</textarea>
+                                        <label class="font-weight-bold" for="area">Área de la Llave</label>
+                                        <input type="text" class="form-control" id="area" name="area" value="{{$llaves->area}}">
                                 </div>
                                 <div class="col-md-4">
-                                    <label for="comentarios">Comentario</label>
-                                    <textarea class="form-control" id="comentarios" name="comentarios">{{$llaves->comentarios}}</textarea>
+                                    <label class="font-weight-bold" for="comentarios">Comentario</label>
+                                    <input type="text" class="form-control" id="comentarios" name="comentarios" value="{{$llaves->comentarios}}">
                                 </div>
                                 <div class="col-md-4">
-                                    <label for="num_copias">Número de Llaves:</label>
+                                    <label class="font-weight-bold" for="num_copias">Número de Llaves:</label>
                                     <input type="number" id="num_copias" name="num_copias"
-                                    min="1" max="5">{{$llaves->num_copias}}
+                                    min="1" max="5" value="{{$llaves->num_copias}}">
                                 </div>
                             </div>
                         </div>

@@ -48,8 +48,8 @@
                                     <label class="font-weight-bold" for="Sexo">Sexo </label>
                                     <select class="form-control" id="Sexo" name="Sexo">
                                         <option disabled selected>Elegir</option>
-                                        <option value="Masculino">Masculino</option>
-                                        <option value="Femenino">Femenino</option>
+                                        <option value="M">Masculino</option>
+                                        <option value="F">Femenino</option>
                                     </select>
                                 </div>
                                 <div class="col-md-4">
@@ -90,7 +90,7 @@
                                         <input class="form-control" id="Division" name="Division" type="text">
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="font-weight-bold" for="DepartamentoAdscripcion">Departamento Adscripción</label>
+                                    <label class="font-weight-bold" for="DepartamentoAdscripcion">Departamento Adscrito</label>
                                     <input class="form-control" id="DepartamentoAdscripcion" name="DepartamentoAdscripcion" type="text">
                                 </div>
                                 <div class="col-md-4">

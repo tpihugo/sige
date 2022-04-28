@@ -26,26 +26,26 @@ class MantenimientoController extends Controller
      */
     public function index()
     {
-        $vsmantenimiento = VsMantenimiento::where('activo',1)->get();
+        $vsmantenimiento = VsMantenimiento::where('activo', 1)->get();
         $mantenimiento = $this->cargarDT($vsmantenimiento);
-        return view('mantenimiento.index')->with('mantenimientos',$mantenimiento);
+        return view('mantenimiento.index')->with('mantenimientos', $mantenimiento);
     }
 
-    public function mantenimiento_detalle(){
+    public function mantenimiento_detalle()
+    {
         $total_area_equipos = DB::table('vs_equipos')->count();
-            // dd($total_area_equipos);
+        // dd($total_area_equipos);
         $total_area_belenes = DB::table('vs_equipos')
-        ->where('area','like','%Belenes%')
+            ->where('area', 'like', '%Belenes%')
             ->count();
         $total_area_la_normal = DB::table('vs_equipos')
-            ->where('area','like','%Belenes%')
+            ->where('area', 'like', '%Belenes%')
             ->count();
         $total_terminado = DB::table('vs_mantenimiento_equipo')
             ->where('terminado')
             ->count();
-            //return ($total_area_equipos->count);
-        return view('mantenimiento.mantenimiento_detalle')->with('total_area_equipos',$total_area_equipos)->with('total_area_belenes',$total_area_belenes)->with('total_area_la_normal',$total_area_la_normal)->with('total_terminado',$total_terminado);
-
+        //return ($total_area_equipos->count);
+        return view('mantenimiento.mantenimiento_detalle')->with('total_area_equipos', $total_area_equipos)->with('total_area_belenes', $total_area_belenes)->with('total_area_la_normal', $total_area_la_normal)->with('total_terminado', $total_terminado);
     }
 
 
@@ -53,24 +53,28 @@ class MantenimientoController extends Controller
     {
         $mantenimiento = [];
 
-        foreach ($consulta as $key => $value){
+        foreach ($consulta as $key => $value) {
 
-            $ruta = "eliminar".$value['id'];
+            $ruta = "eliminar" . $value['id'];
             $eliminar = route('delete-mantenimiento', $value['id']);
             $actualizar =  route('mantenimiento.edit', $value['id']);
+            $agregarequipo = route('mantenimiento.show', $value['id']);
 
             $acciones = '
                 <div class="btn-acciones">
                     <div class="btn-circle">
-                        <a href="'.$actualizar.'" class="btn btn-success" title="Actualizar">
+                        <a href="' . $actualizar . '" class="btn btn-success" title="Actualizar">
                             <i class="far fa-edit"></i>
                         </a>
-                        <a href="#'.$ruta.'" role="button" class="btn btn-danger" data-toggle="modal" title="Eliminar">
+                        <a href="' . $agregarequipo . '" class="btn btn-warning" title="Agregar Equipo">
+                            <i class="far fa-plus"></i>
+                        </a>
+                        <a href="#' . $ruta . '" role="button" class="btn btn-danger" data-toggle="modal" title="Eliminar">
                             <i class="far fa-trash-alt"></i>
                         </a>
                     </div>
                 </div>
-                <div class="modal fade" id="'.$ruta.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="' . $ruta . '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -81,7 +85,7 @@ class MantenimientoController extends Controller
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <a href="'.$eliminar.'" type="button" class="btn btn-danger">Eliminar</a>
+                      <a href="' . $eliminar . '" type="button" class="btn btn-danger">Eliminar</a>
                     </div>
                   </div>
                 </div>
@@ -94,9 +98,8 @@ class MantenimientoController extends Controller
                 $value['fecha_mantenimiento'],
                 $value['nombre'],
                 $value['telefono'],
-                $value['sede'].' - '. $value['edificio'].' - '.$value['piso'].' - '.$value['division'].' - '.$value['coordinacion'].' - '.$value['area']
+                $value['sede'] . ' - ' . $value['edificio'] . ' - ' . $value['piso'] . ' - ' . $value['division'] . ' - ' . $value['coordinacion'] . ' - ' . $value['area']
             );
-
         }
 
         return $mantenimiento;
@@ -109,11 +112,11 @@ class MantenimientoController extends Controller
      */
     public function create()
     {
-        $areas = Area::where('activo',1)->get();
-        $tecnicos = Tecnico::where('activo',1)->get();
+        $areas = Area::where('activo', 1)->get();
+        $tecnicos = Tecnico::where('activo', 1)->get();
 
 
-        return view('mantenimiento.create')->with('areas', $areas)->with('tecnicos',$tecnicos);
+        return view('mantenimiento.create')->with('areas', $areas)->with('tecnicos', $tecnicos);
     }
 
     /**
@@ -124,33 +127,33 @@ class MantenimientoController extends Controller
      */
     public function store(Request $request)
     {
-        $validateData = $this->validate($request,[
+        $validateData = $this->validate($request, [
 
-            'tecnico_id'=>'required',
-            'area_id'=>'required',
-            'fecha_mantenimiento'=>'required'
+            'tecnico_id' => 'required',
+            'area_id' => 'required',
+            'fecha_mantenimiento' => 'required'
         ]);
         $mantenimiento = new Mantenimiento();
 
         $mantenimiento->tecnico_id = $request->input('tecnico_id');
         $mantenimiento->area_id = $request->input('area_id');
         $mantenimiento->fecha_mantenimiento = $request->input('fecha_mantenimiento');
-	    $mantenimiento->save();
+        $mantenimiento->save();
 
         $lastmantenimiento = $mantenimiento->id;
-	//
+        //
         $log = new Log();
         $log->tabla = "mantenimientos";
-        $mov="";
-        $mov=$mov." id:".$mantenimiento->id ." tecnico_id:". $mantenimiento->tecnico_id ." area_id" .$mantenimiento->area_id;
-        $mov=$mov." fecha_mantenimiento:".$mantenimiento->fecha_mantenimiento;
+        $mov = "";
+        $mov = $mov . " id:" . $mantenimiento->id . " tecnico_id:" . $mantenimiento->tecnico_id . " area_id" . $mantenimiento->area_id;
+        $mov = $mov . " fecha_mantenimiento:" . $mantenimiento->fecha_mantenimiento;
         $log->movimiento = $mov;
         $log->usuario_id = Auth::user()->id;
         $log->acciones = "Insercion";
         $log->save();
         //
-        return redirect('mantenimiento/'.$lastmantenimiento)->with(array(
-            'message'=>'El mantenimiento se guardó correctamente'
+        return redirect('mantenimiento/' . $lastmantenimiento)->with(array(
+            'message' => 'El mantenimiento se guardó correctamente'
         ));
     }
 
@@ -162,20 +165,14 @@ class MantenimientoController extends Controller
      */
     public function show($id)
     {
-        $infomantenimiento=VsMantenimiento::find($id);
+        $infomantenimiento = VsMantenimiento::find($id);
 
-        $equipos_en_este_mantenimiento = Vs_Relmantenimiento::where('id_mantenimiento','=',$id)->get();
-        // return view('mantenimiento.agregarMantenimientoEdit')
-        //     ->with('vsmantenimiento',$infomantenimiento)->with('equipos_en_este_mantenimiento',$equipos_en_este_mantenimiento);
-        //     //
-
-
+        $equipos_en_este_mantenimiento = Vs_Relmantenimiento::where('id_mantenimiento', '=', $id)->get();
         $mantenimiento = Mantenimiento::find($id);
-        $equipos=VsEquipo::where('area','=',$mantenimiento->area_id)->get();
+        $equipos = VsEquipo::where('area', '=', $mantenimiento->area_id)->get();
 
         return view('mantenimiento.agregarMantenimientoEdit')
-            ->with('vsmantenimiento',$infomantenimiento)->with('equipos_en_este_mantenimiento',$equipos_en_este_mantenimiento)->with('equipos',$equipos);
-
+            ->with('vsmantenimiento', $infomantenimiento)->with('equipos_en_este_mantenimiento', $equipos_en_este_mantenimiento)->with('equipos', $equipos);
     }
 
     /**
@@ -189,8 +186,8 @@ class MantenimientoController extends Controller
         $mantenimiento = Mantenimiento::find($id);
         $equiposmantenimiento = Vs_Relmantenimiento::all();
         $areas = Area::all();
-        $tecnicos = Tecnico::where('activo',1)->get();
-        return view('mantenimiento.edit')->with('mantenimiento',$mantenimiento)->with('equiposmantenimiento', $equiposmantenimiento)->with('areas',$areas)->with('tecnicos',$tecnicos);
+        $tecnicos = Tecnico::where('activo', 1)->get();
+        return view('mantenimiento.edit')->with('mantenimiento', $mantenimiento)->with('equiposmantenimiento', $equiposmantenimiento)->with('areas', $areas)->with('tecnicos', $tecnicos);
     }
 
     /**
@@ -202,10 +199,10 @@ class MantenimientoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validateData = $this->validate($request,[
-            'tecnico_id'=>'required',
-            'area_id'=>'required',
-            'fecha_mantenimiento'=>'required'
+        $validateData = $this->validate($request, [
+            'tecnico_id' => 'required',
+            'area_id' => 'required',
+            'fecha_mantenimiento' => 'required'
         ]);
         $mantenimiento = Mantenimiento::find($id);
         $mantenimiento->id = $request->input('id');
@@ -213,19 +210,19 @@ class MantenimientoController extends Controller
         $mantenimiento->area_id = $request->input('area_id');
         $mantenimiento->fecha_mantenimiento = $request->input('fecha_mantenimiento');
         $mantenimiento->update();
-	//
-    $log = new Log();
-    $log->tabla = "mantenimientos";
-    $mov="";
-    $mov=$mov." id:".$mantenimiento->id ." tecnico_id:". $mantenimiento->tecnico_id ." area_id" .$mantenimiento->area_id;
-    $mov=$mov." fecha_mantenimiento:".$mantenimiento->fecha_mantenimiento;
-    $log->movimiento = $mov;
-    $log->usuario_id = Auth::user()->id;
-    $log->acciones = "Insercion";
-    $log->save();
+        //
+        $log = new Log();
+        $log->tabla = "mantenimientos";
+        $mov = "";
+        $mov = $mov . " id:" . $mantenimiento->id . " tecnico_id:" . $mantenimiento->tecnico_id . " area_id" . $mantenimiento->area_id;
+        $mov = $mov . " fecha_mantenimiento:" . $mantenimiento->fecha_mantenimiento;
+        $log->movimiento = $mov;
+        $log->usuario_id = Auth::user()->id;
+        $log->acciones = "Insercion";
+        $log->save();
         //
         return redirect('mantenimiento')->with(array(
-            'message'=>'El mantenimiento se guardó Correctamente'
+            'message' => 'El mantenimiento se guardó Correctamente'
         ));
     }
 
@@ -241,16 +238,16 @@ class MantenimientoController extends Controller
     }
     public function busquedaEquiposMantenimiento(Request $request)
     {
-        $validateData = $this->validate($request,[
-            'busqueda'=>'required'
+        $validateData = $this->validate($request, [
+            'busqueda' => 'required'
         ]);
-        $busqueda=$request->input('busqueda');
+        $busqueda = $request->input('busqueda');
 
-        if(isset($busqueda) && !is_null($busqueda)){
+        if (isset($busqueda) && !is_null($busqueda)) {
             $id = $request->input('id');
-        $mantenimiento = Mantenimiento::find($id);
-        $infomantenimiento=VsMantenimiento::find($id);
-        $equipos=VsEquipo::where('area','=',$mantenimiento->area_id)
+            $mantenimiento = Mantenimiento::find($id);
+            $infomantenimiento = VsMantenimiento::find($id);
+            $equipos = VsEquipo::where('area', '=', $mantenimiento->area_id)
                 // ->where('id','LIKE','%'.$busqueda.'%')
                 // ->orWhere('udg_id','LIKE','%'.$busqueda.'%')
                 // ->orWhere('marca','LIKE','%'.$busqueda.'%')
@@ -261,88 +258,79 @@ class MantenimientoController extends Controller
                 // ->orWhere('ip','LIKE','%'.$busqueda.'%')
                 // ->orWhere('tipo_conexion','LIKE','%'.$busqueda.'%')
                 // ->orWhere('tipo_equipo','LIKE','%'.$busqueda.'%')
-                ->orWhere('area','LIKE','%'.$busqueda.'%')->get();
+                ->orWhere('area', 'LIKE', '%' . $busqueda . '%')->get();
 
-        $equipos_en_este_mantenimiento = Vs_Relmantenimiento::where('id_mantenimiento','=',$id)->get();
+            $equipos_en_este_mantenimiento = Vs_Relmantenimiento::where('id_mantenimiento', '=', $id)->get();
 
-        return view('mantenimiento.agregarMantenimientoEdit')
-            ->with('vsmantenimiento',$infomantenimiento)->with('equipos_en_este_mantenimiento',$equipos_en_este_mantenimiento)->with('equipos',$equipos);
-        }else{
+            return view('mantenimiento.agregarMantenimientoEdit')
+                ->with('vsmantenimiento', $infomantenimiento)->with('equipos_en_este_mantenimiento', $equipos_en_este_mantenimiento)->with('equipos', $equipos);
+        } else {
             return redirect('home')->with(array(
-                'message'=>'Debe introducir un término de búsqueda'
+                'message' => 'Debe introducir un término de búsqueda'
             ));
         }
-
-
-
     }
-     public function agregarequipomantenimiento( $mantenimiento_id,$equipo_id){
+    public function agregarequipomantenimiento($mantenimiento_id, $equipo_id)
+    {
 
         $relmantenimientoequipo = new RelMttoEquipo();
         $relmantenimientoequipo->mantenimiento_id = $mantenimiento_id;
-        $relmantenimientoequipo->equipo_id =$equipo_id;
+        $relmantenimientoequipo->equipo_id = $equipo_id;
         $relmantenimientoequipo->save();
 
-     return redirect('mantenimiento/'.$mantenimiento_id)->with(array(
-            'message'=>'El Equipo se agregó Correctamente al mantenimiento'
-         ));
+        return redirect('mantenimiento/' . $mantenimiento_id)->with(array(
+            'message' => 'El Equipo se agregó Correctamente al mantenimiento'
+        ));
     }
-    public function eliminarequipomantenimiento( $mantenimiento_id,$equipo_id){
+    public function eliminarequipomantenimiento($mantenimiento_id, $equipo_id)
+    {
 
-        $relmantenimientoequipo = RelMttoEquipo::where('mantenimiento_id','=',$mantenimiento_id)->where('equipo_id','=',$equipo_id);
+        $relmantenimientoequipo = RelMttoEquipo::where('mantenimiento_id', '=', $mantenimiento_id)->where('equipo_id', '=', $equipo_id);
         $relmantenimientoequipo->delete();
 
-    return redirect('mantenimiento/'.$mantenimiento_id)->with(array(
-            'message'=>'El Equipo se quitó Correctamente del mantenimiento'
+        return redirect('mantenimiento/' . $mantenimiento_id)->with(array(
+            'message' => 'El Equipo se quitó Correctamente del mantenimiento'
         ));
     }
-    public function estadoMantenimiento( $mantenimiento_id,$equipo_id){
+    public function estadoMantenimiento($mantenimiento_id, $equipo_id)
+    {
 
-        $relmantenimientoequipo = RelMttoEquipo::where('mantenimiento_id','=',$mantenimiento_id)->where('equipo_id','=',$equipo_id)->first();
-        $bool=$relmantenimientoequipo->terminado;
+        $relmantenimientoequipo = RelMttoEquipo::where('mantenimiento_id', '=', $mantenimiento_id)->where('equipo_id', '=', $equipo_id)->first();
+        $bool = $relmantenimientoequipo->terminado;
 
-        $relmantenimientoequipo->terminado =!$bool;
+        $relmantenimientoequipo->terminado = !$bool;
         $relmantenimientoequipo->update();
 
-    return redirect('mantenimiento/'.$mantenimiento_id)->with(array(
-            'message'=>'El Equipo se modificó correctamente del mantenimiento'
+        return redirect('mantenimiento/' . $mantenimiento_id)->with(array(
+            'message' => 'El Equipo se modificó correctamente del mantenimiento'
         ));
     }
 
 
- public function delete_mantenimiento($id){
-    $mantenimiento = Mantenimiento::find($id);
-    if($mantenimiento){
-        $mantenimiento->activo = 0;
-        $mantenimiento->update();
-    //
-    $log = new Log();
-    $log->tabla = "mantenimientos";
-    $mov="";
-    $mov=$mov." id:".$mantenimiento->id ." tecnico_id:". $mantenimiento->tecnico_id ." area_id" .$mantenimiento->area_id;
-    $mov=$mov." fecha_mantenimiento:".$mantenimiento->fecha_mantenimiento;
-    $log->movimiento = $mov;
-    $log->usuario_id = Auth::user()->id;
-    $log->acciones = "Borrado";
-    $log->save();
-        //
-        return redirect()->route('mantenimiento.index')->with(array(
-           "message" => "El mantenimiento se ha eliminado correctamente"
-        ));
-    }else{
-        return redirect()->route('home')->with(array(
-           "message" => "El mantenimiento que trata de eliminar no existe"
-        ));
+    public function delete_mantenimiento($id)
+    {
+        $mantenimiento = Mantenimiento::find($id);
+        if ($mantenimiento) {
+            $mantenimiento->activo = 0;
+            $mantenimiento->update();
+            //
+            $log = new Log();
+            $log->tabla = "mantenimientos";
+            $mov = "";
+            $mov = $mov . " id:" . $mantenimiento->id . " tecnico_id:" . $mantenimiento->tecnico_id . " area_id" . $mantenimiento->area_id;
+            $mov = $mov . " fecha_mantenimiento:" . $mantenimiento->fecha_mantenimiento;
+            $log->movimiento = $mov;
+            $log->usuario_id = Auth::user()->id;
+            $log->acciones = "Borrado";
+            $log->save();
+            //
+            return redirect()->route('mantenimiento.index')->with(array(
+                "message" => "El mantenimiento se ha eliminado correctamente"
+            ));
+        } else {
+            return redirect()->route('home')->with(array(
+                "message" => "El mantenimiento que trata de eliminar no existe"
+            ));
+        }
     }
-
-
-
-
-
-
-
-
-
-}
-
 }

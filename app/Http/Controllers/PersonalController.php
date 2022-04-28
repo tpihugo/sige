@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use function Symfony\Component\String\b;
+
 class PersonalController extends Controller
 {
     /**
@@ -31,12 +33,16 @@ class PersonalController extends Controller
             $ruta = "eliminar".$value['id'];
             $eliminar = route('delete-personal', $value['id']);
             $actualizar =  route('personal.edit', $value['id']);
+            $recibo = route('imprimirpersonal', $value['id']);
 
             $acciones = '
                 <div class="btn-acciones">
                     <div class="btn-circle">
                         <a href="'.$actualizar.'" class="btn btn-success" title="Actualizar">
                             <i class="far fa-edit"></i>
+                        </a>
+                        <a href="'.$recibo .'" class="btn btn-primary" title="Detalle Personal">
+                            <i class="far fa-file"></i>
                         </a>
                         <a href="#'.$ruta.'" role="button" class="btn btn-danger" data-toggle="modal" title="Eliminar">
                             <i class="far fa-trash-alt"></i>
@@ -68,8 +74,8 @@ class PersonalController extends Controller
                 $value['Sexo'],
                 $value['RFC'],
                 $value['CURP'],
-                "Division: ".$value['Division']." "."Depto: ".$value['DepartamentoAdscripcion']." "."Depto Laboral: ".$value['DepartamentoLabora']." "."Categoría: ".$value['Categoria']." "."Observaciones: ".$value['OBSERVACIONES_1']." "."Nombramiento: ".$value['NombramientoDirectivoTemporal'],
-                "Domicilio: ".$value['Domicilio']." "."Telefono: ".$value['Telefono']." "."Telefono Celular: ".$value['TelefonoCelular']." "."CP: ".$value['CodigoPostal']." "."Correo Electrónico: ".$value['CorreoE'],
+                " <b> Division: </b>".$value['Division']." "."<b>Depto: </b> ".$value['DepartamentoAdscripcion']." "."<b> Depto Laboral:</b> ".$value['DepartamentoLabora']." "."<b> Categoría:</b> ".$value['Categoria']." "."<b> Observaciones:</b> ".$value['OBSERVACIONES_1']." "."<b> Nombramiento:</b> ".$value['NombramientoDirectivoTemporal'],
+                "<b> Domicilio:</b> ".$value['Domicilio']." "."<b> Telefono:</b> ".$value['Telefono']." "."<b> Telefono Celular:</b> ".$value['TelefonoCelular']." "."<b> CP:</b> ".$value['CodigoPostal']." "."<b> Correo Electrónico:</b> ".$value['CorreoE'],
             );
 
         }
@@ -241,6 +247,12 @@ class PersonalController extends Controller
             ));
         }
 
+    }
+
+    public function recibo($id)
+    {
+        $personal = Personal::find($id);
+            return view('personal.index')->with('personal', $personal);
     }
 
 }

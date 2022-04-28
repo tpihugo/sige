@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Personal;
 use App\Models\VsEquiposPorTicket;
 use App\Models\VsMantenimiento;
 use App\Models\VsPrestamo;
@@ -25,12 +26,10 @@ class PDFController extends Controller
         return $pdf->stream('formatoRecibo.pdf');
 
     }
-    public function imprimirMantenimiento($id){
-        $mantenimiento = VsMantenimiento::where('id','=',$id)->first();
-        $mantenimiento = VsMantenimiento::where('id','=', $id)->get();
-        $pdf = \PDF::loadView('mantenimiento.formatoMantenimiento', compact('mantenimiento'));
+    public function imprimirpersonal($id){
+        $personal = Personal::find ($id);
+        $pdf = \PDF::loadView('personal.formatopersonal', compact('personal'));
 
-        return $pdf->stream('formatoMantenimiento.pdf');
-
+        return $pdf->stream('formatopersonal.pdf');
     }
 }

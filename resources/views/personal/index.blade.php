@@ -31,8 +31,8 @@
             <br>
                 <p align="right">
                     {{-- <a href="{{ route('') }}" class="btn btn-success">Capturar servicio</a> --}}
-                    <a href="{{ route('home') }}" class="btn btn-primary">< Regresar</a>
-                    <a href="{{ route('personal.create') }}" class="btn btn-success">< Capturar Personal</a>
+                    <a href="{{ route('home') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Regresar</a>
+                    <a href="{{ route('personal.create') }}" class="btn btn-success"><i class="fa fa-plus"></i> Capturar Personal</a>
                 </p>
             <table id="example" class="table table-striped table-bordered" style="width:100%">
                 <thead>
