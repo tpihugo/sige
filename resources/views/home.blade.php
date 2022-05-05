@@ -410,7 +410,31 @@
                                     </div>
 
                                 @endif
+<<<<<<< HEAD
 >>>>>>> master
+=======
+                                 @if (Auth::check() && (Auth::user()->role =='admin'))
+                                    <div class="col-lg-4 col-md-6 col-sm-6">
+                                        <div class="card card-stats">
+                                            <div class="card-header card-header-secundary card-header-icon">
+                                                <div class="card-icon">
+                                                    <i class="material-icons">group</i>
+                                                </div>
+                                                <h3 class="card-title">Personal</h3>
+                                                <a class="btn btn-outline-success" href="{{ route('personal.create') }}">Capturar Personal</a>
+                                                <a href="{{ route('personal.index') }}" class="btn btn-outline-danger">Consultar Personal</a>
+                                            </div>
+                                            <div class="card-footer">
+                                                <div class="stats">
+                                                    <i class="material-icons">group</i>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                @endif
+>>>>>>> 54dd4087dba1779548d6696f5425043056d0428f
                             <div class="col-lg-4 col-md-6 col-sm-12">
                                 <div class="card card-stats">
                                     <div class="card-header card-header-success card-header-icon">

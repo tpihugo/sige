@@ -18,32 +18,32 @@ class LlavesController extends Controller
      */
     public function index()
     {
-        $llaves = Vs_llaves::where('activo','=',1)->get();
+        $llaves = Vs_llaves::where('activo', '=', 1)->get();
         $vsllaves = $this->cargarDT($llaves);
-        return view('llaves.index')->with('llaves',$vsllaves);
+        return view('llaves.index')->with('llaves', $vsllaves);
     }
     public function cargarDT($consulta)
     {
         $llaves = [];
 
-        foreach ($consulta as $key => $value){
+        foreach ($consulta as $key => $value) {
 
-            $ruta = "eliminar".$value['id_llave'];
+            $ruta = "eliminar" . $value['id_llave'];
             $eliminar = route('delete_llaves', $value['id_llave']);
             $actualizar =  route('llaves.edit', $value['id_llave']);
 
             $acciones = '
                 <div class="btn-acciones">
                     <div class="btn-circle">
-                        <a href="'.$actualizar.'" class="btn btn-success" title="Actualizar">
+                        <a href="' . $actualizar . '" class="btn btn-success" title="Actualizar">
                             <i class="far fa-edit"></i>
                         </a>
-                        <a href="#'.$ruta.'" role="button" class="btn btn-danger" data-toggle="modal" title="Eliminar">
+                        <a href="#' . $ruta . '" role="button" class="btn btn-danger" data-toggle="modal" title="Eliminar">
                             <i class="far fa-trash-alt"></i>
                         </a>
                     </div>
                 </div>
-                <div class="modal fade" id="'.$ruta.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="' . $ruta . '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -54,7 +54,7 @@ class LlavesController extends Controller
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <a href="'.$eliminar.'" type="button" class="btn btn-danger">Eliminar</a>
+                      <a href="' . $eliminar . '" type="button" class="btn btn-danger">Eliminar</a>
                     </div>
                   </div>
                 </div>
@@ -69,7 +69,6 @@ class LlavesController extends Controller
                 $value['comentarios'],
                 $value['usuario'],
             );
-
         }
 
         return $llaves;
@@ -88,72 +87,72 @@ class LlavesController extends Controller
     public function agregarllaves(Request $request)
     {
 
-        if (Auth::check()){
-            $user= Auth::user()->name;
-            $llaves_disponibles= Llaves::where('activo','=',1)->where('id_usuario','=',0)->get();
-            $llaves_agregadas= Llaves::where('activo','=',1)->where('id_usuario','=',Auth::user()->id)->get();
-            return view('llaves.agregarllaves')->with('user',$user)->with('llaves_disponibles',$llaves_disponibles)->with('llaves_agregadas',$llaves_agregadas);
-
-        }
-        else{
+        if (Auth::check()) {
+            $user = Auth::user()->name;
+            $llaves_disponibles = Llaves::where('activo', '=', 1)->where('id_usuario', '=', 0)->get();
+            $llaves_agregadas = Llaves::where('activo', '=', 0)->where('id_usuario', '=', Auth::user()->id)->get();
+            return view('llaves.agregarllaves')->with('user', $user)->with('llaves_disponibles', $llaves_disponibles)->with('llaves_agregadas', $llaves_agregadas);
+        } else {
             return redirect()->route('home')->with(array(
-               "message" => "Usuario no logeado"
-            ));}
-
+                "message" => "Usuario no logeado"
+            ));
+        }
     }
-    public function devolverllave($id){
+    public function devolverllave($id)
+    {
 
         $llave = Llaves::find($id);
-        $llave->id_usuario=0;
+        $llave->id_usuario = 0;
+        $llave->activo = 1;
         $llave->update();
         //
-        $log = new Log ();
+        $log = new Log();
         $log->tabla = "llaves";
-        $mov="";
-        $mov=$mov." nombre".$llave->nombre ." num_copias". $llave->num_copias ." comentarios" .$llave->comentarios;
+        $mov = "";
+        $mov = $mov . " nombre" . $llave->nombre . " num_copias" . $llave->num_copias . " comentarios" . $llave->comentarios;
         $log->movimiento = $mov;
         $log->usuario_id = Auth::user()->id;
         $log->acciones = "Devolución de Llave";
         $log->save();
         //
-        if (Auth::check()){
+        if (Auth::check()) {
             return redirect()->route('agregarllaves');
-
-        }
-        else{
+        } else {
             return redirect()->route('home')->with(array(
-               "message" => "Usuario no logeado"
-            ));}
+                "message" => "Usuario no logeado"
+            ));
+        }
     }
-    public function seleccionarllave($id){
+    public function seleccionarllave($id)
+    {
 
         $llave = Llaves::find($id);
-        $llave_usuario_anterior=$llave->id_usuario;
-        $llave->id_usuario=Auth::user()->id;
+        $llave_usuario_anterior = $llave->id_usuario;
+        $llave->id_usuario = Auth::user()->id;
+        $llave->activo = 0;
         $llave->update();
         //
-        $log = new Log ();
+        $log = new Log();
         $log->tabla = "llaves";
-        $mov="";
-        $mov=$mov." nombre".$llave->nombre ." num_copias". $llave->num_copias ." comentarios" .$llave->comentarios;
+        $mov = "";
+        $mov = $mov . " nombre" . $llave->nombre . " num_copias" . $llave->num_copias . " comentarios" . $llave->comentarios;
         $log->movimiento = $mov;
         $log->usuario_id = Auth::user()->id;
-        if($llave_usuario_anterior!=0){
+        if ($llave_usuario_anterior != 0) {
             $log->acciones = "Tomaste la Llave.";
-        }else{
-            $log->acciones = "Alguien te paso esta llave.";
+        } else {
+            $log->acciones = "Alguien te pasó esta llave.";
         }
 
         $log->save();
         //
-        if (Auth::check()){
+        if (Auth::check()) {
             return redirect()->route('agregarllaves');
-
-        }
-        else{
+        } else {
             return redirect()->route('home')->with(array(
-               "message" => "Usuario no logeado"
-            ));}
+                "message" => "Usuario no logeado"
+            ));
+        }
     }
 
 
@@ -165,8 +164,8 @@ class LlavesController extends Controller
      */
     public function store(Request $request)
     {
-        $validateData = $this->validate($request,[
-            'area'=>'required',
+        $validateData = $this->validate($request, [
+            'area' => 'required',
         ]);
 
         $llaves = new Llaves();
@@ -175,18 +174,18 @@ class LlavesController extends Controller
         $llaves->comentarios = $request->input('comentarios');
 
         $llaves->save();
-	//
-        $log = new Log ();
+        //
+        $log = new Log();
         $log->tabla = "llaves";
-        $mov="";
-        $mov=$mov." nombre".$llaves->nombre ." num_copias". $llaves->num_copias ." comentarios" .$llaves->comentarios;
+        $mov = "";
+        $mov = $mov . " nombre" . $llaves->nombre . " num_copias" . $llaves->num_copias . " comentarios" . $llaves->comentarios;
         $log->movimiento = $mov;
         $log->usuario_id = Auth::user()->id;
         $log->acciones = "Insercion";
         $log->save();
         //
         return redirect('llaves')->with(array(
-            'message'=>'La llave se guardó Correctamente'
+            'message' => 'La llave se guardó Correctamente'
         ));
     }
 
@@ -222,8 +221,8 @@ class LlavesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validateData = $this->validate($request,[
-            'area'=>'required',
+        $validateData = $this->validate($request, [
+            'area' => 'required',
         ]);
 
         $llaves = Llaves::find($id);
@@ -232,44 +231,44 @@ class LlavesController extends Controller
         $llaves->comentarios = $request->input('comentarios');
 
         $llaves->update();
-	//
-    $log = new Log ();
-    $log->tabla = "llaves";
-    $mov="";
-    $mov=$mov." nombre".$llaves->nombre ." num_copias". $llaves->num_copias ." comentarios" .$llaves->comentarios;
-    $log->movimiento = $mov;
-    $log->usuario_id = Auth::user()->id;
-    $log->acciones = "Insercion";
-    $log->save();
         //
-        return redirect('llaves')->with(array(
-            'message'=>'La Llave se actualizó Correctamente'
-        ));
-    }
-    public function delete_llaves($id){
-        $llaves = Llaves::find($id);
-        if($llaves){
-            $llaves->activo = 0;
-            $llaves->update();
-	    //
         $log = new Log();
         $log->tabla = "llaves";
-        $mov="";
-        $mov=$mov." nombre".$llaves->nombre ." num_copias". $llaves->num_copias ." comentarios" .$llaves->comentarios;
+        $mov = "";
+        $mov = $mov . " nombre" . $llaves->nombre . " num_copias" . $llaves->num_copias . " comentarios" . $llaves->comentarios;
         $log->movimiento = $mov;
+        $log->usuario_id = Auth::user()->id;
+        $log->acciones = "Insercion";
+        $log->save();
+        //
+        return redirect('llaves')->with(array(
+            'message' => 'La Llave se actualizó Correctamente'
+        ));
+    }
+    public function delete_llaves($id)
+    {
+        $llaves = Llaves::find($id);
+        if ($llaves) {
+            $llaves->activo = 0;
+            $llaves->update();
+            //
+            $log = new Log();
+            $log->tabla = "llaves";
+            $mov = "";
+            $mov = $mov . " nombre" . $llaves->nombre . " num_copias" . $llaves->num_copias . " comentarios" . $llaves->comentarios;
+            $log->movimiento = $mov;
             $log->usuario_id = Auth::user()->id;
             $log->acciones = "Borrado";
             $log->save();
             //
             return redirect()->route('llaves.index')->with(array(
-               "message" => "La Llave se ha eliminado correctamente"
+                "message" => "La Llave se ha eliminado correctamente"
             ));
-        }else{
+        } else {
             return redirect()->route('home')->with(array(
-               "message" => "La Llave que trata de eliminar no existe"
+                "message" => "La Llave que trata de eliminar no existe"
             ));
         }
-
     }
 
     /**
@@ -281,5 +280,13 @@ class LlavesController extends Controller
     public function destroy(Llaves $llaves)
     {
         //
+    }
+    public function buscador(Request $request)
+    {
+        if ($request->ajax()) {
+            $consulta = Llaves::select('id', 'area', 'comentarios', 'num_copias', 'activo')->where('area', 'like', '%' . $request->buscador . '%')->orwhere('comentarios', 'like', '%' . $request->buscador . '%')->get();
+            $termino = $request->buscador;
+            return view('llaves.busqueda', compact('consulta', 'termino'))->render();
+        }
     }
 }

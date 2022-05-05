@@ -19,6 +19,7 @@ class InstallCommand extends Command
     protected $signature = 'jetstream:install {stack : The development stack that should be installed}
                                               {--teams : Indicates if team support should be installed}
                                               {--pest : Indicates if Pest should be installed}
+                                              {--ssr : Indicates if Inertia SSR support should be installed}
                                               {--composer=global : Absolute path to the Composer binary which should be used to install packages}';
 
     /**
@@ -57,13 +58,6 @@ class InstallCommand extends Command
         // Configure Session...
         $this->configureSession();
 
-        // AuthenticateSession Middleware...
-        $this->replaceInFile(
-            '// \Illuminate\Session\Middleware\AuthenticateSession::class',
-            '\Laravel\Jetstream\Http\Middleware\AuthenticateSession::class',
-            app_path('Http/Kernel.php')
-        );
-
         // Install Stack...
         if ($this->argument('stack') === 'livewire') {
             $this->installLivewireStack();
@@ -75,7 +69,7 @@ class InstallCommand extends Command
         $stubs = $this->getTestStubsPath();
 
         if ($this->option('pest')) {
-            $this->requireComposerPackages('pestphp/pest:^1.16', 'pestphp/pest-plugin-laravel:^1.1');
+            $this->requireComposerDevPackages('pestphp/pest:^1.16', 'pestphp/pest-plugin-laravel:^1.1');
 
             copy($stubs.'/Pest.php', base_path('tests/Pest.php'));
             copy($stubs.'/ExampleTest.php', base_path('tests/Feature/ExampleTest.php'));
@@ -266,9 +260,15 @@ class InstallCommand extends Command
     {
         return <<<'EOF'
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});
 
 EOF;
     }
@@ -286,16 +286,16 @@ EOF;
         // Install NPM packages...
         $this->updateNodePackages(function ($packages) {
             return [
-                '@inertiajs/inertia' => '^0.10.0',
-                '@inertiajs/inertia-vue3' => '^0.5.1',
-                '@inertiajs/progress' => '^0.2.6',
-                '@tailwindcss/forms' => '^0.4.0',
-                '@tailwindcss/typography' => '^0.5.0',
-                'postcss-import' => '^12.0.1',
+                '@inertiajs/inertia' => '^0.11.0',
+                '@inertiajs/inertia-vue3' => '^0.6.0',
+                '@inertiajs/progress' => '^0.2.7',
+                '@tailwindcss/forms' => '^0.5.0',
+                '@tailwindcss/typography' => '^0.5.2',
+                'postcss-import' => '^14.0.2',
                 'tailwindcss' => '^3.0.0',
-                'vue' => '^3.0.5',
-                '@vue/compiler-sfc' => '^3.0.5',
-                'vue-loader' => '^16.1.2',
+                'vue' => '^3.2.31',
+                '@vue/compiler-sfc' => '^3.2.31',
+                'vue-loader' => '^17.0.0',
             ] + $packages;
         });
 
@@ -309,7 +309,6 @@ EOF;
         // Tailwind Configuration...
         copy(__DIR__.'/../../stubs/inertia/tailwind.config.js', base_path('tailwind.config.js'));
         copy(__DIR__.'/../../stubs/inertia/webpack.mix.js', base_path('webpack.mix.js'));
-        copy(__DIR__.'/../../stubs/inertia/webpack.config.js', base_path('webpack.config.js'));
 
         // Directories...
         (new Filesystem)->ensureDirectoryExists(app_path('Actions/Fortify'));
@@ -405,6 +404,10 @@ EOF;
             $this->installInertiaTeamStack();
         }
 
+        if ($this->option('ssr')) {
+            $this->installInertiaSsrStack();
+        }
+
         $this->line('');
         $this->info('Inertia scaffolding installed successfully.');
         $this->comment('Please execute "npm install && npm run dev" to build your assets.');
@@ -485,6 +488,36 @@ EOF;
     }
 
     /**
+     * Install the Inertia SSR stack into the application.
+     *
+     * @return void
+     */
+    protected function installInertiaSsrStack()
+    {
+        $this->updateNodePackages(function ($packages) {
+            return [
+                '@inertiajs/server' => '^0.1.0',
+                '@vue/server-renderer' => '^3.2.31',
+                'webpack-node-externals' => '^3.0.0',
+            ] + $packages;
+        });
+
+        copy(__DIR__.'/../../stubs/inertia/webpack.ssr.mix.js', base_path('webpack.ssr.mix.js'));
+        copy(__DIR__.'/../../stubs/inertia/resources/js/ssr.js', resource_path('js/ssr.js'));
+
+        (new Process([$this->phpBinary(), 'artisan', 'vendor:publish', '--provider=Inertia\ServiceProvider', '--force'], base_path()))
+            ->setTimeout(null)
+            ->run(function ($type, $output) {
+                $this->output->write($output);
+            });
+
+        copy(__DIR__.'/../../stubs/inertia/app/Http/Middleware/HandleInertiaRequests.php', app_path('Http/Middleware/HandleInertiaRequests.php'));
+
+        $this->replaceInFile("'enabled' => false", "'enabled' => true", config_path('inertia.php'));
+        $this->replaceInFile('mix --production', 'mix --production --mix-config=webpack.ssr.mix.js && mix --production', base_path('package.json'));
+    }
+
+    /**
      * Install the service provider in the application configuration file.
      *
      * @param  string  $after
@@ -560,6 +593,32 @@ EOF;
 
         $command = array_merge(
             $command ?? ['composer', 'require'],
+            is_array($packages) ? $packages : func_get_args()
+        );
+
+        (new Process($command, base_path(), ['COMPOSER_MEMORY_LIMIT' => '-1']))
+            ->setTimeout(null)
+            ->run(function ($type, $output) {
+                $this->output->write($output);
+            });
+    }
+
+    /**
+     * Install the given Composer Packages as "dev" dependencies.
+     *
+     * @param  mixed  $packages
+     * @return void
+     */
+    protected function requireComposerDevPackages($packages)
+    {
+        $composer = $this->option('composer');
+
+        if ($composer !== 'global') {
+            $command = [$this->phpBinary(), $composer, 'require', '--dev'];
+        }
+
+        $command = array_merge(
+            $command ?? ['composer', 'require', '--dev'],
             is_array($packages) ? $packages : func_get_args()
         );
 

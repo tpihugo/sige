@@ -51,7 +51,7 @@ class TicketController extends Controller
                         <a href="'.$actualizar.'" class="btn btn-success" title="Actualizar">
                             <i class="far fa-edit"></i>
                         </a>
-			<a href="'.$recibo .'" class="btn btn-primary" title="Recibo de Equipo">
+			            <a href="'.$recibo .'" class="btn btn-primary" title="Recibo de Equipo">
                             <i class="far fa-file"></i>
                         </a>
                         <a href="#'.$ruta.'" role="button" class="btn btn-danger" data-toggle="modal" title="Eliminar">
@@ -70,7 +70,7 @@ class TicketController extends Controller
                     </div>
                     <div class="modal-body">
                       <p class="text-primary">
-                        <small> 
+                        <small>
                             '.$value['id'].', '.$value['datos_reporte'].', '.$value['fecha_reporte'].', '.$value['solicitante'].'
                         </small>
                       </p>

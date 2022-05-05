@@ -63,6 +63,7 @@ Route::resource('servicios', 'App\Http\Controllers\ServicioController');
 Route::resource('tecnicos', 'App\Http\Controllers\TecnicoController');
 Route::resource('mantenimiento', 'App\Http\Controllers\MantenimientoController');
 Route::resource('llaves', 'App\Http\Controllers\LlavesController');
+Route::resource('personal', 'App\Http\Controllers\PersonalController');
 
 
 Route::resource('expedientes', 'App\Http\Controllers\ExpedienteController');
@@ -445,11 +446,6 @@ Route::get('/delete-mantenimiento/{id}', array(
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\MantenimientoController@delete_mantenimiento'
 ));
-Route::get('/update-mantenimiento', array(
-    'as' => 'update-mantenimiento',
-    'middleware' => 'auth',
-    'uses' => 'App\Http\Controllers\MantenimientoController@update'
-));
 Route::post('/busquedaEquiposMantenimiento', array(
     'as' => 'busquedaEquiposMantenimiento',
     'middleware' => 'auth',
@@ -474,6 +470,11 @@ Route::get('/mantenimiento_detalle', array(
     'as' => 'mantenimiento_detalle',
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\MantenimientoController@mantenimiento_detalle'
+));
+Route::get('/agregar-equipos', array(
+    'as' => 'agregar-equipos',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\MantenimientoController@show'
 ));
 //Expediente
 Route::get('/expediente/{equipo_id}', array(
@@ -508,4 +509,19 @@ Route::get('/seleccionarllave/{llave_id}', array(
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\LlavesController@seleccionarllave'
 ));
-
+Route::post('buscador-llaves', array(
+    'as' => 'buscador-llaves',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\LlavesController@buscador'
+));
+//Personal
+Route::get('/delete-personal/{id}', array(
+    'as' => 'delete-personal',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\PersonalController@delete_personal'
+));
+Route::get('/imprimirpersonal/{id}', array(
+    'as' => 'imprimirpersonal',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\PDFController@imprimirpersonal'
+));
