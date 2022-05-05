@@ -15,7 +15,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
-                @if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='rh' || Auth::user()->role =='cta' || Auth::user()->role =='redes'))
+                @can('AULAS_AREAS#ver')
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Áreas</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -23,21 +23,21 @@
                             <li><a class="dropdown-item" href="{{ route('areas.index') }}">Consulta Áreas</a></li>
                         </ul>
                     </li>
-                @endif
+                @endcan
 
-                @if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='auxiliar' || Auth::user()->role =='redes' || Auth::user()->role =='general' ))
+                @can('MOBILIARIO#ver')
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Mobiliario</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            @if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='auxiliar' || Auth::user()->role =='redes'))
+                            @can('MOBILIARIO#crear')
                                 <li><a class="dropdown-item" href="{{ route('mobiliarios.create') }}">Captura Mobiliario</a></li>
-                            @endif
+                            @endcan
                             <li><a class="dropdown-item" href="{{ route('mobiliarios.index') }}">Consulta Mobiliarios</a></li>
                         </ul>
                     </li>
-                @endif
+                @endcan
 
-                @if(Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'cta' || Auth::user()->role == 'auxiliar' || Auth::user()->role == 'redes'))
+                @can('EQUIPOS#ver')
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Equipos y Préstamos</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -48,9 +48,9 @@
                             <li><a class="dropdown-item" href="{{ route('prestamos-all') }}">Historial Préstamos</a></li>
                         </ul>
                     </li>
-                @endif
+                @endcan
 
-                @if(Auth::check() && (Auth::user()->role =='admin'))
+                @can('ESTADISTICAS#ver')
                     {{--
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Estadisticas</a>
@@ -59,9 +59,9 @@
                             </ul>
                         </li>
                     --}}
-                @endif
+                @endcan
 
-                @if(Auth::check() && (Auth::user()->role =='admin'|| Auth::user()->role =='cta' || Auth::user()->role =='auxiliar' || Auth::user()->role =='redes'))
+                @can('TICKETS#ver')
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Tickets</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -70,23 +70,23 @@
                             <li><a class="dropdown-item" href="{{ route('revisionTickets') }}">Consultar Tickets Completos</a></li>
                         </ul>
                     </li>
-                @endif
+                @endcan
 
-                @if(Auth::check() && (Auth::user()->role =='admin'|| Auth::user()->role =='cta' || Auth::user()->role =='auxiliar' || Auth::user()->role =='redes' || Auth::user()->role =='aulas' || Auth::user()->role =='general'))
+                @can('CURSOS#ver')
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Cursos</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        @if(Auth::check() && Auth::user()->role !='general')
+                        @can('CURSOS#crear')
                             <li><a class="dropdown-item" href="{{ route('cursos.create') }}" >Capturar</a></li>
-                        @endif
+                        @endcan
                             <li><a class="dropdown-item" href="{{ url('cursos/2022A') }}">Todos</a></li>
                             <li><a class="dropdown-item" href="{{ route('cursos-laboratorios', '2022A') }}">Laboratorios</a></li>
                             <li><a class="dropdown-item" href="{{ route('cursos-presenciales', '2022A') }}">Presenciales</a></li>
                         </ul>
                     </li>
-                @endif
+                @endcan
 
-                @if(Auth::check() && (Auth::user()->role =='admin'))
+                @can('USUARIOS#ver')
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Usuarios</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -94,9 +94,9 @@
                             <li><a class="dropdown-item" href="{{ route('usuarios.index') }}">Roles y Permisos</a></li>
                         </ul>
                     </li>
-                @endif
+                @endcan
 
-                @if(Auth::check() && (Auth::user()->role =='admin'))
+                @can('LOGS#crear')
                     {{--
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Logs</a>
@@ -105,9 +105,9 @@
                             </ul>
                         </li>
                     --}}
-                @endif
+                @endcan
 
-                @if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='redes'))
+                @can('PROYECTOS#ver')
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Proyectos</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -115,9 +115,9 @@
                             <li><a class="dropdown-item" href="{{ route('proyectos.index') }}">Consultar Proyectos</a></li>
                         </ul>
                     </li>
-                @endif
+                @endcan
 
-                @if(Auth::check() && (Auth::user()->role =='admin'))
+                @can('LICENCIAS#ver')
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Licencias</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -125,9 +125,9 @@
                             <li><a class="dropdown-item" href="{{ route('licencias.index') }}">Consultar licencia</a></li>
                         </ul>
                     </li>
-                @endif
+                @endcan
 
-                @if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='redes'))
+                @can('SERVICIOS#ver')
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Servicios</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -135,9 +135,9 @@
                             <li><a class="dropdown-item" href="{{ route('servicios.index') }}">Consultar servicios</a></li>
                         </ul>
                     </li>
-                @endif
+                @endcan
 
-                @if(Auth::check() && (Auth::user()->role =='admin' ||  Auth::user()->role =='cta' || Auth::user()->role =='redes'))
+                @can('SUBREDES_IP#ver')
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Subredes e IP's</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -147,30 +147,44 @@
                             <li><a class="dropdown-item" href="{{ route('ips.index') }}">Consulta IP</a></li>
                         </ul>
                     </li>
-                @endif
+                @endcan
 
-                @if(Auth::check() && (Auth::user()->role =='admin'))
-                    {{-- ADMIN NAVBAR-MKII --}}
+                @can('MENU_ADMINISTRADOR#ver')
+                    <!-- ADMIN NAVBAR-MKII -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administrador</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#"><strong>Usuarios</strong></a>
-                            <a class="dropdown-item" href="{{ route('usuarios.index') }}">Administrar Usuarios</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#"><strong>Logs</strong></a>
-                            <a class="dropdown-item" href="{{ route('logs.index') }}">Consultar Logs</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#"><strong>Estadisticas</strong></a>
-                            <a class="dropdown-item" href="{{ route('estadisticas') }}">Generales</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#"><strong>Técnicos</strong></a>
-                            <a class="dropdown-item" href="{{ route('tecnicos.index') }}">Administrar Técnicos</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#"><strong>Mantenimiento</strong></a>
-                            <a class="dropdown-item" href="{{ route('mantenimiento.index') }}">Consultar Mantenimiento</a>
+                            @can('USUARIOS#ver')
+                                <a class="dropdown-item" href="#"><strong>Usuarios</strong></a>
+                                <a class="dropdown-item" href="{{ route('usuarios.index') }}">Administrar Usuarios</a>
+                            @endcan
+
+                            @can('LOGS#ver')
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#"><strong>Logs</strong></a>
+                                <a class="dropdown-item" href="{{ route('logs.index') }}">Consultar Logs</a>
+                            @endcan
+
+                            @can('ESTADISTICAS#ver')
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#"><strong>Estadisticas</strong></a>
+                                <a class="dropdown-item" href="{{ route('estadisticas') }}">Generales</a>
+                            @endcan
+
+                            @can('TECNICOS#ver')
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#"><strong>Técnicos</strong></a>
+                                <a class="dropdown-item" href="{{ route('tecnicos.index') }}">Administrar Técnicos</a>
+                            @endcan
+
+                            @can('MANTENIMIENTO#ver')
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#"><strong>Mantenimiento</strong></a>
+                                <a class="dropdown-item" href="{{ route('mantenimiento.index') }}">Consultar Mantenimiento</a>
+                            @endcan
                         </div>
                     </li>
-                @endif
+                @endcan
             </ul>
 
             <!-- Right Side Of Navbar -->

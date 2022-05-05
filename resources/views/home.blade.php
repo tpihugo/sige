@@ -1,11 +1,11 @@
 @extends('layouts.app', ['activePage' => 'dashboard', 'titlePage' => __('Dashboard')])
-
+   
 @section('content')
     <div class="content">
         <div class="container">
             <div class="row align-items-center">
 
-                @if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='auxiliar' || Auth::user()->role =='redes' || Auth::user()->role =='aulas' || Auth::user()->role =='general' ))
+                @can('BUSQUEDAR#buscar')
                     <div class="col-md-12">
                         <div class="card card-chart">
                             <div class="card-header card-header-success">B&uacute;squeda General</div>
@@ -14,13 +14,13 @@
                                     <div class="alert alert-success" role="alert">
                                         {{ session('status') }}
                                     </div>
-                                @endif
+                                @endcan
 
                                 @if (session('message'))
                                     <div class="alert alert-success">
                                         {{ session('message') }}
                                     </div>
-                                @endif
+                                @endcan
 
                                 <form action="{{route('busqueda')}}" method="POST" enctype="multipart/form-data" class="col-12">
                                     {!! csrf_field() !!}
@@ -29,7 +29,7 @@
                                         <div class="alert alert-danger">
                                             <ul>Debe de escribir un criterio de búsqueda</ul>
                                         </div>
-                                    @endif
+                                    @endcan
 
                                     <br>
                                     <div class="row align-items-center">
@@ -48,14 +48,14 @@
                             <div class="card-footer"></div>
                         </div>
                     </div>
-                @endif
+                @endcan
 
                 <div class="col-md-12 ">
                     <div class="card card-chart">
                         <div class="card-header card-header-success">Sistema Integral de Gesti&oacute;n</div>
                         <div class="row m-1">
 
-                            @if (Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='auxiliar' || Auth::user()->role =='redes' ))
+                            @can('EQUIPOS#ver')
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="card card-stats ">
                                         <div class="card-header card-header-warning card-header-icon">
@@ -75,10 +75,10 @@
                                         </div>
                                     </div>
                                 </div>
-                            @endif
+                            @endcan
 
                             <!-- Apartado de Tickets  -->
-                            @if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='auxiliar' || Auth::user()->role =='redes'))
+                            @can('TICKETS#ver')
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="card card-stats">
                                         <div class="card-header card-header-danger card-header-icon">
@@ -97,9 +97,10 @@
                                         </div>
                                     </div>
                                 </div>
-                            @endif
+                            @endcan
+
                             <!-- Apartado de LLaves   -->
-                            @if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='auxiliar' || Auth::user()->role =='redes'))
+                            @can('LLAVES#ver')
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="card card-stats">
                                         <div class="card-header card-header-info card-header-icon">
@@ -118,10 +119,10 @@
                                         </div>
                                     </div>
                                 </div>
-                            @endif
+                            @endcan
 
                             <!-- Apartado de Inventario   -->
-                            @if(Auth::check() && (Auth::user()->role =='admin'))
+                            @can('INVENTARIOS#ver')
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="card card-stats">
                                         <div class="card-header card-header-success card-header-icon">
@@ -141,10 +142,10 @@
                                         </div>
                                     </div>
                                 </div>
-                            @endif
+                            @endcan
 
                             <!-- Apartado de Aulas y áreas   -->
-                            @if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='rh' || Auth::user()->role =='redes'))
+                            @can('AULAS_AREAS#ver')
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="card card-stats">
                                         <div class="card-header card-header-secondary card-header-icon">
@@ -162,10 +163,10 @@
                                         </div>
                                     </div>
                                 </div>
-                            @endif
+                            @endcan
 
                             <!-- Apartado de Cursos   -->
-                            @if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='aulas' || Auth::user()->role =='redes' || Auth::user()->role =='auxiliar' || Auth::user()->role == 'general'))
+                            @can('CURSOS#ver')
                                 <div class="col-lg-4 col-md-6 col-sm-12 ">
                                     <div class="card card-stats ">
                                         <div class="card-header card-header-info card-header-icon">
@@ -178,19 +179,19 @@
                                         </div>
                                         <div class="card-footer">
                                             <div class="stats">
-                                                @if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='aulas' || Auth::user()->role =='redes' || Auth::user()->role =='auxiliar' ))
+                                                @can('CURSOS#crear')
                                                     <i class="material-icons">spellcheck</i>
                                                       <a href="{{ route('cursos.create') }}" >Capturar</a>
-                                                @endif
+                                                @endcan
                                                 <i class="material-icons">update</i><a  href="{{ url('cursos/2022A') }}">Todos</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            @endif
+                            @endcan
 
                             <!-- Apartado de Usuarios   -->
-                            @if(Auth::check() && (Auth::user()->role =='admin'))
+                            @can('USUARIOS#crear')
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="card card-stats">
                                         <div class="card-header card-header-success card-header-icon">
@@ -211,9 +212,10 @@
                                         </div>
                                     </div>
                                 </div>
-                            @endif
+                            @endcan
 
-                            @if (Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='auxiliar' || Auth::user()->role =='redes' || Auth::user()->role =='general'))
+                            <!-- Apartado de Mobiliario -->
+                            @can('MOBILIARIO#ver')
                                 <div class="col-lg-4 col-md-6 col-sm-12 ">
                                     <div class="card card-stats ">
                                         <div class="card-header card-header-danger card-header-icon">
@@ -221,9 +223,9 @@
                                                 <i class="material-icons">chair</i>
                                             </div>
                                             <h3 class="card-title">Mobiliario</h3>
-                                            @if (Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='auxiliar' || Auth::user()->role =='redes'))
+                                            @can('MOBILIARIO#crear')
                                                 <a class="btn btn-outline-success" href="{{ route('mobiliarios.create') }}">Captura Mobiliario</a>
-                                            @endif
+                                            @endcan
                                             <a href="{{ route('mobiliarios.index') }}" class="btn btn-outline-danger">Consulta Mobiliarios</a>
                                         </div>
                                             <div class="card-footer ">
@@ -233,9 +235,10 @@
                                         </div>
                                     </div>
                                 </div>
-                            @endif
+                            @endcan
 
-                            @if (Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='redes'))
+                            <!-- Apartado de Proyectos -->
+                            @can('PROYECTOS#ver')
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="card card-stats">
                                         <div class="card-header card-header-warning card-header-icon">
@@ -253,9 +256,10 @@
                                         </div>
                                     </div>
                                 </div>
-                            @endif
+                            @endcan
 
-                            @if (Auth::check() && (Auth::user()->role =='admin'))
+                            <!-- Apartado de Licencias -->
+                            @can('LICENCIAS#ver')
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="card card-stats">
                                         <div class="card-header card-header-secundary card-header-icon">
@@ -273,9 +277,10 @@
                                         </div>
                                     </div>
                                 </div>
-                            @endif
+                            @endcan
 
-                            @if (Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='redes'))
+                            <!-- Apartado de Redes e IPs -->
+                            @can('SUBREDES_IP#ver')
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="card card-stats">
                                         <div class="card-header card-header-primary card-header-icon">
@@ -294,9 +299,10 @@
                                         </div>
                                     </div>
                                 </div>
-                            @endif
+                            @endcan
 
-                            @if (Auth::check() && (Auth::user()->role =='admin'))
+                            <!-- Apartado de Estadisticas -->
+                            @can('ESTADISTICAS#ver')
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="card card-stats">
                                         <div class="card-header card-header-success card-header-icon">
@@ -313,9 +319,10 @@
                                         </div>
                                     </div>
                                 </div>
-                            @endif
+                            @endcan
 
-                            @if (Auth::check() && (Auth::user()->role =='admin'))
+                            <!-- Apartado de Logs -->
+                            @can('LOGS#ver')
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="card card-stats">
                                         <div class="card-header card-header-primary card-header-icon">
@@ -334,10 +341,10 @@
                                         </div>
                                     </div>
                                 </div>
-                            @endif
+                            @endcan
 
-                            {{-- Apartado de Mantenimiento --}}
-                            @if (Auth::check() && (Auth::user()->role =='admin'|| Auth::user()->role =='cta'))
+                            <!-- Apartado de Mantenimiento   -->
+                            @can('MANTENIMIENTO#ver')
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="card card-stats">
                                         <div class="card-header card-header-success card-header-icon">
@@ -355,27 +362,32 @@
                                         </div>
                                     </div>
                                 </div>
-                            @endif
-                                @if (Auth::check() && (Auth::user()->role =='admin'))
-                                    <div class="col-lg-4 col-md-6 col-sm-6">
-                                        <div class="card card-stats">
-                                            <div class="card-header card-header-secundary card-header-icon">
-                                                <div class="card-icon">
-                                                    <i class="material-icons">info_outline</i>
-                                                </div>
-                                                <h3 class="card-title">Requisiciones</h3>
-                                                <a class="btn btn-outline-success" href="#">Capturar Requisición</a>
-                                                <a href="#" class="btn btn-outline-danger">Consultar Requisición</a>
-                                            </div>
-                                            <div class="card-footer">
-                                                <div class="stats">
-                                                    <i class="material-icons">info</i>
-                                                </div>
-                                            </div>
+                            @endcan
 
+                            <!-- Apartado de Requisiciones -->
+                            @can('REQUISICIONES#ver')
+                                <div class="col-lg-4 col-md-6 col-sm-6">
+                                    <div class="card card-stats">
+                                        <div class="card-header card-header-secundary card-header-icon">
+                                            <div class="card-icon">
+                                                <i class="material-icons">info_outline</i>
+                                            </div>
+                                            <h3 class="card-title">Requisiciones</h3>
+                                            <a class="btn btn-outline-success" href="#">Capturar Requisición</a>
+                                            <a href="#" class="btn btn-outline-danger">Consultar Requisición</a>
                                         </div>
-                                    </div>
+                                        <div class="card-footer">
+                                            <div class="stats">
+                                                <i class="material-icons">info</i>
+                                            </div>
+                                        </div>
 
+<<<<<<< HEAD
+                                    </div>
+                                </div>
+                            @endcan
+
+=======
                                 @endif
                                  @if (Auth::check() && (Auth::user()->role =='admin'))
                                     <div class="col-lg-4 col-md-6 col-sm-6">
@@ -398,6 +410,31 @@
                                     </div>
 
                                 @endif
+<<<<<<< HEAD
+>>>>>>> master
+=======
+                                 @if (Auth::check() && (Auth::user()->role =='admin'))
+                                    <div class="col-lg-4 col-md-6 col-sm-6">
+                                        <div class="card card-stats">
+                                            <div class="card-header card-header-secundary card-header-icon">
+                                                <div class="card-icon">
+                                                    <i class="material-icons">group</i>
+                                                </div>
+                                                <h3 class="card-title">Personal</h3>
+                                                <a class="btn btn-outline-success" href="{{ route('personal.create') }}">Capturar Personal</a>
+                                                <a href="{{ route('personal.index') }}" class="btn btn-outline-danger">Consultar Personal</a>
+                                            </div>
+                                            <div class="card-footer">
+                                                <div class="stats">
+                                                    <i class="material-icons">group</i>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                @endif
+>>>>>>> 54dd4087dba1779548d6696f5425043056d0428f
                             <div class="col-lg-4 col-md-6 col-sm-12">
                                 <div class="card card-stats">
                                     <div class="card-header card-header-success card-header-icon">
@@ -406,15 +443,16 @@
                                         </div>
                                         <h3 class="card-title">Exit</h3>
                                         <a class="btn btn-outline-danger" href="{{ route('logout') }}"
-                                onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();"
-                            >
-                                {{ __('Salir') }}
-                            </a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
-                                    <div class="card-footer">
+                                            onclick="event.preventDefault();
+                                            document.getElementById('logout-form').submit();"
+                                        >
+                                        {{ __('Salir') }}
+                                        </a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                            @csrf
+                                        </form>
+                                        <div class="card-footer">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
