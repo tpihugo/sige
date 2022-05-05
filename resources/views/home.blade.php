@@ -1,5 +1,5 @@
 @extends('layouts.app', ['activePage' => 'dashboard', 'titlePage' => __('Dashboard')])
-
+   
 @section('content')
     <div class="content">
         <div class="container">
@@ -354,7 +354,6 @@
                                             <h3 class="card-title">Mantenimiento</h3>
                                             <a class="btn btn-outline-success" href="{{ route('mantenimiento.index') }}">Consultar Mantenimientos</a>
                                             <a class="btn btn-outline-danger" href="{{ route('mantenimiento.create') }}">Capturar Mantenimientos</a>
-                                            {{-- <a class="btn btn-outline-danger" href="{{ route('mantenimiento.mantenimiento_detalle') }}">Detalle de Mantenimientos</a> --}}
                                         </div>
                                         <div class="card-footer">
                                             <div class="stats">
@@ -383,10 +382,35 @@
                                             </div>
                                         </div>
 
+<<<<<<< HEAD
                                     </div>
                                 </div>
                             @endcan
 
+=======
+                                @endif
+                                 @if (Auth::check() && (Auth::user()->role =='admin'))
+                                    <div class="col-lg-4 col-md-6 col-sm-6">
+                                        <div class="card card-stats">
+                                            <div class="card-header card-header-secundary card-header-icon">
+                                                <div class="card-icon">
+                                                    <i class="material-icons">group</i>
+                                                </div>
+                                                <h3 class="card-title">Personal</h3>
+                                                <a class="btn btn-outline-success" href="{{ route('personal.create') }}">Capturar Personal</a>
+                                                <a href="{{ route('personal.index') }}" class="btn btn-outline-danger">Consultar Personal</a>
+                                            </div>
+                                            <div class="card-footer">
+                                                <div class="stats">
+                                                    <i class="material-icons">group</i>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                @endif
+>>>>>>> master
                             <div class="col-lg-4 col-md-6 col-sm-12">
                                 <div class="card card-stats">
                                     <div class="card-header card-header-success card-header-icon">
