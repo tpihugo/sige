@@ -34,7 +34,7 @@
                                     <br>
                                     <div class="row align-items-center">
                                         <div class="col-md-3 offset-md-1 text-end">
-                                            <h3 class="card-title"><span class="text-success"><i class="fa fa-search"></span></i> Búsqueda</3>
+                                            <h3 class="card-title"><span class="text-success"><i class="fa fa-search"></span></i> Búsqueda</h3>
                                         </div>
                                         <div class="col-md-5">
                                             <input type="text" class="form-control" id="busqueda" name="busqueda" />

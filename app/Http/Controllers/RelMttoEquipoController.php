@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\relmttoequipo;
+use App\Models\RelMttoEquipo;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class RelmttoequipoController extends Controller
+class RelMttoEquipoController extends Controller
 {
     /**
      * Display a listing of the resource.
