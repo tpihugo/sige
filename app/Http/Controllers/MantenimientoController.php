@@ -165,14 +165,20 @@ class MantenimientoController extends Controller
      */
     public function show($id)
     {
-        $infomantenimiento = VsMantenimiento::find($id);
-
+        $vsmantenimiento =VsMantenimiento::find($id);
+        $infomantenimiento = Mantenimiento::find($id);
         $equipos_en_este_mantenimiento = Vs_Relmantenimiento::where('id_mantenimiento', '=', $id)->get();
-        $mantenimiento = Mantenimiento::find($id);
-        $equipos = VsEquipo::where('area', '=', $mantenimiento->area_id)->get();
+        $equipos = VsEquipo::where('id_area', '=', $infomantenimiento->area_id)->where('tipo_equipo','cpu')->get();
+        foreach ($equipos_en_este_mantenimiento as $key1 => $value1) {
+            foreach ($equipos as $key2 => $value2) {
+                    if ( $value1->udg_id == $value2->udg_id) {
+                        unset($equipos [$key2]);
+                        // array_push($unmatch,$value2);
+                    }
+            }
+        }
 
-        return view('mantenimiento.agregarMantenimientoEdit')
-            ->with('vsmantenimiento', $infomantenimiento)->with('equipos_en_este_mantenimiento', $equipos_en_este_mantenimiento)->with('equipos', $equipos);
+        return view('mantenimiento.agregarMantenimientoEdit')->with('infomantenimiento', $infomantenimiento)->with('equipos_en_este_mantenimiento', $equipos_en_este_mantenimiento)->with('equipos', $equipos)->with('vsmantenimiento',$vsmantenimiento);
     }
 
     /**
@@ -218,7 +224,7 @@ class MantenimientoController extends Controller
         $mov = $mov . " fecha_mantenimiento:" . $mantenimiento->fecha_mantenimiento;
         $log->movimiento = $mov;
         $log->usuario_id = Auth::user()->id;
-        $log->acciones = "Insercion";
+        $log->acciones = "Inserción";
         $log->save();
         //
         return redirect('mantenimiento')->with(array(
@@ -236,40 +242,40 @@ class MantenimientoController extends Controller
     {
         //
     }
-    public function busquedaEquiposMantenimiento(Request $request)
-    {
-        $validateData = $this->validate($request, [
-            'busqueda' => 'required'
-        ]);
-        $busqueda = $request->input('busqueda');
+    // public function busquedaEquiposMantenimiento(Request $request)
+    // {
+    //     $validateData = $this->validate($request, [
+    //         'busqueda' => 'required'
+    //     ]);
+    //     $busqueda = $request->input('busqueda');
 
-        if (isset($busqueda) && !is_null($busqueda)) {
-            $id = $request->input('id');
-            $mantenimiento = Mantenimiento::find($id);
-            $infomantenimiento = VsMantenimiento::find($id);
-            $equipos = VsEquipo::where('area', '=', $mantenimiento->area_id)
-                // ->where('id','LIKE','%'.$busqueda.'%')
-                // ->orWhere('udg_id','LIKE','%'.$busqueda.'%')
-                // ->orWhere('marca','LIKE','%'.$busqueda.'%')
-                // ->orWhere('marca','LIKE','%'.$busqueda.'%')
-                // ->orWhere('modelo','LIKE','%'.$busqueda.'%')
-                // ->orWhere('numero_serie','LIKE','%'.$busqueda.'%')
-                // ->orWhere('mac','LIKE','%'.$busqueda.'%')
-                // ->orWhere('ip','LIKE','%'.$busqueda.'%')
-                // ->orWhere('tipo_conexion','LIKE','%'.$busqueda.'%')
-                // ->orWhere('tipo_equipo','LIKE','%'.$busqueda.'%')
-                ->orWhere('area', 'LIKE', '%' . $busqueda . '%')->get();
+    //     if (isset($busqueda) && !is_null($busqueda)) {
+    //         $id = $request->input('id');
+    //         $mantenimiento = Mantenimiento::find($id);
+    //         $infomantenimiento = VsMantenimiento::find($id);
+    //         $equipos = VsEquipo::where('area', '=', $mantenimiento->area_id)
+    //             // ->where('id','LIKE','%'.$busqueda.'%')
+    //             ->orWhere('udg_id','LIKE','%'.$busqueda.'%')
+    //             // ->orWhere('marca','LIKE','%'.$busqueda.'%')
+    //             // ->orWhere('marca','LIKE','%'.$busqueda.'%')
+    //             // ->orWhere('modelo','LIKE','%'.$busqueda.'%')
+    //             // ->orWhere('numero_serie','LIKE','%'.$busqueda.'%')
+    //             // ->orWhere('mac','LIKE','%'.$busqueda.'%')
+    //             // ->orWhere('ip','LIKE','%'.$busqueda.'%')
+    //             // ->orWhere('tipo_conexion','LIKE','%'.$busqueda.'%')
+    //             // ->orWhere('tipo_equipo','LIKE','%'.$busqueda.'%')
+    //             ->orWhere('area', 'LIKE', '%' . $busqueda . '%')->get();
 
-            $equipos_en_este_mantenimiento = Vs_Relmantenimiento::where('id_mantenimiento', '=', $id)->get();
+    //         $equipos_en_este_mantenimiento = Vs_Relmantenimiento::where('id_mantenimiento', '=', $id)->get();
 
-            return view('mantenimiento.agregarMantenimientoEdit')
-                ->with('vsmantenimiento', $infomantenimiento)->with('equipos_en_este_mantenimiento', $equipos_en_este_mantenimiento)->with('equipos', $equipos);
-        } else {
-            return redirect('home')->with(array(
-                'message' => 'Debe introducir un término de búsqueda'
-            ));
-        }
-    }
+    //         return view('mantenimiento.agregarMantenimientoEdit')
+    //             ->with('vsmantenimiento', $infomantenimiento)->with('equipos_en_este_mantenimiento', $equipos_en_este_mantenimiento)->with('equipos', $equipos);
+    //     } else {
+    //         return redirect('home')->with(array(
+    //             'message' => 'Debe introducir un término de búsqueda'
+    //         ));
+    //     }
+    // }
     public function agregarequipomantenimiento($mantenimiento_id, $equipo_id)
     {
 
@@ -332,5 +338,27 @@ class MantenimientoController extends Controller
                 "message" => "El mantenimiento que trata de eliminar no existe"
             ));
         }
+    }
+
+    public function buscador(Request $request, $vsmantenimiento)
+    {
+        if($request->ajax()){
+
+            $infomantenimiento = VsMantenimiento::select('id')->where('id','=',$vsmantenimiento)->get()[0];
+            $consulta = VsEquipo::select('id','udg_id','resguardante','marca','modelo','numero_serie','detalles','tipo_equipo','activo','area')
+            // ->where('id', 'LIKE', '%' . $request->buscador . '%')
+            ->Where('udg_id', 'LIKE', '%' . $request->buscador . '%')
+            // ->orwhere('resguardante', 'LIKE', '%' . $request->buscador . '%')
+            ->orWhere('marca', 'LIKE', '%' . $request->buscador . '%')
+            ->orWhere('modelo', 'LIKE', '%' . $request->buscador . '%')
+            ->orWhere('numero_serie', 'LIKE', '%' . $request->buscador . '%')->paginate(12);
+            // ->orWhere('detalles', 'LIKE', '%' . $request->buscador . '%')
+            // ->orWhere('tipo_equipo', 'LIKE', '%' . $request->buscador . '%')
+            // ->orWhere('activo', 'LIKE', '%' . $request->buscador . '%')
+            // ->orWhere('area', 'LIKE', '%' . $request->buscador . '%')
+        $termino = $request->buscador;
+        return view('mantenimiento.busqueda', compact('termino','consulta','infomantenimiento'))->render();
+        }
+
     }
 }

@@ -33,9 +33,9 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/', [App\Http\Controllers\
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-Route::resource('usuarios','App\Http\Controllers\UsuariosController');
-Route::resource('roles','App\Http\Controllers\RolesController');
-Route::resource('permisos','App\Http\Controllers\PermisosController');
+Route::resource('usuarios', 'App\Http\Controllers\UsuariosController');
+Route::resource('roles', 'App\Http\Controllers\RolesController');
+Route::resource('permisos', 'App\Http\Controllers\PermisosController');
 
 Route::get('asignar-permisos/{id}', array(
     'as' => 'asignar_permisos',
@@ -293,7 +293,7 @@ Route::get('/actualizacion-inventario/{area_id}', array(
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\InventarioController@actualizacion_inventario'
 ));
- Route::get('/revision-inventario-anual', array(
+Route::get('/revision-inventario-anual', array(
     'as' => 'revision-inventario-anual',
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\RevisionAnualEquipo@revision_inventario_anual'
@@ -446,6 +446,11 @@ Route::get('/delete-mantenimiento/{id}', array(
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\MantenimientoController@delete_mantenimiento'
 ));
+Route::get('/update-mantenimiento', array(
+    'as' => 'update-mantenimiento',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\MantenimientoController@update'
+));
 Route::post('/busquedaEquiposMantenimiento', array(
     'as' => 'busquedaEquiposMantenimiento',
     'middleware' => 'auth',
@@ -475,6 +480,11 @@ Route::get('/agregar-equipos', array(
     'as' => 'agregar-equipos',
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\MantenimientoController@show'
+));
+Route::post('buscador-mantenimiento/{infomantenimiento}', array(
+    'as' => 'buscador-mantenimiento',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\MantenimientoController@buscador'
 ));
 //Expediente
 Route::get('/expediente/{equipo_id}', array(
