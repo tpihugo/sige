@@ -8,7 +8,7 @@
                 @can('BUSQUEDAR#buscar')
                     <div class="col-md-12">
                         <div class="card card-chart">
-                            <div class="card-header card-header-success">B&uacute;squeda General</div>
+                            <div class="card-header card-header-success">B&uacute;squeda General.</div>
                             <div class="card-body">
                                 @if (session('status'))
                                     <div class="alert alert-success" role="alert">
