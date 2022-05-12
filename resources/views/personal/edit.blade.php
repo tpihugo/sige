@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
+@can('cNormal_PERSONAL#editar')
 
     <div class="container">
         @if(Auth::check())
@@ -126,6 +127,7 @@
 
             </div>
     </div>
+    @endcan
 
 @else
     Acceso No válido

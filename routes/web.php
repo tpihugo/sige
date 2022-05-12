@@ -15,22 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/home2', function(){
-// 	return view('home2');
-// });
-
 // Route::middleware(['auth:sanctum', 'verified'])->get('/', function () {
 //     return view('home');
 // })->name('dashboard');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-// Auth::routes();
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-// Auth::routes();
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-// Auth::routes();
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
 Route::resource('usuarios', 'App\Http\Controllers\UsuariosController');
@@ -68,6 +57,25 @@ Route::resource('personal', 'App\Http\Controllers\PersonalController');
 
 Route::resource('expedientes', 'App\Http\Controllers\ExpedienteController');
 Route::resource('mantenimientoEquipos', 'App\Http\Controllers\mantenimientoEquipoController');
+
+Route::post('personal_search', array(
+    // 'as' => 'personal_search',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\PersonalController@search'
+))->name('personal.search');
+
+Route::get('/personal_export-pdf', array(
+    // 'as' => 'personal_search',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\PersonalController@DT_exportPDF'
+))->name('personal.exportPDF');
+
+Route::get('/personal_export-excel', array(
+    // 'as' => 'managestaff',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\PersonalController@DT_exportExcel'
+))
+->name('personal.exportExcel');
 
 Route::get('/cambiar-ubicacion/{equipo_id}/{tipo?}', array(
     'as' => 'cambiar-ubicacion',

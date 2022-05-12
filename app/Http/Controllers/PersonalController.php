@@ -7,6 +7,11 @@ use App\Models\Personal;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\PersonalsExport;
+use Dompdf\Dompdf;
+
+
 
 use function Symfony\Component\String\b;
 
@@ -17,11 +22,249 @@ class PersonalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
     public function index()
     {
         $personal = Personal::where('activo','=',1)->get();
         $vspersonal = $this->cargarDT($personal);
         return view('personal.index')->with('personal',$vspersonal);
+    }
+
+    public function search(Request $request)
+    {
+
+      if($request->ajax()){
+        if($request->input('filterBy') == 'nombre'){
+          $data = Personal::where('NombreYApellidos', 'like', '%'.$request->input('filter'). '%')->get();
+        }else if($request->input('filterBy') == 'codigo'){
+          $data = Personal::where('Codigo',$request->input('filter') )->get();
+        }
+      }
+
+      $output = '';
+      if(count($data) > 0){
+              foreach ($data as $row) {
+
+                $ruta = "eliminar".$row['id'];
+                $eliminar = route('delete-personal', $row['id']);
+                $actualizar =  route('personal.edit', $row['id']);
+                $acciones = '';
+
+                $acciones = `
+                @can('cNormal_PERSONAL#editar')
+                    <div class="btn-acciones">
+                        <div class="btn-circle">
+                            <a href="'.$actualizar.'" class="btn btn-success" title="Actualizar">
+                                <i class="far fa-edit"></i>
+                            </a>
+                            <a href="#'.$ruta.'" role="button" class="btn btn-danger" data-toggle="modal" title="Eliminar">
+                                <i class="far fa-trash-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="'.$ruta.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">¿Seguro que deseas eliminar este persoanl?</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <a href="'.$eliminar.'" type="button" class="btn btn-danger">Eliminar</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  @endcan
+                `;
+
+
+
+                $output .= '
+                <tr>
+                  <td>'.$acciones.'</td>
+                  <td>'.$row->Codigo.'</td>
+                  <td>'.$row->NombreYApellidos.'</td>
+                  <td>'.$row->Sexo.'</td>
+                  <td>'.$row->RFC.'</td>
+                  <td>'.$row->CURP.'</td>
+                  <td> Division: '.$row->Division.'
+                  Depto: '.$row->DepartamentoAdscripcion .'
+                  Depto Laboral: '.$row->DepartamentoLabora .'
+                  Categoría: '.$row->Categoria .'
+                  Observaciones: '.$row->OBSERVACIONES_1 .'
+                  Nombramiento: '.$row->NombramientoDirectivoTemporal.'
+
+                   </td>
+                  <td>
+
+                  Division: '.$row->Division .'
+                  Depto: '.$row->DepartamentoAdscripcion .'
+                  Depto Laboral: '.$row->DepartamentoLabora .'
+                  Categoría: '.$row->Categoria .'
+                  Observaciones: '.$row->OBSERVACIONES_1 .'
+                  Nombramiento: '.$row->NombramientoDirectivoTemporal.'
+
+                  </td> </tr> ';
+              }
+      }else{
+        $output = "no data found";
+      }
+      return $output;
+    }
+
+    public function DT_exportExcel()
+    {
+        $perExport = new PersonalsExport;
+        // $perExport->setValue($valueParameter);
+        return Excel::download($perExport , 'personal.xlsx' );
+    }
+
+    public function DT_exportPDF()
+    {
+        $query = Personal::select(
+            'NombreYApellidos',
+            'Codigo',
+            'Telefono',
+            'TelefonoCelular',
+            'Division',
+            'Categoria',
+            'DepartamentoLabora',
+            'DepartamentoAdscripcion',
+            'NombramientoDefinitivo',
+            'NombramientoTemporal',
+            'FECHA_DE_EMISION_NOMBRAMIENTO_DEF',
+            'FechaInicioNombramientoDir',
+            'FechaTerminoNombramientoDir',
+            'FechaInicioContratoLaboral',
+            'FechaFinContratoLaboral',
+        )->get();
+
+         $dompdf = new Dompdf();
+         $dompdf->loadHtml($this->table_to_PDF($query));
+         $dompdf->setPaper('A2', 'landscape');
+         $dompdf->render();
+         $dompdf->stream('Infomes.pdf', ['Attachment'=>false]);
+    }
+
+    private function table_to_PDF($query)
+    {
+        $output = '
+              <h3 align="center"> Reporte (100 registros solamente)</h3>
+              <table width="100%" style="border-collapse: collapse; border: 0px;">
+              <tr>
+
+                  <th style="border: 1px solid; padding:5px;">
+                      Nombres Y apellidos
+                  </th>
+                  <th style="border: 1px solid; padding:5px;">
+                      Código
+                  </th>
+                  <th style="border: 1px solid; padding:5px;">
+                      Telefono
+                  </th>
+                  <th style="border: 1px solid; padding:5px;">
+                      Telefono celular
+                  </th>
+                  <th style="border: 1px solid; padding:5px;">
+                      Divición
+                  </th>
+                  <th style="border: 1px solid; padding:5px;">
+                      Categoría
+                  </th>
+                  <th style="border: 1px solid; padding:5px;">
+                      Departamento en donde labora
+                  </th>
+                  <th style="border: 1px solid; padding:5px;">
+                      Departamento adscripción
+                  </th>
+                  <th style="border: 1px solid; padding:5px;">
+                        Nombramiento definitivo
+                  </th>
+                  <th style="border: 1px solid; padding:5px;">
+                      Nombramiento temporal
+                  </th>
+                  <th style="border: 1px solid; padding:5px;">
+                    Fecha de emision de nombramiento DEF
+                  </th>
+                  <th style="border: 1px solid; padding:5px;">
+                    Fecha inicio nombramiento Dir
+                  </th>
+                  <th style="border: 1px solid; padding:5px;">
+                    Fecha termino nombramiento Dir
+                  </th>
+                  <th style="border: 1px solid; padding:5px;">
+                      Fecha inicio contrato laboral
+                   </th>
+                  <th style="border: 1px solid; padding:5px;">
+                       Fecha fin contrato laboral
+                   </th>
+              </tr>
+              ';
+
+              $i = 0;
+        foreach($query as $row){
+            // if($i > 100)
+            //     break;
+              $output .= '
+               <tr>
+                   <td style="border: 1px solid; padding:5px;">
+                       '.$row->NombreYApellidos.'
+                   </td>
+                   <td style="border: 1px solid; padding:5px;">
+                      '.$row->Codigo.'
+                  </td>
+
+                  <td style="border: 1px solid; padding:5px;">
+                       '.$row->Telefono.'
+                   </td>
+                   <td style="border: 1px solid; padding:5px;">
+                         '.$row->TelefonoCelular.'
+                     </td>
+                     <td style="border: 1px solid; padding:5px;">
+                        '.$row->Division.'
+                    </td>
+                    <td style="border: 1px solid; padding:5px;">
+                        '.$row->Categoria.'
+                    </td>
+                    <td style="border: 1px solid; padding:5px;">
+                        '.$row->DepartamentoLabora.'
+                    </td>
+                    <td style="border: 1px solid; padding:5px;">
+                        '.$row->DepartamentoAdscripcion.'
+                    </td>
+                    <td style="border: 1px solid; padding:5px;">
+                          '.$row->NombramientoDefinitivo.'
+                      </td>
+                      <td style="border: 1px solid; padding:5px;">
+                         '.$row->NombramientoTemporal.'
+                     </td>
+                     <td style="border: 1px solid; padding:5px;">
+                         '.$row->FECHA_DE_EMISION_NOMBRAMIENTO_DEF.'
+                     </td>
+                     <td style="border: 1px solid; padding:5px;">
+                         '.$row->FechaInicioNombramientoDir.'
+                     </td>
+                     <td style="border: 1px solid; padding:5px;">
+                         '.$row->FechaTerminoNombramientoDir.'
+                     </td>
+                     <td style="border: 1px solid; padding:5px;">
+                            '.$row->FechaInicioContratoLaboral.'
+                      </td>
+                     <td style="border: 1px solid; padding:5px;">
+                            '.$row->FechaFinContratoLaboral.'
+                     </td>
+
+              </tr>
+              ';
+              $i++;
+          }
+         $output .= '</table>';
+        return $output;
     }
 
     public function cargarDT($consulta)
@@ -103,7 +346,6 @@ class PersonalController extends Controller
     {
         $validateData = $this->validate($request,[
             'NombreYApellidos'=>'required',
-
         ]);
 
         $personal = new Personal();
