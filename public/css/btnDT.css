@@ -1,6 +1,7 @@
 .btn-acciones {
     width: 70% !important;
     padding: 10px !important;
+    display: flex;  
 }
 
 .btn-circle {

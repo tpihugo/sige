@@ -88,7 +88,7 @@
 
                             <div class="col-md-4">
                                 <label for="fecha_inicio">Fecha:</label>
-                                <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" value="{{$prestamo->fecha_inicio}}" >
+                                <input type="text" class="form-control" id="fecha_inicio" name="fecha_inicio" value="{{ \Carbon\Carbon::parse($prestamo->fecha_inicio)->format('d/m/Y H:i')}}" >
                             </div>
                         </div>
                         <br>

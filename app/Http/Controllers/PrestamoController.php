@@ -26,8 +26,8 @@ class PrestamoController extends Controller
     {
 
         $vsprestamos = VsPrestamo::where('activo','=',1)
-            ->where('estado','En préstamo')
-	->get();
+            ->where('estado','En préstamo')->get();
+
         $prestamos = $this->cargarDT($vsprestamos);
 
        return view('prestamo.index')->with('prestamos',$prestamos);
@@ -38,6 +38,7 @@ class PrestamoController extends Controller
 
         foreach ($consulta as $key => $value){
 
+        $ruta = "borrarPrestamo".$value['id'];    
         $cambiarubicacion = route('cambiar-ubicacion', $value['id']);
         $actualizar =  route('prestamos.edit', $value['id']);
 	    $prestamo = route('imprimirPrestamo', $value['id']);
@@ -55,10 +56,12 @@ class PrestamoController extends Controller
                     <a href="'.$prestamo.'" class="btn btn-primary"  title="Formato de Préstamo" target="_blank">
                         <i class="far fa-file-alt"></i>
                     </a>
-
-                    <a href="'.$borrarPrestamo.'" class="btn btn-danger"  title="Borrar Préstamo">
-                        <i class="fas fa-eraser"></i>
-                    </a>
+                    </div>
+                    </div>
+                    <div class="btn-acciones">
+                    <a href="#'.$ruta.'" role="button" class="btn btn-danger" data-toggle="modal" title="Eliminar">
+                            <i class="far fa-trash-alt"></i>
+                        </a>
 
                     <a href="'.$devolverPrestamo.'" class="btn btn-success"  title="Devolución de Préstamo">
                     <i class="fas fa-check"></i>
@@ -66,7 +69,29 @@ class PrestamoController extends Controller
 
                 </div>
             </div>
-
+            <div class="modal fade" id="'.$ruta.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">¿Seguro que deseas eliminar este préstamo?</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <p class="text-primary">
+                        <small>
+                            '.$value['id'].', '.$value['solicitante'].'
+                        </small>
+                      </p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <a href="'.$borrarPrestamo.'" type="button" class="btn btn-danger">Eliminar</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
         ';
 
         $prestamos[$key] = array(

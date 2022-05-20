@@ -14,7 +14,7 @@
                 <h2>Tickets </h2>
                     <p align="right">
                         <a href="{{ route('tickets.create') }}" class="btn btn-success">Capturar Ticket</a>
-                        <a href="{{ route('home') }}" class="btn btn-primary">< Regresar</a>
+                        <a href="{{ route('home') }}" class="btn btn-primary">Regresar</a>
                     </p>
             </div>
         </div>
