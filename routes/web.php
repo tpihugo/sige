@@ -53,6 +53,7 @@ Route::resource('tecnicos', 'App\Http\Controllers\TecnicoController');
 Route::resource('mantenimiento', 'App\Http\Controllers\MantenimientoController');
 Route::resource('llaves', 'App\Http\Controllers\LlavesController');
 Route::resource('personal', 'App\Http\Controllers\PersonalController');
+Route::resource('bajas','App\Http\Controllers\BajaController');
 
 
 Route::resource('expedientes', 'App\Http\Controllers\ExpedienteController');
@@ -542,4 +543,45 @@ Route::get('/imprimirpersonal/{id}', array(
     'as' => 'imprimirpersonal',
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\PDFController@imprimirpersonal'
+));
+
+
+//Bajas
+
+
+Route::get('/delete-baja/{baja_id}', array(
+    'as' => 'delete-baja',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\BajaController@delete_baja'
+));
+
+
+ Route::put('baja/{baja_id}', array(
+    'as' => 'update-baja',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\BajaController@update'
+)); 
+
+Route::get('/delete-item/{item_id}', array(
+    'as' => 'delete-item',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\BajaController@delete_item'
+));
+
+Route::get('/{id}/edit', array(
+    'as' => 'bajas.edit',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\BajaController@edit'
+));
+
+Route::get('/imprimirBaja/{baja_id}', array(
+    'as' => 'imprimirBaja',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\BajaController@imprimirBaja'
+));
+
+Route::get('/document/{filename}', array(
+    'as' => 'document',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\BajaController@getDocument'
 ));
