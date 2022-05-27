@@ -86,8 +86,20 @@ class UsuariosController extends Controller
      */
     public function edit($id)
     {
-        $usuario = User::where('id', $id)->get();
-        $roles = Role::orderBy('name')->get();
+        //$usuario = User::where('id', $id)->get();
+        $roles = [];
+        $usuario = User::join('model_has_roles','model_has_roles.model_id','users.id')
+            ->where('users.id',$id)
+            ->where('model_has_roles.model_type','App\Models\User')
+            ->first();
+        foreach (Role::orderBy('name')->get() as $rol) {
+            $elemento = array(
+                'id' => $rol->id,
+                'name' => $rol->name,
+                'selected' => ($usuario->role_id == $rol->id) ? 'selected': ''
+            );
+            $roles[] = $elemento;
+        }
         return view('usuarios.edit')
             ->with('usuario', $usuario)
             ->with('roles', $roles);
