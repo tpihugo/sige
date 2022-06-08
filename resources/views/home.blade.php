@@ -4,7 +4,6 @@
     <div class="content">
         <div class="container">
             <div class="row align-items-center">
-
                 @can('BUSQUEDAR#buscar')
                     <div class="col-md-12">
                         <div class="card card-chart">
