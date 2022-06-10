@@ -89,7 +89,7 @@ class TicketController extends Controller
                 $acciones,
                 $value['id'],
                 $value['estatus'],
-                $value['fecha_reporte'],
+                $value['fecha_reporte'] = \Carbon\Carbon::parse($value->fecha_reporte)->format('d/m/Y H:i'),
                 $value['area'],
                 $value['solicitante'],
                 $value['contacto'],

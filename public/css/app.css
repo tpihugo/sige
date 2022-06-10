@@ -424,6 +424,7 @@ small,
 .small {
   font-size: 80%;
   font-weight: 400;
+  color: #000;
 }
 
 mark,
@@ -5512,6 +5513,7 @@ a.close.disabled {
 .modal-title {
   margin-bottom: 0;
   line-height: 1.6;
+  color: #000;
 }
 
 .modal-body {

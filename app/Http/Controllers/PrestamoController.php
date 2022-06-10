@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Models\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class PrestamoController extends Controller
 {
@@ -56,17 +57,17 @@ class PrestamoController extends Controller
                     <a href="'.$prestamo.'" class="btn btn-primary"  title="Formato de Préstamo" target="_blank">
                         <i class="far fa-file-alt"></i>
                     </a>
-                    </div>
-                    </div>
-                    <div class="btn-acciones">
+                </div>
+            </div>
+                <div class="btn-acciones">
+                <div class="btn-circle">
                     <a href="#'.$ruta.'" role="button" class="btn btn-danger" data-toggle="modal" title="Eliminar">
                             <i class="far fa-trash-alt"></i>
-                        </a>
-
+                    </a>
                     <a href="'.$devolverPrestamo.'" class="btn btn-success"  title="Devolución de Préstamo">
                     <i class="fas fa-check"></i>
                     </a>
-
+                </div>    
                 </div>
             </div>
             <div class="modal fade" id="'.$ruta.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -81,7 +82,10 @@ class PrestamoController extends Controller
                     <div class="modal-body">
                       <p class="text-primary">
                         <small>
-                            '.$value['id'].', '.$value['solicitante'].'
+                            '.$value['id'].',<br> '.$value['solicitante'].'
+                        </small>
+                        <small><br><br>
+                        '.$value['lista_equipos'].'
                         </small>
                       </p>
                     </div>
@@ -103,10 +107,9 @@ class PrestamoController extends Controller
             $value['contacto'],
             $value['estado'],
             $value['lista_equipos'],
-            $value['fecha_actualizacion'],
+            $value['fecha_actualizacion'] = \Carbon\Carbon::parse($value->fecha_actualizacion)->format('d/m/Y H:i'),
             $value['observaciones'],
             $value['documento'],
-
         );
 
         }
@@ -370,7 +373,7 @@ class PrestamoController extends Controller
         $log->save();
         //
         return redirect('prestamos/'.$prestamo_id)->with(array(
-            'message'=>'El Equipo se agreg� Correctamente al Pr stamo'
+            'message'=>'El equipo se agregó correctamente al préstamo'
         ));
     }
 
@@ -421,7 +424,7 @@ class PrestamoController extends Controller
         $prestamo_id = Prestamo::latest('id')->first();
 
         return redirect('prestamos/'.$prestamo_id->id)->with(array(
-            'message'=>'El Equipo se quitó  Correctamente al Préstamo'
+            'message'=>'El préstamo se creó correctamente'
         ));
     }
     public function agregarAccesorio(Request $request){

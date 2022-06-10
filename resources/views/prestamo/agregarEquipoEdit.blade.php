@@ -56,7 +56,8 @@
                     </tbody>
                 </table>
             
-                        <h5><p align="center">Equipo ya Registrado</p></h5>
+                @if ( $equiposPorPrestamo != null )
+                <h5><p align="center">Equipo ya Registrado</p></h5>
                 <table class="table table-bordered" style="width:100%">
                     <thead>
                     <tr>
@@ -127,6 +128,10 @@
 
                     </tbody>
                 </table>
+                @else
+                <h5><p align="center">Sin equipo registrado</p></h5>
+                @endif
+                        
         </div>
         <div class="row">
                 <h5>Agregar Equipos</h5>
