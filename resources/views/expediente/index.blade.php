@@ -155,7 +155,7 @@
 
                 @else
                 <div class="col">
-                  <a href="../archivos_expediente/{{$equipo[8]}}" target="_blank">
+                  <a href="../../storage/app/documentos/{{$equipo[8]}}" target="_blank">
                     <div class="btn p-3">
                       <div class="card-header mx-5 p-1 text-center">
                         <div class=" pt-3 icon-lg fas fa-file border-radius-lg text-center">
@@ -219,7 +219,7 @@
 
                 @else
                 <div class="col">
-                  <a href="../archivos_expediente/{{$equipo[9]}}" target="_blank">
+                  <a href="../../storage/app/documentos/{{$equipo[9]}}" target="_blank">
                     <div class="btn p-3">
                       <div class="card-header mx-5 p-1 text-center">
                         <div class=" pt-3 icon-lg fas fa-money  border-radius-lg text-center">
@@ -282,10 +282,10 @@
 
                 @else
                 <div class="col">
-                  <a href="../archivos_expediente/{{$equipo[10]}}" target="_blank">
+                  <a href="../../storage/app/documentos/{{$equipo[10]}}" target="_blank">
                     <div class="btn p-3">
                       <div class="card-header mx-5 p-1 text-center">
-                        <div class=" pt-3 icon-lg fa-file-invoice  border-radius-lg text-center">
+                        <div class="pt-3 icon-lg fas fa-file-invoice  border-radius-lg text-center">
                           <i class="fas fa-file-pdf " style="color:#fff"></i>
                         </div>
                       </div>
@@ -345,7 +345,7 @@
 
                 @else
                 <div class="col">
-                  <a href="../archivos_expediente/{{$equipo[11]}}" target="_blank">
+                  <a href="../../storage/app/documentos/{{$equipo[11]}}" target="_blank">
                     <div class="btn p-3">
                       <div class="card-header mx-5 p-1 text-center">
                         <div class=" pt-3 icon-lg fas fa-plus  border-radius-lg text-center">

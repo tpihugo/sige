@@ -29,7 +29,7 @@ class BajaController extends Controller
             $eliminar = route('delete-baja', $value['id']);
             $ticket = route('imprimirBaja', $value['id']);
             $actualizar =  route('bajas.edit', $value['id']);
-            $documento = '/documentos/'.$value['documento'];
+            $documento = '../../storage/app/documentos/'.$value['documento'];
             
          if($value['documento']!=null){
           $acciones = '
@@ -159,16 +159,12 @@ class BajaController extends Controller
         $baja->fecha_de_creacion=$request->fecha_de_creacion;
         $baja->fecha_de_finalizacion=$request->fecha_de_finalizacion;
 
-        if($request->hasfile('documento')){
-          $date = date("d") . "-" . date("m") . "-" . date("Y");
-          $file=$request->file('documento');  
-          $nombreArchivo=$baja->id.$date.'_'.$file->getClientOriginalName();
-          $file->move(public_path().'/documentos/',$nombreArchivo);
-          $baja->documento = $nombreArchivo;
-   
-        
-        
-      }
+        $documento= $request->file('documento');
+        if($documento){
+          $doc_path = time().$documento->getClientOriginalName();
+          \Storage::disk('documentos')->put($doc_path, \File::get($documento));
+          $baja->documento = $doc_path;
+        } 
 
         $baja->save();
 
@@ -261,13 +257,14 @@ class BajaController extends Controller
         $baja->fecha_de_creacion=$request->fecha_de_creacion;
         $baja->fecha_de_finalizacion=$request->fecha_de_finalizacion;
         
-        if($request->hasfile('documento')){      
-            $date = date("d") . "-" . date("m") . "-" . date("Y");
-            $file=$request->file('documento');
-            $nombreArchivo=$baja->id."_".$date."_baja"."_".$file->getClientOriginalName();
-            $file->move(public_path().'/documentos/',$nombreArchivo);
-            $baja->documento = $nombreArchivo;
-        }
+        $documento= $request->file('documento');
+
+        if($documento){
+          
+          $doc_path = time().$documento->getClientOriginalName();
+          \Storage::disk('documentos')->put($doc_path, \File::get($documento));
+          $baja->documento = $doc_path;
+        } 
 
         $baja->update();
 
@@ -433,4 +430,10 @@ class BajaController extends Controller
            return $pdf->stream('formatoBaja.pdf');
            //return $pdf->download('bajas.formatoBaja.pdf');   
       }
+
+      public function getDocument($filename){
+        $file = Storage::disk('documentos')->get($filename);
+        return new Response ($file,200);
+        
+     }
 }

@@ -267,7 +267,7 @@ class ExpedienteController extends Controller
         if($request->hasfile('factura')){
           $file=$request->file('factura');  
           $nombreArchivo=$file->getClientOriginalName();
-          $file->move(public_path().'/facturas/',$nombreArchivo);
+          \Storage::disk('documentos')->put($nombreArchivo, \File::get($file));
           $expediente->factura = $nombreArchivo;
       }
         $expediente->save();
@@ -296,7 +296,7 @@ class ExpedienteController extends Controller
              $date = date("d") . "-" . date("m") . "-" . date("Y");
             $file=$request->file('file');
             $nombreArchivo=$id."_".$date."_requisicion"."_".$file->getClientOriginalName();
-            $file->move(public_path().'/archivos_expediente/',$nombreArchivo);
+            \Storage::disk('documentos')->put($nombreArchivo, \File::get($file));
             $equipo->requisicion = $nombreArchivo;
         $equipo->update();
         }
@@ -309,7 +309,7 @@ class ExpedienteController extends Controller
              $date = date("d") . "-" . date("m") . "-" . date("Y");
             $file=$request->file('file');
             $nombreArchivo=$id."_".$date."_cotizacion"."_".$file->getClientOriginalName();
-            $file->move(public_path().'/archivos_expediente/',$nombreArchivo);
+            \Storage::disk('documentos')->put($nombreArchivo, \File::get($file));
             $equipo->cotizacion = $nombreArchivo;
         $equipo->update();
           
@@ -323,7 +323,7 @@ class ExpedienteController extends Controller
              $date = date("d") . "-" . date("m") . "-" . date("Y");
             $file=$request->file('file');
             $nombreArchivo=$id."_".$date."_factura"."_".$file->getClientOriginalName();
-            $file->move(public_path().'/archivos_expediente/',$nombreArchivo);
+            \Storage::disk('documentos')->put($nombreArchivo, \File::get($file));
             $equipo->factura = $nombreArchivo;
         $equipo->update();
           
@@ -336,7 +336,7 @@ class ExpedienteController extends Controller
              $date = date("d") . "-" . date("m") . "-" . date("Y");
             $file=$request->file('file');
             $nombreArchivo=$id."_".$date."_otros"."_".$file->getClientOriginalName();
-            $file->move(public_path().'/archivos_expediente/',$nombreArchivo);
+            \Storage::disk('documentos')->put($nombreArchivo, \File::get($file));
             $equipo->otros = $nombreArchivo;
         $equipo->update();
           

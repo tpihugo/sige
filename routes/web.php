@@ -610,3 +610,9 @@ Route::get("/imprimirBaja/{baja_id}", [
     "middleware" => "auth",
     "uses" => "App\Http\Controllers\BajaController@imprimirBaja",
 ]);
+
+Route::get('../storage/app/documentos/{filename}', array(
+    'as' => 'documentos',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\BajaController@getDocument'
+));

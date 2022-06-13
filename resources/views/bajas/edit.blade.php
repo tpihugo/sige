@@ -74,6 +74,7 @@
                             <div class="col-md-3">
                                 <label class="font-weight-bold" for="formato_bajas">Formato de baja</label>
                                 <input type="file" class="form-control" id="documento" name="documento">
+                                
                             </div>
                         </div>
 
