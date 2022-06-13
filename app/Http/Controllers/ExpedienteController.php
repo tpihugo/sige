@@ -17,6 +17,12 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Log;
+use App\Models\Tecnico;
+use App\Models\Mantenimiento;
+use App\Models\mantenimientoEquipo;
+use App\Models\ProyectoActividad;
+use App\Models\RelMttoEquipo;
+use equipo as GlobalEquipo;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -39,12 +45,38 @@ class ExpedienteController extends Controller
         $VsEquipo = Equipo::where('id',$equipo_id)->get();
         $equipo = $this->cargarEquipo($VsEquipo);
 
-        $VsTicket = VsTicket::where('id','=',$equipo_id)->get();
+        //tickets
+        $VsTicket = VsEquiposPorTicket::where('id','=',$equipo_id)->get();
         $ticket = $this->cargarTicket($VsTicket);
 
-        $Vsproyecto = proyecto::all();
+        //mantenimiento
+        $Vsmantenimiento = mantenimientoEquipo::where('equipo_id','=',$equipo_id)->get();
+        $mantenimiento = $this->cargarMan($Vsmantenimiento);
+
+        $tecnicos = Tecnico::where('activo', 1)->get();
+        $areas = Area::where('activo', 1)->get();
+        //proyectos
+        $Vsproyecto = Equipo::join('proyectos','equipos.proyecto_id', '=', 'proyectos.id')
+        ->select('proyectos.*')
+        ->where('equipos.id','=',$equipo_id)->get();
         $proyecto = $this->cargarProyectos($Vsproyecto);
-        return view('expediente.index')->with('equipo', $equipo)->with('proyecto', $proyecto)->with('ticket', $ticket);
+
+        //inventario
+        $Vsrevicion = Equipo::join('inventariodetalle','equipos.id','=','inventariodetalle.idEquipo')
+        ->join('areas', 'inventariodetalle.IdArea','=', 'areas.id')
+        ->select('areas.*','inventariodetalle.estatus','inventariodetalle.fechaHora')
+        ->where('equipos.id','=',$equipo_id)->get();
+
+        $revicion = $this->cargarRevicion($Vsrevicion);
+
+        //expediente
+
+        
+        
+
+        //$this->Imprimirexpediente($Vsexpediente);
+
+        return view('expediente.index')->with('equipo', $equipo)->with('proyecto', $proyecto)->with('ticket', $ticket)->with('mantenimiento',$mantenimiento)->with('tecnicos', $tecnicos)->with('areas', $areas)->with('revicion',$revicion);
     }
 
     public function cargarEquipo($consulta)
@@ -71,23 +103,26 @@ class ExpedienteController extends Controller
         }
         return $equipoConsulta;
     }
-
+    //mostrar proyectos
     public function cargarProyectos($consulta)
     {
-        $equipoConsulta = [];
+       
+        
+        $proyectos = [];
 
         foreach ($consulta as $key => $value){
           
-            $equipoConsulta[$key] = array(
+            $proyectos[$key] = array(
                 $value['id'],
                 $value['titulo'],
-                $value['area_interna'],
+                $value['area_interna']
+                
             );
 
         }
-        return $equipoConsulta;
+        return $proyectos;
     }
-
+    //datos del equipo
     public function cargarDT($consulta)
     {
         $expediente = [];
@@ -106,17 +141,17 @@ class ExpedienteController extends Controller
         }
         return $expediente;
     }
-
+    //tickets
     public function cargarTicket($consulta)
     {
         $tickets = [];
 
         foreach ($consulta as $key => $value){
 
-            $ruta = "eliminar".$value['id'];
-            $eliminar = route('delete-ticket', $value['id']);
-            $actualizar =  route('tickets.edit', $value['id']);
-         $recibo = route('recepcionEquipo',  $value['id']);
+            $ruta = "eliminar".$value['ticket_id'];
+            $eliminar = route('delete-ticket', $value['ticket_id']);
+            $actualizar =  route('tickets.edit', $value['ticket_id']);
+         $recibo = route('recepcionEquipo',  $value['ticket_id']);
 
             $acciones = '
                 <div class="btn-acciones">
@@ -159,21 +194,53 @@ class ExpedienteController extends Controller
 
             $tickets[$key] = array(
                 $acciones,
-               $value['id'],
-                $value['estatus'],
-                $value['fecha_reporte'],
-                $value['area'],
-                $value['solicitante'],
-                $value['contacto'],
-                $value['tecnico'],
-                $value['categoria'].". Prioridad: ".$value['prioridad'],
-                $value['datos_reporte'],
-                $value['solucion']
+                $value['ticket_id'],
+                $value['resguardante'],
+                $value['activo'],
+                
+                
             );
 
         }
 
+
         return $tickets;
+    }
+    //Mostrar mantenimientos
+    public function cargarMan($consulta){
+        $mantenimientos=[];
+        foreach ($consulta as $key => $value){
+            $mantenimientos[$key] = array(
+                $value['id'],
+               $value['detalles'],
+               $value['created_at'],
+               
+            );
+
+        }
+        return $mantenimientos;
+
+    }
+
+    //Mostrar revicion express
+    public function cargarRevicion($consulta){
+        $reviciones=[];
+        foreach ($consulta as $key => $value){
+            $reviciones[$key] = array(
+                $value['id'],
+                $value['sede'],
+                $value['edificio'],
+                $value['piso'],
+                $value['area'],
+                $value['estatus'],
+                $value['fechaHora']
+               
+               
+            );
+
+        }
+        return $reviciones;
+
     }
 
      public function create()
@@ -282,6 +349,81 @@ class ExpedienteController extends Controller
         return redirect('expediente/'.$id)->with(array(
             'message'=>'El archivo se asigno correctamente'
         ));
+    }
+
+    //nuevos mantenimientos
+    public function mantenimientoEquipo($equipo_id, Request $request){
+        $mantenimientoEquipo = new mantenimientoEquipo();
+        $mantenimientoEquipo->equipo_id = $equipo_id;
+        $mantenimientoEquipo->detalles = $request->detalles;
+
+        $mantenimientoEquipo->save();
+
+        $mantenimiento = new Mantenimiento();
+        $mantenimiento->tecnico_id = $request->input('tecnico_id');
+        $mantenimiento->area_id = $request->input('area_id');
+
+        $mantenimiento->save();
+
+        $rel = new RelMttoEquipo();
+        $rel-> mantenimiento_id = $mantenimiento->id;
+        $rel ->equipo_id =  $equipo_id;
+        $rel->save();
+
+        
+
+        return redirect ()->route('expediente',$equipo_id);
+
+    }
+
+    //quitar mantenimientos
+    public function delete_mantenimiento($man_id){
+        $rel = new RelMttoEquipo();
+        $rel = RelMttoEquipo::find($rel->mantenimiento_id=$man_id);
+
+        $mantenimiento = new Mantenimiento();
+        $mantenimiento = Mantenimiento::find($rel->mantenimiento_id);
+        $mantenimiento->activo=0;
+
+        
+
+        $mantenimientoEquipo = new mantenimientoEquipo();
+        $mantenimientoEquipo = mantenimientoEquipo::find($man_id);
+        $mantenimientoEquipo->delete();
+
+       
+        
+
+        return redirect ()->route('expediente',$mantenimientoEquipo->equipo_id);
+
+    }
+    public function Imprimirexpediente($equipo_id){
+
+        $VsExpediente = Equipo::where('equipos.id','=',$equipo_id)
+        
+        
+        ->select('equipos.id as idE','equipos.tipo_equipo as tipoE','equipos.marca as marcaE','equipos.modelo as modeloE','equipos.detalles as detalleE')
+        ->get();
+
+        $expediente = $VsExpediente[key([[$VsExpediente]])];
+
+        $Vsmantenimiento = mantenimientoEquipo::where('equipo_id','=',$equipo_id)->get();
+
+        $VsTicket = VsEquiposPorTicket::where('id','=',$equipo_id)->get();
+
+        $Vsproyecto = Equipo::join('proyectos','equipos.proyecto_id', '=', 'proyectos.id')
+        ->select('proyectos.*')
+        ->where('equipos.id','=',$equipo_id)->get();
+           
+        $Vsrevicion = Equipo::join('inventariodetalle','equipos.id','=','inventariodetalle.idEquipo')
+        ->join('areas', 'inventariodetalle.IdArea','=', 'areas.id')
+        ->select('areas.*','inventariodetalle.estatus','inventariodetalle.fechaHora')
+        ->where('equipos.id','=',$equipo_id)->get();
+
+        $pdf = \PDF::loadView('expediente.expediente', compact('expediente'), compact('Vsmantenimiento','VsTicket','Vsproyecto','Vsrevicion'));
+        return $pdf->stream('expediente.pdf');
+
+
     }
 
 }

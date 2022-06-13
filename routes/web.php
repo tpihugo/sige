@@ -510,12 +510,31 @@ Route::post("buscador-mantenimiento/{infomantenimiento}", [
     "middleware" => "auth",
     "uses" => "App\Http\Controllers\MantenimientoController@buscador",
 ]);
+Route::post('/mantenimiento-equipo{equipo_id}', array(
+    'as' => 'mantenimiento-equipo',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\ExpedienteController@mantenimientoEquipo'
+));
+
+Route::get('/delete-man-equipo{man_id}', array(
+    'as' => 'delete-man-equipo',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\ExpedienteController@delete_mantenimiento'
+));
 //Expediente
 Route::get("/expediente/{equipo_id}", [
     "as" => "expediente",
     "middleware" => "auth",
     "uses" => "App\Http\Controllers\ExpedienteController@expediente",
 ]);
+
+
+Route::get('/Imprimirexpediente/{equipo}/', array(
+    'as' => 'Imprimirexpediente',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\ExpedienteController@Imprimirexpediente'
+));
+
 //Requisicion
 Route::post("/crear_requisicion", [
     "as" => "crear_requisicion",
@@ -590,10 +609,4 @@ Route::get("/imprimirBaja/{baja_id}", [
     "as" => "imprimirBaja",
     "middleware" => "auth",
     "uses" => "App\Http\Controllers\BajaController@imprimirBaja",
-]);
-
-Route::get("/document/{filename}", [
-    "as" => "document",
-    "middleware" => "auth",
-    "uses" => "App\Http\Controllers\BajaController@getDocument",
 ]);
