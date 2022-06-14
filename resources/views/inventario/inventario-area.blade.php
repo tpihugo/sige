@@ -84,22 +84,28 @@
                     </tr>
                     </thead>
                     <tbody>
-
                     @foreach($equipos as $equipo)
                         <tr>
                             <td>{{$equipo->id}}</td>
                             <td>
                                 {{$equipo->udg_id}}
                             </td>
+
+                            <td>
+
                             @if($equipo->estatus == 'Localizado')
-                                <td style="color: #198754;">{{$equipo->estatus}}</td>
-                            @elseif($equipo->estatus == 'No Localizado')
-                                <td style="color: #dc3545;">{{$equipo->estatus}}</td>
+                                <strong class="text-success">{{$equipo->estatus}}</strong>
+                                @if($equipo->notas && $equipo->notas != '-')
+                                    <spin class="text-info">con nota</spin>
+                                @endif
+                            @elseif($equipo->estatus == 'No Localizado' || is_null($equipo->estatus) )
+                                <strong style="color: #dc3545;">No Localizado</strong>
                             @elseif($equipo->estatus == 'Revision')
-                                <td style="color: #ffc107;">{{$equipo->estatus}}</td>
-                            @elseif(is_null($equipo->estatus))
-                                <td style="color: #dc3545;">No Localizado</td>
+                                <strong style="color: #ffc107;">{{$equipo->estatus}}</strong>
                             @endif
+
+                            </td>
+
                             <td>{{$equipo->tipo_equipo}}</td>
                             <td>{{$equipo->marca}}</td>
                             <td>{{$equipo->modelo}}</td>
@@ -118,54 +124,71 @@
                             </td>
                             <td>{{$equipo->area}}</td>
                             <td>
-                                <p><a class="btn btn-outline-success" href="{{ route('registro-inventario', ['equipo_id' => $equipo->id, 'inventario' => '2022A', 'origen'=>$origen]) }}" >Localizado</a></p>
+                                @if(!$equipo->estatus == 'Localizado')
+                                    <p><a class="btn btn-outline-success" href="{{ route('registro-inventario', ['equipo_id' => $equipo->id, 'origen'=>$origen]) }}" >Localizado</a></p>
+                                @endif
                                 <p><a href="{{ route('cambiar-ubicacion', ['equipo_id' => $equipo->id, 'tipo' => 'inventario']) }}" class="btn btn-outline-primary">Reubicar</a></p>
                                 <p><a href="{{ route('equipos.edit', $equipo->id) }}" class="btn btn-outline-secondary">Editar</a></p>
 
-
-
-
-                            <!-- Botón en HTML (lanza el modal en Bootstrap) -->
-                                <a href="#eliminar{{$equipo->id}}" role="button" class="btn btn-outline-danger" data-toggle="modal">Nota</a>
-
-                                <!-- Modal / Ventana / Overlay en HTML -->
-                                <div id="eliminar{{$equipo->id}}" class="modal fade">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <form action="{{route('inventario.store')}}" method="POST">
-                                                {!! csrf_field() !!}
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Cerrar</button>
-
-                                                </div>
-                                                <div class="modal-body">
-
-                                                    <h4>Agregar Nota al Bien</h4>
-
-                                                    <div class="row g-3 align-items-center">
-                                                        <div class="col-md-12">
-
-                                                            <input type="text" class="form-control" id="equipo_id" name="equipo_id" value="{{$equipo->id}}" >
-                                                            <input type="text" class="form-control" id="area_id" name="area_id" value="{{$equipo->id_area}}" >
-                                                            <input type="text" class="form-control" id="user_id" name="user_id" value="{{Auth::user()->id}}" >
-                                                            <textarea class="form-control" id="nota" name="nota">{{old('nota')}}</textarea>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                                    {{--{{ route('delete-alumno',['alumno_id' => $listaTutor->id]) }} --}}
-                                                    <button type="submit" class="btn btn-danger">Guardar Nota</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div></td>
+                                {{-- @if( $equipo->estatus == 'Localizado' )
+                                    @if($equipo->notas && $equipo->notas != '-')
+                                        <a href="#eliminar{{$equipo->id}}" role="button" class="btn btn-outline-danger" data-toggle="modal"> <p class="d-inline">Ver o editar nota</p> </a>
+                                    @else
+                                        <a href="#eliminar{{$equipo->id}}" role="button" class="btn btn-outline-danger" data-toggle="modal"> <p class="d-inline">Agregar nota</p> </a>
+                                    @endif
+                                @else
+                                    <a href="#eliminar{{$equipo->id}}" role="button" class="btn btn-outline-danger" data-toggle="modal"> <p class="d-inline">Localizar con nota</p> </a>
+                                @endif --}}
+                                @if( $equipo->estatus == 'Localizado' )
+                                    @if($equipo->notas && $equipo->notas != '-')
+                                        <a href="#noteModal" role="button" onclick="launchModal( '{{$equipo->id}}', '{{$equipo->id_area}}', '{{$equipo->notas}}' );" class="btn btn-outline-danger" data-toggle="modal"> <p class="d-inline">Ver o editar nota</p> </a>
+                                    @else
+                                        <a href="#noteModal" role="button" onclick="launchModal( '{{$equipo->id}}', '{{$equipo->id_area}}', '{{$equipo->notas}}' );" class="btn btn-outline-danger" data-toggle="modal"> <p class="d-inline">Agregar nota</p> </a>
+                                    @endif
+                                @else
+                                    <a href="#noteModal" role="button" onclick="launchModal( '{{$equipo->id}}', '{{$equipo->id_area}}', '{{$equipo->notas}}' );" class="btn btn-outline-danger" data-toggle="modal"> <p class="d-inline">Localizar con nota</p> </a>
+                                @endif
+                                </td>
 
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
+            </div>
+
+            <div id="noteModal" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form action="{{route('inventario.store')}}" method="POST">
+                            {!! csrf_field() !!}
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+                            </div>
+                            <div class="modal-body">
+
+                                <h4>Agregar Nota al bien</h4>
+
+                                <div class="row g-3 align-items-center">
+                                    <div class="col-md-12">
+                                        <h5>Nombre del responsable: {{Auth::user()->name}}</h5>
+                                        <label for="equipo_id">ID del equipo: </label>
+                                        <input type="text" class="form-control" id="equipo_id" name="equipo_id" value="#" >
+                                        <label for="equipo_id">ID del area: </label>
+                                        <input type="text" class="form-control" id="area_id" name="area_id" value="#" >
+                                        <input type="text" class="form-control" id="user_id" name="user_id" value="{{Auth::user()->id}}" hidden >
+                                        <label for="nota">Nota: </label>
+                                        <textarea class="form-control" id="nota" name="nota"> - </textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                {{--{{ route('delete-alumno',['alumno_id' => $listaTutor->id]) }} --}}
+                                <button type="submit" class="btn btn-danger">Guardar Nota</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
 
             <p>
@@ -183,21 +206,31 @@
             </div>
         </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
 
-
+    {{-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.flash.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"></script> --}}
+
     <script>
 
+    function launchModal(equipo_id, area_id, notas){
+        document.getElementById('equipo_id').value = equipo_id;
+        document.getElementById('area_id').value = area_id;
+        document.getElementById('nota').value = notas;
+        if(notas == '')
+            document.getElementById('nota').value = '-';
+    }
+
+
     </script>
+
     <script>
         $(document).ready(function() {
             $('#example').DataTable( {

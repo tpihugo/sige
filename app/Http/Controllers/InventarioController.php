@@ -230,24 +230,24 @@ class InventarioController extends Controller
             ->first();
 
         // Query con porcentajes equipos_econtrados vs equipos_inventariables por area
-        $dataTable = DB::table("vs_cuentainventariables")
-            ->join(
-                "vs_cuentaencontrados",
-                "vs_cuentainventariables.id_area",
-                "=",
-                "vs_cuentaencontrados.IdArea"
-            )
-            ->select(
-                DB::raw(
-                    "ROUND((vs_cuentaencontrados.cuentaEncontrados / vs_cuentainventariables.cuentaInventariables) * 100)" .
-                        "as PercentageValue"
-                ),
-                "vs_cuentainventariables.cuentaInventariables as cuentaInventariables",
-                "vs_cuentaencontrados.cuentaEncontrados as cuentaEncontrados",
-                "vs_cuentainventariables.area as area",
-                "vs_cuentainventariables.id_area as id_area"
-            )
-            ->get();
+        // $dataTable = DB::table("vs_cuentainventariables")
+        //     ->join(
+        //         "vs_cuentaencontrados",
+        //         "vs_cuentainventariables.id_area",
+        //         "=",
+        //         "vs_cuentaencontrados.IdArea"
+        //     )
+        //     ->select(
+        //         DB::raw(
+        //             "ROUND((vs_cuentaencontrados.cuentaEncontrados / vs_cuentainventariables.cuentaInventariables) * 100)" .
+        //                 "as PercentageValue"
+        //         ),
+        //         "vs_cuentainventariables.cuentaInventariables as cuentaInventariables",
+        //         "vs_cuentaencontrados.cuentaEncontrados as cuentaEncontrados",
+        //         "vs_cuentainventariables.area as area",
+        //         "vs_cuentainventariables.id_area as id_area"
+        //     )
+        //     ->get();
 //
          $subquery_equipos = DB::table('vs_equipos')
                         ->select(DB::raw("COUNT(*) as eCO, id_area, area"))
@@ -397,7 +397,16 @@ class InventarioController extends Controller
             $log->save();
             //
             $mensaje = "El articulo se registro como Localizado con Nota";
-        } else {
+        } else if($articulosRegistrados == 1 && $nota){
+
+            $ArticuloSeleccionado = InventarioDetalle::where("IdEquipo", $equipo_id)
+                ->where("inventario", $inventario)
+                ->first();
+            $ArticuloSeleccionado->IdRevisor = $request->input('user_id');
+            $ArticuloSeleccionado->notas = $nota;
+            $ArticuloSeleccionado->update();
+            $mensaje = "El articulo se registro como Localizado con Nota";
+        }else{
             $mensaje = "El articulo ya se habia registrado como Localizado";
         }
         return redirect("revision-inventario")->with([
@@ -490,6 +499,8 @@ class InventarioController extends Controller
             ->where("IdArea", "=", $area_id)
             ->first();
 
+            //notas de equipo
+
         /* Revision con Nota*/
 
         // $total_equipos_revision = DB::table('inventariodetalle')
@@ -515,11 +526,20 @@ class InventarioController extends Controller
 
         /*DATA TABLE*/
 
-        // $equipos= Vs_Equipo_Detalle::where('id_area','=',$area_id)->get();
+        // $equipos = Vs_Equipo_Detalle::where("id_area", $area_id)
+        //     ->where("resguardante", "CTA")
+        //     ->get();
 
-        $equipos = Vs_Equipo_Detalle::where("id_area", $area_id)
-            ->where("resguardante", "CTA")
-            ->get();
+        $equipos = DB::table('vs_equipo_detalles')
+        ->leftJoin('vs_inventariodetalle', 'vs_inventariodetalle.IdEquipo', '=', 'vs_equipo_detalles.id')
+        ->where('vs_equipo_detalles.id_area', $area_id)
+        ->where('vs_equipo_detalles.resguardante','CTA')
+        ->get( array(
+            'vs_equipo_detalles.*',
+            'notas'
+        ));
+
+        // dd($equipos[0]->notas);
 
         $total_equipos = count($equipos);
         return view("inventario.inventario-area")
@@ -539,10 +559,18 @@ class InventarioController extends Controller
     public function listarEquipoEncontrado(Request $request)
     {
         //Se hace la ruta, la ruta manda llamar el m�todo y el m�todo manda llamar la plantilla
-        $listadoEquipos = VsEquipo::where("id", "=", $request->input("id"))
-            ->orWhere("udg_id", "=", $request->input("id"))
-            ->orWhere("numero_serie", "like", "%" . $request->input("id") . "%")
-            ->get();
+        $listadoEquipos = DB::table('vs_equipo_detalles')
+            ->leftJoin('vs_inventariodetalle', 'vs_inventariodetalle.IdEquipo', '=', 'vs_equipo_detalles.id')
+            ->where("vs_equipo_detalles.id", "=", $request->input("id"))
+            ->orWhere("vs_equipo_detalles.udg_id", "=", $request->input("id"))
+            ->orWhere("vs_equipo_detalles.numero_serie", "like", "%" . $request->input("id") . "%")
+            ->get( array(
+                'vs_equipo_detalles.*',
+                'notas'
+            ));
+
+        // dd($listadoEquipos);
+
         if ($request->input("nota") != null) {
             $nota = $request->input("nota");
         } else {
@@ -557,12 +585,9 @@ class InventarioController extends Controller
             "origen" => $origen,
         ]);
     }
-    public function registroInventario(
-        $equipo_id,
-        $inventario,
-        $origen = "revision-inventario"
-    ){
-        // dd(config('Vglobal.cicloActual'));
+    public function registroInventario($equipo_id, $origen = "revision-inventario")
+    {
+        $inventario = '2022A';
         $revisor_id = Auth::user()->id;
         $articulosRegistrados = InventarioDetalle::where('IdEquipo',$equipo_id )
             ->where('inventario', $inventario)->count();

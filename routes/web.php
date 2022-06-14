@@ -123,7 +123,7 @@ Route::get("/delete-equipo/{equipo_id}", [
     "middleware" => "auth",
     "uses" => "App\Http\Controllers\EquipoController@delete_equipo",
 ]);
-Route::get("/registro-inventario/{equipo_id}/{inventario}/{origen}", [
+Route::get("/registro-inventario/{equipo_id}/{origen}", [
     "as" => "registro-inventario",
     "middleware" => "auth",
     "uses" => "App\Http\Controllers\InventarioController@registroInventario",
