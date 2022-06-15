@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Baja;
 use App\Models\item_baja;
 use App\Models\re_baja_item_baja;
+use Illuminate\Foundation\Console\StorageLinkCommand;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -28,9 +29,10 @@ class BajaController extends Controller
             $eliminar = route('delete-baja', $value['id']);
             $ticket = route('imprimirBaja', $value['id']);
             $actualizar =  route('bajas.edit', $value['id']);
-         
-
-            $acciones = '
+            $documento = '../../storage/app/documentos/'.$value['documento'];
+            
+         if($value['documento']!=null){
+          $acciones = '
                 <div class="btn-acciones">
                     <div class="btn-circle">
                         <a href="'.$actualizar.'" role="button" class="btn btn-success" title="Actualizar">
@@ -39,9 +41,13 @@ class BajaController extends Controller
                         <a href="'.$ticket.'" class="btn btn-primary" title="Formato bajas">
                             <i class="far fa-file"></i>
                         </a>
+                        <a href="../public'.$documento.'" role="button" class="btn btn-success"  target="_blank" >
+                            <i class="fas fa-clipboard"></i>
+                        </a>
                         <a href="#'.$ruta.'" role="button" class="btn btn-danger" data-toggle="modal" title="Eliminar">
                             <i class="far fa-trash-alt"></i>
                         </a>
+                        
                     </div>
                 </div>
                 <div class="modal fade" id="'.$ruta.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -68,6 +74,52 @@ class BajaController extends Controller
                 </div>
               </div>
             ';
+
+
+         }else{
+
+            $acciones = '
+                <div class="btn-acciones">
+                    <div class="btn-circle">
+                        <a href="'.$actualizar.'" role="button" class="btn btn-success" title="Actualizar">
+                            <i class="far fa-edit"></i>
+                        </a>
+                        <a href="'.$ticket.'" class="btn btn-primary" title="Formato bajas">
+                            <i class="far fa-file"></i>
+                        </a>
+                        
+                        
+                        <a href="#'.$ruta.'" role="button" class="btn btn-danger" data-toggle="modal" title="Eliminar">
+                            <i class="far fa-trash-alt"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+                <div class="modal fade" id="'.$ruta.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">¿Seguro que deseas eliminar este 
+                      registro?</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <p class="text-primary">
+                        <small> 
+                            '.$value['id'].', '.$value['dependencia'].'                 </small>
+                      </p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <a href="'.$eliminar.'" type="button" class="btn btn-danger">Eliminar</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ';
+        }
 
             $baja[$key] = array(
                 $acciones,
@@ -107,7 +159,7 @@ class BajaController extends Controller
         $baja->fecha_de_creacion=$request->fecha_de_creacion;
         $baja->fecha_de_finalizacion=$request->fecha_de_finalizacion;
 
-         $documento= $request->file('documento');
+        $documento= $request->file('documento');
         if($documento){
           $doc_path = time().$documento->getClientOriginalName();
           \Storage::disk('documentos')->put($doc_path, \File::get($documento));
@@ -141,11 +193,7 @@ class BajaController extends Controller
         
     }
 
-    public function getDocument($filename){
-      $file = Storage::disk('documentos')->get($filename);
-      return new Response ($file,200);
-      
-   }
+    
 
     //eliminar registro de baja
     public function delete_baja($baja_id){
@@ -285,6 +333,7 @@ class BajaController extends Controller
             $ruta = "eliminar".$value['id'];
             $eliminar = route('delete-item', $value['id']);
             
+            
          
 
             $acciones = '
@@ -381,4 +430,10 @@ class BajaController extends Controller
            return $pdf->stream('formatoBaja.pdf');
            //return $pdf->download('bajas.formatoBaja.pdf');   
       }
+
+      public function getDocument($filename){
+        $file = Storage::disk('documentos')->get($filename);
+        return new Response ($file,200);
+        
+     }
 }

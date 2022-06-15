@@ -2,7 +2,6 @@
     <div class="content">
         <div class="container">
             <div class="row align-items-center">
-
                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('BUSQUEDAR#buscar')): ?>
                     <div class="col-md-12">
                         <div class="card card-chart">
