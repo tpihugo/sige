@@ -4,23 +4,22 @@
     <div class="content">
         <div class="container">
             <div class="row align-items-center">
-
                 @can('BUSQUEDAR#buscar')
                     <div class="col-md-12">
                         <div class="card card-chart">
-                            <div class="card-header card-header-success">B&uacute;squeda General</div>
+                            <div class="card-header card-header-success">B&uacute;squeda General.</div>
                             <div class="card-body">
                                 @if (session('status'))
                                     <div class="alert alert-success" role="alert">
                                         {{ session('status') }}
                                     </div>
-                                @endcan
+                                @endif
 
                                 @if (session('message'))
                                     <div class="alert alert-success">
                                         {{ session('message') }}
                                     </div>
-                                @endcan
+                                @endif
 
                                 <form action="{{route('busqueda')}}" method="POST" enctype="multipart/form-data" class="col-12">
                                     {!! csrf_field() !!}
@@ -29,7 +28,7 @@
                                         <div class="alert alert-danger">
                                             <ul>Debe de escribir un criterio de búsqueda</ul>
                                         </div>
-                                    @endcan
+                                    @endif
 
                                     <br>
                                     <div class="row align-items-center">
@@ -386,7 +385,7 @@
                                     </div>
                                 </div>
                             @endcan
-                                 @if (Auth::check() && (Auth::user()->role =='admin'))
+                            @can('cNormal_PERSONAL#ver')
                                     <div class="col-lg-4 col-md-6 col-sm-6">
                                         <div class="card card-stats">
                                             <div class="card-header card-header-secundary card-header-icon">
@@ -402,32 +401,9 @@
                                                     <i class="material-icons">group</i>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
-
-                                @endif
-                                 @if (Auth::check() && (Auth::user()->role =='admin'))
-                                    <div class="col-lg-4 col-md-6 col-sm-6">
-                                        <div class="card card-stats">
-                                            <div class="card-header card-header-secundary card-header-icon">
-                                                <div class="card-icon">
-                                                    <i class="material-icons">group</i>
-                                                </div>
-                                                <h3 class="card-title">Personal</h3>
-                                                <a class="btn btn-outline-success" href="{{ route('personal.create') }}">Capturar Personal</a>
-                                                <a href="{{ route('personal.index') }}" class="btn btn-outline-danger">Consultar Personal</a>
-                                            </div>
-                                            <div class="card-footer">
-                                                <div class="stats">
-                                                    <i class="material-icons">group</i>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-                                @endif
+                                @endcan
                             <div class="col-lg-4 col-md-6 col-sm-12">
                                 <div class="card card-stats">
                                     <div class="card-header card-header-success card-header-icon">

@@ -55,7 +55,14 @@
                                             </td>
 
                                             <td>
-                                                <?php echo $Percentage_SICI = round(100-((($total_equipos - $total_SICI_localizados) / ($total_equipos)) * 100),2);?>%
+                                                <?php echo $Percentage_SICI = round(
+                                                    100 -
+                                                        (($total_equipos -
+                                                            $total_SICI_localizados) /
+                                                            $total_equipos) *
+                                                            100,
+                                                    2
+                                                ); ?>%
                                             </td>
                                         </tr>
 
@@ -73,7 +80,14 @@
                                             </td>
 
                                             <td>
-                                            <?php echo $Percentage_SICI = round(100-((($total_SICI_localizados - $total_22A_detalleInventario) / ($total_SICI_localizados)) * 100),2);?>%
+                                            <?php echo $Percentage_SICI = round(
+                                                100 -
+                                                    (($total_SICI_localizados -
+                                                        $total_22A_detalleInventario) /
+                                                        $total_SICI_localizados) *
+                                                        100,
+                                                2
+                                            ); ?>%
                                             </td>
                                         </tr>
 
@@ -144,14 +158,14 @@
 
                     @php ( $cont=1 )
 
-                    @foreach($dataTable as $OneDataRow)
+                    @foreach($DtQuery as $oneRow)
 
                     {{--@php ($ToRoundedValue = round((($OneDataRow->cuentaEncontrados / $OneDataRow->cuentaInventariables) * 100)) ) --}}
-                    @if( $OneDataRow->PercentageValue < '100')
-                        @php ( $bar_indicatorColor="success" )
-                        @if( $OneDataRow->PercentageValue < '50' )
-                            @php ( $bar_indicatorColor= "danger")
-                        @elseif( $OneDataRow->PercentageValue < '90' )
+                    {{--@if( $OneDataRow->PercentageValue < '100')--}}
+                        @php ( $bar_indicatorColor = "success" )
+                        @if( $oneRow['Porcentaje'] < '50.00' )
+                            @php ( $bar_indicatorColor = "danger")
+                        @elseif( $oneRow['Porcentaje'] < '90.00' )
                             @php ( $bar_indicatorColor= "warning")
                         @endif
 
@@ -159,7 +173,7 @@
                             <td>{{$cont++}}</td>
                             <td>
 
-                            <p class="font-weight-normal">{{ $OneDataRow->area }}</p>
+                            <p class="font-weight-normal">{{ $oneRow['area'] }}</p>
 
                             </td>
                             <td style="width: 20%">
@@ -168,12 +182,12 @@
                                         <div class="row no-gutters align-items-center">
 
 
-                                            <div class="h6 mb-0 mr-1 text-center text-gray-800"> <strong>{{$OneDataRow->PercentageValue}}% </strong> </div>
+                                            <div class="h6 mb-0 mr-1 text-center text-gray-800"> <strong>{{$oneRow['Porcentaje']}}%</strong> </div>
 
                                             <div class="col">
                                                 <div class="progress progress-sm mr-2">
-                                                    <div class="progress-bar bg-<?php echo $bar_indicatorColor ?>" role="progressbar"
-                                                        style="width: {{$OneDataRow->PercentageValue}}%" aria-valuenow="50" aria-valuemin="0"
+                                                    <div class="progress-bar bg-<?php echo $bar_indicatorColor; ?>" role="progressbar"
+                                                        style="width: {{$oneRow['Porcentaje']}}%" aria-valuenow="50" aria-valuemin="0"
                                                         aria-valuemax="100"></div>
                                                 </div>
                                             </div>
@@ -181,17 +195,17 @@
                                     </div>
 
                             <td style="width: 10%">
-                                <p class="text-dark text-center">{{$OneDataRow->cuentaEncontrados}} / {{$OneDataRow->cuentaInventariables}} </p>
+                                <p class="text-dark text-center">{{$oneRow['iv_count']}} / {{$oneRow['equipos_count']}} </p>
                             </td>
 
                             </td>
                             <td>
-                            <p><a href="{{ route('inventario-por-area', $OneDataRow->id_area ) }}" class="btn btn-primary">Detalle</a></p>
+                            <p><a href="{{ route('inventario-por-area', $oneRow['eq_id_area'] ) }}" class="btn btn-primary">Detalle</a></p>
 
                                 {{--<p><a href="{{ route('actualizacion-inventario', $OneDataRow->id_area) }}" class="btn btn-success">Revisado</a></p>--}}
                             </td>
                         </tr>
-                        @endif
+                        {{--@endif--}}
                     @endforeach
 
 
