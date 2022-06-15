@@ -82,7 +82,7 @@
                             </div>
                             <div class="modal-body">
 
-                                <h4>Agregar Nota al Bien</h4>
+                                <h4>Agregar nota al bien</h4>
 
                                 <div class="row g-3 align-items-center">
                                     <div class="col-md-12">
