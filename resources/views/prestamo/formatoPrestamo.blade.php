@@ -25,27 +25,26 @@
 </style>
 </head>
 <body>
-
+<br>
 <div class="container">
     <div class="row">
         <div class="col-md-12 col-xs-12">
             <p class="text-center"><img class="img-responsive" src="images/logo.jpg" width="100%"></p>
-
-
         </div>
     </div>
+    <br>
     <div class="row">
         <div class="col-md-12 col-xs-12">
     <table class="table table-bordered" >
         <thead class="thead-light">
         <tr>
-            <th scope="col" colspan="2"><h5>Formato de Prestamo / Traslado</h5></th>
+            <th scope="col" colspan="2"><center><h5>Formato de Préstamo / Traslado</h5></center></th>
         </tr>
         </thead>
         <tbody>
             <tr>
                 <td><b>Folio:</b> {{$prestamo->id}}</td>
-                <td><b>Fecha: </b> {{$prestamo->fecha_inicio}}</td>
+                <td><b>Fecha: </b>{{\Carbon\Carbon::parse($prestamo->fecha_inicio)->format('d/m/Y') }} </td>
             </tr>
             <tr>
                 <td><b>Tipo:</b> {{$prestamo->estado}}</td>
@@ -67,29 +66,30 @@
         </tbody>
     </table>
             <br>
+            <hr>
             <br>
     <table class="table table-bordered" >
 
         <tbody>
             <tr>
-                <td align="center"><b>Entrega</b></td>
-                <td align="center"><b>Recibe</b></td>
+                <td align="center" colspan="2" style="background-color: #BEC6C7;"><b>ENTREGÓ</b></td>
             </tr>
             <tr>
-                <td align="center"><b>Nombre</b></td>
-                <td align="center"><b>Nombre</b></td>
+                <td align="left"><b>Nombre:</b> ___________________________________________</td>
+                <td align="left"><b>Firma:</b> ___________________</td>
+            </tr>
+        </tbody>
+    </table>
+    <hr>
+    <table class="table table-bordered" >
+
+        <tbody>
+            <tr>
+                <td align="center" colspan="2" style="background-color: #BEC6C7;"><b>RECIBIÓ</b></td>
             </tr>
             <tr>
-                <td><br></td>
-                <td><br></td>
-            </tr>
-            <tr>
-                <td align="center"><b>Firma:</b></td>
-                <td align="center"><b>Firma:</b></td>
-            </tr>
-            <tr>
-                <td><br></td>
-                <td><br></td>
+                <td align="left"><b>Nombre:</b> ___________________________________________</td>
+                <td align="left"><b>Firma:</b> ___________________</td>
             </tr>
         </tbody>
     </table>
@@ -99,7 +99,8 @@
         <div class="col-md-12 col-xs-12">
             <br>
             <br>
-
+            <br>
+            <br><br>
             <p class="pie">Hora y día de Impresión:  {{ date('d-m-Y H:i:s') }}<br>
                 Realizado por:  {{ Auth::user()->name }}<br>
                 Formato CTA-010. Actualización: 28/abril/2021</p>
