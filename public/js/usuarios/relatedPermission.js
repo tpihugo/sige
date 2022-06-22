@@ -37,7 +37,6 @@ $(document).ready(function () {
         responsive: true,
     });
     loader(false);
-    console.log(data);
 });
 
 function setPermiso(item) {
