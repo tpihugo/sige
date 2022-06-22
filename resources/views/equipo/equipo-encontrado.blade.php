@@ -57,13 +57,13 @@
                                     @else
                                         <a href="#AggNota" onclick="launchModal( '{{$listadoEquipo->id}}' , '{{$listadoEquipo->id_area}}' , '{{$listadoEquipo->notas}}') " role="button" class="btn btn-danger" data-toggle="modal">Agregar Nota</a>
                                     @endif
+                                    <p><a href="{{ route('cambiar-ubicacion', ['equipo_id' => $listadoEquipo->id, 'tipo' => 'inventario']) }}" class="btn btn-primary">Cambiar Ubicación</a></p>
                                 @else
                                     <a class="btn btn-success" href="{{ route('registro-inventario', ['equipo_id' => $listadoEquipo->id, 'origen'=>'express']) }}" >Registrar Equipo</a>
                                      <a href="#AggNota" onclick="launchModal( '{{$listadoEquipo->id}}' , '{{$listadoEquipo->id_area}}' , '{{$listadoEquipo->notas}}') " role="button" class="btn btn-danger" data-toggle="modal">Registrar con nota</a>
                                 @endif
 
 
-                                <p><a href="{{ route('cambiar-ubicacion', ['equipo_id' => $listadoEquipo->id, 'tipo' => 'inventario']) }}" class="btn btn-primary">Cambiar Ubicación</a></p>
                             </td>
                    </tr>
                @endforeach
