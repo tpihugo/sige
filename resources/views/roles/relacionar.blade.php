@@ -14,11 +14,12 @@
                 <h4>{{$rol->name }}</h4>
             <hr>
             <div class="row align-items-center">
-                <form method="POST" action="{{ route('guardar_relacion_permisos') }}">
+                <form method="POST" id="formPermisos" action="{{ route('guardar_relacion_permisos') }}">
                     @method('POST')
                     @csrf
-                    <input type="hidden" name="role_id" value="{{ $rol->id }}" />
-                    <table id="usersTable" class="display table table-striped table-bordered">
+                    <input type="hidden" id="role_id" name="role_id" value="{{ $rol->id }}" />
+                    <input type="hidden" id="permisos_seleccionados" name="permisos_seleccionados" value="" />
+                    <table id="relatedTable" class="display table table-striped table-bordered">
                         <thead>
                             <tr>
                                 <th>Modulo</th>
@@ -27,18 +28,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($permisos as $permiso)
-                                <tr>
-                                    <td>{{$permiso['modulo']}}</td>
-                                    <td>{{$permiso['permiso']}}</td>
-                                    <td>
-                                        <input type="checkbox" name="permisos[]" value="{{$permiso['valor']}}" {{ $permiso['checked'] }} />
-                                    </td>
-                                </tr>
-                            @endforeach
                         </tbody>
                     </table>
-                    <button class="btn btn-success" type="submit">Guardar</button>
+                    <button class="btn btn-success" type="button" onclick="sendData()">Guardar</button>
                 </form>
             </div>
         @else
@@ -47,7 +39,10 @@
     </div>
     <script
         type="text/javascript"
-        src="{{ asset('js/usuarios/main.js') }}"
+        src="{{ asset('js/usuarios/relatedPermission.js') }}"
     >
     </script>
+    <script type="text/javascript">
+    var data = @json($permisos);
+</script>
 @endsection

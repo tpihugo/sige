@@ -1,5 +1,11 @@
 $(document).ready(function () {
-    $('#usersTable').DataTable({
+    $('#relatedTable').DataTable({
+        data: data,
+        columns: [
+            { data: 'modulo' },
+            { data: 'permiso' },
+            { data: 'input' }
+        ],
         "pageLength": 5,
         "order": [
             [0, "asc"]
@@ -31,4 +37,34 @@ $(document).ready(function () {
         responsive: true,
     });
     loader(false);
+    console.log(data);
 });
+
+function setPermiso(item) {
+    if (item.checked) {
+        data.map(value => {
+            if (value.id == item.value) {
+                value.checked = true;
+            }
+        })
+    } else {
+        data.map(value => {
+            if (value.id == item.value) {
+                value.checked = false;
+            }
+        })
+    }
+}
+
+function sendData() {
+    var permisos_seleccionados = [];
+    data.map(value => {
+        if (value.checked == true) {
+            permisos_seleccionados.push(value.id);
+        }
+        var permisos64 = btoa(permisos_seleccionados);
+        document.getElementById("permisos_seleccionados").value = permisos64;
+    })
+    document.getElementById('formPermisos').submit();
+}
+
