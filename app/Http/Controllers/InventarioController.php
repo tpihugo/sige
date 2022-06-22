@@ -255,7 +255,7 @@ class InventarioController extends Controller
 
             $key_iv = array_search($sub_eq['id_area'], array_column($subquery_inventariados, 'IdArea'));
 
-            $iv_count = $subquery_inventariados[$key_iv]['iCO'];
+            // $iv_count = $subquery_inventariados[$key_iv]['iCO'];
 
             $e_id = $sub_eq['id_area'];
             $e_area = $sub_eq['area'];

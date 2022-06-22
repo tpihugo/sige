@@ -196,7 +196,9 @@
                                 <p class="text-dark text-center">
                                 {{$oneRow['iv_count']}} / {{$oneRow['equipos_count']}}
                                 @if($oneRow['iv_count'] - $oneRow['equipos_count'] > 0)
-                                    <a class="text-muted" data-toggle="modal" href="#warning-triangle-modal" > <i class="fas fa-exclamation-triangle" style="color: orange;" ></i> </a>
+                                    <a class="text-muted" data-toggle="modal" href="#warning-triangle-modal" >
+                                    {{--<i class="fas fa-exclamation-triangle" style="color: orange;" ></i>--}}
+                                     </a>
                                 @endif
                                 </p>
                             </td>
