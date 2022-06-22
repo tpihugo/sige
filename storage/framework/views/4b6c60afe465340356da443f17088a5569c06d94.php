@@ -198,7 +198,9 @@
                                 <?php echo e($oneRow['iv_count']); ?> / <?php echo e($oneRow['equipos_count']); ?>
 
                                 <?php if($oneRow['iv_count'] - $oneRow['equipos_count'] > 0): ?>
-                                    <a class="text-muted" data-toggle="modal" href="#warning-triangle-modal" > <i class="fas fa-exclamation-triangle" style="color: orange;" ></i> </a>
+                                    <a class="text-muted" data-toggle="modal" href="#warning-triangle-modal" >
+                                    
+                                     </a>
                                 <?php endif; ?>
                                 </p>
                             </td>
