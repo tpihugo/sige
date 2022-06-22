@@ -3,68 +3,78 @@
     <div class="container">
         @if(Auth::check())
 
-            <div class="row g-3 align-items-center">
-                <div class="col-md-4">
-                    <h4>Inventario por área</h4>
-                </div>
-            </div>
+            <h3 class="text-center">Inventario por área 2022B </h3>
+            <h5 class="text-center"> <span hidden> {{$area_actual->id}}</span> <strong> Area: </strong> {{$area_actual->Area}} </h5>
             <br>
-            <div class="row">
-                <div class="col-md-12">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                            <th scope="col">Tipo</th>
-                            <th scope="col">Total</th>
-                            <th scope="col">Equipos en SICI</th>
-                            <th scope="col">Localizados SICI</th>
-                            <th scope="col">No Localizados SICI</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                            <th scope="row">Equipos</th>
-                            <td>{{$total_equipos}}</td>
-                            <td>{{$equipos_en_sici->cuenta_equipos}}</td>
-                            <td>{{$equipos_en_sici_localizados->cuenta_equipos}}</td>
-                            <td>{{$equipos_en_sici_no_localizados->cuenta_equipos}}</td>
-                            </tr>
+            <hr>
+            <div class="row g-3 align-items-center">
+                <div class="col-xl-3 col-md-3">
+                    <div class="card bg-secondary text-white mb-3">
+                        <div class="card-body">
+                           <p class="h5 d-inline">
+                               Equipos del área: <strong> {{$total_equipos_del_area}}</strong>
+                           </p>
+                        </div>
 
-
-                        </tbody>
-                    </table>
+                    </div>
                 </div>
 
-            </div>
-            <br>
-            <div class="row g-3 align-items-center">
-                <div class="col-md-4">
-                    <h5>Inventario 2022A</h5>
+                <div class="col-xl-3 col-md-3">
+                    <div class="card bg-secondary text-white mb-3">
+                        <div class="card-body">
+                           <p class="h5 d-inline">
+                               Equipos en SICI: <strong> {{$equipos_en_sici->cuenta_equipos}} </strong>
+                           </p>
+                        </div>
+                    </div>
                 </div>
+
+                <div class="col-xl-3 col-md-3">
+                     <div class="card bg-secondary text-white mb-3">
+                         <div class="card-body">
+                            <p class="h5 d-inline">
+                               Localizados SICI: <strong> {{$equipos_en_sici_localizados->cuenta_equipos}} </strong>
+                            </p>
+                         </div>
+                     </div>
+                 </div>
+
+                 <div class="col-xl-3 col-md-3">
+                       <div class="card bg-secondary text-white mb-3">
+                           <div class="card-body">
+                            <p class="h5 d-inline">
+                               No localizados SICI: <strong> {{$equipos_en_sici_no_localizados->cuenta_equipos}} </strong>
+                            </p>
+                              </div>
+                       </div>
+                  </div>
+
             </div>
+            {{-- /// --}}
+
             <div class="row g-3 align-items-center">
-                <div class="col-xl-3 col-md-6">
+                <div class="col-xl-4 col-md-4">
                     <div class="card bg-success text-white mb-3">
-                        <div class="card-body">Localizados: {{$total_equipos_localizados->localizados}}<b></b></div>
+                        <div class="card-body">Localizados: {{$total_equipos_localizados}} </div>
                     </div>
                 </div>
-                {{--<div class="col-xl-3 col-md-6">
+
+                <div class="col-xl-4 col-md-4">
+                    <div class="card bg-danger text-white mb-3">
+                        <div class="card-body">No Localizados: {{$total_equipos_del_area - $total_equipos_localizados}}<b></b></div>
+                    </div>
+                </div>
+
+                <div class="col-xl-4 col-md-4">
                     <div class="card bg-warning text-white mb-3">
-                        <div class="card-body">Con Incidente: {{ $total_equipos_revision->revisiones}}<b></b></div>
-                    </div>
-                </div>--}}
-                {{--<div class="col-xl-3 col-md-6">
-                    <div class="card bg-danger text-white mb-3">
-                        <div class="card-body">No Localizados: {{$total_equipos-$total_equipos_localizados->localizados - $total_equipos_revision->revisiones}}<b></b></div>
-                    </div>
-                </div>--}}
-                <div class="col-xl-3 col-md-6">
-                    <div class="card bg-danger text-white mb-3">
-                        <div class="card-body">No Localizados: {{$total_equipos-$total_equipos_localizados->localizados}}<b></b></div>
+                        <div class="card-body">Equipos localizados de otras areas:  {{ $total_equipos_localizados_externos}} </div>
                     </div>
                 </div>
 
             </div>
+
+
+
             <br>
             <div class="row">
                 <table id="example" class="table table-striped table-bordered" style="width:100%">
@@ -86,67 +96,59 @@
                     <tbody>
                     @foreach($equipos as $equipo)
                         <tr>
-                            <td>{{$equipo->id}}</td>
+                            <td>{{$equipo['id']}}</td>
                             <td>
-                                {{$equipo->udg_id}}
+                                {{$equipo['udg_id']}}
                             </td>
 
                             <td>
 
-                            @if($equipo->estatus == 'Localizado')
-                                <strong class="text-success">{{$equipo->estatus}}</strong>
-                                @if($equipo->notas && $equipo->notas != '-')
+                            @if($equipo['estatus'] == 'Localizado' && $equipo['id_area'] == $area_actual->id)
+                                <strong class="text-success">{{$equipo['estatus']}}</strong>
+                            @elseif($equipo['estatus'] == 'Localizado' && $equipo['id_area'] != $area_actual->id)
+                                <strong class="text-warning">{{$equipo['estatus']}}</strong>
+                                @if($equipo['notas'] && $equipo['notas'] != '-')
                                     <spin class="text-info">con nota</spin>
                                 @endif
-                            @elseif($equipo->estatus == 'No Localizado' || is_null($equipo->estatus) )
+                            @elseif($equipo['estatus'] == 'No Localizado' || is_null($equipo['estatus']) )
                                 <strong style="color: #dc3545;">No Localizado</strong>
-                            @elseif($equipo->estatus == 'Revision')
-                                <strong style="color: #ffc107;">{{$equipo->estatus}}</strong>
+                            @elseif($equipo['estatus'] == 'Revision')
+                                <strong style="color: #ffc107;">{{$equipo['estatus']}}</strong>
                             @endif
 
                             </td>
 
-                            <td>{{$equipo->tipo_equipo}}</td>
-                            <td>{{$equipo->marca}}</td>
-                            <td>{{$equipo->modelo}}</td>
-                            <td>{{$equipo->numero_serie}}</td>
-                            <td>{{$equipo->detalles}}.<br><br>
-                                @if($equipo->resguardante=='CTA')
+                            <td>{{$equipo['tipo_equipo']}}</td>
+                            <td>{{$equipo['marca']}}</td>
+                            <td>{{$equipo['modelo']}}</td>
+                            <td>{{$equipo['numero_serie']}}</td>
+                            <td>{{$equipo['detalles']}}.<br><br>
+                                @if($equipo['resguardante']=='CTA')
                                     Equipo de CTA.<br>
-                                    @if($equipo->localizado_sici=='S')
+                                    @if($equipo['localizado_sici']=='S')
                                         Localizado.
-				    @elseif($equipo->localizado_sici=='Si')
+                             @elseif($equipo['localizado_sici']=='Si')
                                         Localizado.
                                     @else
                                         No localizado.
                                     @endif
                                 @endif
                             </td>
-                            <td>{{$equipo->area}}</td>
+                            <td>{{$equipo['area']}}</td>
                             <td>
-                                @if(!$equipo->estatus == 'Localizado')
-                                    <p><a class="btn btn-outline-success" href="{{ route('registro-inventario', ['equipo_id' => $equipo->id, 'origen'=>$origen]) }}" >Localizado</a></p>
+                                @if(!$equipo['estatus'] == 'Localizado')
+                                    <p><a class="btn btn-outline-success" href="{{ route('registro-inventario', ['equipo_id' => $equipo['id'], 'origen'=>$origen]) }}" >Localizado</a></p>
                                 @endif
-                                <p><a href="{{ route('cambiar-ubicacion', ['equipo_id' => $equipo->id, 'tipo' => 'inventario']) }}" class="btn btn-outline-primary">Reubicar</a></p>
-                                <p><a href="{{ route('equipos.edit', $equipo->id) }}" class="btn btn-outline-secondary">Editar</a></p>
-
-                                {{-- @if( $equipo->estatus == 'Localizado' )
-                                    @if($equipo->notas && $equipo->notas != '-')
-                                        <a href="#eliminar{{$equipo->id}}" role="button" class="btn btn-outline-danger" data-toggle="modal"> <p class="d-inline">Ver o editar nota</p> </a>
+                                <p><a href="{{ route('cambiar-ubicacion', ['equipo_id' => $equipo['id'], 'tipo' => 'inventario']) }}" class="btn btn-outline-primary">Reubicar</a></p>
+                                <p><a href="{{ route('equipos.edit', $equipo['id']) }}" class="btn btn-outline-secondary">Editar</a></p>
+                                @if( $equipo['estatus'] == 'Localizado' )
+                                    @if($equipo['notas'] && $equipo['notas'] != '-')
+                                        <a href="#noteModal" role="button" onclick="launchModal( '{{$equipo['id']}}', '{{$equipo['id_area']}}', '{{$equipo['notas']}}' );" class="btn btn-outline-danger" data-toggle="modal"> <p class="d-inline">Ver o editar nota</p> </a>
                                     @else
-                                        <a href="#eliminar{{$equipo->id}}" role="button" class="btn btn-outline-danger" data-toggle="modal"> <p class="d-inline">Agregar nota</p> </a>
+                                        <a href="#noteModal" role="button" onclick="launchModal( '{{$equipo['id']}}', '{{$equipo['id_area']}}', '{{$equipo['notas']}}' );" class="btn btn-outline-danger" data-toggle="modal"> <p class="d-inline">Agregar nota</p> </a>
                                     @endif
                                 @else
-                                    <a href="#eliminar{{$equipo->id}}" role="button" class="btn btn-outline-danger" data-toggle="modal"> <p class="d-inline">Localizar con nota</p> </a>
-                                @endif --}}
-                                @if( $equipo->estatus == 'Localizado' )
-                                    @if($equipo->notas && $equipo->notas != '-')
-                                        <a href="#noteModal" role="button" onclick="launchModal( '{{$equipo->id}}', '{{$equipo->id_area}}', '{{$equipo->notas}}' );" class="btn btn-outline-danger" data-toggle="modal"> <p class="d-inline">Ver o editar nota</p> </a>
-                                    @else
-                                        <a href="#noteModal" role="button" onclick="launchModal( '{{$equipo->id}}', '{{$equipo->id_area}}', '{{$equipo->notas}}' );" class="btn btn-outline-danger" data-toggle="modal"> <p class="d-inline">Agregar nota</p> </a>
-                                    @endif
-                                @else
-                                    <a href="#noteModal" role="button" onclick="launchModal( '{{$equipo->id}}', '{{$equipo->id_area}}', '{{$equipo->notas}}' );" class="btn btn-outline-danger" data-toggle="modal"> <p class="d-inline">Localizar con nota</p> </a>
+                                    <a href="#noteModal" role="button" onclick="launchModal( '{{$equipo['id']}}', '{{$equipo['id_area']}}', '{{$equipo['notas']}}' );" class="btn btn-outline-danger" data-toggle="modal"> <p class="d-inline">Localizar con nota</p> </a>
                                 @endif
                                 </td>
 

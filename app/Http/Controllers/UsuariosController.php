@@ -148,6 +148,7 @@ class UsuariosController extends Controller
             $user = User::findOrFail($id);
             $user->email = $request['email'];
             $user->name = $request['name'];
+            $user->role = $request['rol'];
             if ($request['password']) {
                 $user->password = bcrypt($request['password']);
             }
