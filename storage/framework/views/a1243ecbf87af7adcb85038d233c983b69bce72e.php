@@ -99,11 +99,11 @@
                         <?php else: ?>
                             <option value="null" selected>No Especificado</option>
                         <?php endif; ?>
-						
-						
-					
+
+
+
 					<?php $__currentLoopData = $ips; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ip): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-						<option value="<?php echo e($ip->id); ?>"><?php echo e($ip->ip); ?></option>			
+						<option value="<?php echo e($ip->id); ?>"><?php echo e($ip->ip); ?></option>
 					<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 				</select>                            </div>
                             <div class="col-md-4">
@@ -123,11 +123,12 @@
                         <div class="row g-3 align-items-center">
                             <div class="col-md-6">
                                 <label for="resguardante">Resguardante</label>
-                                <select name="resguardante" id="resguardante" class="form-control">    
+                                <select name="resguardante" id="resguardante" class="form-control">
+				                    <option selected="">Elegir</option>
                                     <option value="<?php echo e($equipo->resguardante); ?>" selected><?php echo e($equipo->resguardante); ?></option>
-				    <option disable>Elegir</option>
                                     <option value="Otra dependencia">Otra dependencia</option>
                                     <option value="CTA">CTA</option>
+                                    <option value="No inventariable">No inventariable</option>
                                 </select>
                             </div>
                             <div class="col-md-6">
@@ -150,7 +151,7 @@
                         </div>
                         <br>
                         <br>
-                
+
                 <br>
                 <div class="row align-items-center">
                     <div class="col-md-12">

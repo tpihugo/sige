@@ -92,7 +92,7 @@
                                     @endforeach
                                 </select>
                                 <!--<input type="text" class="form-control" id="ip" name="ip" value="No aplica/No Especificado" >-->
-				
+
                             </div>
                             <div class="col-md-4">
                                 <label for="tipo_conexion">Tipo de Conexión</label>
@@ -110,23 +110,21 @@
                             <div class="col-md-6">
                                 <label for="resguardante">Dependencia Resguardante</label>
                                 <select name="resguardante" id="resguardante" class="form-control">
-				    <option disable selected>Elegir</option>
+				                <option disable selected>Elegir</option>
                                     <option value="Otra dependencia">Otra dependencia</option>
                                     <option value="CTA">CTA</option>
+                                    <option value="No inventariable">No inventariable</option>
                                 </select>
                             </div>
-                            <div class="col-md-6">
+                            {{-- <div class="col-md-6">
                                 <label for="localizado_sici">Inventariable</label>
                                 <select name="localizado_sici" id="localizado_sici" class="form-control">
-				    <option disable selected>Elegir</option>
+				                    <option disable selected>Elegir</option>
                                     <option value="No">No</option>
                                     <option value="Si">Si</option>
                                 </select>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row align-items-center">
-                            <div class="col-md-12">
+                            </div> --}}
+                            <div class="col-md-6">
                                 <label for="detalles">Detalles</label>
                                 <textarea class="form-control" id="detalles" name="detalles">{{old('detalles')}}</textarea>
                             </div>
@@ -152,7 +150,7 @@
                     	</div>
                	 	</div>
                 	<br>
-                	
+
             	</div>
             </form>
             <br>
