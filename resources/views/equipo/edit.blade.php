@@ -99,11 +99,11 @@
                         @else
                             <option value="null" selected>No Especificado</option>
                         @endif
-						
-						
-					
+
+
+
 					@foreach($ips as $ip)
-						<option value="{{$ip->id}}">{{$ip->ip}}</option>			
+						<option value="{{$ip->id}}">{{$ip->ip}}</option>
 					@endforeach
 				</select>                            </div>
                             <div class="col-md-4">
@@ -123,11 +123,12 @@
                         <div class="row g-3 align-items-center">
                             <div class="col-md-6">
                                 <label for="resguardante">Resguardante</label>
-                                <select name="resguardante" id="resguardante" class="form-control">    
+                                <select name="resguardante" id="resguardante" class="form-control">
+				                    <option selected="">Elegir</option>
                                     <option value="{{$equipo->resguardante}}" selected>{{$equipo->resguardante}}</option>
-				    <option disable>Elegir</option>
                                     <option value="Otra dependencia">Otra dependencia</option>
                                     <option value="CTA">CTA</option>
+                                    <option value="No inventariable">No inventariable</option>
                                 </select>
                             </div>
                             <div class="col-md-6">
@@ -150,7 +151,7 @@
                         </div>
                         <br>
                         <br>
-                
+
                 <br>
                 <div class="row align-items-center">
                     <div class="col-md-12">
