@@ -52,7 +52,6 @@ class EquipoController extends Controller
             'detalles'=>'required'
             ]);
         $equipo = new equipo();
-	//$equipo_ip = $equipo->ip;
         $equipo->udg_id = $request->input('udg_id');
         $equipo->tipo_equipo = $request->input('tipo_equipo');
         $equipo->marca = $request->input('marca');
@@ -65,11 +64,12 @@ class EquipoController extends Controller
             $equipo->ip_id = $request->input('ip_id');
         }
 
-	$equipo->tipo_conexion = $request->input('tipo_conexion');
+    	$equipo->tipo_conexion = $request->input('tipo_conexion');
         $equipo->detalles = $request->input('detalles');
         $equipo->id_resguardante = $request->input('id_resguardante');
-	$equipo->resguardante = $request->input('resguardante');
-        $equipo->localizado_sici = $request->input('localizado_sici');
+	    $equipo->resguardante = $request->input('resguardante');
+    	$equipo->localizado_sici = 'No especificado';
+        // $equipo->localizado_sici = $request->input('localizado_sici');
         $equipo->save();
 
 	if($request->input('ip_id')!='null'){
@@ -104,7 +104,7 @@ class EquipoController extends Controller
         $log->acciones = "Insercion";
         $log->save();
         //
-        return redirect('home')->with(array(
+        return redirect('/')->with(array(
             'message'=>'El equipo se guardo Correctamente'
         ));
     }
@@ -181,7 +181,7 @@ class EquipoController extends Controller
         $equipo->tipo_conexion = $request->input('tipo_conexion');
         $equipo->detalles = $request->input('detalles');
         $equipo->id_resguardante = $request->input('id_resguardante');
-	$equipo->resguardante = $request->input('resguardante');
+	    $equipo->resguardante = $request->input('resguardante');
         $equipo->localizado_sici = $request->input('localizado_sici');
 	$equipo->update();
 

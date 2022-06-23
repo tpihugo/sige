@@ -185,6 +185,7 @@ class RolesController extends Controller
         $rol = Role::findOrFail($id);
         $permisos = Permission::orderBy('name')->get();
         $dataReturn = [];
+
         foreach ($permisos as $permiso) {
             $tmp = explode("#", strtolower($permiso->name));
             $push['id'] = $permiso->id;
@@ -193,9 +194,12 @@ class RolesController extends Controller
             $push['permiso'] = str_replace("_"," ",$tmp[1]);
             $push['permiso'] = Str::ucfirst($tmp[1]);
             $push['valor'] = $permiso->name;
-            $push['checked'] = in_array($permiso->id, $soloIdAsignados) ? 'checked' : '';
+            $push['checked'] = in_array($permiso->id, $soloIdAsignados) ? 'true' : 'false';
+            $checked = in_array($permiso->id, $soloIdAsignados) ? 'checked' : '';
+            $push['input'] = "<input type='checkbox' value='".$permiso->id."' ".$checked." onclick='setPermiso(this)'>";
             $dataReturn[] = $push;
         }
+
 
         return view('roles.relacionar')
             ->with('permisos', $dataReturn)
@@ -204,12 +208,11 @@ class RolesController extends Controller
 
     public function guardarRelacion(Request $request)
     {
-        //echo "<pre>";
-        //print_r($request->all());
-        $permisos = $request->get('permisos');
+        $permisos = base64_decode($request->get('permisos_seleccionados'));
+        $array_permisos = explode(",",$permisos);
         $role = Role::findOrFail($request->get('role_id'));
         //$role->givePermissionTo($permisos);
-        $role->syncPermissions($permisos);
+        $role->syncPermissions($array_permisos);
 
         $roles = Role::all();
         return view('roles.index')->with('roles', $roles)->with('success', 'Permisos asignados correctamente.');

@@ -88,16 +88,23 @@ class UsuariosController extends Controller
     {
         //$usuario = User::where('id', $id)->get();
         $roles = [];
-        $usuario = User::join('model_has_roles','model_has_roles.model_id','users.id')
+        $usuario = User::leftjoin('model_has_roles','model_has_roles.model_id','users.id')
             ->where('users.id',$id)
-            ->where('model_has_roles.model_type','App\Models\User')
+            //->where('model_has_roles.model_type','App\Models\User')
             ->first();
+        $roles[] = array('id' => 0, 'name' => 'Seleccione un Rol', 'selected' => '');
         foreach (Role::orderBy('name')->get() as $rol) {
             $elemento = array(
                 'id' => $rol->id,
                 'name' => $rol->name,
-                'selected' => ($usuario->role_id == $rol->id) ? 'selected': ''
+                'selected' => '',
             );
+            if (isset($usuario->role_id)) {
+                if ($usuario->role_id == $rol->id) {
+                    $elemento['selected'] = 'selected';
+                }
+            }
+
             $roles[] = $elemento;
         }
         return view('usuarios.edit')
@@ -127,14 +134,28 @@ class UsuariosController extends Controller
                 $data['password'] = Hash::make($request['password']);
             }
         }
+        if ($request['name'] == '') {
+            $retorno['Error'][] = 'El nombre del usuario es necesario.';
+        }
+        if ($request['email'] == '') {
+            $retorno['Error'][] = 'El email del usuario es necesario.';
+        }
+        if ($request['rol'] == 'Seleccione un Rol') {
+            $retorno['Error'][] = 'El rol del usuario es necesario.';
+        }
 
-        if (! count($retorno['Error']) > 0) {
+        if (count($retorno['Error']) == 0) {
             $user = User::findOrFail($id);
-            $data['email'] = $request['email'];
-            $data['name'] = $request['name'];
+            $user->email = $request['email'];
+            $user->name = $request['name'];
+            $user->role = $request['rol'];
+            if ($request['password']) {
+                $user->password = bcrypt($request['password']);
+            }
             $user->save();
             $user->syncRoles(); # Se borran todos los anteriores
             $user->syncRoles([$request['rol']]); # se asignan todos lo que esten en el array
+            $retorno['Success'][] = 'Usuario editado con éxito.';
         }
 
         return view('usuarios.index')
