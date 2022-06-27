@@ -8788,8 +8788,8 @@ a.text-dark:focus {
 
 .btn.btn-primary {
   color: #fff;
-  background-color: #9c27b0;
-  border-color: #9c27b0;
+  background-color: #b96663;
+  border-color: #b96663;
   box-shadow: 0 2px 2px 0 rgba(156, 39, 176, 0.14), 0 3px 1px -2px rgba(156, 39, 176, 0.2), 0 1px 5px 0 rgba(156, 39, 176, 0.12);
 }
 
@@ -13024,16 +13024,8 @@ fieldset[disabled] .form-group .form-control {
   border-radius: 6px !important;
 }
 
-.navbar {
-  border: 0;
-  border-radius: 3px;
-  padding: 0.625rem 0;
-  margin-bottom: 20px;
-  height: auto !important;
-  color: #555;
-  background-color: #fff !important;
-  box-shadow: 0 4px 18px 0px rgba(0, 0, 0, 0.12), 0 7px 10px -5px rgba(0, 0, 0, 0.15);
-}
+
+
 
 .navbar .dropdown-item:hover,
 .navbar .dropdown-item:focus {
@@ -16777,7 +16769,7 @@ label {
 .card.bg-primary,
 .card.card-rotate.bg-primary .front,
 .card.card-rotate.bg-primary .back {
-  background: linear-gradient(60deg, #ab47bc, #8e24aa);
+  background: linear-gradient(60deg, #893a53, #b96663);
 }
 
 .card .card-header-info .card-icon,
@@ -16786,7 +16778,7 @@ label {
 .card.bg-info,
 .card.card-rotate.bg-info .front,
 .card.card-rotate.bg-info .back {
-  background: linear-gradient(60deg, #26c6da, #00acc1);
+  background: linear-gradient(60deg, #4c7c90, #893a53);
 }
 
 .card .card-header-success .card-icon,
@@ -16795,7 +16787,7 @@ label {
 .card.bg-success,
 .card.card-rotate.bg-success .front,
 .card.card-rotate.bg-success .back {
-  background: linear-gradient(60deg, #66bb6a, #43a047);
+  background: linear-gradient(60deg, #b96663, #893a53);
 }
 
 .card .card-header-warning .card-icon,
@@ -16804,7 +16796,7 @@ label {
 .card.bg-warning,
 .card.card-rotate.bg-warning .front,
 .card.card-rotate.bg-warning .back {
-  background: linear-gradient(60deg, #ffa726, #fb8c00);
+  background: linear-gradient(60deg, #1e526e, #446f8c);
 }
 
 .card .card-header-danger .card-icon,
@@ -16813,7 +16805,7 @@ label {
 .card.bg-danger,
 .card.card-rotate.bg-danger .front,
 .card.card-rotate.bg-danger .back {
-  background: linear-gradient(60deg, #ef5350, #e53935);
+  background: linear-gradient(60deg, #b96663, #1e526e);
 }
 
 .card .card-header-rose .card-icon,
