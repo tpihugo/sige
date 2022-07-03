@@ -11,8 +11,8 @@
                 @can('AULAS_AREAS#ver')
                 <li>
                     <a href="#">Áreas</a>
-                    <i class='bx bxs-chevron-down js-arrow arrow '></i>
-                    <ul class="js-sub-menu sub-menu">
+                    <i class='bx bxs-chevron-down htmlcss-arrow arrow'></i>
+                    <ul class="htmlCss-sub-menu sub-menu">
                         <li><a href="{{ route('areas.create') }}">Captura Área</a></li>
                         <li><a href="{{ route('areas.index') }}">Consulta Áreas</a></li>
                     </ul>
@@ -22,8 +22,8 @@
                 @can('MOBILIARIO#ver')
                 <li>
                     <a href="#">Mobiliario</a>
-                    <i class='bx bxs-chevron-down htmlcss-arrow arrow  '></i>
-                    <ul class="js-sub-menu sub-menu">
+                    <i class='bx bxs-chevron-down htmlcss-arrow arrow'></i>
+                    <ul class="htmlCss-sub-menu sub-menu">
                         @can('MOBILIARIO#crear')
                         <li><a href="{{ route('mobiliarios.create') }}">Captura Mobiliario</a></li>
                         @endcan
@@ -63,8 +63,8 @@
             @can('TICKETS#ver')
             <li>
                 <a href="#">Tickets</a>
-                <i class='bx bxs-chevron-down htmlcss-arrow arrow  '></i>
-                <ul class="htmlCss-sub-menu sub-menu">
+                <i class='bx bxs-chevron-down tickets-arrow arrow '></i>
+                    <ul class="tickets-sub-menu sub-menu">
                     <li><a href="{{ route('tickets.create') }}">Captura Tickets</a></li>
                     <li><a href="{{ route('tickets.index') }}">Consultar Tickets Abiertos</a></li>
                     <li><a href="{{ route('revisionTickets') }}">Consultar Tickets Completos</a></li>
@@ -75,8 +75,8 @@
             @can('CURSOS#ver')
             <li>
                 <a href="#">Cursos</a>
-                <i class='bx bxs-chevron-down htmlcss-arrow arrow  '></i>
-                <ul class="htmlCss-sub-menu sub-menu">
+                <i class='bx bxs-chevron-down cur-arrow arrow  '></i>
+                <ul class="cur-sub-menu sub-menu">
                     @can('CURSOS#crear')
                     <li><a href="{{ route('cursos.create') }}">Capturar</a></li>
                     @endcan
@@ -90,8 +90,8 @@
             @can('USUARIOS#ver')
             <li>
                 <a href="#">Usuarios</a>
-                <i class='bx bxs-chevron-down htmlcss-arrow arrow  '></i>
-                <ul class="htmlCss-sub-menu sub-menu">
+                <i class='bx bxs-chevron-down user-arrow arrow  '></i>
+                <ul class="user-sub-menu sub-menu">
                     <li><a href="{{ route('usuarios.index') }}">Administrar Usuarios</a></li>
                     <li><a href="{{ route('usuarios.index') }}">Roles y Permisos</a></li>
                 </ul>
@@ -102,8 +102,8 @@
             {{--
           <li>
             <a href="#">Logs</a>
-          <i class='bx bxs-chevron-down htmlcss-arrow arrow  '></i>
-            <ul class="htmlCss-sub-menu sub-menu">
+          <i class='bx bxs-chevron-down logs-arrow arrow  '></i>
+            <ul class="logs-sub-menu sub-menu">
                 <li><a href="{{ route('logs.index') }}">Consultar Logs</a></li>
             </ul>
             </li>
@@ -113,8 +113,8 @@
             @can('PROYECTOS#ver')
             <li>
                 <a href="#">Proyectos</a>
-                <i class='bx bxs-chevron-down htmlcss-arrow arrow  '></i>
-                <ul class="htmlCss-sub-menu sub-menu">
+                <i class='bx bxs-chevron-down proj-arrow arrow  '></i>
+                <ul class="proj-sub-menu sub-menu">
                     <li><a href="{{ route('proyectos.create') }}">Capturar Proyecto</a></li>
                     <li><a href="{{ route('proyectos.index') }}">Consultar Proyectos</a></li>
                 </ul>
@@ -124,8 +124,8 @@
             @can('SERVICIOS#ver')
             <li>
                 <a href="#">Servicios</a>
-                <i class='bx bxs-chevron-down htmlcss-arrow arrow  '></i>
-                <ul class="htmlCss-sub-menu sub-menu">
+                <i class='bx bxs-chevron-down serv-arrow arrow  '></i>
+                <ul class="serv-sub-menu sub-menu">
                     <li><a href="{{ route('servicios.create') }}">Capturar servicio</a></li>
                     <li><a href="{{ route('servicios.index') }}">Consultar servicios</a></li>
                 </ul>
@@ -135,8 +135,8 @@
             @can('SUBREDES_IP#ver')
             <li>
                 <a href="#">Subredes e IP's</a>
-                <i class='bx bxs-chevron-down htmlcss-arrow arrow  '></i>
-                <ul class="htmlCss-sub-menu sub-menu">
+                <i class='bx bxs-chevron-down sub-arrow arrow  '></i>
+                <ul class="sub-sub-menu sub-menu">
                     <li><a href="{{ route('subredes.create') }}">Captura Subred</a></li>
                     <li><a href="{{ route('ips.create') }}">Captura IP</a></li>
                     <li><a href="{{ route('subredes.index') }}">Consulta Subred</a></li>
@@ -148,8 +148,8 @@
             @can('LICENCIAS#ver')
             <li>
                 <a href="#">Licencias</a>
-                <i class='bx bxs-chevron-down htmlcss-arrow arrow  '></i>
-                <ul class="htmlCss-sub-menu sub-menu">
+                <i class='bx bxs-chevron-down lic-arrow arrow  '></i>
+                <ul class="lic-sub-menu sub-menu">
                     <li><a href="{{ route('licencias.create') }}">Capturar licencia</a></li>
                     <li><a href="{{ route('licencias.index') }}">Consultar licencia</a></li>
                 </ul>
@@ -170,8 +170,8 @@
             @auth
             <li>
                 <a href="#">{{ Auth::user()->name }}</a>
-                <i class='bx bxs-chevron-down htmlcss-arrow arrow  '></i>
-                <ul class="htmlCss-sub-menu sub-menu">
+                <i class='bx bxs-chevron-down usuario-arrow arrow  '></i>
+                <ul class="usuario-sub-menu sub-menu">
                     <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">{{ __('Salir') }}</a></li>
                 </ul>

@@ -47,5 +47,20 @@ let jsArrow = document.querySelector(".js-arrow");
 jsArrow.onclick = function() {
  navLinks.classList.toggle("show3");
 }
-
+let tickArrow = document.querySelector(".tickets-arrow");
+tickArrow.onclick = function() {
+ navLinks.classList.toggle("show4");
+}
+let curArrow = document.querySelector(".cur-arrow");
+curArrow.onclick = function() {
+ navLinks.classList.toggle("show5");
+}
+let userArrow = document.querySelector(".user-arrow");
+userArrow.onclick = function() {
+ navLinks.classList.toggle("show6");
+}
+let logsArrow = document.querySelector(".logs-arrow");
+logsArrow.onclick = function() {
+ navLinks.classList.toggle("show7");
+}
 </script>

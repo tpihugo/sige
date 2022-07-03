@@ -4,7 +4,7 @@
     @if(Auth::check() && Auth::user()->role =='admin' || Auth::user()->role =='cta')
 
     <div class="container">
-        <div class="row">
+        <div class="container-fluid">
             @if (session('message'))
                 <div class="alert alert-success">
                     {{ session('message') }}

@@ -11,9 +11,9 @@
 
                 </div>
             @endif
-            <div class="row">
+            <div class="container-fluid">
                 <h2>Edición de Préstamo. Folio: {{$prestamo->id}}</h2>
-                <hr>
+                <hr><br>
                <script type="text/javascript">
 
                     $(document).ready(function() {
@@ -24,7 +24,7 @@
                 </script>
 
             </div>
-        <div class="row">
+        <div class="container-fluid">
             <table class="table table-success table-bordered" style="width:100%">
                     <thead class="thead-light">
                     <tr>
@@ -52,13 +52,14 @@
                     </tr>
                     </tbody>
                 </table>
-
+                @if ($equiposPorPrestamo != null && count($equiposPorPrestamo) > 0)
                 <td><a class="btn btn-outline-success" style="width: 100%" href="{{ route('imprimirPrestamo', $prestamo->id)}}" target="blank">Imprimir formato de préstamo</a></td>
                 <p>
                 <br>
                 </p>
+                @endif
                 
-                @if ($equiposPorPrestamo != null)
+                @if ($equiposPorPrestamo != null && count($equiposPorPrestamo) > 0)
                 <h5><p align="center">Equipo en préstamo</p></h5>
                 <table class="table table-bordered" style="width:100%" id="mytable">
                     <thead class="thead-light">
@@ -130,7 +131,7 @@
         </div>
         <hr>
 
-        <div class="row ">
+        <div class="container-fluid">
                 <h5><center>Agregar Equipos</center></h5>
 
                 <form action="{{route('busquedaEquiposPrestamo')}}" method="POST" enctype="multipart/form-data" class="col-12">
@@ -211,9 +212,9 @@
                 </table>
 
         </div>
-        <div class="row">
+        <div class="container-fluid">
                 <br>
-                    <div class="row g-3 align-items-center">
+                    <div class="container-fluid g-3 align-items-center">
                         <div class="col-md-6">
                             <a href="{{ route('home') }}" class="btn btn-danger">Cancelar</a>
                            
@@ -222,7 +223,7 @@
                 </div>
             
             <br>
-            <div class="row g-3 align-items-center">
+            <div class="container-fluid g-3 align-items-center">
 
                 <br>
                 <h5>En caso de inconsistencias, favor de reportarlas a victor.ramirez@academicos.udg.mx</h5>
