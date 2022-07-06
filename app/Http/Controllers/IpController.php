@@ -8,6 +8,7 @@ use App\Models\Subred;
 use App\Models\VsIps;
 use App\Models\Vs_Ips_Subredes;
 use Illuminate\Http\Request;
+use Stringable;
 
 class IpController extends Controller
 {
@@ -116,13 +117,15 @@ class IpController extends Controller
     public function cargarDTall($consulta)
     {
         $ipsdisp = [];
+        
 
         foreach ($consulta as $key => $value){
-
+            
+            
             $ruta = "eliminar".$value['id'];
             $eliminar = route('delete-ip', $value['id']);
             $actualizar =  route('ips.edit', $value['id']);
-
+            
             $acciones = '
                 <div class="btn-acciones">
                     <div class="btn-circle">
@@ -160,6 +163,62 @@ class IpController extends Controller
                 </div>
               </div>
             ';
+            $equipo =  VsIps::
+            join('equipos','vs_ips.id_equipo','=','equipos.id')
+            ->select('vs_ips.*','equipos.tipo_equipo as tipo_equipo','equipos.numero_serie as numero_serie', 'equipos.detalles as detalles')
+            ->where('vs_ips.ip','=',$value['ip'])->first();
+
+            
+            
+            
+            
+           if ($value['disponible']=='no' and $equipo !=null )  {
+            
+            if($equipo !=null){
+            
+                
+            $ipsdisp[$key] = array(
+                $acciones,
+                $value['ip'],
+                //mostrar equipo que tiene la ip en caso de estar registrado
+                
+                
+                '<a href= "'.$equipo.'"  data-toggle="modal" data-target="#exampleModalLong">'.$value['disponible'].'</a>
+                <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Detalles del equipo</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    
+                    <div class="modal-body">
+                        <b>id del equipo:</b> '.$equipo->id_equipo.'<br><br>
+                        <b>Equipo: </b>'.$equipo->tipo_equipo.'<br><br>
+                        <b>Marca:</b> '.$equipo->marca.'<br><br>
+                        <b>Modelo:</b> '.$equipo->modelo.'<br><br>
+                        <b>Numero de serie: </b>'.$equipo->numero_serie.'<br><br>
+                        <b>Detalles del equipo:</b> '.$equipo->detalles.'
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                        
+                    </div>
+                    </div>
+                </div>
+                </div>',
+                
+                $value['subred'],
+                $value['mascara'],
+                $value['gateway'],
+
+            
+
+            );
+            }
+        }else{
             $ipsdisp[$key] = array(
                 $acciones,
                 $value['ip'],
@@ -168,14 +227,20 @@ class IpController extends Controller
                 $value['mascara'],
                 $value['gateway'],
 
-
+            
 
             );
 
         }
+    
 
-        return $ipsdisp;
+        
+
+        
     }
+    return $ipsdisp;
+
+}
     /**
      * Store a newly created resource in storage.
      *
@@ -188,7 +253,7 @@ class IpController extends Controller
 
             'id_subred'=>'required',
             'ip'=>'required|unique:ips,ip',
-            'disponible'=>'required',
+            
 
         ]);
         $subred = Subred::where('id', '=', $request->input('id_subred'))->get()->first();
@@ -197,7 +262,18 @@ class IpController extends Controller
         $ip= new Ip();
         $ip->id_subred=$subred->id;
         $ip->ip = $request->input('ip');
-        $ip->disponible = $request->input('disponible');
+        
+
+         //comprobar que la ip no este ocupada
+        $ipNo = VsIps::where('ip','=',$request->input('ip'))->first();
+        if($ipNo !=null){//si esta ocupada
+            $ip->disponible='no';
+
+        }else{
+            $ip->disponible='si';
+
+        }
+        
         $ip->save();
 
         return redirect('ips')->with(array(
@@ -256,15 +332,26 @@ class IpController extends Controller
     {
         $validateData = $this->validate($request,[
             'ip' => 'required',
-            'disponible' => 'required',
+            
             'id_subred'=>'required',
 
         ]);
 
         $ip= Ip::find($id);
-        $ip->ip = $request->input('ip');
-        $ip->disponible = $request->input('disponible');
+        $ip->ip = $request->input('ip_id');
+        
         $ip->id_subred =$request->input('id_subred');
+        
+        //comprobar que la ip no este ocupada
+        $ipNo = VsIps::where('ip','=',$request->input('ip'))->first();
+        if($ipNo !=null){//si esta ocupada
+            $ip->disponible='no';
+
+        }else{//si no esta ocupada
+            $ip->disponible='si';
+
+        }
+
         $ip->update();
         return redirect('ips')->with(array(
             'message'=>'Ip actualizada'
@@ -408,4 +495,41 @@ class IpController extends Controller
         }
 
     }
+
+    //filtrar por ip
+
+    public function filtro_p_ip(Request $request){
+        if($request->input('ipb')==0){
+            return redirect()->route('ips.index')->with(array(
+                "message" => "Filtros no seleccionados"
+            ));
+        }
+        $subredes= Subred::where('activo','=',1)->get();
+        $ips =Ip::where('activo','=',1)->get();
+        $ip = $request->input('ipb');
+        //ip a buscar
+        $ipElegida = Ip::where('ip','=',$ip)->get();
+
+        if((isset($ip) && !is_null($ip))){
+            if($ipElegida){
+                $filtro = Vs_Ips_Subredes::where('ip','=',$ip)->get();
+
+                $ips = $this->cargarDTall($filtro);
+            
+            }
+            
+
+        } else {
+            $ips =Ip::where('activo','=',1)->get();
+        }
+
+        //return $ip;
+        return view('ips.index')
+            ->with('ips', $ips)
+            ->with('subredes',$subredes)
+            ->with('ipElegida',$ipElegida);
+
+    }
+    
 }
+

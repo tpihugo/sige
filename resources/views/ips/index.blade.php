@@ -15,6 +15,9 @@
                         <a href="{{ route('ips.create') }}" class="btn btn-success">
                             <i class="fa fa-plus"></i> Capturar IP
                         </a>
+                        <a href="{{ route('switches') }}" class="btn btn-primary">
+                            <i class="fa fa-router"></i> Ver switches
+                        </a>
                         <a href="{{ route('asignadas') }}" class="btn btn-primary">
                             <i class="fa fa-list"></i> IPS asignadas
                         </a>
@@ -25,7 +28,9 @@
                 </div>
             </div>
             <br>
-            <form action="{{ route('filtroIps') }}" method="post" enctype="multipart/form-data" class="col-12">
+            
+            <div>
+            <form action="{{ route('filtroIps') }}" method="post" enctype="multipart/form-data" class="col-sm-6" style="display: inline-flexbox">
                 <div class="row g-3 align-items-center">
                     <div class="col">
                         {!! csrf_field() !!}
@@ -41,9 +46,10 @@
 
                     </div>
                     <br>
+                    
                 </div>
 
-                <div class="row align-items-end">
+                <div class="row align-items-end" >
                     <div class="col-md-4 pl-0">
                         <label for="id">Subred </label>
                         <select class="form-control" id="id" name="id">
@@ -105,25 +111,71 @@
                             @endif
 
                         </select>
+                       
                     </div>
-                </div>
-                <div>
                     <div class="col-md-auto mt-3 pl-0">
                         <button type="submit" class="btn btn-outline-primary">
                             <i class="fa fa-search"></i> Filtrar
                         </button>
-                        <a href="{{ route('ips.index') }}" class="btn btn-outline-success">
-                            <i class="fa fa-search-minus"></i> Quitar Filtro
-                        </a>
+                        
                     </div>
                 </div>
+                
                 <br>
             </form>
+            
+        </div>
+            <!--Filtrar por ip-->
+            
+            <form action="{{ route('filIps') }}" method="post" enctype="multipart/form-data" class="col-sm-6" style="display: inline-flexbox">
+                <div class="row g-3 align-items-center">
+                    <div class="col">
+                        {!! csrf_field() !!}
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+        
+                    </div>
+                    <br>
+                
+        
+                <div class="row align-items-end">
+                    <div class="col-md-4 pl-0">
+                        <label for="id">Buscar ip </label>
+                        <input class="form-control" id="ipb" name="ipb">
+                        
+                        
+                    </div>
+                    <div class="col-md-auto mt-3 pl-0">
+                        <button type="submit" class="btn btn btn-outline-primary">
+                            <i class="fa fa-search"></i> Filtrar por ip
+                        </button>
+                    </div>
+                    
+                    
+                </div>
+                
+                <br>
+            </form>
+
+            <a href="{{ route('ips.index') }}" class="btn btn-outline-success col-md-4">
+                <i class="fa fa-search-minus"></i> Quitar Filtro
+            </a>
+
+
         </div>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
+                    
                     <table id="example" class="table table-striped table-bordered" cellspacing="2" width="100%">
+                        
                         <thead>
                         <tr>
                             <th>Acciones</th>
