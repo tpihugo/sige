@@ -21,6 +21,10 @@
                         $('#js-example-basic-single2').select2();
 
                     });
+                    $(document).ready(function() {
+                        $('#js-example-basic-single3').select2();
+
+                    });
                 </script>
 
             </div>
@@ -85,10 +89,10 @@
                             </div>
                             <div class="col-md-4">
                                 <label for="ip_id">IP</label>
-                                <select class="form-control" id="ip_id" name="ip_id">
-                                    <option value="null" selected>No aplica/No Especificado</option>
+                                <select class="form-control" id="js-example-basic-single3" name="ip_id">
+                                    <option value="No Aplica" selected>No Aplica</option>
                                     @foreach($ips as $ip)
-                                        <option value="{{$ip->id}}" >{{$ip->ip}}</option>
+                                        <option value="{{$ip->ip}}" >{{$ip->ip}}</option>
                                     @endforeach
                                 </select>
                                 <!--<input type="text" class="form-control" id="ip" name="ip" value="No aplica/No Especificado" >-->

@@ -61,7 +61,7 @@
                                 </div>
                             </div>
                             <br>
-                            <div class="row align-items-center">
+                            {{-- <div class="row align-items-center">
                                 <div class="row align-items-center">
                                     <div class="col-md-20">
                                         <label class="font-weight-bold" for="disponible">Disponible </label>
@@ -72,7 +72,7 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <br>
                             <div class="row align-items-center m-0">
                                 <div class="col-md-6">
