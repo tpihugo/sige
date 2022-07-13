@@ -33,11 +33,11 @@
                             <br>
                             <div class="row align-items-center">
                                 <div class="col-md-12">
-                                    <label class="font-weight-bold" for="subred">Subred </label>
+                                    <label class="font-weight-bold" for="subred">Numero de subred </label>
                                     <input type="text" class="form-control" id="subred" name="subred"
-                                           pattern="[0-9]{3}\.[0-9]{3}\.[0-9]{1,3}\.[0-9]{1,3}"
-                                           title="El campo debe ser llenado en el formato correcto.&#013;Ejemplo: (192.168.1.0)"
-                                           placeholder="192.168.1.0"
+                                           
+                                           title="El campo debe ser llenado en el formato correcto."
+                                           
                                            value="{{ old('subred') }}">
                                 </div>
                             </div>
@@ -46,7 +46,7 @@
                                 <div class="col-md-12">
                                     <label class="font-weight-bold" for="mascara">Mascara </label>
                                     <input type="text" class="form-control" id="mascara" name="mascara"
-                                           pattern="[0-9]{3}\.[0-9]{3}\.[0-9]{1,3}\.[0-9]{1,3}"
+                                           pattern="[0-5]{3}\.[0-5]{3}\.[0-5]{3}\.[0-9]{1,3}"
                                            title="El campo debe ser llenado en el formato correcto.
                                             &#013; Ejemplo: (255.255.255.255)"
                                            placeholder="255.255.255.255"
@@ -66,16 +66,7 @@
                                 </div>
                             </div>
 <br>
-                            <div class="row align-items-center">
-                                <div class="col-md-20">
-                                    <label class="font-weight-bold" for="disponible">Disponible </label>
-                                    <select class="form-control" id="disponible" name="disponible" >
-                                        <option >Seleccione disponibiliad</option>
-                                        <option value="si">Si</option>
-                                        <option value="no">No</option>
-                                    </select>
-                                </div>
-                            </div>
+                            
                         <br>
                         <div class="row align-items-center m-0">
                             <div class="col-md-6">

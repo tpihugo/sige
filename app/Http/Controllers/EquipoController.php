@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use App\Models\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Ip;
+use App\Models\Subred;
 use equipo as GlobalEquipo;
 use Faker\Calculator\Ean;
 
@@ -36,7 +37,9 @@ class EquipoController extends Controller
         $empleados = Empleado::all()->sortBy('nombre');
         $areas = Area::all();
 	$tipo_equipos = Equipo::distinct()->orderby('tipo_equipo','asc')->get(['tipo_equipo']);
-	$ip = Ip::where('disponible','=','si')->get();
+	$ip = IP::join('subredes','ips.id_subred','=','subredes.id')
+        ->select('subredes.*','ips.*')
+        ->where('ips.disponible','=','si')->get();
         return view('equipo.create')->with('empleados', $empleados)->with('areas', $areas)->with('tipo_equipos', $tipo_equipos)->with('ips',$ip);
     }
 
@@ -64,6 +67,7 @@ class EquipoController extends Controller
             $equipo->ip = null;
         }else{
             $equipo->ip = $request->input('ip_id');
+            
         }
 
     	$equipo->tipo_conexion = $request->input('tipo_conexion');
@@ -76,6 +80,8 @@ class EquipoController extends Controller
 
 	if($request->input('ip_id')!='null'){
         $ip = Ip::where('ip','=',$request->input('ip_id'))->first();
+        $ip->gateway = $request->input('gateway');
+        $ip->mascara = $request->input('mascara');
         $ip->disponible = 'no';
         $ip->update();
     }
@@ -130,17 +136,24 @@ class EquipoController extends Controller
         if($equipo->id!=null){
             //si el equipo tiene ip asignada
             $ip_equipo=Ip::where('ip','=',$equipo->ip)->first();
+            $subred_equipo=Ip::
+            join('subredes','ips.id_subred','=','subredes.id')
+            ->select('subredes.*')
+            ->where('ips.ip','=',$equipo->ip)->first();
 
         }
 
-        $ip = Ip::where('disponible','=','si')->get();
+        $ip = IP::join('subredes','ips.id_subred','=','subredes.id')
+        ->select('subredes.*','ips.*')
+        ->where('ips.disponible','=','si')->get();
+        
         if($equipo){
             $idResguardante=$equipo->id_resguardante;
             if($idResguardante==0){
                 $idResguardante=39;
             }
             $resguardante = Empleado::find($idResguardante);
-            return view('equipo.edit')->with('equipo', $equipo)->with('empleados', $empleados)->with('resguardante',$resguardante)->with('tipo_equipos', $tipo_equipos)->with('ips',$ip)->with('ip_equipo',$ip_equipo);
+            return view('equipo.edit')->with('equipo', $equipo)->with('empleados', $empleados)->with('resguardante',$resguardante)->with('tipo_equipos', $tipo_equipos)->with('ips',$ip)->with('ip_equipo',$ip_equipo)->with('subred_equipo',$subred_equipo);
         }else{
             return redirect('/')->with(array(
                 'message'=>'El Id que desea modificar no existe'
@@ -163,14 +176,17 @@ class EquipoController extends Controller
         $equipo->numero_serie = $request->input('numero_serie');
         $equipo->mac = $request->input('mac');
 
-        if($request->input('ip_id')=="null"){
-            $equipo->ip_id = null;
+        if($request->input('ip_id')=="No Especificado"){
+            $equipo->ip = 'No Especificado';
+            
+
         }else{
             $equipo->ip = $request->input('ip_id');
             $ip = Ip::where('ip','=',$request->input('ip_id'))->first();
             $ip->disponible = 'no';
-            $ip->update();
-            
+            $ip->gateway = $request->input('gateway');
+            $ip->mascara = $request->input('mascara');
+            $ip->update();  
         }
 
 
@@ -181,8 +197,8 @@ class EquipoController extends Controller
         $equipo->localizado_sici = $request->input('localizado_sici');
 	$equipo->update();
 
-    if($equipo_ip==null){//antes era null y veremos que es ahora
-        if($equipo->ip!=null){//la selecionada no es null
+    if($equipo_ip=="No Especificado"){//antes era null y veremos que es ahora
+        if($equipo->ip!="No Especificado"){//la selecionada no es null
             $ip = Ip::where('ip','=',$request->input('ip_id'))->first();
             $ip->disponible = 'no';
             $ip->update();
@@ -191,10 +207,18 @@ class EquipoController extends Controller
         if($equipo_ip!=$equipo->ip){//la ip va a cambiar
             $ip = Ip::where('ip','=',$equipo_ip)->first();
             $ip->disponible = 'si';
+            $ip->gateway = $request->input('No Especificado');
+            $ip->mascara = $request->input('No Especificado');
             $ip->update();
-            if($equipo->ip!=null){//la seleccionada no es null
+            if($equipo->ip!="No Especificado"){//la seleccionada no es null
                 $ip = Ip::where('ip','=',$equipo->ip)->first();
                 $ip->disponible = 'no';
+                
+                $ip->update();
+            }else{
+                $ip = Ip::where('ip','=',$equipo_ip)->first();
+                $ip->gateway = $request->input('No Especificado');
+                $ip->mascara = $request->input('No Especificado');
                 $ip->update();
             }
         }
