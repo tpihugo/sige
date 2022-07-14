@@ -34,18 +34,17 @@
                             <br>
                             <div class="row align-items-end">
                                 <div class="col-md-12 pl-0">
-                                    <label for=id_subred">Subred </label>
+                                    <label for="id_subred">Subred </label>
                                     <select class="form-control" id="id_subred" name="id_subred">
                                             <option value="{{ $ip->id_subred }}" selected>
-                                                Esta ip esta en la subred con el ID: {{$ip->id_subred}}
+                                                subred actual de la ip: {{$subred->subred}}
                                             </option>
                                             <option value="Elegir">Elegir otra subred</option>
                                         @foreach ($subredes as $subred)
                                             <option value="{{ $subred->id }}">
-                                                ID: {{$subred->id}} /
+                                                
                                                 Subred: {{ $subred->subred }} /
-                                                Mascara: {{ $subred->mascara }} /
-                                                Gateway: {{ $subred->gateway }}
+                                               
                                             </option>
                                         @endforeach
 

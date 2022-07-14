@@ -21,7 +21,9 @@ class IpController extends Controller
     {
         $subred = Subred::where('activo','=',1)
             ->get();
-        $ip= Vs_Ips_Subredes::where('activo','=',1)
+        $ip= Ip::join('subredes','ips.id_subred','=','subredes.id')
+            ->select('subredes.subred','ips.*')
+            ->where('ips.activo','=','1')
             ->get();
         $ips = $this->cargarDTall($ip);
 
@@ -165,7 +167,8 @@ class IpController extends Controller
             ';
             $equipo =  VsIps::
             join('equipos','vs_ips.id_equipo','=','equipos.id')
-            ->select('vs_ips.*','equipos.tipo_equipo as tipo_equipo','equipos.numero_serie as numero_serie', 'equipos.detalles as detalles')
+            ->join('empleados', 'equipos.id_resguardante','=','empleados.id')
+            ->select('vs_ips.*','equipos.tipo_equipo as tipo_equipo','equipos.numero_serie as numero_serie', 'equipos.detalles as detalles', 'empleados.nombre as usuario')
             ->where('vs_ips.ip','=',$value['ip'])->first();
 
             
@@ -196,11 +199,13 @@ class IpController extends Controller
                     
                     <div class="modal-body">
                         <b>id del equipo:</b> '.$equipo->id_equipo.'<br><br>
+                        <b>Usuario encargado:</b> '.$equipo->usuario.'<br><br>
+                        <b>Numero de serie: </b>'.$equipo->numero_serie.'<br><br>
+                        <b>MAC del equipo:</b> '.$equipo->mac.'<br><br>
                         <b>Equipo: </b>'.$equipo->tipo_equipo.'<br><br>
                         <b>Marca:</b> '.$equipo->marca.'<br><br>
                         <b>Modelo:</b> '.$equipo->modelo.'<br><br>
-                        <b>Numero de serie: </b>'.$equipo->numero_serie.'<br><br>
-                        <b>Detalles del equipo:</b> '.$equipo->detalles.'
+                        <b>Ubicacion: </b>' . $equipo->area.'                  
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
@@ -209,7 +214,6 @@ class IpController extends Controller
                     </div>
                 </div>
                 </div>',
-                
                 $value['subred'],
                 $value['mascara'],
                 $value['gateway'],
@@ -310,12 +314,17 @@ class IpController extends Controller
 
         {
             $ip = Ip::find($id);
+            $subred = Ip::
+            join('subredes','ips.id_subred','=','subredes.id')
+            ->select('subredes.*')
+            ->where('ips.id','=',$id)->first();
 
             $subredes = Subred::where('activo', '=', 1)
                 ->get();
 
             return view('ips.edit')
                 ->with('ip', $ip)
+                ->with('subred',$subred)
                 ->with('subredes', $subredes);
         }
 
