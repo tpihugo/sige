@@ -60,7 +60,6 @@
                                 <label for="cargo">Cargo</label>
                                 <input type="text" class="form-control" id="cargo" name="cargo" value="{{old('cargo')}}" required>
                             </div>
-
                         </div>
                         <br>
                         <div class="row g-3 align-items-center">

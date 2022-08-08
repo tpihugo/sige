@@ -64,8 +64,8 @@ Route::resource('tecnicos', 'App\Http\Controllers\TecnicoController');
 Route::resource('mantenimiento', 'App\Http\Controllers\MantenimientoController');
 Route::resource('llaves', 'App\Http\Controllers\LlavesController');
 Route::resource('personal', 'App\Http\Controllers\PersonalController');
-
-
+Route::resource('requisicion', 'App\Http\Controllers\RequisicionController');
+Route::resource('articulo', 'App\Http\Controllers\ArticuloController');
 Route::resource('expedientes', 'App\Http\Controllers\ExpedienteController');
 Route::resource('mantenimientoEquipos', 'App\Http\Controllers\mantenimientoEquipoController');
 
@@ -493,11 +493,15 @@ Route::get('/expediente/{equipo_id}', array(
     'uses' => 'App\Http\Controllers\ExpedienteController@expediente'
 ));
 //Requisicion
-Route::post('/crear_requisicion', array(
-    'as' => 'crear_requisicion',
+Route::resource('requisiciones', '\App\Http\Controllers\RequisicionController');
+
+Route::get('/imprimirrequisicion/{id}', array(
+    'as' => 'imprimirrequisicion',
     'middleware' => 'auth',
-    'uses' => 'App\Http\Controllers\RequisicionController@store'
+    'uses' => 'App\Http\Controllers\PDFController@imprimirrequisicion'
 ));
+//Articulo_requisicion
+Route::resource('articulos', '\App\Http\Controllers\ArticuloController');
 //Llaves
 Route::get('/delete_llaves/{id}', array(
     'as' => 'delete_llaves',

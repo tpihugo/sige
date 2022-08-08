@@ -90,12 +90,9 @@
                     <th>Categoría y Prioridad</th>
                     <th>Reporte</th>
                     <th>Solución y cierre</th>
-                    
-
                 </tr>
                 </thead>
                 <tbody>
-               
                 </tbody>
 
             </table>
