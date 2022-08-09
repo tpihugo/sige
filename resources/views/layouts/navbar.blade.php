@@ -132,29 +132,7 @@
             </li>
             @endcan
 
-            @can('SUBREDES_IP#ver')
-            <li>
-                <a href="#">Subredes e IP's</a>
-                <i class='bx bxs-chevron-down sub-arrow arrow  '></i>
-                <ul class="sub-sub-menu sub-menu">
-                    <li><a href="{{ route('subredes.create') }}">Captura Subred</a></li>
-                    <li><a href="{{ route('ips.create') }}">Captura IP</a></li>
-                    <li><a href="{{ route('subredes.index') }}">Consulta Subred</a></li>
-                    <li><a href="{{ route('ips.index') }}">Consulta IP</a></li>
-                </ul>
-            </li>
-            @endcan
-
-            @can('LICENCIAS#ver')
-            <li>
-                <a href="#">Licencias</a>
-                <i class='bx bxs-chevron-down lic-arrow arrow  '></i>
-                <ul class="lic-sub-menu sub-menu">
-                    <li><a href="{{ route('licencias.create') }}">Capturar licencia</a></li>
-                    <li><a href="{{ route('licencias.index') }}">Consultar licencia</a></li>
-                </ul>
-            </li>
-            @endcan
+            
 
             <li>
             @guest
