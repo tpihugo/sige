@@ -22,26 +22,41 @@
   <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
   <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- Font Awesome Icons -->
-  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  
   <!-- Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <!-- CSS Files -->
-  <link id="pagestyle" href="../material2/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />
+  
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4-4.1.1/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/r-2.2.7/datatables.min.js"></script>
+
+  
 </head>
 
 <body class="g-sidenav-show bg-gray-200">
- 
-  <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
-    <div class="container-fluid">
+<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
+  <div class="container-fluid py-1 px-3">
+    <nav aria-label="breadcrumb">
+      
+      
+      <h1 class="font-weight-bolder mb-0">Expediente</h1>
+      
+    </nav>
+    <div class="col-6 text-end">
+      <a class="btn bg-gradient-dark mb-0" href="{{route('Imprimirexpediente',$equipo[0])}}" target="_blank"> <i class="fas fa-file-pdf"></i>&nbsp;&nbsp;Imprimir expediente</a>
+      </div>
+  
+      
+    </div>
+  </div>
+</nav>
+<!-- End Navbar -->
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-lg-8">
       <div class="row">
-        <div class="col-6 d-flex align-items-center">
-          <h2 class="mb-0">Expediente</h2>
-        </div>
-        <div class="col-6 text-end">
-          <a class="btn bg-gradient-dark mb-0" href="javascript:;"> <i class="fas fa-file-pdf"></i>&nbsp;&nbsp;Imprimir expediente</a>
-          </div>
-        </div>
-        <div class="col-md-12 mb-lg-0 mb-4">
+        <div class="col-md-9mb-lg-0 mb-4">
           <div class="card">
             <div class="card-header pb-0 p-1">
               <div class="card-body p-1">
@@ -99,7 +114,7 @@
                   <a href="javascript:;" type="button" data-toggle="modal" data-target="#modalR" data-dismiss="modal">
                     <div class="btn p-3">
                       <div class="card-header mx-5 p-1 text-center">
-                        <div class=" pt-3 icon-lg bg-gradient-primary shadow  border-radius-lg text-center">
+                        <div class=" pt-3 icon-lg fas fa-file border-radius-lg text-center">
                           <i class="fas fa-file-pdf " style="color:#fff"></i>
                         </div>
                       </div>
@@ -140,10 +155,10 @@
 
                 @else
                 <div class="col">
-                  <a href="../archivos_expediente/{{$equipo[8]}}" target="_blank">
+                  <a href="../../storage/app/documentos/{{$equipo[8]}}" target="_blank">
                     <div class="btn p-3">
                       <div class="card-header mx-5 p-1 text-center">
-                        <div class=" pt-3 icon-lg bg-gradient-primary shadow  border-radius-lg text-center">
+                        <div class=" pt-3 icon-lg fas fa-file border-radius-lg text-center">
                           <i class="fas fa-file-pdf " style="color:#fff"></i>
                         </div>
                       </div>
@@ -163,7 +178,7 @@
                   <a href="javascript:;" type="button" data-toggle="modal" data-target="#modalC" data-dismiss="modal">
                     <div class="btn p-3">
                       <div class="card-header mx-5 p-1 text-center">
-                        <div class=" pt-3 icon-lg bg-gradient-danger shadow  border-radius-lg text-center">
+                        <div class=" pt-3 icon-lg fas fa-money border-radius-lg text-center">
                           <i class="fas fa-file-pdf " style="color:#fff"></i>
                         </div>
                       </div>
@@ -204,10 +219,10 @@
 
                 @else
                 <div class="col">
-                  <a href="../archivos_expediente/{{$equipo[9]}}" target="_blank">
+                  <a href="../../storage/app/documentos/{{$equipo[9]}}" target="_blank">
                     <div class="btn p-3">
                       <div class="card-header mx-5 p-1 text-center">
-                        <div class=" pt-3 icon-lg bg-gradient-danger shadow  border-radius-lg text-center">
+                        <div class=" pt-3 icon-lg fas fa-money  border-radius-lg text-center">
                           <i class="fas fa-file-pdf " style="color:#fff"></i>
                         </div>
                       </div>
@@ -226,7 +241,7 @@
                   <a href="javascript:;" type="button" data-toggle="modal" data-target="#modalF" data-dismiss="modal">
                     <div class="btn p-3">
                       <div class="card-header mx-5 p-1 text-center">
-                        <div class=" pt-3 icon-lg bg-gradient-success shadow  border-radius-lg text-center">
+                        <div class=" pt-3 icon-lg fas fa-file-invoice  border-radius-lg text-center">
                           <i class="fas fa-file-pdf " style="color:#fff"></i>
                         </div>
                       </div>
@@ -267,10 +282,10 @@
 
                 @else
                 <div class="col">
-                  <a href="../archivos_expediente/{{$equipo[10]}}" target="_blank">
+                  <a href="../../storage/app/documentos/{{$equipo[10]}}" target="_blank">
                     <div class="btn p-3">
                       <div class="card-header mx-5 p-1 text-center">
-                        <div class=" pt-3 icon-lg bg-gradient-success shadow  border-radius-lg text-center">
+                        <div class="pt-3 icon-lg fas fa-file-invoice  border-radius-lg text-center">
                           <i class="fas fa-file-pdf " style="color:#fff"></i>
                         </div>
                       </div>
@@ -289,7 +304,7 @@
                   <a href="javascript:;" type="button" data-toggle="modal" data-target="#modalO" data-dismiss="modal">
                     <div class="btn p-3">
                       <div class="card-header mx-5 p-1 text-center">
-                        <div class=" pt-3 icon-lg bg-gradient-dark shadow  border-radius-lg text-center">
+                        <div class=" pt-3 icon-lg fas fa-plus border-radius-lg text-center">
                           <i class="fas fa-file-pdf " style="color:#fff"></i>
                         </div>
                       </div>
@@ -330,10 +345,10 @@
 
                 @else
                 <div class="col">
-                  <a href="../archivos_expediente/{{$equipo[11]}}" target="_blank">
+                  <a href="../../storage/app/documentos/{{$equipo[11]}}" target="_blank">
                     <div class="btn p-3">
                       <div class="card-header mx-5 p-1 text-center">
-                        <div class=" pt-3 icon-lg bg-gradient-dark shadow  border-radius-lg text-center">
+                        <div class=" pt-3 icon-lg fas fa-plus  border-radius-lg text-center">
                           <i class="fas fa-file-pdf " style="color:#fff"></i>
                         </div>
                       </div>
@@ -350,199 +365,252 @@
             </div>
           </div>
         </div>
+        
+        
       </div>
+    </div>
 
-      <div class="row">
-        <div class="col-md-7 mt-4">
-          <div class="card">
-            <div class="card-header pb-0 p-3">
-              <div class="row">
-                <div class="col-6 d-flex align-items-center">
-                  <h6 class="mb-0">Mantenimientos</h6>
-                </div>  
-                <div class="col-6 text-end">
-                  <a  type="button" data-toggle="modal" data-target="#modalManto" data-dismiss="modal">
-                  <button class="btn bg-gradient-dark mb-0"><i class="material-icons text-sm">add</i>&nbsp;&nbsp;Crear mantenimiento</button></a>
-                  </div>
-                </div>
-              </div>
-
-              <div class="modal fade" id="modalManto" tabindex="-1" aria-labelledby="modalMantenimientos" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                        <form action="{{route('mantenimientoEquipos.store')}}" method="post" enctype="multipart/form-data" class="col-12">
-                              
-                      <h5 class="modal-title" id="exampleModalLabel">Crear mantenimiento</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <div class="mb-3">
-                        <label for="exampleFormControlTextarea1" class="form-label">Detalles del mantenimiento</label>
-                        <input type="hidden" name="equipos_id" value="{{$equipo[0]}}">  
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="detalles"></textarea>
-                      </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                      <button type="submit" class="btn btn-primary">Guardar</button>
-                    </div>
-                  </div>
-                </form>
-                </div>
-              </div>
-            <div class="card-body pt-4 p-3">
-              <ul class="list-group">
-              
-                <li class="list-group-item border-0 d-flex p-4 mb-2 mt-3 bg-gray-100 border-radius-lg">
-                  <div class="d-flex flex-column">
-                    <h6 class="mb-3 text-sm">Realizo</h6>
-                    <span class="mb-2 text-xs">Fecha: <span class="text-dark font-weight-bold ms-sm-2">xxxxx</span></span>
-                    <span class="mb-2 text-xs">Detalles: <span class="text-dark ms-sm-2 font-weight-bold">xxxx</span></span>
-                    
-                  </div>
-                  <div class="ms-auto text-end">
-              
-                    <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;">+ detalles</a>
-                  </div>
-                </li>
-              </ul>
+    <div class="col-md-4 mt-0 d-flex">
+      <div class="card h-100 mb-4">
+        <div class="card-header pb-0 px-3">
+          <div class="row">
+            <div class="col-md-6">
+              <h6 class="mb-0">TICKETS</h6>
             </div>
-          </div>
-
-          <div class="card">
-            <div class="card-header pb-0 p-3">
-              <div class="row">
-                <div class="col-6 d-flex align-items-center">
-                  <h6 class="mb-0">Revición express</h6>
-                </div>
+            <div class="col-6 text-end">
+              <a class="btn btn-outline-primary btn-md mb-0" href="{{ route('tickets.create') }}"><i class="material-icons text-sm"></i>Crear ticket</a>
               </div>
-              </div>
-
-            <div class="card-body pt-4 p-3">
-              <ul class="list-group">
-                <li class="list-group-item border-0 d-flex p-4 mb-2 mt-3 bg-gray-100 border-radius-lg">
-                  <div class="d-flex flex-column">
-                    <h6 class="mb-3 text-sm">Realizo</h6>
-                    <span class="mb-2 text-xs">Fecha: <span class="text-dark font-weight-bold ms-sm-2">xxxxx</span></span>
-                    <span class="mb-2 text-xs">Detalles: <span class="text-dark ms-sm-2 font-weight-bold">xxxx</span></span>
-                  </div>
-                  <div class="ms-auto text-end">
-                    <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;">+ detalles</a>
-                  </div>
-                </li>
-              </ul>
-            </div>
+            
           </div>
         </div>
+        <div class="card-body pt-4 p-3">
+          <h6 class="text-uppercase text-body text-xs font-weight-bolder mb-3"></h6>
+        @if ($ticket)
 
-        <div class="col-md-5 mt-4">
-          <div class="card">
-            <div class="card-header pb-0 p-3">
-              <div class="row">
-                <div class="col-6 d-flex align-items-center">
-                  <h6 class="mb-0">Proyectos</h6>
-                </div>
-               
-                
-               
-                <div class="col-6 text-end">
-                  <button type="button" class="btn bg-gradient-dark" data-toggle="modal" data-target="#modalProyecto" data-dismiss="modal" data-backdrop="false">
-                    Asignar proyecto
-                  </button>
-             
-                  </div> 
-                
-                  <div class="card-body pt-4 p-3 ">
-                    <ul class="list-group">
-                      <li class="list-group-item border-0 d-flex p-4 mb-2 mt-3 bg-gray-100 border-radius-lg">
-                        <div class="d-flex flex-column">
-                          <h6 class="text-sm">Asigna un proyecto</h6>      
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
+          <ul class="list-group">
+          
+          
+            @foreach($ticket as $tickets)
+           
+            <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
+              <div class="d-flex align-items-center">
+                <div class="d-flex flex-column">
                   
-                </div>
-              </div>
-            </div>
-          <div class="card mb-4">
-            <div class="card-header pb-0 px-3">
-              <div class="row">
-                <div class="col-md-6">
-                  <h6 class="mb-0">Tickets</h6>
-                </div>
-                <div class="col-6 text-end">
-                  <a class="btn bg-gradient-dark mb-0" href="{{ route('tickets.create') }}"><i class="material-icons text-sm"></i>&nbsp;&nbsp;Crear ticket</a>
-                  </div>
-                
-              </div>
-            </div>
-            <div class="card-body pt-4 p-3">
-              <h6 class="text-uppercase text-body text-xs font-weight-bolder mb-3">Abiertos</h6>
-              <ul class="list-group">
-               @foreach($ticket as $ticket)
-
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex align-items-center">
-                    {!! $ticket[0] !!}
                     <div class="d-flex flex-column">
-                      <h6 class="mb-1 text-dark text-sm">Requisitor:</h6>
-                      <h6 class="mb-1 text-dark text-sm">{{$ticket[5]}}</h6>
+                      <h6 class="mb-1 text-dark text-sm">Id del ticket: {{$tickets[1]}} </h6>
+                      <h6 class="mb-1 text-dark text-sm">Resguardante: {{$tickets[2]}}</h6>
+                      {!! $tickets[0] !!}
+                      
                       
                     </div>
-                  </div>
                   
-                </li>
-                @endforeach
-              </ul>
-              <h6 class="text-uppercase text-body text-xs font-weight-bolder my-3">Cerrados</h6>
-              <ul class="list-group">
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex align-items-center">
-                    <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-3 p-3 btn-sm d-flex align-items-center justify-content-center"><i class="material-icons text-lg">expand_less</i></button>
-                    <div class="d-flex flex-column">
-                      <h6 class="mb-1 text-dark text-sm">Stripe</h6>
-                      <span class="text-xs">26 March 2020, at 13:45 PM</span>
-                    </div>
+                 
+                </div>
+              </div>
+              
+            </li>
+           
+        
+            @endforeach
+          
+                       
+      
+          </ul>
+          
+        @else
+        <h2>No hay tickets a mostrar</h2>
+        @endif
+        </div>
+      </div>
+    </div>
+    
+  </div>
+  <div class="row">
+    <div class="col-md-8 mt-1 d-flex">
+      <div class="card">
+        <div class="card-header pb-0 px-3">
+          <h6 class="mb-0">MANTENIMIENTOS</h6>
+          <div class="row-4 text-end">
+            <a class="btn btn-outline-primary btn-md mb-0" href="" data-toggle="modal" data-target="#modalManto" data-dismiss="modal"><i class="material-icons text-sm"></i>Crear mantenimiento</a> &nbsp; &nbsp;
+          </div> 
+        </div>
+        <div class="modal fade" id="modalManto" tabindex="-1" aria-labelledby="modalMantenimientos" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                  
+                        
+                <h5 class="modal-title" id="exampleModalLabel">Crear mantenimiento</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+            <form action="{{route('mantenimiento-equipo',$equipo[0])}}" method="post" enctype="multipart/form-data" class="col-12">
+              {!! csrf_field() !!}
+              
+              <div class="modal-body">
+                <div class="mb-3">
+                  <label for="exampleFormControlTextarea1" class="form-label" >Detalles del mantenimiento</label>
+                  <input type="hidden" name="equipos_id" value="{{$equipo[0]}}">  
+                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="detalles"></textarea>
+
+                  <label for="id_area">Área para mantenimiento</label>
+                                <select class="form-control" class="form-control" id="js-example-basic-single" name="area_id">
+                                    <option value="No Aplica" selected>No Aplica</option>
+                                    @foreach($areas as $area)
+                                        <option value="{{$area->id}}">{{$area->sede}} - {{$area->division}} - {{$area->coordinacion}} - {{$area->area}}</option>
+                                    @endforeach
+                                </select>
+
+                    <label for="tecnico_id">Técnico para mantenimiento</label>
+                    <select class="form-control" class="form-control" id="js-example-basic-single2" name="tecnico_id">
+                        <option value="No Aplica" selected>No Aplica</option>
+                        @foreach($tecnicos as $tecnicos)
+                            <option value="{{$tecnicos->id}}">{{$tecnicos->nombre}} - {{$tecnicos->telefono}} - {{$tecnicos->telefono_emergencia}} </option>
+                        @endforeach
+                    </select>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+            </form>
+             
+            </div>
+          
+          </div>
+        </div>
+        <div class="card-body pt-4 p-3">
+          <ul class="list-group">
+            @if ($mantenimiento)
+            @foreach($mantenimiento as $mantenimiento)
+          <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
+           
+                  
+                  <div class="col-lg-10">
+                    <h6 class="mb-3 text-sm">Realizo</h6>
+                    <span class="mb-12 text-xs">Fecha: <span class="text-dark font-weight-bold ms-sm-2">{{\Carbon\Carbon::parse($mantenimiento[2])->format('d/m/Y')}}</span></span>
+                    <span class="mb-12 text-xs">Detalles: <span class="text-dark ms-sm-2 font-weight-bold">{{$mantenimiento[1]}}</span></span>
+                   
+                      <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="{{route('delete-man-equipo',$mantenimiento[0],$equipo[0])}}"><i class="material-icons text-sm me-2">delete</i>Eliminar</a>
+                      
+                    
                   </div>
-                  <div class="d-flex align-items-center text-success text-gradient text-sm font-weight-bold">
-                    + $ 750
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex align-items-center">
-                    <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-3 p-3 btn-sm d-flex align-items-center justify-content-center"><i class="material-icons text-lg">expand_less</i></button>
-                    <div class="d-flex flex-column">
-                      <h6 class="mb-1 text-dark text-sm">HubSpot</h6>
-                      <span class="text-xs">26 March 2020, at 12:30 PM</span>
-                    </div>
-                  </div>
-                  <div class="d-flex align-items-center text-success text-gradient text-sm font-weight-bold">
-                    + $ 1,000
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                  <div class="d-flex align-items-center">
-                    <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-3 p-3 btn-sm d-flex align-items-center justify-content-center"><i class="material-icons text-lg">expand_less</i></button>
-                    <div class="d-flex flex-column">
-                      <h6 class="mb-1 text-dark text-sm">Creative Tim</h6>
-                      <span class="text-xs">26 March 2020, at 08:30 AM</span>
-                    </div>
-                  </div>
-                  <div class="d-flex align-items-center text-success text-gradient text-sm font-weight-bold">
-                    + $ 2,500
-                  </div>
-                </li>
-              </ul>
+                  @endforeach
+                      
+                 
+                  @else
+                  <h2>Sin mantenimientos</h2>      
+            </li>
+          
+                
+            @endif
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-4 mt-5 d-flex">
+      <div class="card h-100">
+        <div class="card-header pb-0 p-3">
+          <div class="row">
+            <div class="col-6 d-flex align-items-center">
+              <h6 class="mb-0">PROYECTOS</h6>
+            </div>
+            <div class="col-6 text-end">
+              <a href="{{route('proyectos.create')}}" class="btn btn-outline-primary btn-sm mb-0">Agregar</a>
             </div>
           </div>
         </div>
+        <div class="card-body p-3 pb-0">
+          <ul class="list-group">
+            @if($proyecto)
+                
+            
+            @foreach($proyecto as $proyectos)
+            <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
+              <div class="d-flex flex-column">
+                
+                <h6 class="mb-1 text-dark font-weight-bold text-sm">Titulo:</h6>
+                <span class="text-xs">{{$proyectos[1]}}</span>
+              </div>
+              <div class="d-flex flex-column">
+                <h6 class="mb-1 text-dark font-weight-bold text-sm">Area interna</h6>
+                <span>{{$proyectos[2]}}</span>
+                
+              </div>
+            </li>
+            @endforeach
+            @else
+            Sin proyectos
+            @endif
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    
+
+
+
+    <div class="col-sm-12 mt-5 d-flex ">
+      <div class="card">
+        <div class="card-header pb-0 p-3">
+          <div class="row">
+            <div class="col-6 d-flex align-items-center">
+              <h6 class="mb-0">Revición express</h6>
+            </div>
+          </div>
+          </div>
+      
+        <div class="card-body pt-4 p-3">
+          <ul class="list-group">
+            @if ($revicion)
+            @foreach($revicion as $reviciones)
+            <li class="list-group-item border-0 d-flex p-4 mb-2 mt-3 bg-gray-100 border-radius-lg">
+              <div class="d-flex flex-column">
+                <span><h6 class="mb-3 text-sm" style="font-family: Arial, Helvetica, sans-serif">Sede: <span class="text-dark ms-sm-2 font-weight-bold">{{$reviciones[1]}}</span></h6> </span>
+                <span class="mb-2 text-12" style="font-family: Arial, Helvetica, sans-serif"><h6>Area: <span class="text-dark ms-sm-2 font-weight-bold">{{$reviciones[4]}}</span>&nbsp; Piso:<span class="text-dark ms-sm-2 font-weight-bold">{{$reviciones[3]}}</span>&nbsp; Edificio:<span class="text-dark ms-sm-2 font-weight-bold">{{$reviciones[2]}}</span></h6></span>
+                <span class="mb-2 text-xs" style="font-family: Arial, Helvetica, sans-serif"><h6>Estatus: <span class="text-dark font-weight-bold ms-sm-2">{{$reviciones[5]}}</span></h6></span>
+                <span class="mb-2 text-12" style="font-family: Arial, Helvetica, sans-serif"><h6>Fecha: <span class="text-dark ms-sm-2 font-weight-bold">{{\Carbon\Carbon::parse($reviciones[6])->format('d/m/y')}} &nbsp;</span>Hora:<span class="text-dark ms-sm-2 font-weight-bold">{{\Carbon\Carbon::parse($reviciones[6])->format('h:m:s')}}</span></h6></span>
+               
+              </div>
+              
+            </li>
+            @endforeach
+            @else
+                <h6>Sin revicion</h6>
+            @endif
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+
+  
+</div>
+
+
+
+
+
+
+
+
+ 
+ 
+   
+            
       
        @endforeach
-    
-    </div>
-  </main>
+     
+
+      
+ 
   <!--   Core JS Files   -->
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>

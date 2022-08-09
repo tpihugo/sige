@@ -18,6 +18,11 @@
 
                     });
 
+                    $(document).ready(function() {
+                        $('#js-example-basic-single2').select2();
+
+                    });
+
                 </script>
 
             </div>
@@ -90,22 +95,7 @@
                                 <label for="mac">MAC separado por ":" ej 18:AB:34:45 </label>
                                 <input type="text" class="form-control" id="mac" name="mac" value="{{$equipo->mac}}" >
                             </div>
-                            <div class="col-md-4">
-                                <label for="ip">IP </label>
-				<select class="form-control" id="ip" name="ip">
-                        @if ($ip_equipo!=null)
-                            <option value="{{$ip_equipo->id}}" selected>{{$ip_equipo->ip}}</option>
-                            <option value="null">No Especificado</option>
-                        @else
-                            <option value="null" selected>No Especificado</option>
-                        @endif
-						
-						
-					
-					@foreach($ips as $ip)
-						<option value="{{$ip->id}}">{{$ip->ip}}</option>			
-					@endforeach
-				</select>                            </div>
+                            
                             <div class="col-md-4">
                                 <label for="tipo_conexion">Tipo de Conexión</label>
                                 <select class="form-control" id="tipo_conexion" name="tipo_conexion">
@@ -123,11 +113,12 @@
                         <div class="row g-3 align-items-center">
                             <div class="col-md-6">
                                 <label for="resguardante">Resguardante</label>
-                                <select name="resguardante" id="resguardante" class="form-control">    
+                                <select name="resguardante" id="resguardante" class="form-control">
+				                    <option selected="">Elegir</option>
                                     <option value="{{$equipo->resguardante}}" selected>{{$equipo->resguardante}}</option>
-				    <option disable>Elegir</option>
                                     <option value="Otra dependencia">Otra dependencia</option>
                                     <option value="CTA">CTA</option>
+                                    <option value="No inventariable">No inventariable</option>
                                 </select>
                             </div>
                             <div class="col-md-6">
@@ -149,8 +140,73 @@
                             </div>
                         </div>
                         <br>
-                        <br>
+                        <hr>
+                        <h5>Asignar ip</h5>
+                        <div class="row g-3 align-items-center">
+                            
+                            <div class="col-md-4">
+                                <label for="ip">IP </label>
+                                <select class="form-control" id="js-example-basic-single2" name="ip_id">
+                                            @if ($ip_equipo!=null)
+                                                <option value="{{$ip_equipo->ip}}" selected>{{$ip_equipo->ip }} /subred:  {{ $subred_equipo->subred}} </option>
+                                                <option value="No Especificado">No Especificado</option>
+                                            @else
+                                                <option value="No Especificado" selected>No Especificado</option>
+                                            @endif
+
+
+
+                                        @foreach($ips as $ip)
+                                            <option value="{{$ip->ip}}">{{$ip->ip  }}/ subred: {{ $ip->subred}}</option>
+                                        @endforeach
+                                </select>
+
                 
+
+                            </div>
+                            <div class="col-md-5">
+                                <label for="tipo_conexion">Mascara de red</label>
+                                @if ($ip_equipo!=null)
+                                <input type="text" class="form-control" id="mascara" name="mascara"
+                                                       pattern="[0-5]{3}\.[0-5]{3}\.[0-5]{3}\.[0-9]{1,3}"
+                                                       title="El campo debe ser llenado en el formato correcto.
+                                                        &#013; Ejemplo: (255.255.255.0)"
+                                                       placeholder="255.255.255.255"
+                                                       value="{{$ip_equipo->mascara}}">
+                                @else
+                                <input type="text" class="form-control" id="mascara" name="mascara"
+                                                       pattern="[0-5]{3}\.[0-5]{3}\.[0-5]{3}\.[0-9]{1,3}"
+                                                       title="El campo debe ser llenado en el formato correcto.
+                                                        &#013; Ejemplo: (255.255.255.0)"
+                                                       placeholder="255.255.255.255"
+                                                       value="">
+                                @endif
+                            </div>
+                            <div class="col-md-5">
+                                @if ($ip_equipo!=null)
+                                <label for="tipo_conexion">Gateway</label>
+                                <input type="text" class="form-control" id="gateway" name="gateway"
+                                            pattern="[0-9]{3}\.[0-9]{3}\.[0-9]{1,3}\.[0-9]{1,3}"
+                                            title="El campo debe ser llenado en el formato correcto.
+                                            &#013; Ejemplo: (192.168.1.1)"
+                                            placeholder="192.168.1.1"
+                                            value="{{$ip_equipo->gateway}}">
+                                @else
+                                <label for="tipo_conexion">Gateway</label>
+                                <input type="text" class="form-control" id="gateway" name="gateway"
+                                            pattern="[0-9]{3}\.[0-9]{3}\.[0-9]{1,3}\.[0-9]{1,3}"
+                                            title="El campo debe ser llenado en el formato correcto.
+                                            &#013; Ejemplo: (192.168.1.1)"
+                                            placeholder="192.168.1.1"
+                                            value="">
+                                @endif
+
+                            </div>
+
+                        </div>
+                        <br>
+                        <br>
+
                 <br>
                 <div class="row align-items-center">
                     <div class="col-md-12">

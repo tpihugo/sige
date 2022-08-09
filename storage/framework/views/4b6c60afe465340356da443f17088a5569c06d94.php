@@ -8,7 +8,7 @@
                 </div>
             <?php endif; ?>
             <div class="row">
-            <h1 class="text-center">Inventario Detalle por ciclo 2022A</h1>
+            <h1 class="text-center">Inventario Detalle por Ciclo 2022B</h1>
                 <hr>
             </div>
             <br>
@@ -55,7 +55,14 @@
                                             </td>
 
                                             <td>
-                                                <?php echo $Percentage_SICI = round(100-((($total_equipos - $total_SICI_localizados) / ($total_equipos)) * 100),2);?>%
+                                                <?php echo $Percentage_SICI = round(
+                                                    100 -
+                                                        (($total_equipos -
+                                                            $total_SICI_localizados) /
+                                                            $total_equipos) *
+                                                            100,
+                                                    2
+                                                ); ?>%
                                             </td>
                                         </tr>
 
@@ -69,18 +76,25 @@
                                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-down text-danger" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
                                 </svg>
-                                <?php echo e(($total_SICI_localizados - $total_22A_detalleInventario)); ?>
+                                <?php echo e(($total_SICI_localizados - $total_22B_detalleInventario)); ?>
 
                                             </td>
 
                                             <td>
-                                            <?php echo $Percentage_SICI = round(100-((($total_SICI_localizados - $total_22A_detalleInventario) / ($total_SICI_localizados)) * 100),2);?>%
+                                            <?php echo $Percentage_SICI = round(
+                                                100 -
+                                                    (($total_SICI_localizados -
+                                                        $total_22B_detalleInventario) /
+                                                        $total_SICI_localizados) *
+                                                        100,
+                                                2
+                                            ); ?>%
                                             </td>
                                         </tr>
 
                                         <tr>
-                                            <td><a href="#">Revision inventario 2022A</a></td>
-                                            <td class="stat-cell"><?php echo e($total_22A_detalleInventario); ?></td>
+                                            <td><a href="#">Revision inventario 2022B</a></td>
+                                            <td class="stat-cell"><?php echo e($total_22B_detalleInventario); ?></td>
                                             <td class="stat-cell">
                                             <p class="text-center"> </p>
                                             </td>
@@ -89,8 +103,8 @@
                                                 <p class="text-center"> </p>
                                             </td>
                                         </tr>
-                                        
-                                        
+
+
                                     </tbody>
                                 </table>
                             </div><!--//table-responsive-->
@@ -99,12 +113,12 @@
                     </div>
 
 
-                    <div class="col-4 col-lg-3">		        
+                    <div class="col-4 col-lg-3">
 				        <div class="app-card app-card-chart h-100 shadow-sm">
 					        <div class="app-card-header p-3 border-0">
 						        <p class="app-card-title text-center">Equipos localizados</p>
 					        </div><!--//app-card-header-->
-					        <div class="app-card-body p-12">					   
+					        <div class="app-card-body p-12">
 						        <div class="chart-container">
 				                    <canvas id="chart-pie"  ></canvas>
 						        </div>
@@ -112,20 +126,20 @@
 				        </div><!--//app-card-->
 		            </div><!--//col-->
 
-                    
-                    <div class="col-4 col-lg-3">		        
+
+                    <div class="col-4 col-lg-3">
 				        <div class="app-card app-card-chart h-100 shadow-sm">
 					        <div class="app-card-header p-3 border-0">
                             <p class="app-card-title text-center">Avance general</p>
 					        </div><!--//app-card-header-->
-					        <div class="app-card-body p-12">					   
+					        <div class="app-card-body p-12">
 						        <div class="chart-container">
 				                    <canvas id="chart-pie2" width="50" height="50" ></canvas>
 						        </div>
 					        </div>
 				        </div>
 		            </div><!--//col-->
-                    
+
 
                     <!-- <hr> -->
 
@@ -137,67 +151,74 @@
                         <th class="text-center">Área</th>
                         <th>Progreso</th>
                         <th> Avances <a href="#Help_info" class="text-reset" data-toggle="modal"> <strong> ? </strong> </a> </th>
-                                
+
                         <th>Acciones</th>
                     </tr>
                     </thead>
                     <tbody>
 
                     <?php ( $cont=1 ); ?>
-                    
-                    <?php $__currentLoopData = $dataTable; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $OneDataRow): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    
-                    
-                    <?php if( $OneDataRow->PercentageValue < '100'): ?>
-                        <?php ( $bar_indicatorColor="success" ); ?>
-                        <?php if( $OneDataRow->PercentageValue < '50' ): ?>
-                            <?php ( $bar_indicatorColor= "danger"); ?>
-                        <?php elseif( $OneDataRow->PercentageValue < '90' ): ?>
+
+                    <?php $__currentLoopData = $DtQuery; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $oneRow): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
+                        <?php ( $bar_indicatorColor = "success" ); ?>
+                        <?php if( $oneRow['Porcentaje'] < '50.00' ): ?>
+                            <?php ( $bar_indicatorColor = "danger"); ?>
+                        <?php elseif( $oneRow['Porcentaje'] < '90.00' ): ?>
                             <?php ( $bar_indicatorColor= "warning"); ?>
                         <?php endif; ?>
 
                         <tr>
                             <td><?php echo e($cont++); ?></td>
                             <td>
-                                
-                            <p class="font-weight-normal"><?php echo e($OneDataRow->area); ?></p>                            
-                            
+
+                            <p class="font-weight-normal"><?php echo e($oneRow['area']); ?></p>
+
                             </td>
                             <td style="width: 20%">
 
                                 <div class="container-fluid wd-200">
                                         <div class="row no-gutters align-items-center">
-                                            
-                                            
-                                            <div class="h6 mb-0 mr-1 text-center text-gray-800"> <strong><?php echo e($OneDataRow->PercentageValue); ?>% </strong> </div>
-                                            
+
+
+                                            <div class="h6 mb-0 mr-1 text-center text-gray-800"> <strong><?php echo e($oneRow['Porcentaje']); ?>%</strong> </div>
+
                                             <div class="col">
                                                 <div class="progress progress-sm mr-2">
-                                                    <div class="progress-bar bg-<?php echo $bar_indicatorColor ?>" role="progressbar"
-                                                        style="width: <?php echo e($OneDataRow->PercentageValue); ?>%" aria-valuenow="50" aria-valuemin="0"
+                                                    <div class="progress-bar bg-<?php echo $bar_indicatorColor; ?>" role="progressbar"
+                                                        style="width: <?php echo e($oneRow['Porcentaje']); ?>%" aria-valuenow="50" aria-valuemin="0"
                                                         aria-valuemax="100"></div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                            
+
                             <td style="width: 10%">
-                                <p class="text-dark text-center"><?php echo e($OneDataRow->cuentaEncontrados); ?> / <?php echo e($OneDataRow->cuentaInventariables); ?> </p>
+                                <p class="text-dark text-center">
+                                <?php echo e($oneRow['iv_count']); ?> / <?php echo e($oneRow['equipos_count']); ?>
+
+                                <?php if($oneRow['iv_count'] - $oneRow['equipos_count'] > 0): ?>
+                                    <a class="text-muted" data-toggle="modal" href="#warning-triangle-modal" >
+                                    
+                                     </a>
+                                <?php endif; ?>
+                                </p>
                             </td>
-                                
+
                             </td>
                             <td>
-                            <p><a href="<?php echo e(route('inventario-por-area', $OneDataRow->id_area )); ?>" class="btn btn-primary">Detalle</a></p>
-                                 
+                            <p><a href="<?php echo e(route('inventario-por-area', $oneRow['eq_id_area'] )); ?>" class="btn btn-primary">Detalle</a></p>
+
                                 
                             </td>
                         </tr>
-                        <?php endif; ?>
+                        
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                
-                    
+
+
                     </tbody>
 
+                    
                     <div id="Help_info" class="modal fade">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
@@ -229,6 +250,27 @@
                                         </div>
                                     </div>
                                 </div>
+
+
+                    
+                    <div class="modal fade" id="warning-triangle-modal" tabindex="-1" role="dialog" aria-labelledby="warning-triangle-modal" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="warning-triangle-modal">Equipos</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                              <div class="modal-body">
+                                <p class="h4 text-justify">En esta área existen equipos <strong>localizados</strong> de otras areas </p>
+                              </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-info" data-dismiss="modal">Ok</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
 
 
@@ -267,7 +309,7 @@
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs4-4.1.1/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/r-2.2.7/datatables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.js" integrity="sha512-CWVDkca3f3uAWgDNVzW+W4XJbiC3CH84P2aWZXj+DqI6PNbTzXbl1dIzEHeNJpYSn4B6U8miSZb/hCws7FnUZA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        
+
         $(document).ready(function() {
             $('#example').DataTable( {
                 "pageLength": 100,
@@ -309,7 +351,7 @@
         } );
     </script>
 
-    
+
     <script type="text/javascript">
 
         $(document).ready(function() {
@@ -317,8 +359,8 @@
         });
 
         const total_sici_localizados = <?php echo json_encode($total_SICI_localizados); ?>;
-        const total_22A_detalleInventario = <?php echo json_encode($total_22A_detalleInventario); ?>;
-        
+        const total_22B_detalleInventario = <?php echo json_encode($total_22B_detalleInventario); ?>;
+
 
         const ctx = document.getElementById('chart-pie').getContext('2d');
         const ctx2 = document.getElementById('chart-pie2').getContext('2d');
@@ -326,10 +368,10 @@
         const myChart = new Chart(ctx, {
             type: 'pie',
             data: {
-                labels: ['localizados SICI CTA', 'localizados detalle inventario 22A'],
+                labels: ['localizados SICI CTA', 'localizados detalle inventario 22B'],
                 datasets: [{
                     // label: '# of Votes',
-                    data: [total_sici_localizados, total_22A_detalleInventario],
+                    data: [total_sici_localizados, total_22B_detalleInventario],
                     backgroundColor: [
                         'rgb(240,173,78)',
                         'rgb(92,184,92)',
@@ -342,16 +384,16 @@
                 }]
             },
         });
-        
+
         const total_equipos = <?php echo json_encode($total_equipos); ?>;
-        
+
         const myChart2 = new Chart(ctx2, {
             type: 'pie',
             data: {
-                labels: ['Total equipos', 'localizados detalle inventario 22A'],
+                labels: ['Total equipos', 'localizados detalle inventario 22B'],
                 datasets: [{
                     // label: '# of Votes',
-                    data: [total_equipos, total_22A_detalleInventario],
+                    data: [total_equipos, total_22B_detalleInventario],
                     backgroundColor: [
                         'rgb(240,173,78)',
                         'rgb(92,184,92)',

@@ -9,7 +9,7 @@
                 </div>
             @endif
             <div class="row">
-            <h1 class="text-center">Inventario Detalle por Ciclo 2022A</h1>
+            <h1 class="text-center">Inventario Detalle por Ciclo 2022B</h1>
                 <hr>
             </div>
             <br>
@@ -55,7 +55,14 @@
                                             </td>
 
                                             <td>
-                                                <?php echo $Percentage_SICI = round(100-((($total_equipos - $total_SICI_localizados) / ($total_equipos)) * 100),2);?>%
+                                                <?php echo $Percentage_SICI = round(
+                                                    100 -
+                                                        (($total_equipos -
+                                                            $total_SICI_localizados) /
+                                                            $total_equipos) *
+                                                            100,
+                                                    2
+                                                ); ?>%
                                             </td>
                                         </tr>
 
@@ -69,17 +76,24 @@
                                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-down text-danger" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
                                 </svg>
-                                {{($total_SICI_localizados - $total_22A_detalleInventario)}}
+                                {{($total_SICI_localizados - $total_22B_detalleInventario)}}
                                             </td>
 
                                             <td>
-                                            <?php echo $Percentage_SICI = round(100-((($total_SICI_localizados - $total_22A_detalleInventario) / ($total_SICI_localizados)) * 100),2);?>%
+                                            <?php echo $Percentage_SICI = round(
+                                                100 -
+                                                    (($total_SICI_localizados -
+                                                        $total_22B_detalleInventario) /
+                                                        $total_SICI_localizados) *
+                                                        100,
+                                                2
+                                            ); ?>%
                                             </td>
                                         </tr>
 
                                         <tr>
-                                            <td><a href="#">Revision inventario 2022A</a></td>
-                                            <td class="stat-cell">{{$total_22A_detalleInventario}}</td>
+                                            <td><a href="#">Revision inventario 2022B</a></td>
+                                            <td class="stat-cell">{{$total_22B_detalleInventario}}</td>
                                             <td class="stat-cell">
                                             <p class="text-center">{{-- --}} </p>
                                             </td>
@@ -144,14 +158,12 @@
 
                     @php ( $cont=1 )
 
-                    @foreach($dataTable as $OneDataRow)
+                    @foreach($DtQuery as $oneRow)
 
-                    {{--@php ($ToRoundedValue = round((($OneDataRow->cuentaEncontrados / $OneDataRow->cuentaInventariables) * 100)) ) --}}
-                    @if( $OneDataRow->PercentageValue < '100')
-                        @php ( $bar_indicatorColor="success" )
-                        @if( $OneDataRow->PercentageValue < '50' )
-                            @php ( $bar_indicatorColor= "danger")
-                        @elseif( $OneDataRow->PercentageValue < '90' )
+                        @php ( $bar_indicatorColor = "success" )
+                        @if( $oneRow['Porcentaje'] < '50.00' )
+                            @php ( $bar_indicatorColor = "danger")
+                        @elseif( $oneRow['Porcentaje'] < '90.00' )
                             @php ( $bar_indicatorColor= "warning")
                         @endif
 
@@ -159,7 +171,7 @@
                             <td>{{$cont++}}</td>
                             <td>
 
-                            <p class="font-weight-normal">{{ $OneDataRow->area }}</p>
+                            <p class="font-weight-normal">{{ $oneRow['area'] }}</p>
 
                             </td>
                             <td style="width: 20%">
@@ -168,12 +180,12 @@
                                         <div class="row no-gutters align-items-center">
 
 
-                                            <div class="h6 mb-0 mr-1 text-center text-gray-800"> <strong>{{$OneDataRow->PercentageValue}}% </strong> </div>
+                                            <div class="h6 mb-0 mr-1 text-center text-gray-800"> <strong>{{$oneRow['Porcentaje']}}%</strong> </div>
 
                                             <div class="col">
                                                 <div class="progress progress-sm mr-2">
-                                                    <div class="progress-bar bg-<?php echo $bar_indicatorColor ?>" role="progressbar"
-                                                        style="width: {{$OneDataRow->PercentageValue}}%" aria-valuenow="50" aria-valuemin="0"
+                                                    <div class="progress-bar bg-<?php echo $bar_indicatorColor; ?>" role="progressbar"
+                                                        style="width: {{$oneRow['Porcentaje']}}%" aria-valuenow="50" aria-valuemin="0"
                                                         aria-valuemax="100"></div>
                                                 </div>
                                             </div>
@@ -181,22 +193,30 @@
                                     </div>
 
                             <td style="width: 10%">
-                                <p class="text-dark text-center">{{$OneDataRow->cuentaEncontrados}} / {{$OneDataRow->cuentaInventariables}} </p>
+                                <p class="text-dark text-center">
+                                {{$oneRow['iv_count']}} / {{$oneRow['equipos_count']}}
+                                @if($oneRow['iv_count'] - $oneRow['equipos_count'] > 0)
+                                    <a class="text-muted" data-toggle="modal" href="#warning-triangle-modal" >
+                                    {{--<i class="fas fa-exclamation-triangle" style="color: orange;" ></i>--}}
+                                     </a>
+                                @endif
+                                </p>
                             </td>
 
                             </td>
                             <td>
-                            <p><a href="{{ route('inventario-por-area', $OneDataRow->id_area ) }}" class="btn btn-primary">Detalle</a></p>
+                            <p><a href="{{ route('inventario-por-area', $oneRow['eq_id_area'] ) }}" class="btn btn-primary">Detalle</a></p>
 
                                 {{--<p><a href="{{ route('actualizacion-inventario', $OneDataRow->id_area) }}" class="btn btn-success">Revisado</a></p>--}}
                             </td>
                         </tr>
-                        @endif
+                        {{--@endif--}}
                     @endforeach
 
 
                     </tbody>
 
+                    {{-- Modal equipos invenriables vs localizados  --}}
                     <div id="Help_info" class="modal fade">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
@@ -228,6 +248,27 @@
                                         </div>
                                     </div>
                                 </div>
+
+
+                    {{-- Modal incongruencia de equipos inventariables vs localizados por area --}}
+                    <div class="modal fade" id="warning-triangle-modal" tabindex="-1" role="dialog" aria-labelledby="warning-triangle-modal" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="warning-triangle-modal">Equipos</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                              <div class="modal-body">
+                                <p class="h4 text-justify">En esta área existen equipos <strong>localizados</strong> de otras areas </p>
+                              </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-info" data-dismiss="modal">Ok</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
 
 
@@ -316,7 +357,7 @@
         });
 
         const total_sici_localizados = {!! json_encode($total_SICI_localizados) !!};
-        const total_22A_detalleInventario = {!! json_encode($total_22A_detalleInventario) !!};
+        const total_22B_detalleInventario = {!! json_encode($total_22B_detalleInventario) !!};
 
 
         const ctx = document.getElementById('chart-pie').getContext('2d');
@@ -325,10 +366,10 @@
         const myChart = new Chart(ctx, {
             type: 'pie',
             data: {
-                labels: ['localizados SICI CTA', 'localizados detalle inventario 22A'],
+                labels: ['localizados SICI CTA', 'localizados detalle inventario 22B'],
                 datasets: [{
                     // label: '# of Votes',
-                    data: [total_sici_localizados, total_22A_detalleInventario],
+                    data: [total_sici_localizados, total_22B_detalleInventario],
                     backgroundColor: [
                         'rgb(240,173,78)',
                         'rgb(92,184,92)',
@@ -347,10 +388,10 @@
         const myChart2 = new Chart(ctx2, {
             type: 'pie',
             data: {
-                labels: ['Total equipos', 'localizados detalle inventario 22A'],
+                labels: ['Total equipos', 'localizados detalle inventario 22B'],
                 datasets: [{
                     // label: '# of Votes',
-                    data: [total_equipos, total_22A_detalleInventario],
+                    data: [total_equipos, total_22B_detalleInventario],
                     backgroundColor: [
                         'rgb(240,173,78)',
                         'rgb(92,184,92)',

@@ -42,6 +42,10 @@
                                 <div class="col-md-4">
                                     <label class="font-weight-bold" for="mascara">Mascara </label>
                                     <input type="text" class="form-control" id="mascara" name="mascara"
+                                            pattern="[0-5]{3}\.[0-5]{3}\.[0-5]{3}\.[0-9]{1,3}"
+                                            title="El campo debe ser llenado en el formato correcto.
+                                            &#013; Ejemplo: (255.255.255.255)"
+                                            placeholder="255.255.255.255"
                                            value="{{ $subred->mascara }}" max="20">
                                 </div>
                             </div>
@@ -53,14 +57,7 @@
                                            value="{{ $subred->gateway }}" max="20">
                                 </div>
 
-                                    <div class="col-md-20">
-                                        <label class="font-weight-bold" for="disponible">Disponible </label>
-                                        <select class="form-control" id="disponible" name="disponible" >
-                                            <option >{{ $subred->disponible }}</option>
-                                            <option value="si">Si</option>
-                                            <option value="no">No</option>
-                                        </select>
-                                    </div>
+                                    
 
                             </div>
                             <br>
