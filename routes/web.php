@@ -422,6 +422,13 @@ Route::post("/filtroSubredes", [
     "middleware" => "auth",
     "uses" => "App\Http\Controllers\SubredController@filtroSubredes",
 ]);
+
+Route::post("/filIps", [
+    "as" => "filIps",
+    "middleware" => "auth",
+    "uses" => "App\Http\Controllers\IpController@filtro_p_ip",
+]);
+
 Route::post("/filtroIps", [
     "as" => "filtroIps",
     "middleware" => "auth",
@@ -616,3 +623,43 @@ Route::get('../storage/app/documentos/{filename}', array(
     'middleware' => 'auth',
     'uses' => 'App\Http\Controllers\BajaController@getDocument'
 ));
+
+//Rutas para los switches
+
+//filtrar switches
+Route::post("/filtroNumero_serie", [
+    "as" => "filtroNumero_serie",
+    "middleware" => "auth",
+    "uses" => "App\Http\Controllers\EquipoController@filtroNumero_serie",
+]);
+
+
+Route::get("/switches", [
+    "as" => "switches",
+    "uses" => "App\Http\Controllers\EquipoController@switches",
+]);
+
+ Route::get("/create_switch",[
+    "as" => "create_switch",
+    "uses" => "App\Http\Controllers\EquipoController@createSw",
+ ]);
+
+ Route::post("/created_switch",[
+    "as" => "created_switch",
+    "uses" => "App\Http\Controllers\EquipoController@storeSw",
+ ]);
+
+ Route::get("/{id}/edit_switch",[
+    "as" => "equipo.edit_switch",
+    "uses" => "App\Http\Controllers\EquipoController@editSW",
+ ]);
+
+ 
+ Route::post("update-switch/{id}", [
+    "as" => "update-switch",
+    "middleware" => "auth",
+    "uses" => "App\Http\Controllers\EquipoController@updateSW",
+]);
+
+
+

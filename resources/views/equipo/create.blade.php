@@ -21,6 +21,10 @@
                         $('#js-example-basic-single2').select2();
 
                     });
+                    $(document).ready(function() {
+                        $('#js-example-basic-single3').select2();
+
+                    });
                 </script>
 
             </div>
@@ -83,17 +87,7 @@
                                 <label for="mac">MAC separado por ":" ej 18:AB:34:45</label>
                                 <input type="text" class="form-control" id="mac" name="mac" value="No aplica/No Especificado" >
                             </div>
-                            <div class="col-md-4">
-                                <label for="ip_id">IP</label>
-                                <select class="form-control" id="ip_id" name="ip_id">
-                                    <option value="null" selected>No aplica/No Especificado</option>
-                                    @foreach($ips as $ip)
-                                        <option value="{{$ip->id}}" >{{$ip->ip}}</option>
-                                    @endforeach
-                                </select>
-                                <!--<input type="text" class="form-control" id="ip" name="ip" value="No aplica/No Especificado" >-->
-
-                            </div>
+                            
                             <div class="col-md-4">
                                 <label for="tipo_conexion">Tipo de Conexión</label>
                                 <select class="form-control" id="tipo_conexion" name="tipo_conexion">
@@ -142,12 +136,49 @@
                             </div>
                         </div>
                         <br>
+                        <hr>
+                        <h5>Asignar ip</h5>
+                        <div class="row g-3 align-items-center">
+                            <div class="col-md-4">
+                                <label for="ip_id">IP</label>
+                                <select class="form-control" id="js-example-basic-single3" name="ip_id">
+                                    <option value="No Aplica" selected>No Aplica</option>
+                                    @foreach($ips as $ip)
+                                        <option value="{{$ip->ip}}" >{{$ip->ip}} /subred:  {{ $ip->subred}}</option>
+                                    @endforeach
+                                </select>
+                                <!--<input type="text" class="form-control" id="ip" name="ip" value="No aplica/No Especificado" >-->
+
+                            </div>
+                            <div class="col-md-5">
+                                <label for="tipo_conexion">Mascara de red</label>
+                                <input type="text" class="form-control" id="mascara" name="mascara"
+                                                       pattern="[0-5]{3}\.[0-5]{3}\.[0-5]{3}\.[0-9]{1,3}"
+                                                       title="El campo debe ser llenado en el formato correcto.
+                                                        &#013; Ejemplo: (255.255.255.0)"
+                                                       placeholder="255.255.255.255"
+                                                       value="">
+                            </div>
+
+                            <div class="col-md-5">
+                                <label for="tipo_conexion">Gateway</label>
+                                <input type="text" class="form-control" id="gateway" name="gateway"
+                                            pattern="[0-9]{3}\.[0-9]{3}\.[0-9]{1,3}\.[0-9]{1,3}"
+                                            title="El campo debe ser llenado en el formato correcto.
+                                            &#013; Ejemplo: (192.168.1.1)"
+                                            placeholder="192.168.1.1"
+                                            value="">
+                            </div>
+
+                        </div>
+                        <br><br>
 			<div class="row align-items-center">
                     		<div class="col-md-6">
                         		<a href="{{ route('home') }}" class="btn btn-danger">Cancelar</a>
                         		<button type="submit" class="btn btn-success">Guardar datos</button>
                     		</div>
                     	</div>
+                    
                	 	</div>
                 	<br>
 

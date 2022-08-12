@@ -80,7 +80,7 @@ class SubredController extends Controller
                 $value['subred'],
                 $value['mascara'],
                 $value['gateway'],
-                $value['disponible']
+                
 
 
 
@@ -123,7 +123,7 @@ class SubredController extends Controller
             'subred'=>'required|unique:subredes,subred',
             'mascara'=>'required',
             'gateway'=>'required',
-            'disponible'=>'required',
+            
 
         ]);
 
@@ -132,7 +132,7 @@ class SubredController extends Controller
         $subred->subred = $request->input('subred');
         $subred->mascara = $request->input('mascara');
         $subred->gateway = $request->input('gateway');
-        $subred->disponible = $request->input('disponible');
+        $subred->disponible = 'si';
         $subred->save();
         return redirect('subredes')->with(array(
             'message'=>'Subred añadida'
@@ -189,7 +189,7 @@ $subred =$this->cargarDT($subredElegida);
             'subred'=>'required',
             'mascara'=>'required',
             'gateway'=>'required',
-            'disponible'=>'required',
+            
         ]);
 
 
@@ -197,7 +197,7 @@ $subred =$this->cargarDT($subredElegida);
         $subred->subred = $request->input('subred');
         $subred->mascara = $request->input('mascara');
         $subred->gateway = $request->input('gateway');
-        $subred->disponible = $request->input('disponible');
+        $subred->disponible = 'si';
         $subred->update();
         return redirect('subredes')->with(array(
             'message'=>'Subred actualizado'

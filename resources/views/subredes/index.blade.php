@@ -97,7 +97,6 @@
                             <th>Subred</th>
                             <th>Mascara</th>
                             <th>Gateway</th>
-                            <th>Disponible</th>
                         </tr>
                         </thead>
                         <tbody>

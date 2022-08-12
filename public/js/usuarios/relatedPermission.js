@@ -1,3 +1,5 @@
+var dataPermisos = [];
+
 $(document).ready(function () {
     $('#relatedTable').DataTable({
         data: data,
@@ -58,7 +60,7 @@ function setPermiso(item) {
 function sendData() {
     var permisos_seleccionados = [];
     data.map(value => {
-        if (value.checked == true) {
+        if (value.checked == true || value.checked == 'true') {
             permisos_seleccionados.push(value.id);
         }
         var permisos64 = btoa(permisos_seleccionados);
