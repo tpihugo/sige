@@ -173,8 +173,8 @@
                                             <i class="material-icons">school</i>
                                             </div>
                                             <h3 class="card-title">Cursos</h3>
-                                            <a class="btn btn-outline-success" href="{{ route('cursos-presenciales', '2022A') }}">Presenciales</a>
-                                            <a class="btn btn-outline-danger" href="{{ route('cursos-laboratorios', '2022A') }}">Laboratorios</a>
+                                            <a class="btn btn-outline-success" href="{{ route('cursos-presenciales', '2022B') }}">Presenciales</a>
+                                            <a class="btn btn-outline-danger" href="{{ route('cursos-laboratorios', '2022B') }}">Laboratorios</a>
                                         </div>
                                         <div class="card-footer">
                                             <div class="stats">
@@ -182,7 +182,7 @@
                                                     <i class="material-icons">spellcheck</i>
                                                       <a href="{{ route('cursos.create') }}" >Capturar</a>
                                                 @endcan
-                                                <i class="material-icons">update</i><a  href="{{ url('cursos/2022A') }}">Todos</a>
+                                                <i class="material-icons">update</i><a  href="{{ url('cursos/2022B') }}">Todos</a>
                                             </div>
                                         </div>
                                     </div>
@@ -372,8 +372,8 @@
                                                 <i class="material-icons">info_outline</i>
                                             </div>
                                             <h3 class="card-title">Requisiciones</h3>
-                                            <a class="btn btn-outline-success" href="#">Capturar Requisición</a>
-                                            <a href="#" class="btn btn-outline-danger">Consultar Requisición</a>
+                                            <a class="btn btn-outline-success" href="{{route('requisicion.create')}}">Capturar Requisición</a>
+                                            <a href="{{route('requisicion.index')}}" class="btn btn-outline-danger">Consultar Requisición</a>
                                         </div>
                                         <div class="card-footer">
                                             <div class="stats">
