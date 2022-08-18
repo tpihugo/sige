@@ -11,9 +11,9 @@
 
                 </div>
             @endif
-            <div class="row">
+            <div class="container-fluid">
                 <h2>Edición de Préstamo. Folio: {{$prestamo->id}}</h2>
-                <hr>
+                <hr><br>
                <script type="text/javascript">
 
                     $(document).ready(function() {
@@ -24,20 +24,18 @@
                 </script>
 
             </div>
-        <div class="row">
-            <table class="table table-success" style="width:100%">
-                    <thead>
+        <div class="container-fluid">
+            <table class="table table-success table-bordered" style="width:100%">
+                    <thead class="thead-light">
                     <tr>
-                        <th>Folio</th>
-                        <th>Lugar</th>
-                        <th>Solicitante</th>
-                        <th>Contacto</th>
-                        <th>Cargo</th>
-                        <th>Estado</th>
-                        <th>Fecha</th>
-                        <th>Observaciones</th>
-                        <th>Acciones</th>
-                        
+                        <th><b>Folio</b></th>
+                        <th><b>Lugar</b></th>
+                        <th><b>Solicitante</b></th>
+                        <th><b>Contacto</b></th>
+                        <th><b>Cargo</b></th>
+                        <th><b>Estado</b></th>
+                        <th><b>Fecha</b></th>
+                        <th><b>Observaciones</b></th>  
                     </tr>
                     </thead>
                     <tbody>
@@ -49,16 +47,22 @@
                         <td>{{$prestamo->contacto}}</td>
                         <td>{{$prestamo->cargo}}</td>
                         <td>{{$prestamo->estado}}</td>
-                        <td>{{$prestamo->fecha_inicio}}</td>
+                        <td>{{\Carbon\Carbon::parse($prestamo->fecha_inicio)->format('d/m/Y') }}</td>
                         <td>{{$prestamo->observaciones}}</td>
-                        <td><a class="btn btn-outline-success" href="{{ route('imprimirPrestamo', $prestamo->id)}}" target="blank">Formato</a></td>
                     </tr>
                     </tbody>
                 </table>
-            
-                        <h5><p align="center">Equipo ya Registrado</p></h5>
-                <table class="table table-bordered" style="width:100%">
-                    <thead>
+                @if ($equiposPorPrestamo != null && count($equiposPorPrestamo) > 0)
+                <td><a class="btn btn-outline-success" style="width: 100%" href="{{ route('imprimirPrestamo', $prestamo->id)}}" target="blank">Imprimir formato de préstamo</a></td>
+                <p>
+                <br>
+                </p>
+                @endif
+                
+                @if ($equiposPorPrestamo != null && count($equiposPorPrestamo) > 0)
+                <h5><p align="center">Equipo en préstamo</p></h5>
+                <table class="table table-bordered" style="width:100%" id="mytable">
+                    <thead class="thead-light">
                     <tr>
                         <th>Item Prestamo</th>
                         <th>Id UdeG</th>
@@ -71,6 +75,7 @@
                        <th>Operaciones</th> 
                     </tr>
                     </thead>
+                    @endif
                     <tbody>
                     @foreach($equiposPorPrestamo as $equipoPorPrestamo)
                         <tr>
@@ -117,19 +122,17 @@
                                     </div>
                                 </form>
                             </td>
-
                             <td><a href="{{route('eliminarEquipoPrestamo', $equipoPorPrestamo->id)}}" class="btn btn-outline-danger">Quitar</a></td>
-
-
-
                         </tr>
                     @endforeach
-
                     </tbody>
-                </table>
+                </table> 
+                
         </div>
-        <div class="row">
-                <h5>Agregar Equipos</h5>
+        <hr>
+
+        <div class="container-fluid">
+                <h5><center>Agregar Equipos</center></h5>
 
                 <form action="{{route('busquedaEquiposPrestamo')}}" method="POST" enctype="multipart/form-data" class="col-12">
                     {!! csrf_field() !!}
@@ -209,9 +212,9 @@
                 </table>
 
         </div>
-        <div class="row">
+        <div class="container-fluid">
                 <br>
-                    <div class="row g-3 align-items-center">
+                    <div class="container-fluid g-3 align-items-center">
                         <div class="col-md-6">
                             <a href="{{ route('home') }}" class="btn btn-danger">Cancelar</a>
                            
@@ -220,7 +223,7 @@
                 </div>
             
             <br>
-            <div class="row g-3 align-items-center">
+            <div class="container-fluid g-3 align-items-center">
 
                 <br>
                 <h5>En caso de inconsistencias, favor de reportarlas a victor.ramirez@academicos.udg.mx</h5>
@@ -242,8 +245,6 @@
     <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"></script>
 
     <script>
-
-
         $(document).ready(function() {
             $('#example').DataTable( {
                 "pageLength": 100,

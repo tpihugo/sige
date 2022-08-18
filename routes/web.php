@@ -63,6 +63,8 @@ Route::resource(
     "mantenimientoEquipos",
     "App\Http\Controllers\mantenimientoEquipoController"
 );
+Route::resource('requisicion', 'App\Http\Controllers\RequisicionController');
+Route::resource('articulo', 'App\Http\Controllers\ArticuloController');
 
 Route::post("personal_search", [
     // 'as' => 'personal_search',
@@ -660,6 +662,14 @@ Route::get("/switches", [
     "middleware" => "auth",
     "uses" => "App\Http\Controllers\EquipoController@updateSW",
 ]);
+//Requisicion
+Route::resource('requisiciones', '\App\Http\Controllers\RequisicionController');
 
-
+Route::get('/imprimirrequisicion/{id}', array(
+    'as' => 'imprimirrequisicion',
+    'middleware' => 'auth',
+    'uses' => 'App\Http\Controllers\PDFController@imprimirrequisicion'
+));
+//Articulo_requisicion
+Route::resource('articulos', '\App\Http\Controllers\ArticuloController');
 

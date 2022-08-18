@@ -23,3 +23,44 @@
 >
     loader(true);
 </script>
+
+<script>
+
+// sidebar open close js code
+let navLinks = document.querySelector(".nav-links");
+let menuOpenBtn = document.querySelector(".navbar .bx-menu");
+let menuCloseBtn = document.querySelector(".nav-links .bx-x");
+menuOpenBtn.onclick = function() {
+navLinks.style.left = "0";
+}
+menuCloseBtn.onclick = function() {
+navLinks.style.left = "-100%";
+}
+
+
+// sidebar submenu open close js code
+let htmlcssArrow = document.querySelector(".htmlcss-arrow");
+htmlcssArrow.onclick = function() {
+ navLinks.classList.toggle("show1");
+}
+let jsArrow = document.querySelector(".js-arrow");
+jsArrow.onclick = function() {
+ navLinks.classList.toggle("show3");
+}
+let tickArrow = document.querySelector(".tickets-arrow");
+tickArrow.onclick = function() {
+ navLinks.classList.toggle("show4");
+}
+let curArrow = document.querySelector(".cur-arrow");
+curArrow.onclick = function() {
+ navLinks.classList.toggle("show5");
+}
+let userArrow = document.querySelector(".user-arrow");
+userArrow.onclick = function() {
+ navLinks.classList.toggle("show6");
+}
+let logsArrow = document.querySelector(".logs-arrow");
+logsArrow.onclick = function() {
+ navLinks.classList.toggle("show7");
+}
+</script>

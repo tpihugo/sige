@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Articulo;
 use App\Models\Personal;
 use App\Models\VsEquiposPorTicket;
 use App\Models\VsMantenimiento;
 use App\Models\VsPrestamo;
 use App\Models\VsTicket;
+use App\Models\Requisicion;
 use Illuminate\Http\Request;
 
 class PDFController extends Controller
@@ -31,5 +33,12 @@ class PDFController extends Controller
         $pdf = \PDF::loadView('personal.formatopersonal', compact('personal'));
 
         return $pdf->stream('formatopersonal.pdf');
+    }
+    public function imprimirrequisicion($id){
+        $requisicion = Requisicion::find ($id);
+        $pdf = \PDF::loadView('requisiciones.formatorequisicion', compact('requisicion'));
+
+        return $pdf->stream('formatorequisicion.pdf');
+
     }
 }

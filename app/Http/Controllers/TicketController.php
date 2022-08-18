@@ -36,6 +36,7 @@ class TicketController extends Controller
     //este el que se modificó fin de la modificación 1
     public function cargarDT($consulta)
     {
+        
         $tickets = [];
 
         foreach ($consulta as $key => $value){
@@ -63,7 +64,7 @@ class TicketController extends Controller
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">¿Seguro que deseas eliminar este curso?</h5>
+                      <h5 class="modal-title" id="exampleModalLabel">¿Seguro que deseas eliminar este ticket?</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -83,12 +84,12 @@ class TicketController extends Controller
                 </div>
               </div>
             ';
-
+            
             $tickets[$key] = array(
                 $acciones,
                 $value['id'],
                 $value['estatus'],
-                $value['fecha_reporte'],
+                $value['fecha_reporte'] = \Carbon\Carbon::parse($value->fecha_reporte)->format('d/m/Y H:i'),
                 $value['area'],
                 $value['solicitante'],
                 $value['contacto'],
@@ -329,7 +330,6 @@ class TicketController extends Controller
         if($ticket){
             $ticket->activo = 0;
             $ticket->update();
-$ticket->update();
             //
             $log = new Log();
         $log->tabla = "tickets";
