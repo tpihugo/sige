@@ -24,7 +24,7 @@ class CreateArticulosTable extends Migration
             $table->timestamps();
 
             $table->foreign('requisicion_id')->references('id')
-                ->on('requisicions')->onDelete('cascade');
+                ->on('requisiciones')->onDelete('cascade');
         });
     }
 

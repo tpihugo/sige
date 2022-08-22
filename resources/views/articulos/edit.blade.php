@@ -23,7 +23,7 @@
 
             </div>
 
-            <form action="/articulos/{{ $articulo->id}}" method="POST">
+            <form action="{{route('articulos.update',$articulo->id)}}" method="POST">
         @csrf
         @method('PUT')
         <div class="row g-3 align-items-center">
@@ -48,6 +48,10 @@
         <div class="col-md-8">
             <label for="" class="form-label">Observación</label>
             <input type="text" name="observacion" id="observacion" value="{{ $articulo->observacion }}" class="form-control" tabindex="4" required>
+        </div>
+        <div class="col-md-4">
+            <label for="" class="form-label">Id requisicion</label>
+            <input type="text"  name="requisicion_id" id="requisicion_id" value="{{ $articulo->requisicion_id }}" class="form-control" tabindex="4" required>
         </div>
         <div class="col-md-4">
             <label for="" class="form-label">Observación</label>

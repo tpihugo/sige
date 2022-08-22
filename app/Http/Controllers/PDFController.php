@@ -35,8 +35,9 @@ class PDFController extends Controller
         return $pdf->stream('formatopersonal.pdf');
     }
     public function imprimirrequisicion($id){
-        $requisicion = Requisicion::find ($id);
-        $pdf = \PDF::loadView('requisiciones.formatorequisicion', compact('requisicion'));
+        $requisicion = Requisicion::find($id);
+        $articulos = Articulo::where('requisicion_id',$requisicion->id)->get();
+        $pdf = \PDF::loadView('requisiciones.formatorequisicion', compact('requisicion','articulos'));
 
         return $pdf->stream('formatorequisicion.pdf');
 

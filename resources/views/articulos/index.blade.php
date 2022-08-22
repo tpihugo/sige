@@ -14,8 +14,8 @@
             @endif
             <h2>Artículos en requisición </h2>
             <p align="right">
-                <a href="{{ route('articulos.create') }}" class="btn btn-success">Agregar artículo</a>
-                <a href="/requisiciones" class="btn btn-primary">Regresar</a>
+                <a href="{{route('requisicion-articulos-create',$id)}}" class="btn btn-success">Agregar artículo</a>
+                <a href="{{route('requisicion.index')}}" class="btn btn-primary">Regresar</a>
             </p>
         </div>
     </div>
@@ -47,7 +47,7 @@
                         <td>
                             <div class="btn-circle">
                                 <form action="{{ route ('articulos.destroy', $articulo->id)}}" method="POST">
-                                    <a class="btn btn-success" href="/articulos/{{$articulo->id}}/edit">Editar</a>
+                                    <a class="btn btn-success" href="{{route('articulos.edit',$articulo->id)}}">Editar</a>
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" title="Borrar" class="btn btn-danger"> <i class="far fa-trash-alt"></i></button>

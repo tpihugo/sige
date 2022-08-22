@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\Log;
 use Illuminate\Support\Facades\Auth;
+use requisicion as GlobalRequisicion;
 
 class ArticuloController extends Controller
 {
@@ -17,10 +18,10 @@ class ArticuloController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        $articulos = Articulo::all();
-        return view('articulos.index')->with('articulos', $articulos);
+        $articulos = Articulo::where('requisicion_id',$id)->where('activo',1)->get();
+        return view('articulos.index',compact('id'))->with('articulos', $articulos);
     }
 
     /**
@@ -28,9 +29,10 @@ class ArticuloController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Requisicion $id)
     {
-        return view('articulos.create');
+        $requisicion = $id->id;
+        return view('articulos.create',compact('requisicion'));
     }
 
     /**
@@ -54,10 +56,11 @@ class ArticuloController extends Controller
         $articulos->descripcion = $request->get('descripcion');
         $articulos->observacion = $request->get('observacion');
         $articulos->status = $request->get('status');
+        $articulos->requisicion_id	 = $request->get('requisicion_id');
 
         $articulos->save();
 
-        return redirect('/articulos');
+        return redirect()->route('requisiciones.index');
     }
 
     /**
@@ -98,11 +101,12 @@ class ArticuloController extends Controller
         $articulo->cantidad = $request->get('cantidad');
         $articulo->descripcion = $request->get('descripcion');
         $articulo->observacion = $request->get('observacion');
-        $articulo ->status = $request->get('status');
-
+        $articulo->status = $request->get('status');
+        $articulo->requisicion_id = $request->get('requisicion_id');
+        //dd($articulo);
         $articulo->save();
 
-        return redirect('/articulos');
+        return redirect()->route('requisicion.index');
     }
 
     /**
@@ -114,9 +118,9 @@ class ArticuloController extends Controller
     public function destroy($id)
     {
         $articulo = Articulo::find($id);
-        $articulo->delete();
+        $articulo->activo = 0;
 
-        return redirect('/articulos');
+        return redirect()->route('requisicion.index');
 
     }
 }
