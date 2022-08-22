@@ -59,10 +59,10 @@ Route::resource("personal", "App\Http\Controllers\PersonalController");
 Route::resource("bajas", "App\Http\Controllers\BajaController");
 
 Route::resource("expedientes", "App\Http\Controllers\ExpedienteController");
-Route::resource(
+/*Route::resource(
     "mantenimientoEquipos",
     "App\Http\Controllers\mantenimientoEquipoController"
-);
+);*/
 Route::resource('requisicion', 'App\Http\Controllers\RequisicionController');
 Route::resource('articulo', 'App\Http\Controllers\ArticuloController');
 
@@ -673,3 +673,15 @@ Route::get('/imprimirrequisicion/{id}', array(
 //Articulo_requisicion
 Route::resource('articulos', '\App\Http\Controllers\ArticuloController');
 
+Route::get('requisicion/{id}/articulos/create',);
+
+Route::get('requisicion/{id}/articulos/create', array(
+    'as' => 'requisicion-articulos-create',
+    'middleware' => 'auth',
+    'uses' => '\App\Http\Controllers\ArticuloController@create'
+));
+Route::get('requisicion/{id}/articulos/', array(
+    'as' => 'requisicion-articulos',
+    'middleware' => 'auth',
+    'uses' => '\App\Http\Controllers\ArticuloController@index'
+));

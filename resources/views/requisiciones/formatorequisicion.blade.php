@@ -50,35 +50,48 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><b>SOLICITUD:</b> {{$requisicion->num_sol}}</td>
-                            <td><b>DIA / MES / AÑO </b>{{\Carbon\Carbon::parse($requisicion->fecha_inicio)->format('d/m/Y') }} </td>
+                            <td><b>SOLICITUD:</b> {{ $requisicion->num_sol }}</td>
+                            <td><b>DIA / MES / AÑO
+                                </b>{{ \Carbon\Carbon::parse($requisicion->fecha_inicio)->format('d/m/Y') }} </td>
                         </tr>
                         <tr>
-                        <td class="thead-light" colspan="2" bgcolor="#E8E8E8"><b> LUGAR EN QUE SE REQUIEREN LOS ARTÍCULOS</b></td>
+                            <td class="thead-light" colspan="2" bgcolor="#E8E8E8"><b> LUGAR EN QUE SE REQUIEREN LOS
+                                    ARTÍCULOS</b></td>
                         </tr>
                         <tr>
-                        <td class="thead-light" colspan="2">COORDINACIÓN PARA TECNOLOGÍAS DEL APRENDIZAJE</td>
+                            <td class="thead-light" colspan="2">COORDINACIÓN PARA TECNOLOGÍAS DEL APRENDIZAJE</td>
                         </tr>
                     </tbody>
                 </table><br>
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th scope="col"><center>CODIGO</center></th>
-                            <th scope="col"><center>DESCRIPCIÓN</center></th>
-                            <th scope="col"><center>CANTIDAD</center></th>
-                            <th scope="col"><center>OBSERVACIÓN</center></th>
+                            <th scope="col">
+                                <center>CODIGO</center>
+                            </th>
+                            <th scope="col">
+                                <center>DESCRIPCIÓN</center>
+                            </th>
+                            <th scope="col">
+                                <center>CANTIDAD</center>
+                            </th>
+                            <th scope="col">
+                                <center>OBSERVACIÓN</center>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
-                        
+                        @foreach ($articulos as $item)
+                            <tr>
+                                <td>{{ $item->codigo }}</td>
+                                <td>{{ $item->descripcion }}</td>
+                                <td>{{ $item->cantidad }}</td>
+                                <td>{{ $item->observacion }}</td>
+                            </tr>
+                        @endforeach
+
                     </tbody>
-                </table><br>
-                <br>
-                <hr>
-                <br>
-                <hr>
-            </div>
+                </table>
         </div>
         <div class="row">
             <div class="col-md-12 col-xs-12">

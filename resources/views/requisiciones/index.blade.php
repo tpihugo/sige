@@ -64,9 +64,9 @@
                         </td>
                         <td>
                             <div class="btn-circle">
-                                <a class="btn btn-success" title="Agregar artículos" href=""><i class="far fa-edit"></i></a>
-                                <a class="btn btn-primary" title="Ver" href="/articulos/"><i class="fas fa-check"></i></a>
-                                <a class="btn btn-warning" title="Imprimir formato" href="/imprimirrequisicion/{{$requisicion->id}}" target="blank"><i class="far fa-file-alt"></i></a></center>
+                                <a class="btn btn-success" title="Agregar artículos" href="{{route('requisicion-articulos-create',$requisicion->id)}}"><i class="far fa-edit"></i></a>
+                                <a class="btn btn-primary" title="Ver" href="{{route('requisicion-articulos',$requisicion->id)}}"><i class="fas fa-check"></i></a>
+                                <a class="btn btn-warning" title="Imprimir formato" href=" {{route('imprimirrequisicion',$requisicion->id)}}" target="blank"><i class="far fa-file-alt"></i></a></center>
 
                             </div>
 

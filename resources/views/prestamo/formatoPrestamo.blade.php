@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Préstamo / Traslado de Equipos. SIGE</title>
+    <title>Préstamo / Recibo de Equipos. SIGE</title>
 
     <!-- Styles -->
 
@@ -38,7 +38,7 @@
     <table class="table table-bordered" >
         <thead class="thead-light">
         <tr>
-            <th scope="col" colspan="2"><center><h5>Formato de Préstamo / Traslado</h5></center></th>
+            <th scope="col" colspan="2"><center><h5>Formato de Préstamo / Recibo de Equipos</h5></center></th>
         </tr>
         </thead>
         <tbody>
