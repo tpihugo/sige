@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Area;
+use App\Models\complementos_switch;
 use App\Models\Equipo;
 use App\Models\Empleado;
 use App\Models\VsEquipo;
@@ -17,7 +18,9 @@ use Illuminate\Http\Request;
 use App\Models\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Ip;
-
+use App\Models\Subred;
+use equipo as GlobalEquipo;
+use Faker\Calculator\Ean;
 
 class EquipoController extends Controller
 {
@@ -34,7 +37,9 @@ class EquipoController extends Controller
         $empleados = Empleado::all()->sortBy('nombre');
         $areas = Area::all();
 	$tipo_equipos = Equipo::distinct()->orderby('tipo_equipo','asc')->get(['tipo_equipo']);
-	$ip = Ip::where('disponible','=','si')->get();
+	$ip = IP::join('subredes','ips.id_subred','=','subredes.id')
+        ->select('subredes.*','ips.*')
+        ->where('ips.disponible','=','si')->get();
         return view('equipo.create')->with('empleados', $empleados)->with('areas', $areas)->with('tipo_equipos', $tipo_equipos)->with('ips',$ip);
     }
 
@@ -59,9 +64,10 @@ class EquipoController extends Controller
         $equipo->numero_serie = $request->input('numero_serie');
         $equipo->mac = $request->input('mac');
         if($request->input('ip_id')=="null"){
-            $equipo->ip_id = null;
+            $equipo->ip = null;
         }else{
-            $equipo->ip_id = $request->input('ip_id');
+            $equipo->ip = $request->input('ip_id');
+            
         }
 
     	$equipo->tipo_conexion = $request->input('tipo_conexion');
@@ -73,8 +79,10 @@ class EquipoController extends Controller
         $equipo->save();
 
 	if($request->input('ip_id')!='null'){
-        $ip = Ip::where('id','=',$request->input('ip_id'))->first();
-        $ip->disponible = "no";
+        $ip = Ip::where('ip','=',$request->input('ip_id'))->first();
+        $ip->gateway = $request->input('gateway');
+        $ip->mascara = $request->input('mascara');
+        $ip->disponible = 'no';
         $ip->update();
     }
 
@@ -126,19 +134,26 @@ class EquipoController extends Controller
         $equipo = Equipo::find($id);
         $ip_equipo=null;
         if($equipo->id!=null){
-
-            $ip_equipo=Ip::where('id','=',$equipo->ip_id)->first();
+            //si el equipo tiene ip asignada
+            $ip_equipo=Ip::where('ip','=',$equipo->ip)->first();
+            $subred_equipo=Ip::
+            join('subredes','ips.id_subred','=','subredes.id')
+            ->select('subredes.*')
+            ->where('ips.ip','=',$equipo->ip)->first();
 
         }
 
-        $ip = Ip::where('disponible','=','si')->get();
+        $ip = IP::join('subredes','ips.id_subred','=','subredes.id')
+        ->select('subredes.*','ips.*')
+        ->where('ips.disponible','=','si')->get();
+        
         if($equipo){
             $idResguardante=$equipo->id_resguardante;
             if($idResguardante==0){
                 $idResguardante=39;
             }
             $resguardante = Empleado::find($idResguardante);
-            return view('equipo.edit')->with('equipo', $equipo)->with('empleados', $empleados)->with('resguardante',$resguardante)->with('tipo_equipos', $tipo_equipos)->with('ips',$ip)->with('ip_equipo',$ip_equipo);
+            return view('equipo.edit')->with('equipo', $equipo)->with('empleados', $empleados)->with('resguardante',$resguardante)->with('tipo_equipos', $tipo_equipos)->with('ips',$ip)->with('ip_equipo',$ip_equipo)->with('subred_equipo',$subred_equipo);
         }else{
             return redirect('/')->with(array(
                 'message'=>'El Id que desea modificar no existe'
@@ -151,19 +166,9 @@ class EquipoController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validateData = $this->validate($request,[
-            'udg_id'=>'required',
-            'tipo_equipo'=>'required',
-            'marca'=>'required',
-            'modelo'=>'required',
-            'numero_serie'=>'required',
-            'mac'=>'required',
-            'ip'=>'required',
-            'tipo_conexion'=>'required',
-            'detalles'=>'required'
-        ]);
+        
         $equipo = Equipo::find($id);
-	$equipo_ip = $equipo->ip_id;
+	    $equipo_ip = $equipo->ip;
         $equipo->udg_id = $request->input('udg_id');
         $equipo->tipo_equipo = $request->input('tipo_equipo');
         $equipo->marca = $request->input('marca');
@@ -171,10 +176,17 @@ class EquipoController extends Controller
         $equipo->numero_serie = $request->input('numero_serie');
         $equipo->mac = $request->input('mac');
 
-        if($request->input('ip')=="null"){
-            $equipo->ip_id = null;
+        if($request->input('ip_id')=="No Especificado"){
+            $equipo->ip = 'No Especificado';
+            
+
         }else{
-            $equipo->ip_id = $request->input('ip');
+            $equipo->ip = $request->input('ip_id');
+            $ip = Ip::where('ip','=',$request->input('ip_id'))->first();
+            $ip->disponible = 'no';
+            $ip->gateway = $request->input('gateway');
+            $ip->mascara = $request->input('mascara');
+            $ip->update();  
         }
 
 
@@ -185,20 +197,28 @@ class EquipoController extends Controller
         $equipo->localizado_sici = $request->input('localizado_sici');
 	$equipo->update();
 
-    if($equipo_ip==null){//antes era null y veremos que es ahora
-        if($equipo->ip_id!=null){//la selecionada no es null
-            $ip = Ip::where('id','=',$equipo->ip_id)->get()[0];
+    if($equipo_ip=="No Especificado"){//antes era null y veremos que es ahora
+        if($equipo->ip!="No Especificado"){//la selecionada no es null
+            $ip = Ip::where('ip','=',$request->input('ip_id'))->first();
             $ip->disponible = 'no';
             $ip->update();
         }
     }else{//antes tenia una ip
-        if($equipo_ip!=$equipo->ip_id){//la ip va a cambiar
-            $ip = Ip::where('id','=',$equipo_ip)->get()[0];
+        if($equipo_ip!=$equipo->ip){//la ip va a cambiar
+            $ip = Ip::where('ip','=',$equipo_ip)->first();
             $ip->disponible = 'si';
+            $ip->gateway = $request->input('No Especificado');
+            $ip->mascara = $request->input('No Especificado');
             $ip->update();
-            if($equipo->ip_id!=null){//la seleccionada no es null
-                $ip = Ip::where('id','=',$equipo->ip_id)->get()[0];
+            if($equipo->ip!="No Especificado"){//la seleccionada no es null
+                $ip = Ip::where('ip','=',$equipo->ip)->first();
                 $ip->disponible = 'no';
+                
+                $ip->update();
+            }else{
+                $ip = Ip::where('ip','=',$equipo_ip)->first();
+                $ip->gateway = $request->input('No Especificado');
+                $ip->mascara = $request->input('No Especificado');
                 $ip->update();
             }
         }
@@ -479,5 +499,315 @@ public function busquedaEquiposPrestamo(Request $request){
 
     }
 
+    //Funciones para los switches
+    public function switches(){
+        $switches = VsEquipo::
+            join('complementos_switch','vs_equipos.id','=','complementos_switch.id_equipo')
+            ->select('vs_equipos.*','complementos_switch.switch as switchS','complementos_switch.licencias as licencias','complementos_switch.enlace as enlace' ,'complementos_switch.accesso as acceso' ,'complementos_switch.descripcion as descripcion')
+            ->where('vs_equipos.tipo_equipo','=','Switch')->get();
+
+            $switch=$this-> cargarSW($switches);
+
+            return view('equipo.equipo-switches')->with('switch',$switch);
+            
+    }
+
+    //cargar switches
+
+    public function cargarSW($consulta){
+        $switches = [];
+        foreach ($consulta as $key => $value){
+            $cambiarubicacion = route('cambiar-ubicacion', $value['id']);
+            $actualizar =  route('equipo.edit_switch', $value['id']);
+
+            $acciones = '
+			<div class="btn-acciones">
+                    	    <div class="btn-circle">
+				<a href="' . $actualizar . '" title="Actualizar">
+                <span class="text-success"><span class="material-icons">edit</span></span>
+                        	</a>
+                
+                <a href="' . $cambiarubicacion . '"  title="Reubicar">
+                            	<span class="text-danger"><span class="material-icons">location_on</span></span>
+				</a>
+                </div>
+            </div>'
+            
+                ;
+
+            $switches[$key] = array(
+            $acciones,
+            $value['id'],
+            $value['udg_id'],
+            $value['switchS'],
+            $value['licencias'],
+            $value['ip'],
+            $value['mac'],
+            $value['acceso'],
+            $value['descripcion'],
+            $value['enlace'],
+            $value['modelo'],
+            $value['marca'],
+            $value['numero_serie'],
+            $value['area']
+
+            
+        );
+
+
+        }
+
+        return $switches;
+
+    }
+
+    //Filtrar switch por numero de serie
+    public function filtroNumero_serie(Request $request){
+        if($request->input('numero')==0){
+            return redirect()->route('switches')->with(array(
+                "message" => "Filtros no seleccionados"
+            ));
+        }
+        $switches =VsEquipo::
+            join('complementos_switch','vs_equipos.id','=','complementos_switch.id_equipo')
+            ->select('vs_equipos.*','complementos_switch.switch as switchS','complementos_switch.licencias as licencias','complementos_switch.enlace as enlace' ,'complementos_switch.accesso as acceso' ,'complementos_switch.descripcion as descripcion')
+            ->where('vs_equipos.tipo_equipo','=','Switch')->get();
+        $switch = $request->input('numero');
+        
+        $switchElegido = VsEquipo::
+        join('complementos_switch','vs_equipos.id','=','complementos_switch.id_equipo')
+        ->select('vs_equipos.*','complementos_switch.switch as switchS','complementos_switch.licencias as licencias','complementos_switch.enlace as enlace' ,'complementos_switch.accesso as acceso' ,'complementos_switch.descripcion as descripcion')
+        ->where('vs_equipos.numero_serie','=',$switch)->get();
+
+        if((isset($switch) && !is_null($switch))){
+            if($switchElegido){
+                $filtro = VsEquipo::
+                join('complementos_switch','vs_equipos.id','=','complementos_switch.id_equipo')
+                ->select('vs_equipos.*','complementos_switch.switch as switchS','complementos_switch.licencias as licencias','complementos_switch.enlace as enlace' ,'complementos_switch.accesso as acceso' ,'complementos_switch.descripcion as descripcion')
+                ->where('vs_equipos.numero_serie','=',$switch)->get();
+
+                $switchess = $this->cargarSW($filtro);
+            
+            }
+            
+
+        } else {
+            $switches = VsEquipo::
+                join('complementos_switch','vs_equipos.id','=','complementos_switch.id_equipo')
+                ->select('vs_equipos.*','complementos_switch.switch as switchS','complementos_switch.licencias as licencias','complementos_switch.enlace as enlace' ,'complementos_switch.accesso as acceso' ,'complementos_switch.descripcion as descripcion')
+                ->where('vs_equipos.tipo_equipo','=','Switch')->get();
+        }
+
+        return view('equipo.equipo-switches')
+            ->with('switch', $switchess)
+            ->with('switches',$switches)
+            ->with('switchElegido',$switchElegido);
+
+    }
+
+    public function createSw(){
+        $empleados = Empleado::all()->sortBy('nombre');
+        $areas = Area::all();
+        $ip = Ip::where('disponible','=','si')->get();
+        return view('equipo.capturar_switches')->with('empleados', $empleados)->with('areas', $areas)->with('ips',$ip);
+
+    }
+
+    //capturar switch
+
+    public function storeSw(Request $request)
+    {
+        $validateData = $this->validate($request,[
+            'udg_id'=>'required',
+            'ip_id'=>'required',
+            
+            'marca'=>'required',
+            'modelo'=>'required',
+            'numero_serie'=>'required',
+            'mac'=>'required',
+            'tipo_conexion'=>'required',
+            'detalles'=>'required'
+            ]);
+        $equipo = new equipo();
+        $equipo->udg_id = $request->input('udg_id');
+        $equipo->tipo_equipo = "Switch"; 
+        $equipo->marca = $request->input('marca');
+        $equipo->modelo = $request->input('modelo');
+        $equipo->numero_serie = $request->input('numero_serie');
+        $equipo->mac = $request->input('mac');
+        if($request->input('ip_id')=="null"){
+            $equipo->ip = null;
+        }else{
+            $equipo->ip = $request->input('ip_id');
+        }
+
+    	$equipo->tipo_conexion = $request->input('tipo_conexion');
+        $equipo->detalles = $request->input('detalles');
+        $equipo->id_resguardante = $request->input('id_resguardante');
+	    $equipo->resguardante = $request->input('resguardante');
+    	$equipo->localizado_sici = 'No especificado';
+        // $equipo->localizado_sici = $request->input('localizado_sici');
+        $equipo->save();
+
+        if($request->input('ip_id')!='null'){
+            $ip = Ip::where('ip','=',$request->input('ip_id'))->first();
+            $ip->disponible = "no";
+            $ip->update();
+        }
+
+        $complementos_swtich= new complementos_switch();
+        $complementos_swtich->id_equipo = $equipo->id;
+        $complementos_swtich->switch=$request->input('switch');
+        $complementos_swtich->licencias = $request->input('licencias');
+        $complementos_swtich->enlace = $request->input('enlace');
+        $complementos_swtich->accesso= $request->input('acceso');
+        $complementos_swtich->descripcion = $request->input('descripcion');
+
+        $complementos_swtich->save();
+
+        
+
+	
+
+    $movimiento_equipo = new MovimientoEquipo;
+	$movimiento_equipo->id_equipo = $equipo->id;
+	$movimiento_equipo->id_area = $request->input('area_id');
+	$movimiento_equipo->id_usuario = $request->input('id_resguardante');
+	$movimiento_equipo->registro = 'Alta de equipo';
+	$movimiento_equipo->fecha = now();
+	$movimiento_equipo->comentarios = 'Alta equipo';
+	$movimiento_equipo->save();
+
+	//
+        $log = new Log();
+        $log->tabla = "equipos";
+        $mov="";
+        $mov=$mov." udg_id:".$equipo->udg_id ." tipo_equipo:". $equipo->tipo_equipo ." marca:" .$equipo->marca;
+        $mov=$mov." modelo:".$equipo->modelo ." numero_serie:". $equipo->numero_serie ." mac:" .$equipo->mac;
+        $mov=$mov." ip:".$equipo->ip ." tipo_conexion:". $equipo->tipo_conexion ." detalles:" .$equipo->detalles;
+        $mov=$mov." id_resguardante:".$equipo->id_resguardante ." resguardante:". $equipo->resguardante ." localizado_sici:" .$equipo->localizado_sici;
+        $log->movimiento = $mov;
+        $log->usuario_id = Auth::user()->id;
+        $log->acciones = "Insercion";
+        $log->save();
+        //
+        return redirect('switches')->with(array(
+            'message'=>'El equipo se guardo Correctamente'
+        ));
+    }
+
+//Editar switches
+
+
+
+
+    public function editSW($id){
+        $empleados = Empleado::all()->sortBy('nombre');
+
+        $equipo = Equipo::find($id);
+        $switch = complementos_switch::where('id_equipo','=',$id)->first();
+        $area_actual = VsEquipo::find($id);
+        $ip_equipo=null;
+        if($equipo->id!=null){
+
+            $ip_equipo=Ip::where('id','=',$equipo->ip)->first();
+
+        }
+
+        $ip = Ip::where('disponible','=','si')->get();
+        if($equipo){
+            $idResguardante=$equipo->id_resguardante;
+            if($idResguardante==0){
+                $idResguardante=39;
+            }
+            $resguardante = Empleado::find($idResguardante);
+            return view('equipo.editar_switch')->with('equipo', $equipo)->with('area_actual',$area_actual)->with('empleados', $empleados)->with('switch', $switch)->with('resguardante',$resguardante)->with('ips',$ip)->with('ip_equipo',$ip_equipo);
+        }else{
+            return redirect('switches')->with(array(
+                'message'=>'El Id que desea modificar no existe'
+            ));
+        }
+    }
+
+    public function updateSW(Request $request, $id){
+
+        
+        
+        $validateData = $this->validate($request,[
+            'udg_id'=>'required',
+            
+            'marca'=>'required',
+            'modelo'=>'required',
+            'numero_serie'=>'required',
+            'mac'=>'required',
+            'ip_id'=>'required',
+            'tipo_conexion'=>'required',
+            'detalles'=>'required'
+        ]);
+        $equipo = Equipo::find($id);
+        $equipo_ip = $equipo->ip;
+        $equipo->udg_id = $request->input('udg_id');
+        $equipo->tipo_equipo = 'switch';
+        $equipo->marca = $request->input('marca');
+        $equipo->modelo = $request->input('modelo');
+        $equipo->numero_serie = $request->input('numero_serie');
+        $equipo->mac = $request->input('mac');
+    
+        if($request->input('ip_id')=="null"){
+            $equipo->ip = null;
+        }else{
+            $equipo->ip = $request->input('ip_id');
+        }
+    
+    
+        $equipo->tipo_conexion = $request->input('tipo_conexion');
+        $equipo->detalles = $request->input('detalles');
+        $equipo->id_resguardante = $request->input('id_resguardante');
+        $equipo->resguardante = $request->input('resguardante');
+        $equipo->localizado_sici = $request->input('localizado_sici');
+        $equipo->update();
+
+        $complementos_swtich = complementos_switch::where('id_equipo','=',$id)->first();
+        $complementos_swtich->id_equipo = $equipo->id;
+        $complementos_swtich->switch= $request->input('switch');
+        $complementos_swtich->licencias = $request->input('licencias');
+        $complementos_swtich->enlace = $request->input('enlace');
+        $complementos_swtich->accesso= $request->input('acceso');
+        $complementos_swtich->descripcion = $request->input('descripcion');
+
+        $complementos_swtich->update();
+
+        $movimiento_equipo = new MovimientoEquipo;
+        $movimiento_equipo->id_area = $request->input('area_id');
+        $movimiento_equipo->update();
+
+       
+
+
+    
+    if($equipo_ip==null){//antes era null y veremos que es ahora
+        if($equipo->ip!=null){//la selecionada no es null
+            $ip = Ip::where('ip','=',$equipo->ip)->get()[0];
+            $ip->disponible = 'no';
+            $ip->update();
+        }
+    }else{//antes tenia una ip
+        if($equipo_ip!=$equipo->ip){//la ip va a cambiar
+            $ip = Ip::where('ip','=',$equipo_ip)->get()[0];
+            $ip->disponible = 'si';
+            $ip->update();
+            if($equipo->ip!=null){//la seleccionada no es null
+                $ip = Ip::where('ip','=',$equipo->ip)->get()[0];
+                $ip->disponible = 'no';
+                $ip->update();
+            }
+        }}
+
+        return redirect()->route('switches')->with(array(
+            'message'=>'Los se actualizaron Correctamente'
+        ));;
+
+
+    }
 
 }

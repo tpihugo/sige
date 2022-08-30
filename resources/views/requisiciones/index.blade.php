@@ -1,212 +1,88 @@
 @extends('layouts.app')
 
 @section('content')
-    @if (Auth::check() && (Auth::user()->role =='admin' ||  Auth::user()->role =='cta' || Auth::user()->role =='aulas' || Auth::user()->role =='redes' || Auth::user()->role =='auxiliar'))
-
-        <div class="container-fluid">
-            <div class="row g-3 align-items-center">
-                <div class="col-md-12">
-                    @if (session('message'))
-                        <div class="alert alert-success">
-                            {{ session('message') }}
-                        </div>
-                    @endif
-                    <h2>Requisiciones </h2>
-                                        <p align="right">
-			@if (Auth::check() && Auth::user()->role == 'admin')
-<<<<<<< HEAD
-                        	<a href="{{route('requisicions.create')}}" class="btn btn-success">
-=======
-                        	<!-- <a href="{{ route('cursos.create') }}" class="btn btn-success">
-                            		<i class="fa fa-plus"></i> Capturar Requisicion
-                        	</a> -->
-
-                          <a href="{{ route('requisicions.create') }}" class="btn btn-success">
->>>>>>> 1448ce638473fea77923a53ab975230a86f4b1b7
-                            		<i class="fa fa-plus"></i> Capturar Requisicion
-                        	</a>
-			@endif
-                        <a href="{{ route('home') }}" class="btn btn-primary">
-                            <i class="fa fa-arrow-left"></i> Regresar
-                        </a>
-                    </p>
-                </div>
-            </div>
-            <br>
-
-
-
-
+@if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='auxiliar' || Auth::user()->role =='redes'))
 
 
 <div class="container-fluid">
-<<<<<<< HEAD
-            <div class="row">
-                <div class="col-12">
-                    <table id="example" class="table table-striped table-bordered" cellspacing="2" width="100%">
-                        <thead>
-                            <tr>
-                                <th>Acciones</th>
-                                <th>Número Solicitud</th>
-                                <th>Fecha</th>
-                                <th>Número Usuario</th>
-                                <th>Proyecto</th>
-                                <th>Fondo</th>
-                                <th>Fecha Recibido</th>
-                                <th>Recibido por</th>
-                                <th>Id</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-
-
-                        </tbody>
-                    </table>
-                </div>
+    <div class="row g-3 align-items-center">
+        <div class="col-md-12">
+            @if (session('message'))
+            <div class="alert alert-success">
+                {{ session('message') }}
             </div>
-            <div class="row">
-                <div class="col-12">
-                    <p>
-                        <a href="{{ route('home') }}" class="btn btn-primary">
-                            < Regresar</a>
-
-
-                    </p>
-                </div>
-=======
-        <div class="row">
-          <div class="col-12">
-              <table id="example" class="table table-striped table-bordered" cellspacing="2" width="100%">
-                  <thead>
-                      <tr>
-                          <th>Acciones</th>
-                          <th>Articulos</th>
-                          <th>Número Solicitud</th>
-                          <th>Fecha</th>
-                          <th>ID Usuario</th>
-                          <th>Proyecto</th>
-                          <th>Fondo</th>
-                          <th>Fecha Recibido</th>
-                          <th>Recibido por</th>
-                          <th>Id</th>
-                      </tr>
-                  </thead>
-                  <tbody id="dataTable-tbody">
-
-
-
-                  </tbody>
-              </table>
->>>>>>> 1448ce638473fea77923a53ab975230a86f4b1b7
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <p>
-                    <a href="{{ route('home') }}" class="btn btn-primary">
-                        < Regresar</a>
-
-
-                </p>
-            </div>
+            @endif
+            <h2>Requisiciones</h2>
+            <p align="right">
+                <a href="{{ route('requisiciones.create') }}" class="btn btn-success">Capturar requisición</a>
+                <a href="{{ route('home') }}" class="btn btn-primary">Regresar</a>
+            </p>
         </div>
     </div>
 
-        @extends('layouts.loader')
+    <br>
 
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-        <script type="text/javascript" src="https://cdn.datatables.net/v/bs4-4.1.1/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/r-2.2.7/datatables.min.js"></script>
+    <div class="row g-3 align-items-center">
+        <div class="col">
+            <table id="example" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Solicitud</th>
+                        <th>Fecha</th>
+                        <th>Usuario</th>
+                        <th>Proyecto</th>
+                        <th>Fondo</th>
+                        <th>Fecha recibido</th>
+                        <th>Nombre quien recibe</th>
+                        <th>Evidencia</th>
+                        <th>Acciones</th>
+                        <th>Artículos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($requisiciones as $requisicion)
+                    <tr>
+                        <td>{{ $requisicion->id }}</td>
+                        <td>{{ $requisicion->num_sol }}</td>
+                        <td>{{ \Carbon\Carbon::parse($requisicion->fecha)->format('d/m/Y') }}</td>
+                        <td>{{ $requisicion->user }}</td>
+                        <td>{{ $requisicion->proyecto }}</td>
+                        <td>{{ $requisicion->fondo }}</td>
+                        <td>{{ \Carbon\Carbon::parse($requisicion->fecha_recibido)->format('d/m/Y')}}</td>
+                        <td>{{ $requisicion->quien_recibe }}</td>
+                        <td><a href="/almacen/requis/{{$requisicion->documento}}" target="blank_">VER</a></td>
+                        <td>
+                            <div class="btn-circle">
+                            <form action="{{ route ('requisiciones.destroy', $requisicion->id)}}" method="POST">
+                                <a class="btn btn-info" title="Editar" href="/requisiciones/{{$requisicion->id}}/edit"><i class="far fa-edit"></i></a>
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" title="Borrar" class="btn btn-danger"> <i class="far fa-trash-alt"></i></button>
+                            </form>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="btn-circle">
+                                <a class="btn btn-success" title="Agregar artículos" href="{{route('requisicion-articulos-create',$requisicion->id)}}"><i class="far fa-edit"></i></a>
+                                <a class="btn btn-primary" title="Ver" href="{{route('requisicion-articulos',$requisicion->id)}}"><i class="fas fa-check"></i></a>
+                                <a class="btn btn-warning" title="Imprimir formato" href=" {{route('imprimirrequisicion',$requisicion->id)}}" target="blank"><i class="far fa-file-alt"></i></a></center>
 
-        <script type="text/javascript">
-            var data = @json($requisiciones);
-            console.log(data);
+                            </div>
 
-            $(document).ready(function() {
-                $('#example').DataTable({
-                    "data": data,
-                    "pageLength": 100,
-                    "order": [
-                        [0, "desc"]
-                    ],
-                    "language": {
-                        "sProcessing": "Procesando...",
-                        "sLengthMenu": "Mostrar _MENU_ registros",
-                        "sZeroRecords": "No se encontraron resultados",
-                        "sEmptyTable": "Ningún dato disponible en esta tabla",
-                        "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                        "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                        "sInfoPostFix": "",
-                        "sSearch": "Buscar:",
-                        "sUrl": "",
-                        "sInfoThousands": ",",
-                        "sLoadingRecords": "Cargando...",
-                        "oPaginate": {
-                            "sFirst": "Primero",
-                            "sLast": "Último",
-                            "sNext": "Siguiente",
-                            "sPrevious": "Anterior"
-                        },
-                        "oAria": {
-                            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                        }
-                    },
-                    responsive: true,
-                    // dom: 'Bfrtip',
-                    dom: '<"col-xs-3"l><"col-xs-5"B><"col-xs-4"f>rtip',
-                    buttons: [
-                        'copy', 'excel',
-                        {
-                            extend: 'pdfHtml5',
-                            orientation: 'landscape',
-                            pageSize: 'LETTER',
-                        }
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
 
-                    ]
-                })
-               loader(false);
-
-               let newTd = document.createElement('td');
-               let tBody = document.getElementById('dataTable-tbody');
-               newTd.innerHTML = 'FFF';
-               tbody.children[0].appendChild(newTd);
-            });
-
-
-            jQuery.extend( jQuery.fn.dataTableExt.oSort, {
-            "portugues-pre": function ( data ) {
-                var a = 'a';
-                    var e = 'e';
-                    var i = 'i';
-                    var o = 'o';
-                    var u = 'u';
-                    var c = 'c';
-                    var special_letters = {
-                        "Á": a, "á": a, "Ã": a, "ã": a, "À": a, "à": a,
-                        "É": e, "é": e, "Ê": e, "ê": e,
-                        "Í": i, "í": i, "Î": i, "î": i,
-                        "Ó": o, "ó": o, "Õ": o, "õ": o, "Ô": o, "ô": o,
-                        "Ú": u, "ú": u, "Ü": u, "ü": u,
-                        "ç": c, "Ç": c
-                    };
-                    for (var val in special_letters)
-                        data = data.split(val).join(special_letters[val]).toLowerCase();
-                    return data;
-                },
-                "portugues-asc": function ( a, b ) {
-                    return ((a < b) ? -1 : ((a > b) ? 1 : 0));
-                },
-                "portugues-desc": function ( a, b ) {
-                    return ((a < b) ? 1 : ((a > b) ? -1 : 0));
-                }
-            } );
-            //"columnDefs": [{ type: 'portugues', targets: "_all" }],
-
-        </script>
-    @else
-        Acceso No válido
-    @endif
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">$(document).ready(function () {
+    $('#example').DataTable();
+});</script>
+@else
+Acceso No válido
+@endif
 @endsection

@@ -67,16 +67,7 @@
                                 </div>
                             </div>
                             <br>
-                            <div class="row align-items-center">
-                                <div class="col-md-6 pl-0">
-                                    <label class="font-weight-bold" for="disponible">Disponible </label>
-                                    <select class="form-control" id="disponible" name="disponible"  >
-                                        <option >Seleccione disponibiliad</option>
-                                        <option value="si">Si</option>
-                                        <option value="no">No</option>
-                                    </select>
-                                </div>
-                            </div>
+                            
                             <br>
                         </div>
                         <br>

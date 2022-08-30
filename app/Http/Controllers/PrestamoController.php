@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Models\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class PrestamoController extends Controller
 {
@@ -26,8 +27,8 @@ class PrestamoController extends Controller
     {
 
         $vsprestamos = VsPrestamo::where('activo','=',1)
-            ->where('estado','En préstamo')
-	->get();
+            ->where('estado','En préstamo')->get();
+
         $prestamos = $this->cargarDT($vsprestamos);
 
        return view('prestamo.index')->with('prestamos',$prestamos);
@@ -38,6 +39,7 @@ class PrestamoController extends Controller
 
         foreach ($consulta as $key => $value){
 
+        $ruta = "borrarPrestamo".$value['id'];    
         $cambiarubicacion = route('cambiar-ubicacion', $value['id']);
         $actualizar =  route('prestamos.edit', $value['id']);
 	    $prestamo = route('imprimirPrestamo', $value['id']);
@@ -55,18 +57,45 @@ class PrestamoController extends Controller
                     <a href="'.$prestamo.'" class="btn btn-primary"  title="Formato de Préstamo" target="_blank">
                         <i class="far fa-file-alt"></i>
                     </a>
-
-                    <a href="'.$borrarPrestamo.'" class="btn btn-danger"  title="Borrar Préstamo">
-                        <i class="fas fa-eraser"></i>
+                </div>
+            </div>
+                <div class="btn-acciones">
+                <div class="btn-circle">
+                    <a href="#'.$ruta.'" role="button" class="btn btn-danger" data-toggle="modal" title="Eliminar">
+                            <i class="far fa-trash-alt"></i>
                     </a>
-
                     <a href="'.$devolverPrestamo.'" class="btn btn-success"  title="Devolución de Préstamo">
                     <i class="fas fa-check"></i>
                     </a>
-
+                </div>    
                 </div>
             </div>
-
+            <div class="modal fade" id="'.$ruta.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">¿Seguro que deseas eliminar este préstamo?</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <p class="text-primary">
+                        <small>
+                            '.$value['id'].',<br> '.$value['solicitante'].'
+                        </small>
+                        <small><br><br>
+                        '.$value['lista_equipos'].'
+                        </small>
+                      </p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <a href="'.$borrarPrestamo.'" type="button" class="btn btn-danger">Eliminar</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
         ';
 
         $prestamos[$key] = array(
@@ -78,10 +107,9 @@ class PrestamoController extends Controller
             $value['contacto'],
             $value['estado'],
             $value['lista_equipos'],
-            $value['fecha_actualizacion'],
+            $value['fecha_actualizacion'] = \Carbon\Carbon::parse($value->fecha_actualizacion)->format('d/m/Y H:i'),
             $value['observaciones'],
             $value['documento'],
-
         );
 
         }
@@ -345,7 +373,7 @@ class PrestamoController extends Controller
         $log->save();
         //
         return redirect('prestamos/'.$prestamo_id)->with(array(
-            'message'=>'El Equipo se agreg� Correctamente al Pr stamo'
+            'message'=>'El equipo se agregó correctamente al préstamo'
         ));
     }
 
@@ -396,7 +424,7 @@ class PrestamoController extends Controller
         $prestamo_id = Prestamo::latest('id')->first();
 
         return redirect('prestamos/'.$prestamo_id->id)->with(array(
-            'message'=>'El Equipo se quitó  Correctamente al Préstamo'
+            'message'=>'El préstamo se creó correctamente'
         ));
     }
     public function agregarAccesorio(Request $request){

@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Requisicion extends Model
 {
     use HasFactory;
-    public $timestamps = false;
     protected $table = 'requisiciones';
+
+    //Relacion uno a muchos
+    public function articulos(){
+        return  $this->hasMany('App\Models\Articulo');
+    }
 }

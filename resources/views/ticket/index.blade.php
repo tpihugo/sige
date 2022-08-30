@@ -14,7 +14,7 @@
                 <h2>Tickets </h2>
                     <p align="right">
                         <a href="{{ route('tickets.create') }}" class="btn btn-success">Capturar Ticket</a>
-                        <a href="{{ route('home') }}" class="btn btn-primary">< Regresar</a>
+                        <a href="{{ route('home') }}" class="btn btn-primary">Regresar</a>
                     </p>
             </div>
         </div>
@@ -66,6 +66,13 @@
                     </select>
 
                 </div>
+                            <div class="col-sm-12 col-md-2 m-1">
+                <select name="sede" id="" class="form-control">
+                <option >Seleccion una sede</option>
+                    <option value="Belenes">Belenes</option>
+                    <option value="La Normal">La Normal</option>
+                </select>
+            </div>
                 <div class="col-md-2 " >
                     <button type="submit" class="btn btn-outline-primary">Filtrar</button>
                     <a href="{{ route('tickets.index') }}" class="btn btn-outline-success">Quitar Filtro</a>
@@ -81,21 +88,16 @@
                 <tr>
                     <th>Acciones</th>
                     <th>Folio</th>
-                    <th>Estatus</th>
                     <th>Fecha Reporte</th>
                     <th>Área</th>
                     <th>Solicitante</th>
                     <th>Contacto</th>
                     <th>Técnico</th>
                     <th>Categoría y Prioridad</th>
-                    <th>Reporte</th>
-                    <th>Solución y cierre</th>
-                    
-
+                    <th>Reporte</th>                
                 </tr>
                 </thead>
                 <tbody>
-               
                 </tbody>
 
             </table>

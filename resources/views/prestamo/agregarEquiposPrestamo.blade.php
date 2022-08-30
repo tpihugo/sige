@@ -4,15 +4,15 @@
     @if(Auth::check() && Auth::user()->role =='admin' || Auth::user()->role =='cta')
 
     <div class="container">
-        <div class="row">
+        <div class="container-fluid">
             @if (session('message'))
                 <div class="alert alert-success">
                     {{ session('message') }}
                 </div>
             @endif
-            <h3>Pr&eacutestamo {{$prestamo_id}}.</h3> <br>
+            <center><h3>Pr&eacutestamo {{$prestamo_id}}.</h3> <br></center>
                 <table class="table table-success" style="width:100%">
-                    <thead>
+                    <thead class="thead-light">
                     <tr>
                         <th>Folio</th>
                         <th>Solicitante</th>
@@ -33,14 +33,16 @@
                         <td>{{$prestamo->lugar}}</td>
                         <td>{{$prestamo->contacto}}</td>
                         <td>{{$prestamo->estado}}</td>
-                        <td>{{$prestamo->fecha_inicio}}</td>
+                        <td>{{\Carbon\Carbon::parse($prestamo->fecha_inicio)->format('d/m/Y') }}</td>
 			            <td>{{$prestamo->observaciones}}</td>
-                        <td><a class="btn btn-outline-success" href="{{ route('imprimirPrestamo', $prestamo->id)}}" target="blank">Formato</a></td>
                     </tr>
                     </tbody>
                 </table>
-
-            <br>
+                <td><a class="btn btn-outline-success" style="width: 100%" href="{{ route('imprimirPrestamo', $prestamo->id)}}" target="blank">Imprimir formato de préstamo</a></td>
+                <p>
+                <br>
+                </p>
+=
 
                 <h5><p align="center">Equipo ya Registrado</p></h5>
                 <table class="table table-bordered" style="width:100%">

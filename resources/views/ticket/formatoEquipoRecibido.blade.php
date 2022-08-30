@@ -30,36 +30,100 @@
 <body>
 
 <div class="container">
-    <div class="row">
+    <div class="row"><br>
         <div class="col">
             <p class="text-center"><img class="img-responsive" src="images/logo.jpg" width="100%"></p>
         </div>
     </div>
     <div class="row">
-        <div class="col">
-            <p><b>Folio:</b> {{$ticket->id}}. <b>Fecha: </b> {{\Carbon\Carbon::parse($ticket->fecha_reporte)->format('d/m/Y') }}</p>
-            <p><b>Solicitante:</b> {{$ticket->solicitante}}. <b>Contacto: </b> {{$ticket->contacto}}. <b>Técnico: </b> {{$ticket->tecnico}}</p>
-            <p><b>Área:</b> {{$ticket->area}}</p>
-            <p><b>Reporte:</b> {{$ticket->datos_reporte}}</p>
-    </table>
-            <h5><p align="center">Equipo Entregado a CTA</p></h5>
-            @foreach($equipoPorTickets as $equipoPorTicket)
-                <p><b>Id SIGE:</b> {{$equipoPorTicket->id}}. <b>Id UdeG: </b> {{$equipoPorTicket->udg_id }}. <b>Equipo: </b>{{$equipoPorTicket->tipo_equipo}}</p>
-                <p><b>Marca:</b> {{$equipoPorTicket->marca}}. <b>Modelo: </b> {{$equipoPorTicket->modelo}}. <b>Núm. Serie: </b> {{$equipoPorTicket->numero_serie}}. <b>Detalles: </b></p>
-                <p><b>Comentarios:</b> {{$equipoPorTicket->comentarios}}</p>
-                <p><b>Detalles:</b> {{$equipoPorTicket->detalles}}</p>
-            @endforeach
-            <br>
-            <h5>Recepción del Equipo en CTA</h5>
-            <p><b>Fecha de Recepción: __________________________________</b></p>
-            <p><b>Nombre de quién recibe: __________________________________</b></p>
-            <p><b>Firma de quién recibe: __________________________________</b></p>
-            <hr>
-            <h5>Devolución del Equipo al Usuario</h5>
-            <p><b>Fecha de Devolución al Usuario: __________________________________</b></p>
-            <p><b>Nombre de quien recibe el equipo: __________________________________</b></p>
-            <p><b>Firma de conformidad de quien recibe: __________________________________</b></p>
+        <div class="col-md-12 col-xs-12">
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col" colspan="3"><center><b>Formato de recibo de equipo</b></center></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>Folio: </b>{{$ticket->id}}</td>
+                        <td><b>Fecha: </b>{{\Carbon\Carbon::parse($ticket->fecha_reporte)->format('d/m/Y')}}</td>
+                        <td><b>Técnico: </b>{{$ticket->tecnico}}</td>                    
+                    </tr>
+                    <tr>
+                        <td colspan="2"><b>Solicitante: </b>{{$ticket->solicitante}}</td>
+                        <td><b>Contacto: </b>{{$ticket->contacto}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><b>Área: </b>{{$ticket->area}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><b>Reporte: </b>{{$ticket->datos_reporte}}</td>
+                    </tr>
+                </tbody>
 
+            </table>
+
+            @foreach($equipoPorTickets as $equipoPorTicket)
+                <div class="row">
+                    <div class="col-md-12 col-xs-12">
+                        <table class="table table-bordered">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col" colspan="3"><center><b>Equipo Entregado a CTA</b></center></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><b>Id SIGE: </b> {{$equipoPorTicket->id}}</td>
+                                    <td><b>Id UdeG: </b> {{$equipoPorTicket->udg_id}}</td>
+                                    <td><b>Equipo: </b> {{$equipoPorTicket->tipo_equipo}}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Marca: </b> {{$equipoPorTicket->marca}}</td>
+                                    <td><b>Modelo: </b> {{$equipoPorTicket->modelo}}</td>
+                                    <td><b>Núm. Serie: </b> {{$equipoPorTicket->numero_serie}}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"><b>Detalles: </b> {{$equipoPorTicket->detalles}}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"><b>Comentarios: </b> {{$equipoPorTicket->comentarios}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            @endforeach
+            <table class="table table-bordered" >
+                <tbody>
+                    <tr>
+                        <td align="center" colspan="2" style="background-color: #BEC6C7;"><b>Recepción del Equipo en CTA</b></td>
+                    </tr>
+                    <tr>
+                        <td align="left" colspan="2"><b>Nombre de quién recibe: </b>____________________________________________________</td>
+                    </tr>
+                    <tr>
+                        <td align="left"><b>Firma de recibido: </b>_______________________</td>
+                        <td align="left"><b>Fecha:</b> _______________________</td>
+
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered" >
+                <tbody>
+                    <tr>
+                        <td align="center" colspan="2" style="background-color: #BEC6C7;"><b>Devolución del Equipo al Usuario</b></td>
+                    </tr>
+                    <tr>
+                        <td align="left" colspan="2"><b>Nombre de quién recibe:</b> ____________________________________________________</td>
+                    </tr>
+                    <tr>
+                        <td align="left"><b>Firma de recibido:</b> _______________________</td>
+                        <td align="left"><b>Fecha:</b> _______________________</td>
+
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
     <div class="row">

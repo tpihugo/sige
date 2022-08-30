@@ -9,6 +9,8 @@ use App\Models\VsEmpleado;
 use App\Models\VsMobiliario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Log;
+
 
 class MobiliarioController extends Controller
 {
