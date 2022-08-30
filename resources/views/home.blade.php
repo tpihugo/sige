@@ -408,18 +408,12 @@
                                 <div class="card card-stats">
                                     <div class="card-header card-header-success card-header-icon">
                                         <div class="card-icon">
-                                            <i class="material-icons">info_outline</i>
+                                            <i class="material-icons">handyman</i>
                                         </div>
-                                        <h3 class="card-title">Exit</h3>
-                                        <a class="btn btn-outline-danger" href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                            document.getElementById('logout-form').submit();"
-                                        >
-                                        {{ __('Salir') }}
+                                        <h3 class="card-title">Tecnicos</h3>
+                                        <a class="btn btn-outline-danger" href="{{ route('tecnicos.index') }}">
+                                        Consultar Tecnicos 
                                         </a>
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                            @csrf
-                                        </form>
                                         <div class="card-footer">
                                         </div>
                                     </div>
