@@ -685,3 +685,15 @@ Route::get('requisicion/{id}/articulos/', array(
     'middleware' => 'auth',
     'uses' => '\App\Http\Controllers\ArticuloController@index'
 ));
+
+Route::get('/tickets/tomar-ticket/{id}', array(
+    'as' => 'tomar-ticket',
+    'middleware' => 'auth',
+    'uses' => '\App\Http\Controllers\TicketController@tomar_ticket'
+));
+
+Route::get('/equipo-area/{id}', array(
+    'as' => 'equipo-area',
+    'middleware' => 'auth',
+    'uses' => '\App\Http\Controllers\AreaController@equipo_area'
+));

@@ -278,15 +278,10 @@
                             <div class="col-md-4">
                                 <label class="font-weight-bold" for="Equipamiento">Equipamiento</label>
                                 <select class="form-control" id="equipamiento" name="equipamiento">
-                                    <option value="{{$area->equipamiento}}" selected>{{$area->equipamiento}}</option>
-                                    <option value="Sin equipo">Sin equipo</option>
-                                    <option disabled>Cambiar</option>
-                                    <option value="Botonera">Botonera</option>
-                                    <option value="Botonera y pantalla">Botonera y pantalla</option>
-                                    <option value="Proyector">Proyector</option>
- 				    <option value="Proyector">Proyector, botonera y pantalla</option>
-                                    <option value="Proyector, computadora">Proyector y Computadora</option>
-                                    <option value="Proyector, computadora, videoconferencia">Proyector, Computadora y Videoconferencia</option>
+                                    <option {{($area->equipamiento =='Sin Equipo')? 'selected': ''}} value="Sin Equipo">Sin equipo</option>
+                                    <option {{($area->equipamiento =='PC')? 'selected': ''}} value="PC">PC</option>
+                                    <option {{($area->equipamiento =='TV,PC')? 'selected': ''}} value="TV,PC">Pantalla TV - PC</option>
+                                    <option {{($area->equipamiento =='Proyector,PC')? 'selected': ''}} value="Proyector,PC">Proyector - PC</option>
                                 </select>
                             </div>
                         </div>

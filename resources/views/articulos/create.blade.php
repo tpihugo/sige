@@ -52,7 +52,7 @@
                     </div>
 
                     <div class="col-md-4">
-                        <label for="" class="form-label">Observación</label>
+                        <label for="" class="form-label">Status</label>
                         <select class="form-control" name="status" id="status" tabindex="5">
                             <option value="solicitado">SOLICITADO</option>
                             <option value="comprado">COMPRADO NO RECIBIDO EN ALMACEN</option>

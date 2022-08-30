@@ -140,7 +140,7 @@
                                         <div class="carousel-item active">
                                             <img id="img1" src="" class="d-block w-100" alt="...">
                                         </div>
-                                        <div class="carousel-item" id="slide_2">
+                                        <div class="carousel-item">
                                             <img id="img2" src="" class="d-block w-100" alt="...">
                                         </div>
                                     </div>
@@ -160,8 +160,8 @@
                         </div>
                         <div class="row" id="row_datos" style="display:none;">
                             <div class="col-sm-12">
-                                <h5 class="text-center">Solicitante: <span id="solicitante"></span> - Contacto: <span
-                                        id="contacto"></span></h5>
+                                <h5 class="text-center">Solicitante: <span id="solicitante"></span>Contacto: <span
+                                        id="prioridad"></span></h5>
                                 <hr>
                                 <p>Datos reporte: <span id="datos"></span></p>
                                 <p>Fecha reporte: <span id="fecha"></span></p>
@@ -190,16 +190,13 @@
             function modal(params) {
                 $("#exampleModalLabel").html(params['area']);
                 if (params['imagen_1'] == 'Sin imagen') {
+                    console.log('Sin imagen');
                     document.getElementById('slide').style.display = 'none';
+
                 } else {
-                    document.getElementById('slide_1').style.display = 'block';
                     $('#img1').attr("src", params['imagen_1']);
-                    if (params['imagen_2'] == 'Sin imagen') {
-                        document.getElementById('slide_2').style.display = 'none';
-                    } else {
-                        document.getElementById('slide_1').style.display = 'block';
-                        $('#img2').attr("src", params['imagen_2']);
-                    }
+                    $('#img2').attr("src", params['imagen_2']);
+                    document.getElementById('slide').style.display = 'block';
                 }
 
                 if (params.hasOwnProperty('tickets')) {
