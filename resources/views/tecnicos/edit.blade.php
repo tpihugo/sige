@@ -15,7 +15,7 @@
                 
                 <script type="text/javascript">
                     $(document).ready(function() {
-                        $('#js-example-basic-single').select2();
+                        $('#usuario').select2();
 
                     });
                     var dateControl = document.querySelector('input[type="date"]');
@@ -79,6 +79,18 @@
                                     <label for="comentarios">Programa/Comentario</label>
                                     <input class="form-control" id="comentarios" name="comentarios"
                                         value="{{ $tecnico->comentarios }}">
+                                </div>
+                                <div class="form-group row">
+                                    <label for="rol" class="col-md-4 col-form-label text-md-right">Seleccioan el usuario relacionado con el técnico</label>
+        
+                                    <div class="col-md-6">
+                                        <select class="form-control" id="usuario" name="usuario">
+                                            <option disabled selected>Selecciona un usuario</option>
+                                            @foreach ( $users as $item)
+                                            <option value="{{$item->id}}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
     
     

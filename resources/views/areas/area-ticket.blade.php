@@ -127,7 +127,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-sm-12" id="slide">
+                            <div class="col-sm-12" id="slide" style="display:none;">
                                 <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
                                     <div class="carousel-indicators">
                                         <button type="button" data-bs-target="#carouselExampleIndicators"
@@ -140,7 +140,7 @@
                                         <div class="carousel-item active">
                                             <img id="img1" src="" class="d-block w-100" alt="...">
                                         </div>
-                                        <div class="carousel-item" id="slide_2">
+                                        <div class="carousel-item" id="slide_2" style="display:none;">
                                             <img id="img2" src="" class="d-block w-100" alt="...">
                                         </div>
                                     </div>
