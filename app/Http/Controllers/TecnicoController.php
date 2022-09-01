@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Log;
 use Illuminate\Http\Request;
 use App\Models\Tecnico;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -156,7 +157,8 @@ class TecnicoController extends Controller
     public function edit($id)
     {
         $tecnico = Tecnico::find($id);
-        return view('tecnicos.edit')->with('tecnico', $tecnico);
+        $users = User::where('activo',1)->get();
+        return view('tecnicos.edit',compact('users'))->with('tecnico', $tecnico);
     }
 
     /**

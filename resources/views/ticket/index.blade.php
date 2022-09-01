@@ -119,9 +119,9 @@
     $(document).ready(function() {
         $('#example').DataTable({
             "data": data,
-            "pageLength": 100,
+            "pageLength": 50,
             "order": [
-                [0, "desc"]
+                [1, "desc"]
             ],
             "language": {
                 "sProcessing": "Procesando...",
