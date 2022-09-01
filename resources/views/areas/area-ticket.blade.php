@@ -192,12 +192,12 @@
                 if (params['imagen_1'] == 'Sin imagen') {
                     document.getElementById('slide').style.display = 'none';
                 } else {
-                    document.getElementById('slide_1').style.display = 'block';
+                    document.getElementById('slide').style.display = 'block';
                     $('#img1').attr("src", params['imagen_1']);
                     if (params['imagen_2'] == 'Sin imagen') {
                         document.getElementById('slide_2').style.display = 'none';
                     } else {
-                        document.getElementById('slide_1').style.display = 'block';
+                        document.getElementById('slide').style.display = 'block';
                         $('#img2').attr("src", params['imagen_2']);
                     }
                 }
