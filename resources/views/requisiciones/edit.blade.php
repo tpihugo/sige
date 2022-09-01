@@ -12,7 +12,7 @@
             </div>
         </div>
     </div>
-    <form action="/requisiciones/{{ $requisicion->id}}" method="POST">
+    <form action="/requisiciones/{{ $requisicion->id}}" method="POST"  enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="row g-3 align-items-center">
