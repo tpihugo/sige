@@ -64,7 +64,7 @@
 
                 </div>
                 <div class="col-md-2 col-sm-12 order-sm-0 order-md-1">
-                    <div class="d-flex flex-column align-items-center sticky-top">
+                    <div class="d-flex flex-column align-items-center">
                         <p class="font-weight-bold">Nomenclatura</p>
 
                         <div class="row">
@@ -127,34 +127,28 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-sm-12" id="slide" style="display:none;">
-                                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
-                                    <div class="carousel-indicators">
-                                        <button type="button" data-bs-target="#carouselExampleIndicators"
-                                            data-bs-slide-to="0" class="active" aria-current="true"
-                                            aria-label="Slide 1"></button>
-                                        <button type="button" data-bs-target="#carouselExampleIndicators"
-                                            data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                    </div>
+                            <div class="col-sm-12" >
+                                <div id="carouselExampleControls" id="slide" style="display:none;" class="carousel slide" data-ride="carousel">
                                     <div class="carousel-inner">
-                                        <div class="carousel-item active">
-                                            <img id="img1" src="" class="d-block w-100" alt="...">
-                                        </div>
-                                        <div class="carousel-item" id="slide_2" style="display:none;">
-                                            <img id="img2" src="" class="d-block w-100" alt="...">
-                                        </div>
+                                      <div class="carousel-item active">
+                                        <img class="d-block w-100" src="..." alt="First slide">
+                                      </div>
+                                      <div class="carousel-item">
+                                        <img class="d-block w-100" src="..." alt="Second slide">
+                                      </div>
+                                      <div class="carousel-item" id="slide_2" style="display:none;">
+                                        <img class="d-block w-100" src="..." alt="Third slide">
+                                      </div>
                                     </div>
-                                    <button class="carousel-control-prev" type="button"
-                                        data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Previous</span>
-                                    </button>
-                                    <button class="carousel-control-next" type="button"
-                                        data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Next</span>
-                                    </button>
-                                </div>
+                                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                      <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                      <span class="sr-only">Next</span>
+                                    </a>
+                                  </div>
                             </div>
 
                         </div>
@@ -192,13 +186,18 @@
                 if (params['imagen_1'] == 'Sin imagen') {
                     document.getElementById('slide').style.display = 'none';
                 } else {
-                    document.getElementById('slide_1').style.display = 'block';
-                    $('#img1').attr("src", params['imagen_1']);
+                    document.getElementById('slide').style.display = 'block';
+                    var url = "{{ route('area_imagenes', ':id') }}";
+                    url = url.replace(':id', params['imagen_1']);
+                    
+                    $('#img1').attr("src", url);
                     if (params['imagen_2'] == 'Sin imagen') {
                         document.getElementById('slide_2').style.display = 'none';
                     } else {
-                        document.getElementById('slide_1').style.display = 'block';
-                        $('#img2').attr("src", params['imagen_2']);
+                        document.getElementById('slide_2').style.display = 'block';
+                        var url = "{{ route('area_imagenes', ':id') }}";
+                        url = url.replace(':id', params['imagen_2']);
+                        $('#img2').attr("src", url);
                     }
                 }
 
