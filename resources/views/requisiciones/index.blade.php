@@ -51,11 +51,12 @@
                         <td>{{ $requisicion->fondo }}</td>
                         <td>{{ \Carbon\Carbon::parse($requisicion->fecha_recibido)->format('d/m/Y')}}</td>
                         <td>{{ $requisicion->quien_recibe }}</td>
-                        <td><a href="{{asset('/almacen/requis/'.$requisicion->documento)}}" target="blank_">VER</a></td>
+                        <td><a href="{{asset('almacen/requis/'.$requisicion->documento)}}" target="blank_">VER</a></td>
                         <td>
                             <div class="btn-circle">
                             <form action="{{ route ('requisiciones.destroy', $requisicion->id)}}" method="POST">
-                                <a class="btn btn-info" title="Editar" href="{{route('requisiciones.update',$requisicion->id)}}"><i class="far fa-edit"></i></a>
+                                <a class="btn btn-info" title="Editar" href="{{route('requisiciones.edit',$requisicion->id)}}"><i class="far fa-edit"></i></a>
+
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" title="Borrar" class="btn btn-danger"> <i class="far fa-trash-alt"></i></button>

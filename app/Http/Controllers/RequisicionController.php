@@ -107,15 +107,16 @@ class RequisicionController extends Controller
         $requisicion->fondo = $request->get('fondo');
         $requisicion->fecha_recibido = $request->get('fecha_recibido');
         $requisicion->quien_recibe = $request->get('quien_recibe');
-        if($request->hasFile('pdf'))
+        
+        if(isset($request->pdf))
         {
-            $archivo=$request->file('pdf');
+            $archivo = $request->file('pdf');
             $archivo->move(public_path().'/almacen/requis/',$archivo->getClientOriginalName());
             $requisicion->documento=$archivo->getClientOriginalName();
         }
         $requisicion->save();
 
-        return redirect('/requisiciones');  
+        return redirect()->route('requisiciones.index');  
     }
 
     /**
@@ -129,7 +130,7 @@ class RequisicionController extends Controller
         $requisicion = Requisicion::find($id);
         $requisicion->delete();
 
-        return redirect('/requisiciones');
+        return redirect()->route('requisiciones.index');
 
     }
 }

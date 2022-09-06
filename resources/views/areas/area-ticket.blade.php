@@ -64,7 +64,7 @@
 
                 </div>
                 <div class="col-md-2 col-sm-12 order-sm-0 order-md-1">
-                    <div class="d-flex flex-column align-items-center sticky-top">
+                    <div class="d-flex flex-column align-items-center">
                         <p class="font-weight-bold">Nomenclatura</p>
 
                         <div class="row">
@@ -127,33 +127,30 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-sm-12" id="slide" style="display:none;">
-                                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
-                                    <div class="carousel-indicators">
-                                        <button type="button" data-bs-target="#carouselExampleIndicators"
-                                            data-bs-slide-to="0" class="active" aria-current="true"
-                                            aria-label="Slide 1"></button>
-                                        <button type="button" data-bs-target="#carouselExampleIndicators"
-                                            data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                    </div>
+                            <div class="col-sm-12">
+                                <div id="carouselExampleControls" id="slide" style="display:none;"
+                                    class="carousel slide" data-ride="carousel">
                                     <div class="carousel-inner">
                                         <div class="carousel-item active">
-                                            <img id="img1" src="" class="d-block w-100" alt="...">
+                                            <img class="d-block w-100" src="..." alt="First slide">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img class="d-block w-100" src="..." alt="Second slide">
                                         </div>
                                         <div class="carousel-item" id="slide_2" style="display:none;">
-                                            <img id="img2" src="" class="d-block w-100" alt="...">
+                                            <img class="d-block w-100" src="..." alt="Third slide">
                                         </div>
                                     </div>
-                                    <button class="carousel-control-prev" type="button"
-                                        data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button"
+                                        data-slide="prev">
                                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Previous</span>
-                                    </button>
-                                    <button class="carousel-control-next" type="button"
-                                        data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#carouselExampleControls" role="button"
+                                        data-slide="next">
                                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Next</span>
-                                    </button>
+                                        <span class="sr-only">Next</span>
+                                    </a>
                                 </div>
                             </div>
 
@@ -193,35 +190,40 @@
                     document.getElementById('slide').style.display = 'none';
                 } else {
                     document.getElementById('slide').style.display = 'block';
-                    $('#img1').attr("src", params['imagen_1']);
+
+                    var url = "{{ route('area_imagenes', ':id') }}";
+                    url = url.replace(':id', params['imagen_1']);
+
+                    $('#img1').attr("src", url);
                     if (params['imagen_2'] == 'Sin imagen') {
                         document.getElementById('slide_2').style.display = 'none';
                     } else {
-                        document.getElementById('slide').style.display = 'block';
-                        $('#img2').attr("src", params['imagen_2']);
+                        document.getElementById('slide_2').style.display = 'block';
+                        var url = "{{ route('area_imagenes', ':id') }}";
+                        url = url.replace(':id', params['imagen_2']);
+                        $('#img2').attr("src", url);
                     }
+
+                    if (params.hasOwnProperty('tickets')) {
+                        document.getElementById('row_datos').style.display = 'block';
+                        $("#datos").html(params['tickets'][0]['datos_reporte']);
+                        $("#solicitante").html(params['tickets'][0]['solicitante']);
+                        $("#fecha").html(params['tickets'][0]['fecha_reporte']);
+                        $("#prioridad").html(params['tickets'][0]['prioridad']);
+                        $("#contacto").html(params['tickets'][0]['contacto']);
+
+                    } else {
+                        document.getElementById('row_datos').style.display = 'none';
+                    }
+                    var id = params['id'].toString();
+                    var url = "{{ route('ticket-historial', ':id') }}";
+                    url = url.replace(':id', id);
+                    document.getElementById('historial').href = url;
+                    var url = "{{ route('equipo-area', ':id') }}";
+                    url = url.replace(':id', id);
+                    document.getElementById('equipos').href = url;
+
                 }
-
-                if (params.hasOwnProperty('tickets')) {
-                    document.getElementById('row_datos').style.display = 'block';
-                    $("#datos").html(params['tickets'][0]['datos_reporte']);
-                    $("#solicitante").html(params['tickets'][0]['solicitante']);
-                    $("#fecha").html(params['tickets'][0]['fecha_reporte']);
-                    $("#prioridad").html(params['tickets'][0]['prioridad']);
-                    $("#contacto").html(params['tickets'][0]['contacto']);
-
-                } else {
-                    document.getElementById('row_datos').style.display = 'none';
-                }
-                var id = params['id'].toString();
-                var url = "{{ route('ticket-historial', ':id') }}";
-                url = url.replace(':id', id);
-                document.getElementById('historial').href = url;
-                var url = "{{ route('equipo-area', ':id') }}";
-                url = url.replace(':id', id);
-                document.getElementById('equipos').href = url;
-
-            }
         </script>
     @else
         Acceso No válido

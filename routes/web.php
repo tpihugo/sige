@@ -377,7 +377,7 @@ Route::get("/area-ticket/{sede}", [
     "uses" => "App\Http\Controllers\AreaController@area_ticket",
 ]);
 Route::get("/images/{filename}", [
-    "as" => "images",
+    "as" => "area_imagenes",
     "middleware" => "auth",
     "uses" => "App\Http\Controllers\AreaController@getImage",
 ]);
@@ -686,7 +686,7 @@ Route::get('requisicion/{id}/articulos/', array(
     'uses' => '\App\Http\Controllers\ArticuloController@index'
 ));
 
-Route::get('/tickets/tomar-ticket/{id}', array(
+Route::match(['get', 'post'],'/tickets/tomar-ticket/{id}', array(
     'as' => 'tomar-ticket',
     'middleware' => 'auth',
     'uses' => '\App\Http\Controllers\TicketController@tomar_ticket'
