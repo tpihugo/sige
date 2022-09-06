@@ -108,50 +108,28 @@
                                 class="col-auto my-2 btn bg-secondary text-white">La
                                 Normal</a>
                         @endif
-
-
-
-
                         <label class="font-weight-bold my-2" for="">Edificio </label>
 
                     </div>
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" id="slide" style="display:none;">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel"></h5>
                     </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-sm-12" >
-                                <div id="carouselExampleControls"  class="carousel slide" data-ride="carousel">
-                                    <div class="carousel-inner">
-                                      <div class="carousel-item active">
-                                        <img class="d-block w-100" src="..." alt="First slide">
-                                      </div>
-                                      <div class="carousel-item">
-                                        <img class="d-block w-100" src="..." alt="Second slide">
-                                      </div>
-                                      <div class="carousel-item" id="slide_2" style="display:none;">
-                                        <img class="d-block w-100" src="..." alt="Third slide">
-                                      </div>
-                                    </div>
-                                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                      <span class="sr-only">Previous</span>
-                                    </a>
-                                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                      <span class="sr-only">Next</span>
-                                    </a>
-                                  </div>
+                    <div class="modal-body ">
+                        <div class="row justify-content-center">
+                            <div class="col-sm-12 col-md-5">
+                                <img id="img1" class="d-block" style="width: 300px;" src="..." alt="First slide">
                             </div>
-
+                            <div class="col-sm-12 col-md-5" id="slide_2">
+                                <img id="img2" class="d-block" style="width: 300px;" src="..." alt="First slide">
+                            </div>
                         </div>
-                        <div class="row" id="row_datos" style="display:none;">
+                        <div class="row mt-2" id="row_datos" style="display:none;">
                             <div class="col-sm-12">
                                 <h5 class="text-center">Solicitante: <span id="solicitante"></span> - Contacto: <span
                                         id="contacto"></span></h5>
@@ -162,7 +140,7 @@
 
                             </div>
                         </div>
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center ">
                             <div class="col-sm-12 col-md-3">
                                 <a href="" id="historial" class="btn btn-primary">Historial</a>
                             </div>
@@ -188,7 +166,7 @@
                     document.getElementById('slide').style.display = 'block';
                     var url = "{{ route('area_imagenes', ':id') }}";
                     url = url.replace(':id', params['imagen_1']);
-                    
+
                     $('#img1').attr("src", url);
                     if (params['imagen_2'] == 'Sin imagen') {
                         document.getElementById('slide_2').style.display = 'none';
@@ -215,6 +193,7 @@
                 var url = "{{ route('ticket-historial', ':id') }}";
                 url = url.replace(':id', id);
                 document.getElementById('historial').href = url;
+
                 var url = "{{ route('equipo-area', ':id') }}";
                 url = url.replace(':id', id);
                 document.getElementById('equipos').href = url;
