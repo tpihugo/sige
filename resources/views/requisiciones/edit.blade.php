@@ -12,6 +12,7 @@
             </div>
         </div>
     </div>
+
     <form action="{{route('requisiciones.update',$requisicion->id)}}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')

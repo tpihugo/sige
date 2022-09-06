@@ -127,28 +127,31 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-sm-12" >
-                                <div id="carouselExampleControls" id="slide" style="display:none;" class="carousel slide" data-ride="carousel">
+                            <div class="col-sm-12">
+                                <div id="carouselExampleControls" id="slide" style="display:none;"
+                                    class="carousel slide" data-ride="carousel">
                                     <div class="carousel-inner">
-                                      <div class="carousel-item active">
-                                        <img class="d-block w-100" src="..." alt="First slide">
-                                      </div>
-                                      <div class="carousel-item">
-                                        <img class="d-block w-100" src="..." alt="Second slide">
-                                      </div>
-                                      <div class="carousel-item" id="slide_2" style="display:none;">
-                                        <img class="d-block w-100" src="..." alt="Third slide">
-                                      </div>
+                                        <div class="carousel-item active">
+                                            <img class="d-block w-100" src="..." alt="First slide">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img class="d-block w-100" src="..." alt="Second slide">
+                                        </div>
+                                        <div class="carousel-item" id="slide_2" style="display:none;">
+                                            <img class="d-block w-100" src="..." alt="Third slide">
+                                        </div>
                                     </div>
-                                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                      <span class="sr-only">Previous</span>
+                                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button"
+                                        data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Previous</span>
                                     </a>
-                                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                      <span class="sr-only">Next</span>
+                                    <a class="carousel-control-next" href="#carouselExampleControls" role="button"
+                                        data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Next</span>
                                     </a>
-                                  </div>
+                                </div>
                             </div>
 
                         </div>
@@ -187,9 +190,10 @@
                     document.getElementById('slide').style.display = 'none';
                 } else {
                     document.getElementById('slide').style.display = 'block';
+
                     var url = "{{ route('area_imagenes', ':id') }}";
                     url = url.replace(':id', params['imagen_1']);
-                    
+
                     $('#img1').attr("src", url);
                     if (params['imagen_2'] == 'Sin imagen') {
                         document.getElementById('slide_2').style.display = 'none';
@@ -199,28 +203,27 @@
                         url = url.replace(':id', params['imagen_2']);
                         $('#img2').attr("src", url);
                     }
+
+                    if (params.hasOwnProperty('tickets')) {
+                        document.getElementById('row_datos').style.display = 'block';
+                        $("#datos").html(params['tickets'][0]['datos_reporte']);
+                        $("#solicitante").html(params['tickets'][0]['solicitante']);
+                        $("#fecha").html(params['tickets'][0]['fecha_reporte']);
+                        $("#prioridad").html(params['tickets'][0]['prioridad']);
+                        $("#contacto").html(params['tickets'][0]['contacto']);
+
+                    } else {
+                        document.getElementById('row_datos').style.display = 'none';
+                    }
+                    var id = params['id'].toString();
+                    var url = "{{ route('ticket-historial', ':id') }}";
+                    url = url.replace(':id', id);
+                    document.getElementById('historial').href = url;
+                    var url = "{{ route('equipo-area', ':id') }}";
+                    url = url.replace(':id', id);
+                    document.getElementById('equipos').href = url;
+
                 }
-
-                if (params.hasOwnProperty('tickets')) {
-                    document.getElementById('row_datos').style.display = 'block';
-                    $("#datos").html(params['tickets'][0]['datos_reporte']);
-                    $("#solicitante").html(params['tickets'][0]['solicitante']);
-                    $("#fecha").html(params['tickets'][0]['fecha_reporte']);
-                    $("#prioridad").html(params['tickets'][0]['prioridad']);
-                    $("#contacto").html(params['tickets'][0]['contacto']);
-
-                } else {
-                    document.getElementById('row_datos').style.display = 'none';
-                }
-                var id = params['id'].toString();
-                var url = "{{ route('ticket-historial', ':id') }}";
-                url = url.replace(':id', id);
-                document.getElementById('historial').href = url;
-                var url = "{{ route('equipo-area', ':id') }}";
-                url = url.replace(':id', id);
-                document.getElementById('equipos').href = url;
-
-            }
         </script>
     @else
         Acceso No válido
