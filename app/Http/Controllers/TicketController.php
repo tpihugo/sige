@@ -74,8 +74,8 @@ class TicketController extends Controller
             }
             if(count($registro_historial)>0){
                 foreach($registro_historial as $item){
-                    $tecnico = Tecnico::where('user_id',$item->id_user)->first();
-                    $item->nombre = $tecnico->nombre;
+                    $tecnico_nombre = Tecnico::where('user_id',$item->id_user)->first();
+                    $item->nombre = $tecnico_nombre->nombre;
                 }
                 $historial = '<button type="button" onclick='."'".'historial('.$registro_historial.')'."'".' class="btn btn-outline-dark" data-toggle="modal" data-target="#historial-ticket">
                 <i class="far fa-list-alt"></i>
