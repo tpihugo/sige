@@ -64,7 +64,7 @@
 
                 </div>
                 <div class="col-md-2 col-sm-12 order-sm-0 order-md-1">
-                    <div class="d-flex flex-column align-items-center sticky-top">
+                    <div class="d-flex flex-column align-items-center">
                         <p class="font-weight-bold">Nomenclatura</p>
 
                         <div class="row">
@@ -108,10 +108,6 @@
                                 class="col-auto my-2 btn bg-secondary text-white">La
                                 Normal</a>
                         @endif
-
-
-
-
                         <label class="font-weight-bold my-2" for="">Edificio </label>
 
                     </div>
@@ -119,46 +115,21 @@
             </div>
         </div>
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog modal-lg" >
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel"></h5>
-                        <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close">x</button>
                     </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-sm-12" id="slide" style="display:none;">
-                                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
-                                    <div class="carousel-indicators">
-                                        <button type="button" data-bs-target="#carouselExampleIndicators"
-                                            data-bs-slide-to="0" class="active" aria-current="true"
-                                            aria-label="Slide 1"></button>
-                                        <button type="button" data-bs-target="#carouselExampleIndicators"
-                                            data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                    </div>
-                                    <div class="carousel-inner">
-                                        <div class="carousel-item active">
-                                            <img id="img1" src="" class="d-block w-100" alt="...">
-                                        </div>
-                                        <div class="carousel-item" id="slide_2" style="display:none;">
-                                            <img id="img2" src="" class="d-block w-100" alt="...">
-                                        </div>
-                                    </div>
-                                    <button class="carousel-control-prev" type="button"
-                                        data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Previous</span>
-                                    </button>
-                                    <button class="carousel-control-next" type="button"
-                                        data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Next</span>
-                                    </button>
-                                </div>
+                    <div class="modal-body ">
+                        <div class="row justify-content-center" >
+                            <div class="col-sm-12 col-md-5" id="slide" style="display:none;">
+                                <img id="img1" class="d-block" style="width: 300px;" src="..." alt="First slide">
                             </div>
-
+                            <div class="col-sm-12 col-md-5" id="slide_2">
+                                <img id="img2" class="d-block" style="width: 300px;" src="..." alt="First slide">
+                            </div>
                         </div>
-                        <div class="row" id="row_datos" style="display:none;">
+                        <div class="row mt-2" id="row_datos" style="display:none;">
                             <div class="col-sm-12">
                                 <h5 class="text-center">Solicitante: <span id="solicitante"></span> - Contacto: <span
                                         id="contacto"></span></h5>
@@ -169,7 +140,7 @@
 
                             </div>
                         </div>
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center ">
                             <div class="col-sm-12 col-md-3">
                                 <a href="" id="historial" class="btn btn-primary">Historial</a>
                             </div>
@@ -188,17 +159,23 @@
 
         <script>
             function modal(params) {
+                console.log('entro');
                 $("#exampleModalLabel").html(params['area']);
                 if (params['imagen_1'] == 'Sin imagen') {
                     document.getElementById('slide').style.display = 'none';
                 } else {
-                    document.getElementById('slide_1').style.display = 'block';
-                    $('#img1').attr("src", params['imagen_1']);
+                    document.getElementById('slide').style.display = 'block';
+                    var url = "{{ route('area_imagenes', ':id') }}";
+                    url = url.replace(':id', params['imagen_1']);
+
+                    $('#img1').attr("src", url);
                     if (params['imagen_2'] == 'Sin imagen') {
                         document.getElementById('slide_2').style.display = 'none';
                     } else {
-                        document.getElementById('slide_1').style.display = 'block';
-                        $('#img2').attr("src", params['imagen_2']);
+                        document.getElementById('slide_2').style.display = 'block';
+                        var url = "{{ route('area_imagenes', ':id') }}";
+                        url = url.replace(':id', params['imagen_2']);
+                        $('#img2').attr("src", url);
                     }
                 }
 
@@ -214,9 +191,11 @@
                     document.getElementById('row_datos').style.display = 'none';
                 }
                 var id = params['id'].toString();
+
                 var url = "{{ route('ticket-historial', ':id') }}";
                 url = url.replace(':id', id);
                 document.getElementById('historial').href = url;
+
                 var url = "{{ route('equipo-area', ':id') }}";
                 url = url.replace(':id', id);
                 document.getElementById('equipos').href = url;

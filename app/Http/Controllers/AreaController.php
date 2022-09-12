@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Area;
 use App\Models\Log;
-use App\Models\VsAreaTicket;
+use App\Models\VsEquipo;
 use App\Models\VsTicket;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 
@@ -309,38 +310,43 @@ class AreaController extends Controller
          }
          // Verifica si tiene ticket's si no los tiene guarda directamente el aula, en caso contrario recupera los tickets
          if (count($ticket) > 0) {
+            $item->tickets = $ticket;
             if (array_key_exists($edificio, $areas_f)) {
-               $item->tickets = $ticket;
                if (array_key_exists($item->piso, $areas_f[$edificio])) {
                   array_push($areas_f[$edificio][$item->piso], $item->toArray());
                } else {
                   $areas_f[$edificio][$item->piso] = [$item->toArray()];
                }
             } else {
-               $areas_f[$edificio][$item->piso] = $ticket;
+               $areas_f[$edificio][$item->piso] = [$item->toArray()];
             }
          } else {
-            if (isset($areas_f[$edificio])) {
+            if (isset($areas_f[$edificio])){
                if (array_key_exists($item->piso, $areas_f[$edificio])) {
                   array_push($areas_f[$edificio][$item->piso], $item->toArray());
                } else {
                   $areas_f[$edificio][$item->piso] = [$item->toArray()];
                }
             } else {
-
                $areas_f[$edificio][$item->piso] = [$item->toArray()];
             }
          }
          ksort($areas_f[$edificio]);
       }
       $areas = collect($areas_f);
+      //return $areas;
       return view('areas.area-ticket', compact('areas', 'sede'));
    }
    public function equipo_area($id)
    {
       $area = Area::select('ultimo_inventario', 'tipo_espacio', 'sede', 'edificio', 'piso', 'division', 'coordinacion', 'area')
          ->where('id', $id)->first();
-      $equipo = VsEquipo::where('activo', '=', 1)->where('id_area', '=', $id)->get();
+
+         $equipo = VsEquipo::where('activo', 1)
+         ->where('id_area', '=', $id)
+         ->whereIn(
+            'tipo_equipo', ['CPU','Proyector','Pantalla'])
+         ->get();
       return view('areas.equipos', compact('area', 'equipo'));
    }
 }

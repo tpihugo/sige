@@ -12,7 +12,8 @@
             </div>
         </div>
     </div>
-    <form action="/requisiciones/{{ $requisicion->id}}" method="POST">
+
+    <form action="{{route('requisiciones.update',$requisicion->id)}}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="row g-3 align-items-center">
@@ -59,7 +60,6 @@
 
     <br>
     <div class="row g-3 align-items-center">
-
         <br>
         <h5>En caso de inconsistencias, favor de reportarlas.</h5>
         <hr>

@@ -171,7 +171,12 @@
                         	<div class="col-md-12">
                             		<a href="{{ route('home') }}" class="btn btn-danger">Cancelar</a>
                             		<button type="submit" class="btn btn-success">Guardar datos</button>
+                                    <a href="{{route('delete-ticket', $ticket->id)}}" type="button" class="btn btn-outline-danger">Eliminar</a>
                         	</div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                
+                              </div>
                     	</div>
                     </div>
                     <br>

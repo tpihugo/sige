@@ -184,6 +184,10 @@ class TecnicoController extends Controller
         $tecnico->carrera = $request->input('carrera');
         $tecnico->institucion = $request->input('institucion');
         $tecnico->comentarios = $request->input('comentarios');
+        if(isset($tecnico->user_id)){
+            $tecnico->user_id = $request->input('usuario');
+        }
+        
 
 
         $tecnico->update();
