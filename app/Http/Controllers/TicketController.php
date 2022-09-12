@@ -7,7 +7,7 @@ use App\Models\Empleado;
 use App\Models\Equipo;
 use App\Models\Tecnico;
 use App\Models\Ticket;
-use App\Models\VsAreaTicket;
+use App\Models\ticket_historial;
 use App\Models\VsEquiposPorTicket;
 use App\Models\VsTicket;
 use Illuminate\Http\Request;
@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use App\Models\EquipoTicket;
 use App\Models\Log;
 use Illuminate\Support\Facades\Auth;
+use Detection\MobileDetect as MobileDetect;
 
 class TicketController extends Controller
 {
@@ -31,33 +32,58 @@ class TicketController extends Controller
 
         $tecnicos = Tecnico::where('activo', '=', 1)->get();
         $tickets = $this->cargarDT($vstickets);
-        return view('ticket.index')->with('tickets', $tickets)->with('tecnicos', $tecnicos);
+        $id_tecnico = Tecnico::where('activo',1)->where('user_id',Auth::user()->id)->first();
+        return view('ticket.index',compact('id_tecnico'))->with('tickets', $tickets)->with('tecnicos', $tecnicos);
     }
     //este el que se modificó fin de la modificación 1
     public function cargarDT($consulta)
     {
 
         $tickets = [];
-
+        $tecnico = Tecnico::where('activo',1)->where('user_id',Auth::user()->id)->first();
         foreach ($consulta as $key => $value) {
-
-            $ruta = "eliminar" . $value['id'];
-            $eliminar = route('delete-ticket', $value['id']);
+            
             $actualizar =  route('tickets.edit', $value['id']);
             $recibo = route('recepcionEquipo',  $value['id']);
             $tomar = route('tomar-ticket', $value['id']);
-
-
-            if (Auth::user()->id == 161) {
-                $tomar = '<button type="button" onclick="cambio('.$value['id'].')" class="btn btn-warning" data-toggle="modal" data-target="#tomar-ticket">
+            $registro_historial = ticket_historial::where('id_ticket',$value['id'])->orderBy('created_at')->get();
+            
+            
+            if (Auth::user()->id == 161 || Auth::user()->role  == 'admin') {
+                $tomar = '<button type="button" onclick="tomar_ticket('.$value['id'].')" class="btn btn-outline-warning" data-toggle="modal" data-target="#tomar-ticket">
                 <i class="far fa-hand-paper"></i>
               </button>
               ';
-            } else {
-                $tomar = '<a href="' . $tomar . '" class="btn btn-warning" title="Tomar ticket">
-                <i class="far fa-hand-paper"></i>
-           </a>';
+            }elseif(isset($tecnico)){
+                if($tecnico->id != $value['tecnico_id']) {
+                    $tomar = '<a href="' . $tomar . '" class="btn btn-warning" title="Tomar ticket">
+                    <i class="far fa-hand-paper"></i>
+               </a>';
+                }else{
+                    $tomar = '';
+                }
+                if($tecnico->id == $value['tecnico_id']){
+                    $tomar = '<button type="button" onclick="soltar_ticket('.$value['id'].')"  class="btn btn-outline-dark" data-toggle="modal" data-target="#soltar-ticket">
+                    <i class="far fa-hand-paper"></i>
+                  </button>';
+                }
+
+            }else{
+                $tomar = '';
+                $historial = '';
             }
+            if(count($registro_historial)>0){
+                foreach($registro_historial as $item){
+                    $tecnico = Tecnico::where('user_id',$item->id_user)->first();
+                    $item->nombre = $tecnico->nombre;
+                }
+                $historial = '<button type="button" onclick='."'".'historial('.$registro_historial.')'."'".' class="btn btn-outline-dark" data-toggle="modal" data-target="#historial-ticket">
+                <i class="far fa-list-alt"></i>
+                </button>';
+            }else{
+                $historial = '';
+            }
+
             $acciones = '
                 <div class="btn-acciones">
                     <div class="btn-circle">
@@ -67,35 +93,10 @@ class TicketController extends Controller
 			            <a href="' . $recibo . '" class="btn btn-primary" title="Recibo de Equipo">
                             <i class="far fa-file"></i>
                         </a>'
-                . $tomar .
+                . $tomar . $historial .
                 '
-
-                        <a href="#' . $ruta . '" role="button" class="btn btn-danger" data-toggle="modal" title="Eliminar">
-                            <i class="far fa-trash-alt"></i>
-                        </a>
                     </div>
                 </div>
-                <div class="modal fade" id="' . $ruta . '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">¿Seguro que deseas eliminar este ticket?</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      <p class="text-primary">
-                        <small>
-                            ' . $value['id'] . ', ' . $value['datos_reporte'] . ', ' . $value['fecha_reporte'] . ', ' . $value['solicitante'] . '
-                        </small>
-                      </p>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <a href="' . $eliminar . '" type="button" class="btn btn-danger">Eliminar</a>
-                    </div>
-                  </div>
                 </div>
               </div>
             ';
@@ -107,8 +108,8 @@ class TicketController extends Controller
                 $area = str_replace('- La Normal ', "", $area);
                 $area = '<b>La Normal</b> - ' . $area;
             }
+
             $tickets[$key] = array(
-                $acciones,
                 $value['id'],
                 $value['fecha_reporte'] = \Carbon\Carbon::parse($value->fecha_reporte)->format('d/m/Y H:i'),
                 $area,
@@ -117,7 +118,9 @@ class TicketController extends Controller
                 $value['tecnico'],
                 $value['categoria'] . ". Prioridad: " . $value['prioridad'],
                 $value['datos_reporte'],
+                $acciones,
             );
+
         }
 
         return $tickets;
@@ -426,8 +429,7 @@ class TicketController extends Controller
     {
         
         
-        if(isset($request->tecnico)){
-            
+        if(isset($request->tecnico)){            
             $tecnico =  Tecnico::select('id')->where('activo', '=', 1)->where('id', $request->tecnico)->first();
         }else{
             //return Auth::user()->id;
@@ -442,12 +444,31 @@ class TicketController extends Controller
             $ticket->tecnico_id = $tecnico->id;
             $ticket->save();
             return redirect()->route('tickets.index')->with(array(
-                'message' => 'Se asigo correctamente el ticket'
+                'message' => 'Se asigno correctamente el ticket'
             ));
         } else {
             return redirect()->route('tickets.index')->with(array(
                 "error" => "No puedes tomar tantos tickets, antes de tomar más completa los que ya tienes asignados."
             ));
         }
+    }
+    public function soltar_ticket($id, Request $request){
+        $validateData = $this->validate($request, [
+            'detalle' => 'required',
+            'motivo' => 'required',
+        ]);
+        date_default_timezone_set('America/Mexico_City');
+        $historial = new ticket_historial();
+        $historial->id_user = Auth::user()->id;
+        $historial->id_ticket = $id;
+        $historial->motivo = $request->motivo;
+        $historial->detalles = $request->detalle;
+        $historial->save();
+        $ticket = Ticket::find($id);
+        $ticket->tecnico_id  = 137;
+        $ticket->save();
+        return redirect()->route('tickets.index')->with(array(
+            'message' => 'Se libero el ticket correctamente'
+        ));
     }
 }

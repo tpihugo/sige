@@ -115,14 +115,14 @@
             </div>
         </div>
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" id="slide" style="display:none;">
+            <div class="modal-dialog modal-lg" >
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel"></h5>
                     </div>
                     <div class="modal-body ">
-                        <div class="row justify-content-center">
-                            <div class="col-sm-12 col-md-5">
+                        <div class="row justify-content-center" >
+                            <div class="col-sm-12 col-md-5" id="slide" style="display:none;">
                                 <img id="img1" class="d-block" style="width: 300px;" src="..." alt="First slide">
                             </div>
                             <div class="col-sm-12 col-md-5" id="slide_2">
@@ -159,6 +159,7 @@
 
         <script>
             function modal(params) {
+                console.log('entro');
                 $("#exampleModalLabel").html(params['area']);
                 if (params['imagen_1'] == 'Sin imagen') {
                     document.getElementById('slide').style.display = 'none';
@@ -190,6 +191,7 @@
                     document.getElementById('row_datos').style.display = 'none';
                 }
                 var id = params['id'].toString();
+
                 var url = "{{ route('ticket-historial', ':id') }}";
                 url = url.replace(':id', id);
                 document.getElementById('historial').href = url;

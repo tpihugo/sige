@@ -341,21 +341,12 @@ class AreaController extends Controller
    {
       $area = Area::select('ultimo_inventario', 'tipo_espacio', 'sede', 'edificio', 'piso', 'division', 'coordinacion', 'area')
          ->where('id', $id)->first();
-      
-      $equipo = VsEquipo::where('activo', '=', 1)
-         ->where('id_area', '=', $id)
-         ->where([
-            ['tipo_equipo', '=', 'CPU'],
-            ['tipo_equipo', '=', 'Proyector'],
-         ])
-         ->get();
-         $equipo = DB::table('vs_equipos')->where('activo', 1)
+
+         $equipo = VsEquipo::where('activo', 1)
          ->where('id_area', '=', $id)
          ->whereIn(
-            'tipo_equipo', ['CPU','Proyector'])
+            'tipo_equipo', ['CPU','Proyector','Pantalla'])
          ->get();
-      //dd($equipo);
-      //return $equipo;
       return view('areas.equipos', compact('area', 'equipo'));
    }
 }
