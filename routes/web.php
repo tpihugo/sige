@@ -692,6 +692,12 @@ Route::match(['get', 'post'],'/tickets/tomar-ticket/{id}', array(
     'uses' => '\App\Http\Controllers\TicketController@tomar_ticket'
 ));
 
+Route::post('/tickets/soltar-ticket/{id}', array(
+    'as' => 'soltar-ticket',
+    'middleware' => 'auth',
+    'uses' => '\App\Http\Controllers\TicketController@soltar_ticket'
+));
+
 Route::get('/equipo-area/{id}', array(
     'as' => 'equipo-area',
     'middleware' => 'auth',

@@ -8,17 +8,37 @@
             Auth::user()->role == 'redes'))
         <script type="text/javascript">
             $(document).ready(function() {
-                $('#tecnico').select2();
+                $('#js-example-basic-single2').select2();
 
             });
         </script>
-        <script  type="text/javascript">
-            function cambio(params) {
-                console.log(params)
+        <script type="text/javascript">
+            function tomar_ticket(params) {
                 var url = "{{ route('tomar-ticket', ':id') }}";
                 url = url.replace(':id', params);
                 document.getElementById('asignar').action = url;
 
+            }
+
+            function soltar_ticket(params) {
+                var url = "{{ route('soltar-ticket', ':id') }}";
+                url = url.replace(':id', params);
+                document.getElementById('soltar').action = url;
+            }
+
+            function historial(params) {
+                document.getElementById('historial').innerHTML = '';
+                document.getElementById('historial').innerHTML =
+                    '<tr><td>Usuario</td><td>Motivo</td><td>Detalle</td><td>Fecha</td></tr>';
+                let cont = 1;
+                params.forEach(element => {
+                    let fecha = new Date(element['created_at']);
+                    fecha = (fecha.getDate() + '/' + fecha.getDate() + '/' + fecha.getFullYear());
+                    document.getElementById('historial').innerHTML += '<td>' + cont + ' </td><td>' + element['nombre'] +
+                        ' </td> <td>' + element['motivo'] + ' </td> <td>' + element['detalles'] + '</td> <td>' + fecha +
+                        '</td>';
+                    cont = cont + 1;
+                });
             }
         </script>
         <div class="container-fluid">
@@ -27,6 +47,11 @@
                     @if (session('message'))
                         <div class="alert alert-success">
                             {{ session('message') }}
+                        </div>
+                    @endif
+                    @if (session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
                         </div>
                     @endif
                     <h2>Tickets </h2>
@@ -101,10 +126,9 @@
             </form>
             <div class="row g-3 align-items-center">
                 <div class="col">
-                    <table id="example" class="table table-striped table-bordered" style="width:100%">
+                    <table id="example" class="display responsive table-bordered" style="width:100%">
                         <thead>
                             <tr>
-                                <th>Acciones</th>
                                 <th>Folio</th>
                                 <th>Fecha Reporte</th>
                                 <th>Área</th>
@@ -113,15 +137,16 @@
                                 <th>Técnico</th>
                                 <th>Categoría y Prioridad</th>
                                 <th>Reporte</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="text-justify">
                         </tbody>
 
                     </table>
                 </div>
             </div>
-            @if (Auth::user()->id = 161)
+            @if (Auth::user()->id == 161 || Auth::user()->role == 'admin')
                 <div class="modal fade" id="tomar-ticket" tabindex="-1" aria-labelledby="asignar-usuario"
                     aria-hidden="true">
                     <div class="modal-dialog">
@@ -130,19 +155,76 @@
                                 <form action="" id="asignar" class="row justify-content-center" method="POST">
                                     @csrf
                                     <div class="form-group row">
-                                        <label for="rol" class="col-md-4 col-form-label text-md-right">Seleccioan el técnico</label>
-            
+                                        <label for="rol" class="col-md-4 col-form-label text-md-right">Seleccioan el
+                                            técnico</label>
+
                                         <div class="col-md-6">
-                                            <select class="form-control" id="tecnico" name="tecnico">
-                                                
-                                                @foreach ( $tecnicos as $item)
-                                                <option value="{{$item->id}}">{{ $item->nombre }}</option>
+                                            <select class="form-control" id="js-example-basic-single2" name="tecnico">
+                                                @foreach ($tecnicos as $item)
+                                                    <option value="{{ $item->id }}">{{ $item->nombre }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Asignar Usuario</button>
                                 </form>
+                            </div>
+                            <div class="modal-footer">
+
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+            @if (isset($id_tecnico->id))
+                <div class="modal fade" id="soltar-ticket" tabindex="-1" aria-labelledby="asignar-usuario"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <form action="" id="soltar" class="row justify-content-center" method="POST">
+                                    @csrf
+                                    <label for="rol" class="col-md-12 form-label">Seleccioan el motivo por el que dejas
+                                        el ticket</label>
+
+                                    <div class="col-md-12">
+                                        <select class="form-control" id="motivo" name="motivo" required>
+                                            <option selected disabled>selecciona una opción</option>
+                                            <option value="área equivocada">Área equivocada</option>
+                                            <option value="no se encontro personal">No se encontro personal</option>
+                                            <option value="falta material">Falta material</option>
+                                            <option value="tecnico se retiro">Técnico se retiro</option>
+                                            <option value="usuario especializado">Más especialización</option>
+                                            <option value="otro">Otro</option>
+                                        </select>
+                                    </div>
+                                    <label for="rol" class="col-md-12 form-label">Detalles</label>
+                                    <div class="col-sm-12">
+                                        <textarea name="detalle" id="detalle" class="form-control"></textarea>
+                                    </div>
+                                    <div class="col">
+                                        <button type="submit" class="btn btn-primary">Soltar ticket</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal  fade" id="historial-ticket" tabindex="-1" aria-labelledby="asignar-usuario"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <div class="table-responsive">
+                                    <table class="table" id="historial">
+
+                                    </table>
+                                </div>
                             </div>
                             <div class="modal-footer">
 
@@ -167,6 +249,7 @@
             src="https://cdn.datatables.net/v/bs4-4.1.1/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/r-2.2.7/datatables.min.js">
         </script>
 
+
         <script type="text/javascript">
             var data = @json($tickets);
 
@@ -175,7 +258,7 @@
                     "data": data,
                     "pageLength": 50,
                     "order": [
-                        [1, "desc"]
+                        [0, "desc"]
                     ],
                     "language": {
                         "sProcessing": "Procesando...",
