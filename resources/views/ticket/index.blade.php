@@ -29,11 +29,11 @@
             function historial(params) {
                 document.getElementById('historial').innerHTML = '';
                 document.getElementById('historial').innerHTML =
-                    '<tr><td>Usuario</td><td>Motivo</td><td>Detalle</td><td>Fecha</td></tr>';
+                    '<tr><td>Núm.</td><td>Usuario</td><td>Motivo</td><td>Detalle</td><td>Fecha</td></tr>';
                 let cont = 1;
                 params.forEach(element => {
                     let fecha = new Date(element['created_at']);
-                    fecha = (fecha.getDate() + '/' + fecha.getDate() + '/' + fecha.getFullYear());
+                    fecha = (fecha.getDay() + '/' + fecha.getDate() + '/' + fecha.getFullYear());
                     document.getElementById('historial').innerHTML += '<td>' + cont + ' </td><td>' + element['nombre'] +
                         ' </td> <td>' + element['motivo'] + ' </td> <td>' + element['detalles'] + '</td> <td>' + fecha +
                         '</td>';
