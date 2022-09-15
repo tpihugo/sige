@@ -33,7 +33,7 @@
                 let cont = 1;
                 params.forEach(element => {
                     let fecha = new Date(element['created_at']);
-                    fecha = (fecha.getDate() + '/' + fecha.getMonth()+1 + '/' + fecha.getFullYear());
+                    fecha = (fecha.getDate() + '/' + (fecha.getMonth()+1) + '/' + fecha.getFullYear());
                     document.getElementById('historial').innerHTML += '<td>' + cont + ' </td><td>' + element['nombre'] +
                         ' </td> <td>' + element['motivo'] + ' </td> <td>' + element['detalles'] + '</td> <td>' + fecha +
                         '</td>';
