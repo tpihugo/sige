@@ -347,7 +347,7 @@ class TicketController extends Controller
         }
         $tickets = $this->cargarDT($vstickets);
         $id_tecnico = Tecnico::where('activo',1)->where('user_id',Auth::user()->id)->first();
-        return view('ticket.index',compact('id_tecnico))->with('tickets', $tickets)->with('tecnicos', $tecnicos)
+        return view('ticket.index',compact('id_tecnico'))->with('tickets', $tickets)->with('tecnicos', $tecnicos)
             ->with('tecnicoElegido', $tecnicoElegido)->with('estatus', $estatus);
     }
     public function recepcionEquipo($ticket_id)
