@@ -656,7 +656,7 @@ Route::get("/switches", [
     "uses" => "App\Http\Controllers\EquipoController@editSW",
  ]);
 
- 
+
  Route::post("update-switch/{id}", [
     "as" => "update-switch",
     "middleware" => "auth",
