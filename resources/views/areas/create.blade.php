@@ -99,7 +99,7 @@
                                     <option value="Edificio T">Edificio T</option>
                                     <option value="Edificio U">Edificio U</option>
                                     <option value="Edificio Servicios Generales Belenes">Servicios Generales Belenes</option>
-                                    <option value="Edificio de Arqueología">Edificio de Arqueología</option>
+                                    <option value="Laboratorio de Arqueología">Laboratorio de Arqueología</option>
                                 </select>
                             </div>
                             <div class="col-md-3">
