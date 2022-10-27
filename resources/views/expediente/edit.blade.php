@@ -53,18 +53,18 @@
         @if($value[8]=="")
         <form action="{{route('expedientes.update', $value[0])}}" method="post" enctype="multipart/form-data" class="col-12">
             @method('put')
-                {{--<div class="mb-3">
+                <div class="mb-3">
                     <input type="hidden" name="requisicion" id="requisicion" value="1">
                     <input class="form-control btn btn-outline" type="file" name="file" id="file">
-                </div>--}}
-            <x-adminlte-input name="iBasic"/>
-            <x-adminlte-input-file name="requisicion" igroup-size="sm" legend="Buscar archivo" placeholder="Seleccionar archivo...">
-                <x-slot name="requisicion">
+                </div>
+            <{{--x-adminlte-input name="iBasic" type="hidden" name="requisicion" id="requisicion" value="1"/>
+            <x-adminlte-input-file name="file" type="file" id="file" igroup-size="sm" legend="Buscar archivo" placeholder="Seleccionar archivo..." accept=".pdf">
+                <x-slot name="file">
                 <div class="input-group-text text-primary">
                 <i class="fas fa-file-upload"></i>
                 </div>
                 </x-slot>
-            </x-adminlte-input-file>
+            </x-adminlte-input-file>--}}
             {{--<div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                 <button type="submit" class="btn btn-primary">Cargar</button>

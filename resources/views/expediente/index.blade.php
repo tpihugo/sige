@@ -29,12 +29,12 @@
     </div><!-- /.container-fluid -->
 </div>
 <!-- /.content-header -->
+
+    {{--Contenido de equipo y tickets--}}
     <div class="row">
         {{--card contenido del equipo--}}
-        <div class="col-md-6">
+        <div class="col-md-7">
         <x-adminlte-card title="Información de equipo" theme="success" icon="fas fa-desktop" footer-class="mx-auto bg-white" >
-            <x-slot name="toolsSlot">
-            </x-slot>
             @foreach($equipo as $value)
                 <strong><i class="fas fa-desktop"></i> Tipo de Equipo:</strong>
             <div class="row">
@@ -66,15 +66,129 @@
         </x-adminlte-card>
         </div>
         {{--card contenido del los tickets del equipo--}}
-        <div class="col-md-6">
+        <div class="col-md-5">
         <x-adminlte-card title="Tickets"  theme="success" icon="fas fa-desktop"  icon="fas fa-file" >
+            <div class="row">
+                <div class="col-md-10">
+                    @if ($ticket)
+                        <ul class="list-group">
+                            @foreach($ticket as $tickets)
+                                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
+                                    <div class="d-flex align-items-center">
+                                        <div class="d-flex flex-column">
+                                            <div class="d-flex flex-column">
+                                                <h6 class="mb-1 text-dark text-sm">Id del ticket: {{$tickets[1]}} </h6>
+                                                <h6 class="mb-1 text-dark text-sm">Resguardante: {{$tickets[2]}}</h6>
+                                                {!! $tickets[0] !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <p>Sin tickets</p>
+                    @endif
+                </div>
+                <div class="col-md-2">
+                    <a class="btn bg-gradient-info" icon="fas fa-edit" href="{{ route('tickets.create') }}">Crear</a>
 
-            A removable and collapsible card with purple theme...
+                </div>
+            </div>
 
         </x-adminlte-card>
         </div>
     </div>
-<!-- /.row -->
+<!-- /.row fin contenido equipo y tickets -->
+    {{--Contenido de matenimientos, revisiónes express y proyectos--}}
+    <div class="row">
+        {{--card contenido mantenimientos--}}
+        <div class="col-md-6">
+            <x-adminlte-card title="Mantenimientos" theme="success" icon="fas fa-desktop" footer-class="mx-auto bg-white" >
+                <div class="row">
+                    <div class="col-md-10">
+                        <ul class="list-group">
+                            @if ($mantenimiento)
+                                    @foreach($mantenimiento as $mantenimiento)
+                                        <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
+                                            <div class="col-lg-10">
+                                                <h6 class="mb-3 text-sm">Realizo</h6>
+                                                <span class="mb-12 text-xs">Fecha: <span class="text-dark font-weight-bold ms-sm-2">{{\Carbon\Carbon::parse($mantenimiento[2])->format('d/m/Y')}}</span></span>
+                                                <span class="mb-12 text-xs">Detalles: <span class="text-dark ms-sm-2 font-weight-bold">{{$mantenimiento[1]}}</span></span>
+                                                <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="{{route('delete-man-equipo',$mantenimiento[0],$equipo[0])}}"><i class="material-icons text-sm me-2">delete</i>Eliminar</a>
+                                            </div>
+                                    @endforeach
+                                @else
+                                    <p>Sin mantenimientos</p>
+                                        </li>
+                            @endif
+                        </ul>
+                    </div>
+                    <div class="col-md-2">
+                        <x-adminlte-button class="btn bg-gradient-info" data-toggle="modal" data-target="#modalManto" label="Crear" />
+
+                    </div>
+                </div>
+        </x-adminlte-card>
+        </div>
+        {{--card contenido revisiones express--}}
+        {{--card contenido proyectos--}}
+        <div class="col-md-6">
+            <x-adminlte-card title="Proyectos"  theme="success" icon="fas fa-desktop"  icon="fas fa-file" >
+            <div class="row">
+                <div class="col-md-10">
+                    <ul class="list-group">
+                        @if($proyecto)
+                            @foreach($proyecto as $proyectos)
+                                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
+                                    <div class="d-flex flex-column">
+
+                                        <h6 class="mb-1 text-dark font-weight-bold text-sm">Titulo:</h6>
+                                        <span class="text-xs">{{$proyectos[1]}}</span>
+                                    </div>
+                                    <div class="d-flex flex-column">
+                                        <h6 class="mb-1 text-dark font-weight-bold text-sm">Area interna</h6>
+                                        <span>{{$proyectos[2]}}</span>
+                                    </div>
+                                </li>
+                            @endforeach
+                        @else
+                            <p>Sin proyectos</p>
+                        @endif
+
+                    </ul>
+                </div>
+                <div class="col-md-2">
+                    <a href="{{route('proyectos.create')}}" class="btn bg-gradient-info">Agregar</a>
+                </div>
+            </div>
+
+        </x-adminlte-card>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <x-adminlte-card title="Revisiones express"  theme="success" icon="fas fa-desktop"  icon="fas fa-file" >
+                <ul class="list-group">
+                    @if ($revicion)
+                        @foreach($revicion as $reviciones)
+                            <li class="list-group-item border-0 d-flex p-4 mb-2 mt-3 bg-gray-100 border-radius-lg">
+                                <div class="d-flex flex-column">
+                                    <span><h6 class="mb-3 text-sm" style="font-family: Arial, Helvetica, sans-serif">Sede: <span class="text-dark ms-sm-2 font-weight-bold">{{$reviciones[1]}}</span></h6> </span>
+                                    <span class="mb-2 text-12" style="font-family: Arial, Helvetica, sans-serif"><h6>Area: <span class="text-dark ms-sm-2 font-weight-bold">{{$reviciones[4]}}</span>&nbsp; Piso:<span class="text-dark ms-sm-2 font-weight-bold">{{$reviciones[3]}}</span>&nbsp; Edificio:<span class="text-dark ms-sm-2 font-weight-bold">{{$reviciones[2]}}</span></h6></span>
+                                    <span class="mb-2 text-xs" style="font-family: Arial, Helvetica, sans-serif"><h6>Estatus: <span class="text-dark font-weight-bold ms-sm-2">{{$reviciones[5]}}</span></h6></span>
+                                    <span class="mb-2 text-12" style="font-family: Arial, Helvetica, sans-serif"><h6>Fecha: <span class="text-dark ms-sm-2 font-weight-bold">{{\Carbon\Carbon::parse($reviciones[6])->format('d/m/y')}} &nbsp;</span>Hora:<span class="text-dark ms-sm-2 font-weight-bold">{{\Carbon\Carbon::parse($reviciones[6])->format('h:m:s')}}</span></h6></span>
+                                </div>
+                            </li>
+                        @endforeach
+                    @else
+                        <h6>Sin revisiones</h6>
+                    @endif
+                </ul>
+            </x-adminlte-card>
+        </div>
+    </div>
+<!-- /.row de matenimientos, revisiónes express y proyectos -->
 
     {{-- modal-edición-de-equipo --}}
 {{--<x-adminlte-modal id="modal-editar-equipo" title="Editar equipo" theme="primary" icon="fas fa-inbox" size='lg' disable-animations>
@@ -562,7 +676,6 @@
             @foreach($mantenimiento as $mantenimiento)
           <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
 
-
                   <div class="col-lg-10">
                     <h6 class="mb-3 text-sm">Realizo</h6>
                     <span class="mb-12 text-xs">Fecha: <span class="text-dark font-weight-bold ms-sm-2">{{\Carbon\Carbon::parse($mantenimiento[2])->format('d/m/Y')}}</span></span>
@@ -570,15 +683,12 @@
 
                       <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="{{route('delete-man-equipo',$mantenimiento[0],$equipo[0])}}"><i class="material-icons text-sm me-2">delete</i>Eliminar</a>
 
-
                   </div>
                   @endforeach
-
 
                   @else
                   <h2>Sin mantenimientos</h2>
             </li>
-
 
             @endif
 
@@ -603,7 +713,6 @@
           <ul class="list-group">
             @if($proyecto)
 
-
             @foreach($proyecto as $proyectos)
             <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
               <div class="d-flex flex-column">
@@ -626,9 +735,6 @@
         </div>
       </div>
     </div>
-
-
-
 
 
     <div class="col-sm-12 mt-5 d-flex ">
@@ -664,25 +770,8 @@
       </div>
     </div>
   </div>
-
 </div>
-
-
-
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
        @endforeach
 
 
