@@ -331,6 +331,10 @@ return [
                     'text'=>'Consultar',
                     'route'=>'areas.index'
                 ],
+                [
+                    'text'=>'Estadísticas',
+                    'route'=>'historial-areas'
+                ],
             ],
         ],
         [
@@ -377,6 +381,10 @@ return [
                     'text'=>'En proceso',
                     'route'=>'revisionTickets'
                 ],
+                [
+                    'text'=>'Estadísticas',
+                    'route' => 'historial-tickets'
+                ]
             ],
         ],
         [
@@ -587,12 +595,12 @@ return [
             ],
         ],
         'Chartjs' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
-                    'asset' => false,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js',
+                    'asset' => true,
+                    'location' => 'https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js',
                 ],
             ],
         ],

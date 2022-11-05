@@ -15,6 +15,7 @@
                     <ul class="htmlCss-sub-menu sub-menu">
                         <li><a href="{{ route('areas.create') }}">Captura Área</a></li>
                         <li><a href="{{ route('areas.index') }}">Consulta Áreas</a></li>
+                        <li><a href="{{ route('historial-areas') }}">Estadísticas</a></li>
                     </ul>
                 </li>
                 @endcan
@@ -68,6 +69,7 @@
                     <li><a href="{{ route('tickets.create') }}">Captura Tickets</a></li>
                     <li><a href="{{ route('tickets.index') }}">Consultar Tickets Abiertos</a></li>
                     <li><a href="{{ route('revisionTickets') }}">Consultar Tickets Completos</a></li>
+                    <li><a href="{{ route('historial-tickets') }}">Estadísticas</a></li>
                 </ul>
             </li>
             @endcan
@@ -132,7 +134,7 @@
             </li>
             @endcan
 
-            
+
 
             <li>
             @guest
@@ -162,7 +164,7 @@
         </div>
 
         <div class="nav-links">
-            
+
         </div>
 
     </div>

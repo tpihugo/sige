@@ -5,9 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9dec0bac-f5e3-41de-a3b3-5e603464d988" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/sige-erp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sige-erp.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TicketHistorialController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TicketHistorialController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/adminlte.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/adminlte.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/expediente/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/expediente/edit.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/expediente/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/expediente/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/navbar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/navbar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -183,6 +188,9 @@
       <path value="$PROJECT_DIR$/vendor/jeroennoten/laravel-adminlte" />
     </include_path>
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectId" id="1pXLmXSJkz0UUFIeb42Da1D4Abb" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -254,6 +262,8 @@
       <workItem from="1664381373782" duration="11943000" />
       <workItem from="1664413987113" duration="18921000" />
       <workItem from="1664804292568" duration="10504000" />
+      <workItem from="1667518932155" duration="189000" />
+      <workItem from="1667519627939" duration="2002000" />
     </task>
     <servers />
   </component>

@@ -1,10 +1,9 @@
 @extends('adminlte::page')
 @section('title', 'Expediente |')
 {{--@extends('layouts.app')--}}
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-@stop
+    <link rel="stylesheet" href="{{asset('/css/admin_custom.css')}}">
 @section('plugins.BsCustomFileInput', true)
+
 @section('content')
 @include('expediente.edit')
 @if(Auth::check() && Auth::user()->role == 'admin')
@@ -33,7 +32,7 @@
     {{--Contenido de equipo y tickets--}}
     <div class="row">
         {{--card contenido del equipo--}}
-        <div class="col-md-7">
+        <div class="col-md-6">
         <x-adminlte-card title="Información de equipo" theme="success" icon="fas fa-desktop" footer-class="mx-auto bg-white" >
             @foreach($equipo as $value)
                 <strong><i class="fas fa-desktop"></i> Tipo de Equipo:</strong>
@@ -43,7 +42,8 @@
                 <h3 class="m-y3">{{$value[2]}}</h3>
                 </div>
                 <div class="col-md-3">
-                <x-adminlte-button class="btn bg-gradient-info"  data-toggle="modal" data-target="#modal-editar-equipo2" icon="fas fa-edit"/>
+                {{--<x-adminlte-button class="btn bg-gradient-info"  data-toggle="modal" data-target="#modal-editar-equipo2" icon="fas fa-edit"/>--}}
+                <a class="btn bg-gradient-info" href="{{route('equipos.edit', $value[0])}}" target="_blank"><i class="fas fa-edit"></i></a>
                 <x-adminlte-button class="btn bg-gradient-danger" data-toggle="modal" data-target="#modal-eliminar" icon="fas fa-trash"/>
 
                 </div>
@@ -57,16 +57,20 @@
                 <p >{{$value[3]}}</p><hr>
             @endforeach
             <x-slot name="footerSlot" >
-                <x-adminlte-button class="btn btn-app bg-gradient-info" data-toggle="modal" data-target="#modal-requisicion" label="Requisición" icon="fas fa-inbox"/>
-                <x-adminlte-button class="btn btn-app bg-gradient-info" data-toggle="modal" data-target="#modal-cotizacion" label="Cotización" icon="fas fa-inbox"/>
-                <x-adminlte-button class="btn btn-app bg-gradient-info" data-toggle="modal" data-target="#modal-factura" label="Factura" icon="fas fa-inbox"/>
-                <x-adminlte-button class="btn btn-app bg-gradient-info" data-toggle="modal" data-target="#modal-otros" label="Otros" icon="fas fa-inbox"/>
+                @if($value[8]=="") <x-adminlte-button class="btn btn-app bg-gradient-info" data-toggle="modal" data-target="#modal-requisicion" label="Requisición" icon="fas fa-inbox"/>
+                @else <a class="btn btn-app bg-gradient-info" href="../../storage/app/documentos/{{$value[8]}}" target="_blank"><i class="fas fa-inbox"></i> Ver requisición</a>@endif
+                @if($value[9]=="")<x-adminlte-button class="btn btn-app bg-gradient-info" data-toggle="modal" data-target="#modal-cotizacion" label="Cotización" icon="fas fa-inbox"/>
+                @else <a class="btn btn-app bg-gradient-info" href="../../storage/app/documentos/{{$value[9]}}" target="_blank"><i class="fas fa-inbox"></i> Ver cotización</a>@endif
+                @if($value[10]="")<x-adminlte-button class="btn btn-app bg-gradient-info" data-toggle="modal" data-target="#modal-factura" label="Factura" icon="fas fa-inbox"/>
+                @else <a class="btn btn-app bg-gradient-info" href="../../storage/app/documentos/{{$value[10]}}" target="_blank"><i class="fas fa-inbox"></i> Ver factura</a>@endif
+                @if($value[11]=="")<x-adminlte-button class="btn btn-app bg-gradient-info" data-toggle="modal" data-target="#modal-otros" label="Otros" icon="fas fa-inbox"/>
+                @else <a class="btn btn-app bg-gradient-info" href="../../storage/app/documentos/{{$value[11]}}" target="_blank"><i class="fas fa-inbox"></i> Ver otros</a>@endif
 
             </x-slot>
         </x-adminlte-card>
         </div>
         {{--card contenido del los tickets del equipo--}}
-        <div class="col-md-5">
+        <div class="col-md-6">
         <x-adminlte-card title="Tickets"  theme="success" icon="fas fa-desktop"  icon="fas fa-file" >
             <div class="row">
                 <div class="col-md-10">
@@ -188,57 +192,30 @@
             </x-adminlte-card>
         </div>
     </div>
+    @else
+        Acceso No válido
+    @endif
+@stop
 <!-- /.row de matenimientos, revisiónes express y proyectos -->
 
-    {{-- modal-edición-de-equipo --}}
-{{--<x-adminlte-modal id="modal-editar-equipo" title="Editar equipo" theme="primary" icon="fas fa-inbox" size='lg' disable-animations>
-    --}}{{-- Placeholder, sm size and prepend icon --}}{{--
-    @foreach($equipo as $value)
-    --}}{{--<iframe src="{{route('equipos.edit', $value[0])}}" frameborder="0" ></iframe>--}}{{--
-    @endforeach
-    <x-slot name="footerSlot">
-        <x-adminlte-button  theme="danger" label="Cancelar" data-dismiss="modal"/>
-        <x-adminlte-button  theme="success" label="Cargar"/>
-    </x-slot>
-</x-adminlte-modal>--}}
-    {{-- modal-requisicion --}}
-{{--<x-adminlte-modal id="modal-requisicion2" title="Cargar requisiciòn" theme="primary" icon="fas fa-inbox" size='lg' disable-animations>
-    --}}{{-- Placeholder, sm size and prepend icon --}}{{--
-    <x-adminlte-input-file name="ifPholder" igroup-size="sm" legend="Buscar archivo" placeholder="Seleccionar archivo...">
-        <x-slot name="prependSlot">
-            <div class="input-group-text text-primary">
-                <i class="fas fa-file-upload"></i>
-            </div>
-        </x-slot>
-    </x-adminlte-input-file>
-    <x-slot name="footerSlot">
-        <x-adminlte-button  theme="danger" label="Cancelar" data-dismiss="modal"/>
-        <x-adminlte-button  theme="success" label="Cargar"/>
-    </x-slot>
-</x-adminlte-modal>--}}
-
-    <div class="container-fluid">
+{{--    <div class="container-fluid">
         <div class="row">
             @if (session('message'))
                 <div class="alert alert-success">
                     {{ session('message') }}
                 </div>
-            @endif
+            @endif--}}
 
 
-<body class="g-sidenav-show bg-gray-200">
+{{--<body class="g-sidenav-show bg-gray-200">
 <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
   <div class="container-fluid py-1 px-3">
     <nav aria-label="breadcrumb">
-      {{--<h1 class="font-weight-bolder mb-0">Expediente</h1>--}}
+      <h1 class="font-weight-bolder mb-0">Expediente</h1>
     </nav>
     <div class="col-6 text-end">
-{{--
       <a class="btn bg-gradient-dark mb-0" href="{{route('Imprimirexpediente',$equipo[0])}}" target="_blank"> <i class="fas fa-file-pdf"></i>&nbsp;&nbsp;Imprimir expediente</a>
---}}
       </div>
-
-
     </div>
   </div>
 </nav>
@@ -254,13 +231,13 @@
                 <ul class="list-group">
                 @foreach($equipo as $equipo)
                   <li class="list-group-item border-0 d-flex p-4 mb-2 mt-3 bg-gray-100 border-radius-lg">
-                    {{--<div class="d-flex flex-column">
+                    <div class="d-flex flex-column">
                       <h3>Información del equipo</h3>
                       <h6>Tipo de equipo: <span class="text-dark ms-sm-1 font-weight-bold">{{$equipo[2]}}</span><h6>
                       <h6>Descripción: <span class="text-dark ms-sm-2 font-weight-bold">{{$equipo[6]}}</span></h6>
                       <h6>Modelo: <span class="text-dark ms-sm-2 font-weight-bold">{{$equipo[4]}}</span></h6>
                       <h6>Marca: <span class="text-dark ms-sm-2 font-weight-bold">{{$equipo[3]}}</span></h6>
-                    </div>--}}
+                    </div>
                     <div class="ms-auto text-end">
                       <a href="#delete" role="button" class="btn btn-link text-danger text-gradient px-3 mb-0" data-toggle="modal" title="Eliminar">
                               Eliminar
@@ -287,10 +264,10 @@
                          </div>
                           </div>
                       </div>
-                  </div>
-                      <a class="btn btn-link text-dark px-3 mb-0" href="{{route('equipos.edit', $equipo[0])}}"><i class="material-icons text-sm me-2">edit</i>Editar</a>
-                    </div>
-                  </li>
+                      </div>
+                          <a class="btn btn-link text-dark px-3 mb-0" href="{{route('equipos.edit', $equipo[0])}}"><i class="material-icons text-sm me-2">edit</i>Editar</a>
+                        </div>
+                    </li>
 
                 </ul>
               </div>
@@ -772,7 +749,7 @@
   </div>
 </div>
 </div>
-       @endforeach
+       @endforeach--}}
 
 
 
@@ -795,9 +772,9 @@
 {{--  <script async defer src="https://buttons.github.io/buttons.js"></script>--}}
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
 {{--  <script src="../assets/js/material-dashboard.min.js?v=3.0.0"></script>--}}
-</body>
+{{--</body>--}}
 
-@else
-    Acceso No válido
-@endif
+
+{{--
 @endsection
+--}}

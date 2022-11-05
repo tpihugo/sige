@@ -2,7 +2,8 @@
 
 use Illuminate\Routing\Route as RoutingRoute;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\TicketHistorialController;
+use App\Http\Controllers\AulaHistorialController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -703,3 +704,6 @@ Route::get('/equipo-area/{id}', array(
     'middleware' => 'auth',
     'uses' => '\App\Http\Controllers\AreaController@equipo_area'
 ));
+
+Route::middleware('auth')->get('/historial-tickets',[TicketHistorialController::class, 'index'])->name('historial-tickets');
+Route::middleware('auth')->get('/historial-areas',[AulaHistorialController::class, 'index'])->name('historial-areas');
