@@ -104,6 +104,7 @@ class RequisicionController extends Controller
         $requisicion->fecha = $request->get('fecha');
         $requisicion->user = $request->get('user');
         $requisicion->proyecto = $request->get('proyecto');
+        $requisicion->estatus = $request->get('estatus');
         $requisicion->fondo = $request->get('fondo');
         $requisicion->fecha_recibido = $request->get('fecha_recibido');
         $requisicion->quien_recibe = $request->get('quien_recibe');

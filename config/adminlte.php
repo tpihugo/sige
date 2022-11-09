@@ -14,9 +14,9 @@ return [
     |
     */
 
-    'title' => '',
+    'title' => 'AdminLTE 3',
     'title_prefix' => '',
-    'title_postfix' => 'SIGE CUCSH',
+    'title_postfix' => '',
 
     /*
     |--------------------------------------------------------------------------
@@ -30,7 +30,7 @@ return [
     |
     */
 
-    'use_ico_only' => true,
+    'use_ico_only' => false,
     'use_full_favicon' => false,
 
     /*
@@ -63,12 +63,12 @@ return [
     |
     */
 
-    'logo' => '<b>SIGE </b>CUCSH',
-    'logo_img' => 'images/cta-logo.jpeg',
-    'logo_img_class' => 'brand-image elevation-3',
+    'logo' => '<b>Admin</b>LTE',
+    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'sige cucsh',
+    'logo_img_alt' => 'Admin Logo',
 
     /*
     |--------------------------------------------------------------------------
@@ -109,11 +109,11 @@ return [
     'preloader' => [
         'enabled' => true,
         'img' => [
-            'path' => 'images/cta-logo.jpeg',
-            'alt' => 'sige cucsh',
+            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'alt' => 'AdminLTE Preloader Image',
             'effect' => 'animation__shake',
-            'width' => 100,
-            'height' => 100,
+            'width' => 60,
+            'height' => 60,
         ],
     ],
 
@@ -150,8 +150,8 @@ return [
 
     'layout_topnav' => null,
     'layout_boxed' => null,
-    'layout_fixed_sidebar' => true,
-    'layout_fixed_navbar' => true,
+    'layout_fixed_sidebar' => null,
+    'layout_fixed_navbar' => null,
     'layout_fixed_footer' => null,
     'layout_dark_mode' => null,
 
@@ -187,7 +187,7 @@ return [
     */
 
     'classes_body' => '',
-    'classes_brand' => 'cta-color',
+    'classes_brand' => '',
     'classes_brand_text' => '',
     'classes_content_wrapper' => '',
     'classes_content_header' => '',
@@ -210,7 +210,7 @@ return [
     |
     */
 
-    'sidebar_mini' => false,
+    'sidebar_mini' => 'lg',
     'sidebar_collapse' => false,
     'sidebar_collapse_auto_size' => false,
     'sidebar_collapse_remember' => false,
@@ -253,7 +253,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => '/',
+    'dashboard_url' => 'home',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -291,174 +291,45 @@ return [
 
     'menu' => [
         // Navbar items:
-        ['header' => 'Sistema Integral de Gestión'],
         [
             'type'         => 'navbar-search',
-            'text'         => 'busqueda',
+            'text'         => 'search',
             'topnav_right' => true,
         ],
         [
             'type'         => 'fullscreen-widget',
-            'topnav_right' => false,
+            'topnav_right' => true,
         ],
 
         // Sidebar items:
         [
             'type' => 'sidebar-menu-search',
-            'text' => 'busqueda',
+            'text' => 'search',
         ],
         [
             'text' => 'blog',
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
         ],
-        /*[
+        [
             'text'        => 'pages',
             'url'         => 'admin/pages',
             'icon'        => 'far fa-fw fa-file',
             'label'       => 4,
             'label_color' => 'success',
-        ],*/
-        [
-            'text'=>'Áreas',
-            'icon'=> 'fas fa-university',
-            'submenu'=> [
-                [
-                    'text'=>'Capturar',
-                    'route'=>'areas.create'
-                ],
-                [
-                    'text'=>'Consultar',
-                    'route'=>'areas.index'
-                ],
-                [
-                    'text'=>'Estadísticas',
-                    'route'=>'historial-areas'
-                ],
-            ],
         ],
+        ['header' => 'account_settings'],
         [
-            'text'=>'Mobiliario',
-            'icon'=> 'fa fa-solid fa-chair',
-            'submenu'=> [
-                [
-                    'text'=>'Capturar',
-                    'route'=>'mobiliarios.create'
-                ],
-                [
-                    'text'=>'Consultar',
-                    'route'=>'mobiliarios.index'
-                ],
-            ],
-        ],
-        [
-            'text'=> 'Equipos',
-            'icon'    => 'fa fa-solid fa-desktop',
-            'submenu'=>[
-                [
-                    'text'=>'Capturar',
-                    'route'=> 'equipos.create'
-                ],
-                [
-                    'text'=>'Consultar Préstamos',
-                    'route'=> 'prestamos.index'
-                ],
-            ],
-        ],
-        [
-            'text'=>'Tickets',
-            'icon'=> 'fas fa-clipboard-list',
-            'submenu'=> [
-                [
-                    'text'=>'Capturar',
-                    'route'=>'tickets.create'
-                ],
-                [
-                    'text'=>'Abiertos',
-                    'route'=>'tickets.index'
-                ],
-                [
-                    'text'=>'En proceso',
-                    'route'=>'revisionTickets'
-                ],
-                [
-                    'text'=>'Estadísticas',
-                    'route' => 'historial-tickets'
-                ]
-            ],
-        ],
-        [
-            'text'=>'Cursos',
-            'icon'=> 'fas fa-chalkboard-teacher',
-            'submenu'=> [
-                [
-                    'text'=>'Capturar',
-                    'route'=>'cursos.create'
-                ],
-                [
-                    'text'=>'Todos',
-                    'url'=>'cursos/2021B',
-                ],
-                [
-                    'text'=>'Laboratorios',
-                    'url'=>'cursos-laboratorios/2022A',
-                ],
-                [
-                    'text'=>'Presenciales',
-                    'url'=>'cursos-presenciales/2022A',
-                ],
-            ],
-        ],
-        [
-            'text' => 'Administrador',
+            'text' => 'profile',
+            'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-user',
-            'can'=> 'USUARIOS#ver',
-            'submenu'=>
-                [
-                    [
-                        'text'=>'Administrar usuarios',
-                        'route'=>'usuarios.index',
-                    ],
-                ],
         ],
         [
-            'text' => 'Proyectos',
-            'icon' => 'fas fa-lightbulb',
-            'can'=> 'PROYECTOS#ver',
-            'submenu'=>
-                [
-                    [
-                        'text'=>'Capturar',
-                        'route'=>'proyectos.create',
-                    ],
-                    [
-                        'text'=>'Consultar',
-                        'route'=>'proyectos.create',
-                    ],
-                ],
-        ],[
-            'text' => 'Servicios',
-            'icon' => 'fas fa-inbox',
-            'can'=> 'SERVICIOS#ver',
-            'submenu'=>
-                [
-                    [
-                        'text'=>'Capturar',
-                        'route'=>'servicios.create',
-                    ],
-                    [
-                        'text'=>'Consultar',
-                        'route'=>'servicios.index',
-                    ],
-                ],
-        ],
-        /*['header' => 'account_settings'],*/
-        /*[
             'text' => 'change_password',
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-lock',
-        ],*/
-        /*[
+        ],
+        [
             'text'    => 'multilevel',
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [
@@ -495,8 +366,8 @@ return [
                     'url'  => '#',
                 ],
             ],
-        ],*/
-        /*['header' => 'labels'],
+        ],
+        ['header' => 'labels'],
         [
             'text'       => 'important',
             'icon_color' => 'red',
@@ -511,7 +382,7 @@ return [
             'text'       => 'information',
             'icon_color' => 'cyan',
             'url'        => '#',
-        ],*/
+        ],
     ],
 
     /*
@@ -549,16 +420,6 @@ return [
     */
 
     'plugins' => [
-        'BsCustomFileInput' => [
-            'active' => true,
-            'files' => [
-                [
-                    'type' => 'js',
-                    'asset' => true,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/bs-custom-file-input/1.1.1/bs-custom-file-input.min.js',
-                ],
-            ],
-        ],
         'Datatables' => [
             'active' => false,
             'files' => [
@@ -595,12 +456,12 @@ return [
             ],
         ],
         'Chartjs' => [
-            'active' => true,
+            'active' => false,
             'files' => [
                 [
                     'type' => 'js',
-                    'asset' => true,
-                    'location' => 'https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js',
                 ],
             ],
         ],
