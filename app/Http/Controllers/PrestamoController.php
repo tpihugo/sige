@@ -99,7 +99,6 @@ class PrestamoController extends Controller
         ';
 
         $prestamos[$key] = array(
-            $acciones,
             $value['id'],
             $value['solicitante'],
             $value['cargo'],
@@ -109,7 +108,7 @@ class PrestamoController extends Controller
             $value['lista_equipos'],
             $value['fecha_actualizacion'] = \Carbon\Carbon::parse($value->fecha_actualizacion)->format('d/m/Y H:i'),
             $value['observaciones'],
-            $value['documento'],
+            $acciones,
         );
 
         }

@@ -183,7 +183,6 @@
                     document.getElementById('slide').style.display = 'block';
                     var url = "{{ route('area_imagenes', ':id') }}";
                     url = url.replace(':id', params['imagen_1']);
-
                     $('#img1').attr("src", url);
                     if (params['imagen_2'] == 'Sin imagen') {
                         document.getElementById('slide_2').style.display = 'none';
@@ -201,7 +200,6 @@
                     $("#fecha").html(params['tickets'][0]['fecha_reporte']);
                     $("#prioridad").html(params['tickets'][0]['prioridad']);
                     $("#contacto").html(params['tickets'][0]['contacto']);
-
                 } else {
                     document.getElementById('row_datos').style.display = 'none';
                 }
@@ -211,7 +209,6 @@
                     $("#horario").html(params['clase']['horario']);
                     $("#curso").html(params['clase']['curso']);
                     $("#profesor").html(params['clase']['profesor']);
-
                 } else {
                     console.log('entro');
                     document.getElementById('clases').style.display = 'none';
@@ -221,11 +218,9 @@
                 var url = "{{ route('ticket-historial', ':id') }}";
                 url = url.replace(':id', id);
                 document.getElementById('historial').href = url;
-
                 var url = "{{ route('equipo-area', ':id') }}";
                 url = url.replace(':id', id);
                 document.getElementById('equipos').href = url;
-
             }
         </script>
     @else
