@@ -65,7 +65,6 @@
                     </div>
                     <div class="col-md-6">
                         <label for="estatus" class="form-label">Estatus</label>
-                        Estatus : {{$requisicion->estatus}}
                         <select name="estatus" id="estatus" class="form-control">
                             <option {{($requisicion->estatus == 'En tramite')? 'selected':''}} value="En tramite">En tramite</option>
                             <option {{($requisicion->estatus == 'Entregado')? 'selected':''}} value="Entregado">Entregado</option>

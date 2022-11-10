@@ -5,8 +5,7 @@
         @if (Auth::check() &&
             (Auth::user()->role == 'admin' ||
                 Auth::user()->role == 'cta' ||
-                Auth::user()->role == 'auxiliar' ||
-                Auth::user()->role == 'redes'))
+                Auth::user()->role == 'auxiliar'))
             <div class="row">
                 <div class="row g-3 align-items-center">
                     <div class="col-md-12">
@@ -63,7 +62,7 @@
                     </div>
                     <div class="col-md-6">
                         <label for="" class="form-label">Adjuntar requisición</label>
-                        <input type="file" name="pdf" id="pdf" class="form-control" tabindex="8">
+                        <input type="file" name="pdf" id="pdf" class="form-control">
                     </div>
                     <div class="col-md-6">
                         <label for="estatus" class="form-label">Estatus</label>

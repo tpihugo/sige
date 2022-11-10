@@ -26,33 +26,34 @@
                                 @php
                                     $areas = collect($item);
                                 @endphp
-                                @foreach ($areas as $key)
-                                    @if (isset($key['tickets']))
-                                        <a onclick="modal({{ collect($key) }})" class="btn bg-danger text-white text-wrap"
+                                @foreach ($areas as $key => $value)
+                                    @if (isset($value['tickets']))
+                                        <a onclick="modal({{ collect($value) }})" class="btn bg-danger text-white text-wrap"
                                             data-bs-toggle="modal" data-bs-target="#exampleModal">
 
-                                            {{ $key['area'] }}
-                                            @if (str_contains($key['equipamiento'], 'PC'))
+                                            {{ $value['area'] }}
+                                            @if (str_contains($value['equipamiento'], 'PC'))
                                                 <i class="fa fa-laptop "></i>
                                             @endif
-                                            @if (str_contains($key['equipamiento'], 'TV') == 1)
+                                            @if (str_contains($value['equipamiento'], 'TV') == 1)
                                                 <i class="fa fa-tv "></i>
                                             @endif
-                                            @if (str_contains($key['equipamiento'], 'Proyector') == 1)
+                                            @if (str_contains($value['equipamiento'], 'Proyector') == 1)
                                                 <i class="fa fa-video "></i>
                                             @endif
 
                                         </a>
                                     @else
-                                        <a onclick="modal({{ collect($key) }})" class="btn bg-success text-white text-wrap"
-                                            data-bs-toggle="modal" data-bs-target="#exampleModal">{{ $key['area'] }}
-                                            @if (str_contains($key['equipamiento'], 'PC') == 1)
+                                        <a onclick="modal({{ collect($value) }})"
+                                            class="btn bg-success text-white text-wrap" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal">{{ $value['area'] }}
+                                            @if (str_contains($value['equipamiento'], 'PC') == 1)
                                                 <i class="fa fa-laptop "></i>
                                             @endif
-                                            @if (str_contains($key['equipamiento'], 'TV') == 1)
+                                            @if (str_contains($value['equipamiento'], 'TV') == 1)
                                                 <i class="fa fa-tv "></i>
                                             @endif
-                                            @if (str_contains($key['equipamiento'], 'Proyector') == 1)
+                                            @if (str_contains($value['equipamiento'], 'Proyector') == 1)
                                                 <i class="fa fa-video "></i>
                                             @endif
                                         </a>
@@ -115,13 +116,13 @@
             </div>
         </div>
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" >
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel"></h5>
                     </div>
                     <div class="modal-body ">
-                        <div class="row justify-content-center" >
+                        <div class="row justify-content-center">
                             <div class="col-sm-12 col-md-5" id="slide" style="display:none;">
                                 <img id="img1" class="d-block" style="width: 300px;" src="..." alt="First slide">
                             </div>
@@ -140,6 +141,21 @@
 
                             </div>
                         </div>
+                        <div class="row" >
+                            <div class="col-sm-12">
+                                <hr>
+                                <h4>Datos de Clase</h4>
+                            </div>
+   
+                            <div class="col-sm-12" id="clases" style="display: none;">
+                                <p>Curso: <span id="curso"></span> </p>
+                                <p>Horario: <span id="horario"></span></p>
+                                <p>Profesor: <span id="profesor"></span></p>
+                            </div>
+                            <div class="col-sm-12" id="sin_clase" style="display: none;">
+                                <p>Sin clase</p>
+                            </div>
+                        </div>
                         <div class="row justify-content-center ">
                             <div class="col-sm-12 col-md-3">
                                 <a href="" id="historial" class="btn btn-primary">Historial</a>
@@ -150,7 +166,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cerrar</button>
                     </div>
                 </div>
             </div>
@@ -159,7 +175,7 @@
 
         <script>
             function modal(params) {
-                console.log('entro');
+                console.log(params);
                 $("#exampleModalLabel").html(params['area']);
                 if (params['imagen_1'] == 'Sin imagen') {
                     document.getElementById('slide').style.display = 'none';
@@ -167,7 +183,6 @@
                     document.getElementById('slide').style.display = 'block';
                     var url = "{{ route('area_imagenes', ':id') }}";
                     url = url.replace(':id', params['imagen_1']);
-
                     $('#img1').attr("src", url);
                     if (params['imagen_2'] == 'Sin imagen') {
                         document.getElementById('slide_2').style.display = 'none';
@@ -178,7 +193,6 @@
                         $('#img2').attr("src", url);
                     }
                 }
-
                 if (params.hasOwnProperty('tickets')) {
                     document.getElementById('row_datos').style.display = 'block';
                     $("#datos").html(params['tickets'][0]['datos_reporte']);
@@ -186,20 +200,27 @@
                     $("#fecha").html(params['tickets'][0]['fecha_reporte']);
                     $("#prioridad").html(params['tickets'][0]['prioridad']);
                     $("#contacto").html(params['tickets'][0]['contacto']);
-
                 } else {
                     document.getElementById('row_datos').style.display = 'none';
                 }
+                if (params.hasOwnProperty('clase')){
+                    document.getElementById('clases').style.display = 'block';
+                    document.getElementById('sin_clase').style.display = 'none';
+                    $("#horario").html(params['clase']['horario']);
+                    $("#curso").html(params['clase']['curso']);
+                    $("#profesor").html(params['clase']['profesor']);
+                } else {
+                    console.log('entro');
+                    document.getElementById('clases').style.display = 'none';
+                    document.getElementById('sin_clase').style.display = 'block';
+                }
                 var id = params['id'].toString();
-
                 var url = "{{ route('ticket-historial', ':id') }}";
                 url = url.replace(':id', id);
                 document.getElementById('historial').href = url;
-
                 var url = "{{ route('equipo-area', ':id') }}";
                 url = url.replace(':id', id);
                 document.getElementById('equipos').href = url;
-
             }
         </script>
     @else

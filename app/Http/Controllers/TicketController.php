@@ -32,55 +32,54 @@ class TicketController extends Controller
 
         $tecnicos = Tecnico::where('activo', '=', 1)->get();
         $tickets = $this->cargarDT($vstickets);
-        $id_tecnico = Tecnico::where('activo',1)->where('user_id',Auth::user()->id)->first();
-        return view('ticket.index',compact('id_tecnico'))->with('tickets', $tickets)->with('tecnicos', $tecnicos);
+        $id_tecnico = Tecnico::where('activo', 1)->where('user_id', Auth::user()->id)->first();
+        return view('ticket.index', compact('id_tecnico'))->with('tickets', $tickets)->with('tecnicos', $tecnicos);
     }
     //este el que se modificó fin de la modificación 1
     public function cargarDT($consulta)
     {
 
         $tickets = [];
-        $tecnico = Tecnico::where('activo',1)->where('user_id',Auth::user()->id)->first();
+        $tecnico = Tecnico::where('activo', 1)->where('user_id', Auth::user()->id)->first();
         foreach ($consulta as $key => $value) {
-            
+
             $actualizar =  route('tickets.edit', $value['id']);
             $recibo = route('recepcionEquipo',  $value['id']);
             $tomar = route('tomar-ticket', $value['id']);
-            $registro_historial = ticket_historial::where('id_ticket',$value['id'])->orderBy('created_at')->get();
-            
-            
+            $registro_historial = ticket_historial::where('id_ticket', $value['id'])->orderBy('created_at')->get();
+
+
             if (Auth::user()->id == 161 || Auth::user()->role  == 'admin') {
-                $tomar = '<button type="button" onclick="tomar_ticket('.$value['id'].')" class="btn btn-outline-warning" data-toggle="modal" data-target="#tomar-ticket">
+                $tomar = '<button type="button" onclick="tomar_ticket(' . $value['id'] . ')" class="btn btn-outline-warning" data-toggle="modal" data-target="#tomar-ticket">
                 <i class="far fa-hand-paper"></i>
               </button>
               ';
-            }elseif(isset($tecnico)){
-                if($tecnico->id != $value['tecnico_id']) {
+            } elseif (isset($tecnico)) {
+                if ($tecnico->id != $value['tecnico_id']) {
                     $tomar = '<a href="' . $tomar . '" class="btn btn-warning" title="Tomar ticket">
                     <i class="far fa-hand-paper"></i>
                </a>';
-                }else{
+                } else {
                     $tomar = '';
                 }
-                if($tecnico->id == $value['tecnico_id']){
-                    $tomar = '<button type="button" onclick="soltar_ticket('.$value['id'].')"  class="btn btn-outline-dark" data-toggle="modal" data-target="#soltar-ticket">
+                if ($tecnico->id == $value['tecnico_id']) {
+                    $tomar = '<button type="button" onclick="soltar_ticket(' . $value['id'] . ')"  class="btn btn-outline-dark" data-toggle="modal" data-target="#soltar-ticket">
                     <i class="far fa-hand-paper"></i>
                   </button>';
                 }
-
-            }else{
+            } else {
                 $tomar = '';
                 $historial = '';
             }
-            if(count($registro_historial)>0){
-                foreach($registro_historial as $item){
-                    $tecnico_nombre = Tecnico::where('user_id',$item->id_user)->first();
+            if (count($registro_historial) > 0) {
+                foreach ($registro_historial as $item) {
+                    $tecnico_nombre = Tecnico::where('user_id', $item->id_user)->first();
                     $item->nombre = $tecnico_nombre->nombre;
                 }
-                $historial = '<button type="button" onclick='."'".'historial('.$registro_historial.')'."'".' class="btn btn-outline-dark" data-toggle="modal" data-target="#historial-ticket">
+                $historial = '<button type="button" onclick=' . "'" . 'historial(' . $registro_historial . ')' . "'" . ' class="btn btn-outline-dark" data-toggle="modal" data-target="#historial-ticket">
                 <i class="far fa-list-alt"></i>
                 </button>';
-            }else{
+            } else {
                 $historial = '';
             }
 
@@ -120,7 +119,6 @@ class TicketController extends Controller
                 $value['datos_reporte'],
                 $acciones,
             );
-
         }
 
         return $tickets;
@@ -346,10 +344,12 @@ class TicketController extends Controller
             }
         }
         $tickets = $this->cargarDT($vstickets);
-        $id_tecnico = Tecnico::where('activo',1)->where('user_id',Auth::user()->id)->first();
-        return view('ticket.index',compact('id_tecnico'))->with('tickets', $tickets)->with('tecnicos', $tecnicos)
+
+        $id_tecnico = Tecnico::where('activo', 1)->where('user_id', Auth::user()->id)->first();
+        return view('ticket.index', compact('id_tecnico'))->with('tickets', $tickets)->with('tecnicos', $tecnicos)
             ->with('tecnicoElegido', $tecnicoElegido)->with('estatus', $estatus);
     }
+    
     public function recepcionEquipo($ticket_id)
     {
         $ticket = VsTicket::find($ticket_id);
@@ -358,6 +358,7 @@ class TicketController extends Controller
 
         return view('ticket.agregarEquiposTicket')->with('ticket', $ticket)->with('ticket_id', $ticket_id)->with('equipoPorTickets', $equipoPorTickets);
     }
+
     public function registrarEquipoTicket($equipo_id, $ticket_id)
     {
         $equipoTicket = new EquipoTicket();
@@ -427,11 +428,11 @@ class TicketController extends Controller
     }
     public function tomar_ticket($id, Request $request)
     {
-        
-        
-        if(isset($request->tecnico)){            
+
+
+        if (isset($request->tecnico)) {
             $tecnico =  Tecnico::select('id')->where('activo', '=', 1)->where('id', $request->tecnico)->first();
-        }else{
+        } else {
             //return Auth::user()->id;
             $tecnico =  Tecnico::select('id')->where('activo', '=', 1)->where('user_id', Auth::user()->id)->first();
         }
@@ -439,7 +440,7 @@ class TicketController extends Controller
         $total = VsTicket::where('activo', '=', 1)->where('tecnico_id', '=', $tecnico->id)->where('estatus', 'Abierto')->get();
 
         //return count($total);
-        if (count($total) < 3 || $tecnico->id == 161){
+        if (count($total) < 3 || $tecnico->id == 161) {
             $ticket = Ticket::find($id);
             $ticket->tecnico_id = $tecnico->id;
             $ticket->save();
@@ -452,7 +453,8 @@ class TicketController extends Controller
             ));
         }
     }
-    public function soltar_ticket($id, Request $request){
+    public function soltar_ticket($id, Request $request)
+    {
         $validateData = $this->validate($request, [
             'detalle' => 'required',
             'motivo' => 'required',

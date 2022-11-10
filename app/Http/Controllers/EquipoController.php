@@ -178,8 +178,6 @@ class EquipoController extends Controller
 
         if($request->input('ip_id')=="No Especificado"){
             $equipo->ip = 'No Especificado';
-            
-
         }else{
             $equipo->ip = $request->input('ip_id');
             $ip = Ip::where('ip','=',$request->input('ip_id'))->first();
@@ -322,7 +320,7 @@ class EquipoController extends Controller
     }
 
 public function busquedaEquiposPrestamo(Request $request){
-        $validateData = $this->validate($request,[
+        $this->validate($request,[
             'busqueda'=>'required'
         ]);
 
@@ -438,7 +436,6 @@ public function busquedaEquiposPrestamo(Request $request){
                 }
         if(Auth::user()->role != 'general'){
             $equipos[$key] = array(
-                $acciones,
                 $value['id'],
                 $value['udg_id'],
                 $value['tipo_equipo'],
@@ -446,7 +443,8 @@ public function busquedaEquiposPrestamo(Request $request){
                 $value['modelo'],
                 $value['numero_serie'],
                 $value['detalles'].' SICI: '.$localizado_en_sici,
-                $value['area']
+                $value['area'],
+                $acciones,
             );
         }else{
             $equipos[$key] = array(
