@@ -78,7 +78,7 @@ class EquipoController extends Controller
         // $equipo->localizado_sici = $request->input('localizado_sici');
         $equipo->save();
 
-	if($request->input('ip_id')!='null'){
+	if($request->input('ip_id')!='No Aplica'){
         $ip = Ip::where('ip','=',$request->input('ip_id'))->first();
         $ip->gateway = $request->input('gateway');
         $ip->mascara = $request->input('mascara');
