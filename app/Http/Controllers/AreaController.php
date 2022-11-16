@@ -330,13 +330,13 @@ class AreaController extends Controller
             // Obtener cursos del aula
             // return $dia;
             //dd($item->id);
-            $cursos = Curso::select('id','curso', 'horario', 'profesor')
+            $cursos = Curso::select('id', 'curso', 'horario', 'profesor')
                 ->Where('id_area', $item->id)
                 ->Where('ciclo', '=', '2022B')
                 ->Where(function ($query) {
                     $dias = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado'];
                     $dia = $dias[date('w')];
-                    
+
                     $query
                         ->Where('lunes', $dia)
                         ->orWhere('martes', $dia)
@@ -346,7 +346,7 @@ class AreaController extends Controller
                         ->orWhere('sabado', $dia);
                 })
                 ->get();
-            
+
             // Obtiene la clase actual
             foreach ($cursos as $clases => $value) {
                 $horario = explode('-', $value->horario);
@@ -396,8 +396,19 @@ class AreaController extends Controller
 
         $equipo = VsEquipo::where('activo', 1)
             ->where('id_area', '=', $id)
-            ->whereIn('tipo_equipo', ['CPU', 'Proyector', 'Pantalla'])
+            ->whereIn('tipo_equipo', ['CPU', 'Proyector', 'Pantalla', 'No break', 'Bocinas', 'Soporte para Proyector', 'Botonera'])->orderBy('tipo_equipo')
             ->get();
-        return view('areas.equipos', compact('area', 'equipo'));
+
+        $grupos = VsEquipo::where('activo', 1)
+            ->where('id_area', '=', $id)
+            ->whereIn('tipo_equipo', ['CPU', 'Proyector', 'Pantalla', 'No break', 'Bocinas', 'Soporte para Proyector', 'Botonera'])->get()->groupBy(function ($issuePlaces) {
+                return $issuePlaces->tipo_equipo;
+            });
+        $cantidad = [];
+        foreach ($grupos as $item => $llave) {
+            $cantidad[$item] = count($llave);
+        }
+        $cantidad = collect($cantidad);
+        return view('areas.equipos', compact('area', 'equipo','cantidad'));
     }
 }
