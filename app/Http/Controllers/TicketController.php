@@ -109,6 +109,7 @@ class TicketController extends Controller
             }
 
             $tickets[$key] = array(
+                '',
                 $value['id'],
                 $value['fecha_reporte'] = \Carbon\Carbon::parse($value->fecha_reporte)->format('d/m/Y H:i'),
                 $area,
@@ -161,7 +162,8 @@ class TicketController extends Controller
             'prioridad' => 'required',
             'estatus' => 'required',
             'datos_reporte' => 'required',
-            'fecha_reporte' => 'required'
+            'fecha_reporte' => 'required',
+            ''
         ]);
         $ticket = new Ticket();
         $ticket->area_id = $request->input('area_id');

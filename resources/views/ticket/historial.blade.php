@@ -2,27 +2,28 @@
 @section('title', 'Estadísticas tickets |')
 @section('content')
     <div class="row">
-        <h2>Estadísticas de tickets</h2>
-        {{--{{dd($months)}}--}}
-        <div>
+        <div class="col-sm-12">
+            <h2>Estadísticas de tickets</h2>
         </div>
-        <div class="col-md-12">
-            <div class="card card-info">
+        
+        {{--{{dd($months)}}--}}
+        <div class="col-md-6">
+            <div class="card card-info w-100">
                 <div class="card-header">
                     <h2 class="card-title">Histórico de tickets</h2>
                 </div>
                 <div class="card-body">
                     <h3>Tickets por mes</h3>
                     <div class="chart">
-                        <canvas id="myChart" style="min-height: 250px; height: 250px; max-height: 400px; max-width: 100%;"></canvas>
+                        <canvas id="myChart"></canvas>
                         {{--<canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>--}}
                     </div>
                 </div>
                 <!-- /.card-body -->
             </div>
         </div>
-        <div class="col-md-12">
-            <div class="card card-info">
+        <div class="col-md-6">
+            <div class="card card-info w-100">
                 <div class="card-header">
                     <h3 class="card-title">Técnicos</h3>
                     <div class="card-tools">
@@ -34,7 +35,7 @@
                 <div class="card-body">
                     <h4>Tickets por tecnico </h4>
                     <div class="chart">
-                        <canvas id="myChartTecnicals" style="min-height: 250px; height: 250px; max-height: 1000px; max-width: 100%;"></canvas>
+                        <canvas id="myChartTecnicals"></canvas>
                         {{--<canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>--}}
                     </div>
                 </div>
@@ -76,11 +77,10 @@
                         </button>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body  w-100">
                     <h4>Tickets solicitados por tipo de categoría</h4>
-                    <div class="chart">
-                        <canvas id="myChartCategories" style="min-height: 250px; height: 250px; max-height: 1000px; max-width: 100%;"></canvas>
-                        {{--<canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>--}}
+                    <div class="chart" >
+                        <canvas id="myChartCategories"></canvas>
                     </div>
                 </div>
                 <!-- /.card-body -->
