@@ -42,7 +42,7 @@
             }
         </script>
         <div class="container-fluid">
-            <div class="row g-3 align-items-center">
+           
                 <div class="col-md-12">
                     @if (session('message'))
                         <div class="alert alert-success">

@@ -140,7 +140,7 @@ class TicketController extends Controller
     {
         $equipos = Equipo::all();
         //$areas = Area::pluck('id','area')->prepend('seleciona');
-        $areas = Area::all();
+        $areas = Area::where('activo',1)->get();
         $tecnicos = Tecnico::where('activo', '=', 1)->get();
         return view('ticket.create')->with('equipos', $equipos)->with('areas', $areas)->with('tecnicos', $tecnicos);
     }
