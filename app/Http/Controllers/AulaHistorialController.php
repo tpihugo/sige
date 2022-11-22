@@ -31,7 +31,7 @@ class AulaHistorialController extends Controller
             $placesIssues[] = $issues;
             $issueByPlaces[] = count($itemIssue);
         }
-        
+
         $room ='Aula';
         $issuePlaceAula = VsTicket::select('tipo_espacio', 'problema','id')->where('tipo_espacio',$room)->get()->groupBy(function ($issuePlaces){
             return $issuePlaces->problema;
@@ -57,7 +57,7 @@ class AulaHistorialController extends Controller
             $labIssues[] = count($itemIssue);
         }
 
-        $issuePlaceArea = VsTicket::select('id', 'estatus')->get()->groupBy(function ($issuePlaces){
+        $issuePlaceArea = VsTicket::select('id', 'estatus')->where('estatus','!=','cerrado')->get()->groupBy(function ($issuePlaces){
             return $issuePlaces->estatus;
         });
 
@@ -67,7 +67,7 @@ class AulaHistorialController extends Controller
             $ticketAreas[] = $issuesAR;
             $ticketID[] = count($itemIssue);
         }
-        
+
 
         return view('areas.historial',
             [

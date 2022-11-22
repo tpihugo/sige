@@ -1,5 +1,6 @@
 @extends('adminlte::page')
 @section('title', 'Estadísticas áreas |')
+<link rel="stylesheet" href="{{asset('/css/admin_custom.css')}}">
 @section('content')
     {{--{{dd($placesIssues)}}--}}
     <div class="row">
@@ -124,7 +125,7 @@
         const dataArea = {
             labels: labelsAreas,
             datasets: [{
-                label: 'Áreas',
+                label: 'Tictets',
                 backgroundColor: [
                     'rgb(255, 99, 132)',
                     'rgb(54, 162, 235)',
@@ -140,7 +141,7 @@
 
 
         const configAreas = {
-            type: 'doughnut',
+            type: 'bar',
             data: dataArea,
             options: {}
         };

@@ -1,11 +1,12 @@
 @extends('adminlte::page')
 @section('title', 'Estadísticas tickets |')
+<link rel="stylesheet" href="{{asset('/css/admin_custom.css')}}">
 @section('content')
     <div class="row">
         <div class="col-sm-12">
             <h2>Estadísticas de tickets</h2>
         </div>
-        
+
         {{--{{dd($months)}}--}}
         <div class="col-md-6">
             <div class="card card-info w-100">
@@ -16,7 +17,6 @@
                     <h3>Tickets por mes</h3>
                     <div class="chart">
                         <canvas id="myChart"></canvas>
-                        {{--<canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>--}}
                     </div>
                 </div>
                 <!-- /.card-body -->
@@ -36,7 +36,7 @@
                     <h4>Tickets por tecnico </h4>
                     <div class="chart">
                         <canvas id="myChartTecnicals"></canvas>
-                        {{--<canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>--}}
+
                     </div>
                 </div>
                 <!-- /.card-body -->
@@ -58,10 +58,10 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <h4>Tickets por tipo de falla reportada</h4>
+                    <h4>Tickets por tipo de falla reportada en todas las áreas</h4>
                     <div class="chart">
                         <canvas id="myChartIssue" style="min-height: 250px; height: 250px; max-height: 300px; max-width: 100%;"></canvas>
-                        {{--<canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>--}}
+
                     </div>
                 </div>
                 <!-- /.card-body -->
@@ -119,12 +119,12 @@
             config
         );
 
-        const labelsTecnical = JSON.parse('{!! json_encode($tecnical) !!}');
-        const quantityTecnical = JSON.parse( '{!! json_encode($countTickets) !!}' );
+        const labelsTecnical = JSON.parse('{!! json_encode($technicians) !!}');
+        const quantityTecnical = JSON.parse( '{!! json_encode($numTickets) !!}' );
         const dataTecnical = {
             labels: labelsTecnical,
             datasets: [{
-                label: 'Tecnicos',
+                label: 'Tickets',
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
                 data: quantityTecnical,
