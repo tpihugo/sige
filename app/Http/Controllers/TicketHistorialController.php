@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\Ticket;
 use App\Models\VsTicket;
 use Carbon\Carbon;
@@ -20,6 +21,23 @@ class TicketHistorialController extends Controller
         foreach ($data as $month => $values) {
             $months[] = $month;
             $monthCount[] = count($values);
+        }
+
+        $activeTechnicians = DB::table('tecnicos')
+            ->join('tickets', 'tecnicos.id','=','tickets.tecnico_id')
+            ->select('tickets.id','tecnicos.nombre as tecnico')
+            ->where('tecnicos.activo',1)
+            ->get()
+            ->groupBy(function ($activeTechnicians){
+                return $activeTechnicians->tecnico;
+            });
+
+        $numTickets = [];
+        $Technicians =[];
+
+        foreach ($activeTechnicians as $personal => $nums){
+            $Technicians[] = $personal;
+            $numTickets[] = count($nums);
         }
 
         $tecnicals = VsTicket::select('id', 'tecnico')->get()->groupBy(function ($tecnicals) {
@@ -64,6 +82,8 @@ class TicketHistorialController extends Controller
                 'issues' => $issues,
                 'categories' => $categories,
                 'ticketsC' => $ticketsC,
+                'technicians'=> $Technicians,
+                'numTickets' => $numTickets
             ]
         );
     }
