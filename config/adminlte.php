@@ -292,21 +292,21 @@ return [
     'menu' => [
         // Navbar items:
         ['header' => 'Sistema Integral de Gestión'],
-        [
+        /*[
             'type'         => 'navbar-search',
             'text'         => 'busqueda',
             'topnav_right' => true,
-        ],
+        ],*/
         [
             'type'         => 'fullscreen-widget',
             'topnav_right' => false,
         ],
 
         // Sidebar items:
-        [
+        /*[
             'type' => 'sidebar-menu-search',
             'text' => 'busqueda',
-        ],
+        ],*/
         [
             'text' => 'blog',
             'url'  => 'admin/blog',
