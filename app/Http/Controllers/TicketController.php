@@ -162,8 +162,6 @@ class TicketController extends Controller
             'prioridad' => 'required',
             'estatus' => 'required',
             'datos_reporte' => 'required',
-            'fecha_reporte' => 'required',
-            ''
         ]);
         $ticket = new Ticket();
         $ticket->area_id = $request->input('area_id');
@@ -174,7 +172,7 @@ class TicketController extends Controller
         $ticket->prioridad = $request->input('prioridad');
         $ticket->estatus = $request->input('estatus');
         $ticket->datos_reporte = $request->input('datos_reporte');
-        $ticket->fecha_reporte = $request->input('fecha_reporte');
+        $ticket->fecha_reporte = date('Y/m/d');
         $ticket->fecha_inicio  = $request->input('fecha_inicio ');
         $ticket->fecha_termino = $request->input('fecha_termino');
         $ticket->problema = $request->input('problema');
