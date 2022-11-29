@@ -352,6 +352,7 @@ class PrestamoController extends Controller
     public function prestamoEquipos($prestamo_id){
         $prestamo = VsPrestamo::find($prestamo_id);
         $equiposPorPrestamo = EquipoPorPrestamo::where('id_prestamo','=', $prestamo_id)->get();
+        
         return view('prestamo.agregarEquipoEdit')->with('prestamo', $prestamo )
             ->with('prestamo_id', $prestamo_id)->with('equiposPorPrestamo', $equiposPorPrestamo);
     }

@@ -301,7 +301,7 @@ class AreaController extends Controller
 
     public function area_ticket($sede)
     {
-        // Se obtienen las Aulas
+        // Se obtienen las Aulas y Laboratorios
         $areas = Area::select('id', 'ultimo_inventario', 'tipo_espacio', 'equipamiento', 'edificio', 'piso', 'area', 'imagen_1', 'imagen_2')
             ->where('sede', '=', $sede)
             ->where('activo', 1)
@@ -309,6 +309,7 @@ class AreaController extends Controller
             ->where('tipo_espacio', '!=', 'Administrativo')
             ->orderBy('edificio')
             ->get();
+
         // Se crea el contenedor principal
         $areas_f = [];
         date_default_timezone_set('America/Mexico_City');
@@ -324,9 +325,11 @@ class AreaController extends Controller
                 ->where('area_id', '=', $item->id)
                 ->where('estatus', 'Abierto')
                 ->get();
+
             if (strcmp('Planta Baja', $item->piso) == 0) {
                 $item->piso = 'Piso 0';
             }
+
             // Obtener cursos del aula
             // return $dia;
             //dd($item->id);
@@ -336,7 +339,6 @@ class AreaController extends Controller
                 ->Where(function ($query) {
                     $dias = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado'];
                     $dia = $dias[date('w')];
-
                     $query
                         ->Where('lunes', $dia)
                         ->orWhere('martes', $dia)
@@ -377,13 +379,10 @@ class AreaController extends Controller
                     $areas_f[$edificio][$item->piso] = [$item->toArray()];
                 }
             }
-
             //dd($areas_f[$edificio][$item->piso]);
-
             //dd($areas_f[$edificio]);
             ksort($areas_f[$edificio]);
         }
-
         $areas = collect($areas_f);
         //return $areas;
         return view('areas.area-ticket', compact('areas', 'sede'));

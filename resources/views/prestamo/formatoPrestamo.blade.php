@@ -58,7 +58,13 @@
                 <td colspan="2"><b>Lugar:</b> {{$prestamo->lugar}}</td>
             </tr>
             <tr>
-                <td colspan="2"><b>Equipos:</b> {{$prestamo->lista_equipos}}</td>
+
+                <td colspan="2"><b>Equipos:</b> 
+                
+                    {{$prestamo->lista_equipos}}
+
+                </td>
+
             </tr>
             <tr>
                 <td colspan="2"><b>Observaciones:</b> {{$prestamo->observaciones}}</td>
