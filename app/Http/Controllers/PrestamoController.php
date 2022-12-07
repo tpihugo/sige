@@ -152,7 +152,7 @@ class PrestamoController extends Controller
         $prestamo->fecha_inicio = $request->input('fecha_inicio');
         $prestamo->observaciones = $request->input('observaciones');
 
-	$prestamo->save();
+	    $prestamo->save();
 
         $lastPrestamo = $prestamo->id;
 
