@@ -1,5 +1,5 @@
-{{--@extends('adminlte::page')
-@section('title', 'Dashboard |')--}}
+{{-- @extends('adminlte::page')
+@section('title', 'Dashboard |') --}}
 @extends('layouts.app', ['activePage' => 'dashboard', 'titlePage' => __('Dashboard')])
 @section('content')
     <div class="content">
@@ -51,7 +51,8 @@
                         </div>
                     </div>
                 @endcan
-
+            </div>
+            <div class="row">
                 <div class="col-md-12 ">
                     <div class="card card-chart">
                         <div class="card-header card-header-success">Sistema Integral de Gesti&oacute;n</div>
@@ -120,11 +121,6 @@
                                                 Llaves</a>
                                             <a href="{{ route('agregarllaves') }}" class="btn btn-outline-info">Elegir
                                                 Llaves</a>
-                                        </div>
-                                        <div class="card-footer">
-                                            <div class="stats">
-                                                <i class="material-icons">door_back</i>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -357,22 +353,29 @@
                             <!-- Apartado de Logs -->
                             @can('LOGS#ver')
                                 <div class="col-lg-4 col-md-6 col-sm-12">
-                                    <div class="card card-stats">
+                                    <div class="card card-stats  pb-3">
                                         <div class="card-header card-header-primary card-header-icon">
-                                            <div class="card-icon">
-                                                <i class="material-icons">info_outline</i>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="card-icon">
+                                                        <i class="material-icons">info_outline</i>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <h3 class="card-title">Logs</h3>
-                                            <a class="btn btn-outline-danger" href="{{ route('logs.index') }}">Consultar
-                                                Logs</a>
-                                            <a class="btn btn-outline-success" href="{{ route('estadisticas') }}">Consultar
-                                                Estadisticas</a>
+                                            <div class="row">
+                                                <div class="col mx-auto"><a class="btn btn-outline-danger"
+                                                        href="{{ route('logs.index') }}">Consultar
+                                                        Logs</a></div>
+                                                <div class="col"><a class="btn btn-outline-success"
+                                                        href="{{ route('estadisticas') }}">Consultar
+                                                        Estadisticas</a></div>
 
-                                        </div>
-                                        <div class="card-footer">
-                                            <div class="stats">
-                                                <i class="material-icons">info</i>
+
+
+
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -381,20 +384,26 @@
                             <!-- Apartado de Mantenimiento   -->
                             @can('MANTENIMIENTO#ver')
                                 <div class="col-lg-4 col-md-6 col-sm-12">
-                                    <div class="card card-stats">
+                                    <div class="card card-stats pb-3">
                                         <div class="card-header card-header-success card-header-icon">
-                                            <div class="card-icon">
-                                                <i class="material-icons">handyman</i>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="card-icon">
+                                                        <i class="material-icons">handyman</i>
+                                                    </div>
+                                                </div>
+
                                             </div>
                                             <h3 class="card-title">Mantenimiento</h3>
-                                            <a class="btn btn-outline-success"
-                                                href="{{ route('mantenimiento.index') }}">Consultar Mantenimientos</a>
-                                            <a class="btn btn-outline-danger"
-                                                href="{{ route('mantenimiento.create') }}">Capturar Mantenimientos</a>
-                                        </div>
-                                        <div class="card-footer">
-                                            <div class="stats">
-                                                <i class="material-icons">devices</i>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <a class="btn btn-outline-success"
+                                                        href="{{ route('mantenimiento.index') }}">Consultar Mantenimientos</a>
+                                                </div>
+                                                <div class="col">
+                                                    <a class="btn btn-outline-danger"
+                                                        href="{{ route('mantenimiento.create') }}">Capturar Mantenimientos</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -404,24 +413,31 @@
                             <!-- Apartado de Requisiciones -->
                             @can('REQUISICIONES#ver')
                                 <div class="col-lg-4 col-md-6 col-sm-6">
-                                    <div class="card card-stats">
+                                    <div class="card card-stats  pb-3">
                                         <div class="card-header card-header-secundary card-header-icon">
-                                            <div class="card-icon">
-                                                <i class="material-icons">info_outline</i>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="card-icon">
+                                                        <i class="material-icons">info_outline</i>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <h3 class="card-title">Requisiciones</h3>
-                                            <a class="btn btn-outline-success"
-                                                href="{{ route('requisicion.create') }}">Capturar Requisición</a>
-                                            <a href="{{ route('requisicion.index') }}"
-                                                class="btn btn-outline-danger">Consultar Requisición</a>
-                                        </div>
-                                        <div class="card-footer">
-                                            <div class="stats">
-                                                <i class="material-icons">info</i>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <a class="btn btn-outline-success"
+                                                        href="{{ route('requisicion.create') }}">Capturar Requisición</a>
+                                                </div>
+                                                <div class="col">
+                                                    <a href="{{ route('requisicion.index') }}"
+                                                        class="btn btn-outline-danger">Consultar Requisición</a>
+                                                </div>
                                             </div>
+
+
+
+
                                         </div>
-
-
                                     </div>
                                 </div>
                             @endcan
@@ -437,11 +453,6 @@
                                                 Personal</a>
                                             <a href="{{ route('personal.index') }}" class="btn btn-outline-danger">Consultar
                                                 Personal</a>
-                                        </div>
-                                        <div class="card-footer">
-                                            <div class="stats">
-                                                <i class="material-icons">group</i>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>

@@ -39,15 +39,15 @@ Route::post("guardar-relacion-permisos", [
     "uses" => "App\Http\Controllers\RolesController@guardarRelacion",
 ]);
 
-Route::resource("equipos", "App\Http\Controllers\EquipoController");
-Route::resource("areas", "App\Http\Controllers\AreaController");
-Route::resource("movimientos", "App\Http\Controllers\MovimientoController");
-Route::resource("inventario", "App\Http\Controllers\InventarioController");
-Route::resource("tickets", "App\Http\Controllers\TicketController");
-Route::resource("prestamos", "App\Http\Controllers\PrestamoController");
-Route::resource("mobiliarios", "App\Http\Controllers\MobiliarioController");
-Route::resource("cursos", "App\Http\Controllers\CursoController");
-Route::resource("logs", "App\Http\Controllers\LogController");
+Route::resource("equipos", "App\Http\Controllers\EquipoController")->middleware('auth');
+Route::resource("areas", "App\Http\Controllers\AreaController")->middleware('auth');
+Route::resource("movimientos", "App\Http\Controllers\MovimientoController")->middleware('auth');
+Route::resource("inventario", "App\Http\Controllers\InventarioController")->middleware('auth');
+Route::resource("tickets", "App\Http\Controllers\TicketController")->middleware('auth');
+Route::resource("prestamos", "App\Http\Controllers\PrestamoController")->middleware('auth');
+Route::resource("mobiliarios", "App\Http\Controllers\MobiliarioController")->middleware('auth');
+Route::resource("cursos", "App\Http\Controllers\CursoController")->middleware('auth');
+Route::resource("logs", "App\Http\Controllers\LogController")->middleware('auth');
 Route::resource("licencias", "App\Http\Controllers\LicenciaController");
 Route::resource("servicios", "App\Http\Controllers\ServicioController");
 Route::resource("tecnicos", "App\Http\Controllers\TecnicoController");
