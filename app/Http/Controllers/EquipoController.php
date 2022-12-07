@@ -133,7 +133,8 @@ class EquipoController extends Controller
 
         $equipo = Equipo::find($id);
         $ip_equipo=null;
-        if($equipo->id!=null){
+        
+        if($equipo->id != null ){
             //si el equipo tiene ip asignada
             $ip_equipo=Ip::where('ip','=',$equipo->ip)->first();
             $subred_equipo=Ip::
@@ -175,8 +176,7 @@ class EquipoController extends Controller
         $equipo->modelo = $request->input('modelo');
         $equipo->numero_serie = $request->input('numero_serie');
         $equipo->mac = $request->input('mac');
-
-        if($request->input('ip_id')=="No Especificado"){
+        if(strcmp($request->input('ip_id'),"No Especificado") == 0){
             $equipo->ip = 'No Especificado';
         }else{
             $equipo->ip = $request->input('ip_id');

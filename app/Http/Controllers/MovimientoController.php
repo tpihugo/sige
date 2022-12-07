@@ -80,7 +80,7 @@ class MovimientoController extends Controller
         $log->save();
         //
         $tipo = $request->input('tipo');
-        if($tipo=='inventario'){
+        if($tipo == 'inventario'){
             return redirect('revision-inventario')->with(array(
                 'message'=>'El equipo se actualizo, ya puede volverlo a buscar en inventario'
             ));
