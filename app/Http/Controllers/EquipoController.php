@@ -195,7 +195,7 @@ class EquipoController extends Controller
         $equipo->localizado_sici = $request->input('localizado_sici');
 	$equipo->update();
 
-    if($equipo_ip=="No Especificado"){//antes era null y veremos que es ahora
+    if(strcmp($equipo->ip,"No Especificado") == 0){//antes era null y veremos que es ahora
         if($equipo->ip!="No Especificado"){//la selecionada no es null
             $ip = Ip::where('ip','=',$request->input('ip_id'))->first();
             $ip->disponible = 'no';
