@@ -134,6 +134,7 @@
                                     <option value="División de Estudios de Estado y Sociedad">División de Estudios de Estado y Sociedad
                                     </option>
                                     <option value="C.U. DE CS. SOCIALES Y HUMANIDADES">C.U. DE CS. SOCIALES Y HUMANIDADES</option>
+                                     <option value="Núcleo de Auditorios ">Núcleo de Auditorios </option>
                                 </select>
                             </div>
                             <div class="col-md-6">
