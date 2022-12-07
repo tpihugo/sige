@@ -60,7 +60,7 @@
                                 <label for="prioridad">Prioridad </label>
                                 <select class="form-control" id="prioridad" name="prioridad">
                                     <option disabled>Elegir</option>
-                                    <option value="Alta">Alta</option>
+                                    <option value="No Urgenete | No Importante">No Urgenete | No Importante</option>
                                     <option value="Media" selected>Media</option>
                                     <option value="Baja">Baja</option>
                                 </select>
