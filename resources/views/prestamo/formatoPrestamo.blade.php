@@ -81,6 +81,7 @@
                             <td><b>N/S</b></td>
                             <td><b>Accesorios</b></td>
                         </tr>
+                        
                         @foreach ($lista_final as $item)
                             <tr style="outline: thin solid">
                                 <td >{{ $item['equipo']['id'] }}</td>

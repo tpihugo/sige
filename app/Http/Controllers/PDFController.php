@@ -18,12 +18,14 @@ class PDFController extends Controller
     {
 
         $prestamo = VsPrestamo::where('id', '=', $prestamo_id)->first();
-        $temp = explode("<fin>", $prestamo->lista_equipos);
+        
+        $temp = explode("<fin>,", $prestamo->lista_equipos);
+        //dd($temp);
         $lista_final = collect();
         $equipo = collect();
         $cont = 0;
         foreach ($temp as $item => $llave) {
-            $elements = explode("<br>", $llave);
+            $elements = explode("<accesorios>", $llave);
             $lista = explode("-", $elements[0]);
             $equipo['id'] = str_replace(" Id SIGE: ", "", $lista[0]);
             $equipo['idUDG'] = str_replace(" IdUdeG: ", "", $lista[2]);
@@ -32,15 +34,24 @@ class PDFController extends Controller
             $equipo['modelo'] = str_replace(" Modelo: ", "", $lista[4]);
             $equipo['n_s'] = str_replace(" N/S: ", "", $lista[5]);
 
+            //echo $elements[1];
+            //var_dump(str_contains('<fin>', $elements[1]));
+            if(str_contains('<fin>', $elements[1])){
+                str_replace("<fin>",'', $elements[1]);
+            }
             $lista_final[$cont] = ["equipo" => $equipo, 'accesorios' => $elements[1]];
             $cont = $cont + 1;
             //$lista_final[$cont] = [$elements[0],$elements[1]];
         }
+        //dd($lista_final);
         $lista_final = collect($lista_final);
 
         $pdf = \PDF::loadView('prestamo.formatoPrestamo', compact('prestamo', 'lista_final'));
         return $pdf->stream('formatoPrestamo.pdf');
     }
+
+
+
     public function imprimirRecibo($ticket_id)
     {
         $ticket = VsTicket::where('id', '=', $ticket_id)->first();
