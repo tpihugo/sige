@@ -335,7 +335,7 @@ class AreaController extends Controller
             //dd($item->id);
             $cursos = Curso::select('id', 'curso', 'horario', 'profesor')
                 ->Where('id_area', $item->id)
-                ->Where('ciclo', '=', '2022B')
+                ->Where('ciclo', '=', '2023A')
                 ->Where(function ($query) {
                     $dias = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado'];
                     $dia = $dias[date('w')];
