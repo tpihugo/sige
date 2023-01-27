@@ -187,9 +187,9 @@
                                             </div>
                                             <h3 class="card-title">Cursos</h3>
                                             <a class="btn btn-outline-success"
-                                                href="{{ route('cursos-presenciales', '2022B') }}">Presenciales</a>
+                                                href="{{ route('cursos-presenciales', '2023A') }}">Presenciales</a>
                                             <a class="btn btn-outline-danger"
-                                                href="{{ route('cursos-laboratorios', '2022B') }}">Laboratorios</a>
+                                                href="{{ route('cursos-laboratorios', '2023A') }}">Laboratorios</a>
                                         </div>
                                         <div class="card-footer">
                                             <div class="stats">
@@ -198,7 +198,7 @@
                                                     <a href="{{ route('cursos.create') }}">Capturar</a>
                                                 @endcan
                                                 <i class="material-icons">update</i><a
-                                                    href="{{ url('cursos/2022B') }}">Todos</a>
+                                                    href="{{ url('cursos/2023A') }}">Todos</a>
                                             </div>
                                         </div>
                                     </div>
