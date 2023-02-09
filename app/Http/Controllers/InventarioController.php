@@ -226,7 +226,7 @@ class InventarioController extends Controller
 
         $total_22B_detalleInventario = DB::table("vs_inventariodetalle")
             ->select(DB::raw("count(*) as count"))
-            // ->where("inventario", "=", "2022A")
+            ->where("inventario", "=", "2023A")
             ->first();
             // dd($total_22B_detalleInventario);
 //
@@ -308,7 +308,7 @@ class InventarioController extends Controller
     {
         $area = Area::find($area_id);
         if ($area) {
-            $area->ultimo_inventario = "2022";
+            $area->ultimo_inventario = "2023";
             $area->update();
             //
             $log = new Log();
@@ -337,7 +337,7 @@ class InventarioController extends Controller
         $equipo_id = $request->input("equipo_id");
         $area_id = $request->input("area_id");
         $user_id = $request->input("user_id");
-        $inventario = "2022B";
+        $inventario = "2023A";
         $nota = $request->input("nota");
         $articulosRegistrados = InventarioDetalle::where([
             ["IdEquipo", "=", $equipo_id],
@@ -485,7 +485,7 @@ class InventarioController extends Controller
                     ->where('eq.id_area', $area_id)
           )
               ->where('iv.IdArea', $area_id)
-              ->where("inventario", "2022B")
+              ->where("inventario", "2023A")
               ->first();
          $total_equipos_localizados = $total_equipos_localizados->total_locales;
 
@@ -505,7 +505,7 @@ class InventarioController extends Controller
                     ->where('eq.id_area', $area_id)
           )
               ->where('iv.IdArea', $area_id)
-              ->where("inventario", "2022B")
+              ->where("inventario", "2023A")
               ->first();
               $total_equipos_localizados_externos = $total_equipos_localizados_externos->total_externos;
 
@@ -555,7 +555,7 @@ class InventarioController extends Controller
                     ->where('eq.id_area', $area_id)
           )
               ->where('iv.IdArea', $area_id)
-              ->where("inventario", "2022B")
+              ->where("inventario", "2023A")
               ->get(
                   array(
                       'vs_equipos.*',
@@ -627,7 +627,7 @@ class InventarioController extends Controller
         $origen = $request->input("origen");
 
         return view("equipo.equipo-encontrado", [
-            "message" => "El equipo se registro correctamente 2022B",
+            "message" => "El equipo se registro correctamente 2023A",
             "listadoEquipos" => $listadoEquipos,
             "nota" => $nota,
             "origen" => $origen,
@@ -635,7 +635,7 @@ class InventarioController extends Controller
     }
     public function registroInventario($equipo_id, $origen = "revision-inventario")
     {
-        $inventario = '2022B';
+        $inventario = '2023A';
         $revisor_id = Auth::user()->id;
         $articulosRegistrados = InventarioDetalle::where('IdEquipo',$equipo_id )
             ->where('inventario', $inventario)->count();
@@ -696,7 +696,7 @@ class InventarioController extends Controller
     {
         $area = Area::find($area_id);
         if ($area) {
-            $area->ultimo_inventario = "2022";
+            $area->ultimo_inventario = "2023";
             $area->update();
             //
             $log = new Log();
@@ -715,7 +715,7 @@ class InventarioController extends Controller
             return redirect()
                 ->route("inventario-express-detalle2")
                 ->with([
-                    "message" => "Se marco como último inventario 2022",
+                    "message" => "Se marco como último inventario 2023",
                 ]);
         }
     }
