@@ -83,6 +83,11 @@
                                     <option value="Edificio D">Edificio D</option>
                                     <option value="Edificio E">Edificio E</option>
                                     <option value="Edificio F">Edificio F</option>
+                                    <option value="Edificio F">Edificio F 1</option>
+                                    <option value="Edificio F">Edificio F 2</option>
+                                    <option value="Edificio F">Edificio F 3</option>
+                                    <option value="Edificio F">Edificio F 4</option>
+                                    <option value="Edificio F">Edificio F 5</option>
                                     <option value="Edificio G">Edificio G</option>
                                     <option value="Edificio H">Edificio H</option>
                                     <option value="Edificio I">Edificio I</option>
