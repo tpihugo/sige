@@ -55,6 +55,7 @@
                                 <select class="form-control" id="tipo_espacio" name="tipo_espacio">
                                     <option disabled selected>Elegir</option>
                                     <option value="Administrativo">Administrativo</option>
+                                    <option value="Auditorio">Auditorio</option>
                                     <option value="Aula">Aula</option>
                                     <option value="Laboratorio">Laboratorio</option>
                                 </select>
