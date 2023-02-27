@@ -78,8 +78,8 @@
                             <div class="col-md-4">
                                 <label for="categoria">Categoría </label>
                                 <select class="form-control" id="categoria" name="categoria">
-                                    <option disabled>Elegir</option>
-                                    <option value="Incidente" selected>Incidente</option>
+                                    <option disabled selected>Elegir</option>
+                                    <option value="Incidente">Incidente</option>
                                     <option value="Solicitudes de Servicio">Solicitudes de Servicio</option>
                                     <option value="Reporte de aula">Reporte de aula</option>
 
@@ -89,10 +89,10 @@
                         <br>
                         <div class="row g-3 align-items-center">
                             <div class="col-md-12">
-                                <label for="area_id">Areas</label>
+                                <label for="area_id">Áreas</label>
                                 <select class="form-control" class="form-control" id="js-example-basic-single"
                                     name="area_id" required>
-                                    <option value="No Aplica" selected>No Aplica</option>
+                                    <option disable selected>Selecciona una área</option>
                                     @foreach ($areas as $area)
                                         <option value="{{ $area->id }}">{{ $area->sede }} - {{ $area->division }} -
                                             {{ $area->coordinacion }} - {{ $area->area }}</option>
@@ -106,7 +106,7 @@
                             <div class="col-md-4">
                                 <label for="tecnico_id">Técnico </label>
                                 <select class="form-control" id="js-example-basic-single2" name="tecnico_id" required>
-                                    <option disabled>Elegir</option>
+                                    <option disabled selected>Elegir</option>
                                     @foreach ($tecnicos as $tecnico)
                                         <option value="{{ $tecnico->id }}">{{ $tecnico->nombre }}</option>
                                     @endforeach

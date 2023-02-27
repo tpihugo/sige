@@ -28,10 +28,16 @@
             .page-break {
                 page-break-after: always;
             }
+          
             
         </style>
+
+        
+
     </head>
     <body>
+
+        
         <br>
         <div class="container">
             <div class="row">
@@ -69,16 +75,14 @@
                             <td colspan="10"><b>Nombre del Solicitante:</b> {{ $prestamo->solicitante }} </td>
                         </tr>
                         <tr>
-                            <td colspan="5"><b>Código: </b> a</td>
+                            <td colspan="5"><b>Contacto: </b> {{$prestamo->contacto}}</td>
                             <td colspan="5"><b>Cargo: </b>{{ $prestamo->cargo }}</td>
                         </tr>
                         <tr>
-                            <td colspan="10"><b>Contacto: </b>{{ $prestamo->contacto }}</td>
+                            <td colspan="10"><b>Área: </b>{{ $prestamo->lugar }}</td>
 
                         </tr>
-                        <tr>
-                            <td colspan="10"><b>Área: </b>{{ $prestamo->lugar }}</td>
-                        </tr>
+
 
                     </table>
 
@@ -113,7 +117,7 @@
                             </tr>
                             @foreach ($equiposPorPrestamo as $item)
                                 <tr style="outline: thin solid">
-                                    <td>{{ $item->id }}</td>
+                                    <td>{{ $item->id_equipo }}</td>
                                     <td>{{ $item->udg_id }}</td>
                                     <td>{{ $item->tipo_equipo }}</td>
                                     <td>{{ $item->marca }}</td>
@@ -128,44 +132,10 @@
                                 <td colspan="7"><b>Observaciones: </b>{{ $prestamo->observaciones }}</td>
                             </tr>
                             <tr>               
-                                <td colspan="7"><b>Cantidad de dispositivos: </b>{{$contador_consulta}} </td>
+                                <td colspan="7"><b>Cantidad de dispositivos:</b> {{$contador_consulta}} </td>
                             </tr>
                             
                     </tbody>
-
-               {{--  @foreach ($equiposPorPrestamo as $item)
-                    
-                    <tr>               
-                        <td colspan="7"><b>Equipo # {{$contador++}}</b></td>
-                    </tr>
-
-                        <tr>
-                            <td colspan="2"><b>ID UDG:</b> {{ $item->udg_id }}</td>
-                            <td colspan="3"><b>Marca:</b>{{ $item->marca }}</td>
-                            <td colspan="2"><b>Modelo:</b> {{ $item->modelo}}</td>
-                        
-                        </tr>
-
-
-                        <tr>
-                            <td colspan="7"><b>No. de Serie: </b>{{ $item->numero_serie }}</td>
-                        </tr>
-                        <tr>
-                            <td colspan="7"><b>Accesorios incluidos: </b> 
-                                <p rows="4" cols="50">{{ $item->accesorios }}</p> </td>
-
-                        </tr>
-                    
-                        @endforeach
-                   --}}
-            
-                   {{--  <tr>
-                        <td colspan="7"><b>Fecha de prestamo:</b> {{ \Carbon\Carbon::parse($prestamo->fecha_inicio)->format('d/m/Y') }}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="7"><b>Fecha de devolucion: </b>{{ $fechaProxima->format('d/m/Y') }} </td>
-                    </tr>
-                    </table> --}}
                 </table>
                           
                 </div>
@@ -181,7 +151,7 @@
                 <tr>
                     <th scope="col" colspan="7">
                         <center>
-                            <h5 class="position-relative text-primary">Fecha préstamo / Devolución</h5>
+                            <h5 class="position-relative text-primary">Fecha préstamo / devolución</h5>
                         </center>
                     </th>
                 </tr>
@@ -293,7 +263,7 @@
         <div class="col-lg-2">
             <div class="border-left border-primary pt-2 pl-4 ml-2">
                 
-                       <p class="letter_size_2"><span class="font-weight-bold letter_size_2">8 -</span> En caso de daño, robo o extravío del equipo de cómputo o de cualquiera de sus accesorios, el Alumno deberá acudir en TIEMPO y FORMA a las instalaciones de la Coordinación de Tecnologías para el Aprendizaje (CTA) para que se le pueda dar el seguimiento adecuado al suceso, y así el alumno no se vea en la obligación de tener que resarcir el daño, ni tener que reponer el equipo.</p>
+                       <p class="letter_size_2"><span class="font-weight-bold letter_size_2">8 -</span> En caso de daño, robo o extravío del equipo de cómputo o de cualquiera de sus accesorios, el Alumno deberá acudir en TIEMPO y FORMA a las instalaciones de la Coordinación de Tecnologías para el Aprendizaje (CTA) para que se le pueda dar el seguimiento adecuado al suceso.</p>
 
                         <p class="letter_size_2"> <span class="font-weight-bold letter_size_2">9 -</span> El usuario deberá estar de acuerdo con el presente reglamento y firmar aceptando todos los términos y condiciones estipulados en el mismo. Bajo ninguna circunstancia el usuario podrá deslindarse de la responsabilidad que le confiere el presente reglamento y el formato de préstamo.</p>
    
@@ -354,7 +324,7 @@
                                     <p class="pie">Hora y día de Impresión: {{ date('d-m-Y H:i:s') }}<br>
                                         Realizado por: {{ Auth::user()->name }}<br>
                                         Reglamento para préstamo de equipos de Cómputo<br>
-                                        Formato CTA-012. Actualización: 15 / diciembre / 2022</p>
+                                        Formato CTA-012. Actualización: 15/diciembre/2022</p>
                                 </div>
                             </div>
                             

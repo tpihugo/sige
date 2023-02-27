@@ -115,8 +115,9 @@
                         <div class="col-md-4">
                             <label for="registro">Movimiento</label>
                             <select class="form-control" id="registro" name="registro">
-                                <option value="Alta de Equipo" selected>Alta de Equipo</option>
-                                <option value="Cambio de ubicación">Cambio de ubicación</option>
+                                
+                                <option {{(isset($tipo) && $tipo =='alta' )? 'selected':'' }} value="Alta de Equipo" >Alta de Equipo</option>
+                                <option {{(isset($tipo) && $tipo =='cambio' )? 'selected':'' }} value="Cambio de ubicación">Cambio de ubicación</option>
                                 <option value="Traslado">Traslado</option>
                                 <option value="Préstamo">Préstamo</option>
                                 <option value="Baja<">Baja</option>

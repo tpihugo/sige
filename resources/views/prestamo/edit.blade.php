@@ -153,6 +153,7 @@
                                 </div>
                                     <hr>
                                 @endforeach
+                                
 
 
 
@@ -183,7 +184,18 @@
                 <a href="{{ route('home') }}" class="btn btn-danger">Cancelar</a>
                 <button type="submit" class="btn btn-success">Guardar datos</button>
             </div>
+            <div class="col-md-6" align="right"> 
+                @if($prestamo->cargo == 'Alumno')
+                <td><a class="btn btn-success" style="width: auto" href="{{ route('imprimirPrestamo', $prestamo->id)}}" target="blank">Imprimir formato de préstamo</a></td>
+                 @endif    
+               
+          
+            <p><a href="{{route('agregarEquipos_prestamoExistente', [$prestamo->id])}}" class="btn btn-outline-info">Agregar más equipos</a></p>
         </div>
+        </div>
+
+        
+                               
     </form>
             <br>
             <div class="row g-3 align-items-center">
@@ -194,6 +206,7 @@
 
             </div>
     </div>
+    
 
     @else
         El periodo de Registro de Proyectos a terminado

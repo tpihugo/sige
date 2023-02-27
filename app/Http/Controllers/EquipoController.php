@@ -187,7 +187,7 @@ class EquipoController extends Controller
             $ip->update();  
         }
 
-
+        
         $equipo->tipo_conexion = $request->input('tipo_conexion');
         $equipo->detalles = $request->input('detalles');
         $equipo->id_resguardante = $request->input('id_resguardante');
@@ -223,6 +223,8 @@ class EquipoController extends Controller
 
 
     }
+
+    return $equipo;
 
 
 
@@ -372,7 +374,7 @@ public function busquedaEquiposPrestamo(Request $request){
             $actualizar =  route('equipos.edit', $value['id']);
             $expediente = "expediente/".$value['id'];
             $prestamo = route('generar-prestamo', $value['id']);
-	    $historial = route('historial', $value['id']);
+	        $historial = route('historial', $value['id']);
 	    $ruta = "eliminar".$value['id'];
             $eliminar = route('delete-equipo', $value['id']);
             if(Auth::user()->role != 'general') {

@@ -5,7 +5,7 @@
 integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous">
 </script>
 
-    <div class="container">
+    <div class="container"  >
         @if(Auth::check())
             @if (session('message'))
                 <div class="alert alert-success">

@@ -400,8 +400,8 @@ class AreaController extends Controller
 
         $grupos = VsEquipo::where('activo', 1)
             ->where('id_area', '=', $id)
-            ->whereIn('tipo_equipo', ['CPU', 'Proyector', 'Pantalla', 'No break', 'Bocinas', 'Soporte para Proyector', 'Botonera'])->get()->groupBy(function ($issuePlaces) {
-                return $issuePlaces->tipo_equipo;
+            ->whereIn('tipo_equipo', ['CPU', 'Proyector', 'Pantalla', 'No break', 'Bocinas', 'Soporte para Proyector', 'Botonera'])->get()->groupBy(function ($elmento) {
+                return $elmento->tipo_equipo;
             });
         $cantidad = [];
         foreach ($grupos as $item => $llave) {
