@@ -78,7 +78,7 @@ class EquipoController extends Controller
         // $equipo->localizado_sici = $request->input('localizado_sici');
         $equipo->save();
 
-	if($request->input('ip_id')!='null'){
+	if($request->input('ip_id')!='No Aplica'){
         $ip = Ip::where('ip','=',$request->input('ip_id'))->first();
         $ip->gateway = $request->input('gateway');
         $ip->mascara = $request->input('mascara');
@@ -133,7 +133,8 @@ class EquipoController extends Controller
 
         $equipo = Equipo::find($id);
         $ip_equipo=null;
-        if($equipo->id!=null){
+        
+        if($equipo->id != null ){
             //si el equipo tiene ip asignada
             $ip_equipo=Ip::where('ip','=',$equipo->ip)->first();
             $subred_equipo=Ip::
@@ -175,11 +176,8 @@ class EquipoController extends Controller
         $equipo->modelo = $request->input('modelo');
         $equipo->numero_serie = $request->input('numero_serie');
         $equipo->mac = $request->input('mac');
-
-        if($request->input('ip_id')=="No Especificado"){
+        if(strcmp($request->input('ip_id'),"No Especificado") == 0){
             $equipo->ip = 'No Especificado';
-            
-
         }else{
             $equipo->ip = $request->input('ip_id');
             $ip = Ip::where('ip','=',$request->input('ip_id'))->first();
@@ -197,7 +195,7 @@ class EquipoController extends Controller
         $equipo->localizado_sici = $request->input('localizado_sici');
 	$equipo->update();
 
-    if($equipo_ip=="No Especificado"){//antes era null y veremos que es ahora
+    if(strcmp($equipo->ip,"No Especificado") == 0){//antes era null y veremos que es ahora
         if($equipo->ip!="No Especificado"){//la selecionada no es null
             $ip = Ip::where('ip','=',$request->input('ip_id'))->first();
             $ip->disponible = 'no';
@@ -322,7 +320,7 @@ class EquipoController extends Controller
     }
 
 public function busquedaEquiposPrestamo(Request $request){
-        $validateData = $this->validate($request,[
+        $this->validate($request,[
             'busqueda'=>'required'
         ]);
 
@@ -438,7 +436,6 @@ public function busquedaEquiposPrestamo(Request $request){
                 }
         if(Auth::user()->role != 'general'){
             $equipos[$key] = array(
-                $acciones,
                 $value['id'],
                 $value['udg_id'],
                 $value['tipo_equipo'],
@@ -446,7 +443,8 @@ public function busquedaEquiposPrestamo(Request $request){
                 $value['modelo'],
                 $value['numero_serie'],
                 $value['detalles'].' SICI: '.$localizado_en_sici,
-                $value['area']
+                $value['area'],
+                $acciones,
             );
         }else{
             $equipos[$key] = array(

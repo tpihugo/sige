@@ -33,7 +33,7 @@
                 let cont = 1;
                 params.forEach(element => {
                     let fecha = new Date(element['created_at']);
-                    fecha = (fecha.getDate() + '/' + (fecha.getMonth()+1) + '/' + fecha.getFullYear());
+                    fecha = (fecha.getDate() + '/' + (fecha.getMonth() + 1) + '/' + fecha.getFullYear());
                     document.getElementById('historial').innerHTML += '<td>' + cont + ' </td><td>' + element['nombre'] +
                         ' </td> <td>' + element['motivo'] + ' </td> <td>' + element['detalles'] + '</td> <td>' + fecha +
                         '</td>';
@@ -42,7 +42,7 @@
             }
         </script>
         <div class="container-fluid">
-            <div class="row g-3 align-items-center">
+           
                 <div class="col-md-12">
                     @if (session('message'))
                         <div class="alert alert-success">
@@ -129,6 +129,7 @@
                     <table id="example" class="display responsive table-bordered" style="width:100%">
                         <thead>
                             <tr>
+                                <th>#</th>
                                 <th>Folio</th>
                                 <th>Fecha Reporte</th>
                                 <th>Área</th>
@@ -258,7 +259,7 @@
                     "data": data,
                     "pageLength": 50,
                     "order": [
-                        [0, "desc"]
+                        [1, "desc"]
                     ],
                     "language": {
                         "sProcessing": "Procesando...",

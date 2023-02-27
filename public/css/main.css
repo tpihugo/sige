@@ -12,7 +12,7 @@ html, body, .cover{
 h1,h2{
   text-align: center;
   align-items: center;
-  justify-content: center;	
+  justify-content: center;
   color: #1e526e;
 }
 .a.btn.btn-success {
@@ -223,7 +223,7 @@ nav .navbar{
 nav .navbar .logo a{
   font-size: 27px;
   align-items: center;
-  
+
 }
 nav .navbar .links li{
   padding: 0 10px;
@@ -347,7 +347,7 @@ nav .navbar .links li:hover .logs-sub-menu{
 @media (max-width:370px){
 nav .navbar .nav-links{
 max-width: 100%;
-} 
+}
 }
 
 

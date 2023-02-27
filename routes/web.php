@@ -2,7 +2,8 @@
 
 use Illuminate\Routing\Route as RoutingRoute;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\TicketHistorialController;
+use App\Http\Controllers\AulaHistorialController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,15 +39,15 @@ Route::post("guardar-relacion-permisos", [
     "uses" => "App\Http\Controllers\RolesController@guardarRelacion",
 ]);
 
-Route::resource("equipos", "App\Http\Controllers\EquipoController");
-Route::resource("areas", "App\Http\Controllers\AreaController");
-Route::resource("movimientos", "App\Http\Controllers\MovimientoController");
-Route::resource("inventario", "App\Http\Controllers\InventarioController");
-Route::resource("tickets", "App\Http\Controllers\TicketController");
-Route::resource("prestamos", "App\Http\Controllers\PrestamoController");
-Route::resource("mobiliarios", "App\Http\Controllers\MobiliarioController");
-Route::resource("cursos", "App\Http\Controllers\CursoController");
-Route::resource("logs", "App\Http\Controllers\LogController");
+Route::resource("equipos", "App\Http\Controllers\EquipoController")->middleware('auth');
+Route::resource("areas", "App\Http\Controllers\AreaController")->middleware('auth');
+Route::resource("movimientos", "App\Http\Controllers\MovimientoController")->middleware('auth');
+Route::resource("inventario", "App\Http\Controllers\InventarioController")->middleware('auth');
+Route::resource("tickets", "App\Http\Controllers\TicketController")->middleware('auth');
+Route::resource("prestamos", "App\Http\Controllers\PrestamoController")->middleware('auth');
+Route::resource("mobiliarios", "App\Http\Controllers\MobiliarioController")->middleware('auth');
+Route::resource("cursos", "App\Http\Controllers\CursoController")->middleware('auth');
+Route::resource("logs", "App\Http\Controllers\LogController")->middleware('auth');
 Route::resource("licencias", "App\Http\Controllers\LicenciaController");
 Route::resource("servicios", "App\Http\Controllers\ServicioController");
 Route::resource("tecnicos", "App\Http\Controllers\TecnicoController");
@@ -57,6 +58,8 @@ Route::resource(
 Route::resource("llaves", "App\Http\Controllers\LlavesController");
 Route::resource("personal", "App\Http\Controllers\PersonalController");
 Route::resource("bajas", "App\Http\Controllers\BajaController");
+
+Route::resource("contrato", "App\Http\Controllers\FormatoContrato");
 
 Route::resource("expedientes", "App\Http\Controllers\ExpedienteController");
 /*Route::resource(
@@ -71,6 +74,14 @@ Route::post("personal_search", [
     "middleware" => "auth",
     "uses" => "App\Http\Controllers\PersonalController@search",
 ])->name("personal.search");
+
+Route::get("/imprimirContrato/{prestamo_id}", [
+    "as" => "imprimirContrato",
+    "middleware" => "auth",
+    "uses" => "App\Http\Controllers\FormatoContrato@imprimirContrato",
+]);
+
+
 
 Route::get("/personal_export-pdf", [
     // 'as' => 'personal_search',
@@ -243,6 +254,12 @@ Route::get("/registrarEquipoPrestamo/{equipo_id}/{prestamo_id}", [
     "uses" => "App\Http\Controllers\PrestamoController@registrarEquipoPrestamo",
 ]);
 
+Route::get("/EquipoPrestado/{equipo_id}", [
+    "as" => "EquipoPrestado",
+    "middleware" => "auth",
+    "uses" => "App\Http\Controllers\PrestamoController@EquipoPrestado",
+]);
+
 Route::get("/eliminarEquipoTicket/{equipo_id}/{ticket_id}", [
     "as" => "eliminarEquipoTicket",
     "middleware" => "auth",
@@ -252,6 +269,12 @@ Route::get("/eliminarEquipoPrestamo/{item_id}", [
     "as" => "eliminarEquipoPrestamo",
     "middleware" => "auth",
     "uses" => "App\Http\Controllers\PrestamoController@eliminarEquipoPrestamo",
+]);
+
+Route::get("/registrarEquipoPrestamo/{equipo_id}", [
+    "as" => "equipoEnPrestamo",
+    "middleware" => "auth",
+    "uses" => "App\Http\Controllers\PrestamoController@equipoEnPrestamo",
 ]);
 
 Route::get("/imprimirRecibo/{ticket_id}", [
@@ -656,7 +679,7 @@ Route::get("/switches", [
     "uses" => "App\Http\Controllers\EquipoController@editSW",
  ]);
 
- 
+
  Route::post("update-switch/{id}", [
     "as" => "update-switch",
     "middleware" => "auth",
@@ -703,3 +726,6 @@ Route::get('/equipo-area/{id}', array(
     'middleware' => 'auth',
     'uses' => '\App\Http\Controllers\AreaController@equipo_area'
 ));
+
+Route::middleware('auth')->get('/historial-tickets',[TicketHistorialController::class, 'index'])->name('historial-tickets');
+Route::middleware('auth')->get('/historial-areas',[AulaHistorialController::class, 'index'])->name('historial-areas');

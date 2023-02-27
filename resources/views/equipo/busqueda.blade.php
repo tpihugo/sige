@@ -68,9 +68,6 @@
             			<table id="example" class="table table-striped table-bordered" style="width:100%;font-size:14;padding-right: 30px;">
 			                <thead >
 				                <tr>
-                                    @if(Auth::user()->role != 'general')
-				                    <th width="10%">Acciones</th>
-                                    @endif
 				                    <th>ID</th>
 				                    <th>Id UdeG</th>
 				                    <th>Tipo Equipo</th>
@@ -79,6 +76,9 @@
 				                    <th>Núm. Serie</th>
 				                    <th>Detalles</th>
 				                    <th>Área</th>
+                                    @if(Auth::user()->role != 'general')
+				                    <th width="10%">Acciones</th>
+                                    @endif
                 				</tr>
                				</thead>
                 			<tbody>
@@ -111,9 +111,9 @@
             $(document).ready(function() {
                 $('#example').DataTable({
                     "data": data,
-                    "pageLength": 100,
+                    "pageLength": 50,
                     "order": [
-                        [0, "desc"]
+                        [0, "asc"]
                     ],
                     "language": {
                         "sProcessing": "Procesando...",

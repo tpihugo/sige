@@ -62,12 +62,10 @@ class LlavesController extends Controller
             ';
 
             $llaves[$key] = array(
-                $acciones,
                 $value['id_llave'],
-                $value['area'],
-                $value['num_copias'],
-                $value['comentarios'],
+                "Área :".$value['area'] . " </br>Núm. llaves:".$value['num_copias'] . " </br>Comantarios: ".$value['comentarios'] ,
                 $value['usuario'],
+                $acciones
             );
         }
 
@@ -90,7 +88,7 @@ class LlavesController extends Controller
         if (Auth::check()) {
             $user = Auth::user()->name;
             $llaves_disponibles = Llaves::where('activo', '=', 1)->where('id_usuario', '=', 0)->get();
-            $llaves_agregadas = Llaves::where('activo', '=', 0)->where('id_usuario', '=', Auth::user()->id)->get();
+            $llaves_agregadas = Llaves::where('id_usuario', '=', Auth::user()->id)->get();
             return view('llaves.agregarllaves')->with('user', $user)->with('llaves_disponibles', $llaves_disponibles)->with('llaves_agregadas', $llaves_agregadas);
         } else {
             return redirect()->route('home')->with(array(
@@ -129,7 +127,6 @@ class LlavesController extends Controller
         $llave = Llaves::find($id);
         $llave_usuario_anterior = $llave->id_usuario;
         $llave->id_usuario = Auth::user()->id;
-        $llave->activo = 0;
         $llave->update();
         //
         $log = new Log();

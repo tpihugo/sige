@@ -28,12 +28,12 @@ use Illuminate\Support\Facades\Auth;
 
 class ExpedienteController extends Controller
 {
-    
+
     public function index()
-    {   
+    {
         $Vsexpediente = expediente::where('activo', '=', 1)->get();
         $expedientes = $this->cargarDT($Vsexpediente);
-        
+
     }
 
         public function show($id)
@@ -71,8 +71,8 @@ class ExpedienteController extends Controller
 
         //expediente
 
-        
-        
+
+
 
         //$this->Imprimirexpediente($Vsexpediente);
 
@@ -84,7 +84,7 @@ class ExpedienteController extends Controller
         $equipoConsulta = [];
 
         foreach ($consulta as $key => $value){
-          
+
             $equipoConsulta[$key] = array(
                 $value['id'],//0
                 $value['udg_id'],//1
@@ -106,17 +106,17 @@ class ExpedienteController extends Controller
     //mostrar proyectos
     public function cargarProyectos($consulta)
     {
-       
-        
+
+
         $proyectos = [];
 
         foreach ($consulta as $key => $value){
-          
+
             $proyectos[$key] = array(
                 $value['id'],
                 $value['titulo'],
                 $value['area_interna']
-                
+
             );
 
         }
@@ -127,7 +127,7 @@ class ExpedienteController extends Controller
     {
         $expediente = [];
 
-        foreach ($consulta as $key => $value){  
+        foreach ($consulta as $key => $value){
             $expediente[$key] = array(
                 $value['id'],
                 $value['id_udg'],
@@ -178,7 +178,7 @@ class ExpedienteController extends Controller
                     </div>
                     <div class="modal-body">
                       <p class="text-primary">
-                        <small> 
+                        <small>
                             '.$value['id'].', '.$value['datos_reporte'].', '.$value['fecha_reporte'].', '.$value['solicitante'].'
                         </small>
                       </p>
@@ -197,8 +197,8 @@ class ExpedienteController extends Controller
                 $value['ticket_id'],
                 $value['resguardante'],
                 $value['activo'],
-                
-                
+
+
             );
 
         }
@@ -214,7 +214,7 @@ class ExpedienteController extends Controller
                 $value['id'],
                $value['detalles'],
                $value['created_at'],
-               
+
             );
 
         }
@@ -234,8 +234,8 @@ class ExpedienteController extends Controller
                 $value['area'],
                 $value['estatus'],
                 $value['fechaHora']
-               
-               
+
+
             );
 
         }
@@ -253,7 +253,7 @@ class ExpedienteController extends Controller
 
     public function store(Request $request)
     {
-        $validateData = $this->validate($request, [       
+        $validateData = $this->validate($request, [
             'realizo' => 'required',
             'id_proyecto' => 'required',
             'id_requisicion' => 'required',
@@ -265,7 +265,7 @@ class ExpedienteController extends Controller
         $expediente->id_proyecto = $request->input('id_proyecto');
         $expediente->id_requisicion = $request->input('id_requisicion');
         if($request->hasfile('factura')){
-          $file=$request->file('factura');  
+          $file=$request->file('factura');
           $nombreArchivo=$file->getClientOriginalName();
           \Storage::disk('documentos')->put($nombreArchivo, \File::get($file));
           $expediente->factura = $nombreArchivo;
@@ -286,11 +286,11 @@ class ExpedienteController extends Controller
 
     public function update(Request $request, $id)
         {
-      
+
         if($request->input('requisicion') == 1){
           $validateData = $this->validate($request,[
             'requisicion'=>'required'
-           
+
         ]);
             $equipo = Equipo::find($id);
              $date = date("d") . "-" . date("m") . "-" . date("Y");
@@ -303,7 +303,7 @@ class ExpedienteController extends Controller
         elseif ($request->input('cotizacion') == 2) {
           $validateData = $this->validate($request,[
             'cotizacion'=>'required'
-            
+
         ]);
            $equipo = Equipo::find($id);
              $date = date("d") . "-" . date("m") . "-" . date("Y");
@@ -312,7 +312,7 @@ class ExpedienteController extends Controller
             \Storage::disk('documentos')->put($nombreArchivo, \File::get($file));
             $equipo->cotizacion = $nombreArchivo;
         $equipo->update();
-          
+
         }
 
          elseif ($request->input('factura') == 3) {
@@ -326,7 +326,7 @@ class ExpedienteController extends Controller
             \Storage::disk('documentos')->put($nombreArchivo, \File::get($file));
             $equipo->factura = $nombreArchivo;
         $equipo->update();
-          
+
         }
          elseif ($request->input('otros') == 4) {
           $validateData = $this->validate($request,[
@@ -339,12 +339,12 @@ class ExpedienteController extends Controller
             \Storage::disk('documentos')->put($nombreArchivo, \File::get($file));
             $equipo->otros = $nombreArchivo;
         $equipo->update();
-          
+
         }
-        
-        
+
+
   //
-        
+
         //
         return redirect('expediente/'.$id)->with(array(
             'message'=>'El archivo se asigno correctamente'
@@ -370,7 +370,7 @@ class ExpedienteController extends Controller
         $rel ->equipo_id =  $equipo_id;
         $rel->save();
 
-        
+
 
         return redirect ()->route('expediente',$equipo_id);
 
@@ -385,14 +385,14 @@ class ExpedienteController extends Controller
         $mantenimiento = Mantenimiento::find($rel->mantenimiento_id);
         $mantenimiento->activo=0;
 
-        
+
 
         $mantenimientoEquipo = new mantenimientoEquipo();
         $mantenimientoEquipo = mantenimientoEquipo::find($man_id);
         $mantenimientoEquipo->delete();
 
-       
-        
+
+
 
         return redirect ()->route('expediente',$mantenimientoEquipo->equipo_id);
 
@@ -400,8 +400,8 @@ class ExpedienteController extends Controller
     public function Imprimirexpediente($equipo_id){
 
         $VsExpediente = Equipo::where('equipos.id','=',$equipo_id)
-        
-        
+
+
         ->select('equipos.id as idE','equipos.tipo_equipo as tipoE','equipos.marca as marcaE','equipos.modelo as modeloE','equipos.detalles as detalleE')
         ->get();
 
@@ -414,7 +414,7 @@ class ExpedienteController extends Controller
         $Vsproyecto = Equipo::join('proyectos','equipos.proyecto_id', '=', 'proyectos.id')
         ->select('proyectos.*')
         ->where('equipos.id','=',$equipo_id)->get();
-           
+
         $Vsrevicion = Equipo::join('inventariodetalle','equipos.id','=','inventariodetalle.idEquipo')
         ->join('areas', 'inventariodetalle.IdArea','=', 'areas.id')
         ->select('areas.*','inventariodetalle.estatus','inventariodetalle.fechaHora')

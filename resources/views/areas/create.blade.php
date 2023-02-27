@@ -55,6 +55,7 @@
                                 <select class="form-control" id="tipo_espacio" name="tipo_espacio">
                                     <option disabled selected>Elegir</option>
                                     <option value="Administrativo">Administrativo</option>
+                                    <option value="Auditorio">Auditorio</option>
                                     <option value="Aula">Aula</option>
                                     <option value="Laboratorio">Laboratorio</option>
                                 </select>
@@ -83,6 +84,11 @@
                                     <option value="Edificio D">Edificio D</option>
                                     <option value="Edificio E">Edificio E</option>
                                     <option value="Edificio F">Edificio F</option>
+                                    <option value="Edificio F 1">Edificio F 1</option>
+                                    <option value="Edificio F 2">Edificio F 2</option>
+                                    <option value="Edificio F 3">Edificio F 3</option>
+                                    <option value="Edificio F 4">Edificio F 4</option>
+                                    <option value="Edificio F 5">Edificio F 5</option>
                                     <option value="Edificio G">Edificio G</option>
                                     <option value="Edificio H">Edificio H</option>
                                     <option value="Edificio I">Edificio I</option>
@@ -99,6 +105,7 @@
                                     <option value="Edificio T">Edificio T</option>
                                     <option value="Edificio U">Edificio U</option>
                                     <option value="Edificio Servicios Generales Belenes">Servicios Generales Belenes</option>
+                                    <option value="Laboratorio de Arqueología">Laboratorio de Arqueología</option>
                                 </select>
                             </div>
                             <div class="col-md-3">
@@ -133,6 +140,7 @@
                                     <option value="División de Estudios de Estado y Sociedad">División de Estudios de Estado y Sociedad
                                     </option>
                                     <option value="C.U. DE CS. SOCIALES Y HUMANIDADES">C.U. DE CS. SOCIALES Y HUMANIDADES</option>
+                                     <option value="Núcleo de Auditorios ">Núcleo de Auditorios </option>
                                 </select>
                             </div>
                             <div class="col-md-6">

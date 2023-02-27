@@ -22,7 +22,7 @@
             <table id="example" class="table table-striped table-bordered" style="width:100%">
                 <thead>
                 <tr>
-                    <th>Acciones</th>
+                    
                     <th>Folio</th>
                     <th>Solicitante</th>
                     <th>Cargo</th>
@@ -32,7 +32,7 @@
                     <th>Equipos</th>
                     <th>Fecha</th>
                     <th>Observaciones</th>
-		            <th>Documento</th>
+		            <th>Acciones</th>
 
                 </tr>
                 </thead>
@@ -59,9 +59,9 @@
     $(document).ready(function() {
         $('#example').DataTable({
             "data": data,
-            "pageLength": 100,
+            "pageLength": 15,
             "order": [
-                [0, "desc"]
+                [3, "desc"]
             ],
             "language": {
                 "sProcessing": "Procesando...",

@@ -1,7 +1,9 @@
 
 @extends('layouts.app')
 @section('content')
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous">
+</script>
 
     <div class="container">
         @if(Auth::check())
@@ -52,12 +54,25 @@
                     </tr>
                     </tbody>
                 </table>
+        <div style="text-align: center; justify-content: center;" class="row g-3 align-items-center">
+            <div class="col-md-5">
                 @if ($equiposPorPrestamo != null && count($equiposPorPrestamo) > 0)
-                <td><a class="btn btn-outline-success" style="width: 100%" href="{{ route('imprimirPrestamo', $prestamo->id)}}" target="blank">Imprimir formato de préstamo</a></td>
+                <td><a class="btn btn-outline-info" style="width: auto" href="{{ route('imprimirPrestamo', $prestamo->id)}}" target="blank">Imprimir formato de préstamo</a></td>
                 <p>
                 <br>
                 </p>
                 @endif
+             </div>
+            <div class="col-md-5">
+                @if ($equiposPorPrestamo != null && count($equiposPorPrestamo) > 0)
+                <td><a class="btn btn-outline-success" style="width: auto" href="{{ route('imprimirContrato', $prestamo->id)}}" target="blank">Imprimir formato de contrato</a></td>
+                <p>
+                <br>
+                </p>
+                @endif 
+            </div>
+        </div>
+
                 
                 @if ($equiposPorPrestamo != null && count($equiposPorPrestamo) > 0)
                 <h5><p align="center">Equipo en préstamo</p></h5>
@@ -200,9 +215,16 @@
                                         @endif
                                     @endif
                                 </td>
-                                <td>{{$equipo->area}}</td>
-                                {{--{{route('registrarEquipoTicket', [$equipo->id, $ticket_id])}}--}}
-                                <td><p><a href="#" class="btn btn-outline-success">Agregar</a></p></td>
+                                    <td>{{$equipo->area}}</td>
+                                    <td>     
+                                        @if($consult =DB::table('movimiento_equipos')->where('id_equipo' ,'=' ,$equipo->id)->orderBy('id', 'desc')->limit(1)->latest()->first())
+                                                @if($consult->registro == 'En préstamo')
+                                                    <p><a onclick="modal({{ collect($equipo) }})" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#exampleModal" style="color: rgb(7,189,212)">En prèstamo</a></p>        
+                                                @else
+                                                    <p><a href="{{route('registrarEquipoPrestamo', [$equipo->id, $prestamo_id])}}" class="btn btn-outline-success">Agregar</a></p>
+                                            @endif
+                                        @endif
+                                    </td>
                             </tr>
                         @endforeach
                     @endif
@@ -247,7 +269,7 @@
     <script>
         $(document).ready(function() {
             $('#example').DataTable( {
-                "pageLength": 100,
+                "pageLength": 20,
                 "order": [[ 0, "asc" ]],
                 "language": {
                     "sProcessing": "Procesando...",
@@ -291,4 +313,74 @@
     @endif
 
    
-@endsection
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Equipo en préstamo</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>                    
+                </div>
+                <div class="modal-body">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <h5>Id préstamo:</h5>
+                            <strong id="id"></strong>        
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <h5>Área:</h5>
+                            <strong id="lugar"></strong> 
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <h5>Solicitante:</h5>
+                          <strong id="solicitante"></strong> 
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <h5>Contacto:</h5>
+                           <strong id="contacto"></strong> 
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <h5>Responsable:</h5>
+                           <strong id="responsable"></strong> 
+                        </div>
+                    </div>
+      
+                    
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <button type="button" class="btn grey btn btn-success" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+    
+     <script>
+        function modal(params) {
+           // console.log(params);
+            $("#exampleModalLabel").html(params['prestamo']);
+    
+            if (params.hasOwnProperty('prestamo')){
+                $("#id").html(params['prestamo']['id']);
+                $("#lugar").html(params['prestamo']['lugar']);
+                $("#solicitante").html(params['prestamo']['solicitante']);
+                $("#contacto").html(params['prestamo']['contacto']);
+                $("#responsable").html(params['prestamo']['responsable']);
+            } else {
+             //   console.log('entro');
+            }
+          
+        
+        }
+    </script> 
+    
+    @endsection
