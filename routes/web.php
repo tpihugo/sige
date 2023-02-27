@@ -81,6 +81,27 @@ Route::get("/imprimirContrato/{prestamo_id}", [
     "uses" => "App\Http\Controllers\FormatoContrato@imprimirContrato",
 ]);
 
+
+Route::get("/ReporteAlumno", [
+    "as" => "ReporteAlumno",
+    "middleware" => "auth",
+    "uses" => "App\Http\Controllers\PrestamoController@ReporteAlumno",
+]);
+
+Route::get("/ReporteAdministracion", [
+    "as" => "ReporteAdministracion",
+    "middleware" => "auth",
+    "uses" => "App\Http\Controllers\PrestamoController@ReporteAdministracion",
+]);
+
+
+Route::get("/imprimirPasosDevolucion", [
+    "as" => "imprimirPasosDevolucion",
+    "middleware" => "auth",
+    "uses" => "App\Http\Controllers\FormatoPasosDevolucionController@imprimirPasosDevolucion",
+]);
+
+
 Route::post("/BuscadorEquipos/{id}", [
     "as" => "BuscadorEquipos",
     "middleware" => "auth",
