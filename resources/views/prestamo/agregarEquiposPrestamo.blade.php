@@ -210,7 +210,7 @@ integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4
             </table>
               
         <p>
-            <a href="{{ route('home') }}" class="btn btn-primary">Regresar</a>
+            <a href="{{ route('home') }}" class="btn btn-primary"> < Regresar</a>
         </p>
     </div>  
 </div>     

@@ -30,72 +30,64 @@
                                                 <h4 class="app-card-title">Lista de dispositivos</h4>
                                             </div>
                                             <!--//col-->
-                                            <div class="col-auto">
-                                                <div class="card-header-action">
-                                                    <a href="#">...</a>
-                                                </div>
-                                                <!--//card-header-actions-->
-                                            </div>
-                                            <!--//col-->
                                         </div>
                                         <!--//row-->
                                     </div>
                                     <!--//app-card-header-->
                                     <div class="app-card-body p-3 p-lg-4">
+                                        <div>
+                                            <h4>Total de Equipos {{$totales['total']}}</h4>
+                                        </div>
                                         <div class="table{{-- -responsive --}}">
                                             <table class="table table-borderless mb-0">
                                                 <thead>
                                                     <tr>
                                                         <th class="meta">Dispositivos</th>
-                                                        <th class="meta stat-cell">Total</th>
-                                                        <th class="meta stat-cell">Falta</th>
-                                                        <th class="meta stat-cell">Porcentaje</th>
+                                                        <th class="meta stat-cell">Cantidad</th>
+                                                        <th class="meta stat-cell">Porcentaje del total</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
     
                                                     <tr>
-                                                        <td><a href="#">Total equipos</a></td>
-                                                        <td class="stat-cell">{{ $total_equipos }}</td>
-                                                        <td class="stat-cell">
-                                                            <svg width="1em" height="1em" viewBox="0 0 16 16"
-                                                                class="bi bi-arrow-down text-danger" fill="currentColor"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <path fill-rule="evenodd"
-                                                                    d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z" />
-                                                            </svg>
-                                                            {{ $total_equipos - $total_SICI_localizados }}
-                                                        </td>
     
+    
+                                                    <tr>
+                                                        <td><span>Localizados SICI</span></td>
+                                                        <td class="stat-cell">
+                                                            
+                                                            {{ $totales['Si'] - $totales['total_inventario'] }}
+                                                        </td>
                                                         <td>
-                                                            <?php echo $Percentage_SICI = round(100 - (($total_equipos - $total_SICI_localizados) / $total_equipos) * 100, 2); ?>%
+                                                            <?php echo $Percentage_SICI = round((($totales['Si'] * 100) / $totales['total']), 2); ?>%
                                                         </td>
                                                     </tr>
-    
                                                     <tr>
-    
-    
-                                                    <tr>
-                                                        <td><a href="#">Localizados SICI</a></td>
-                                                        <td class="stat-cell">{{ $total_SICI_localizados }}</td>
+                                                        <td><span>No Localizados SICI</span></td>
                                                         <td class="stat-cell">
-                                                            <svg width="1em" height="1em" viewBox="0 0 16 16"
-                                                                class="bi bi-arrow-down text-danger" fill="currentColor"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <path fill-rule="evenodd"
-                                                                    d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z" />
-                                                            </svg>
-                                                            {{ $total_SICI_localizados - $total_22B_detalleInventario }}
+                                                            {{ $totales['No'] - $totales['total_inventario'] }}
                                                         </td>
-    
                                                         <td>
-                                                            <?php echo $Percentage_SICI = round(100 - (($total_SICI_localizados - $total_22B_detalleInventario) / $total_SICI_localizados) * 100, 2); ?>%
+                                                            <?php echo $Percentage_SICI = round((($totales['No'] * 100) / $totales['total']), 2); ?>%
                                                         </td>
                                                     </tr>
+                                                    @foreach ($totales as $item => $llave)
+                                                        @if ($item != 'Si' && $item != 'No' && $item != 'total' && $item != 'total_inventario')
+                                                        <tr>
+                                                            <td><span>{{$item}}</span></td>
+                                                            <td class="stat-cell">
+                                                                {{ $llave - $totales['total_inventario'] }}
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $Percentage_SICI = round((($llave * 100) / $totales['total']), 2); ?>%
+                                                            </td>
+                                                        </tr>
+                                                        @endif
+                                                    @endforeach
     
                                                     <tr>
-                                                        <td><a href="#">Revision inventario 2022B</a></td>
-                                                        <td class="stat-cell">{{ $total_22B_detalleInventario }}</td>
+                                                        <td><span>Revision inventario</span></td>
+                                                        <td class="stat-cell">{{ $totales['total_inventario'] }}</td>
                                                         <td class="stat-cell">
                                                             <p class="text-center">{{-- --}} </p>
                                                         </td>
@@ -157,6 +149,7 @@
 
                     <!-- <hr> -->
 
+
                     <div class="row">
                         <div class="table-responsive">
                             <table id="example" class="table table-striped table-bordered" style="width:100%">
@@ -175,11 +168,11 @@
     
                                     @php($cont = 1)
     
-                                    @foreach ($DtQuery as $oneRow)
+                                    @foreach ($areas as $oneRow => $llave)
                                         @php($bar_indicatorColor = 'success')
-                                        @if ($oneRow['Porcentaje'] < '50.00')
+                                        @if ($llave->porcentaje < '50.00')
                                             @php($bar_indicatorColor = 'danger')
-                                        @elseif($oneRow['Porcentaje'] < '90.00')
+                                        @elseif($llave->porcentaje < '90.00')
                                             @php($bar_indicatorColor = 'warning')
                                         @endif
     
@@ -187,7 +180,7 @@
                                             <td>{{ $cont++ }}</td>
                                             <td>
     
-                                                <p class="font-weight-normal">{{ $oneRow['area'] }}</p>
+                                                <p class="font-weight-normal">{{ $llave->area }}</p>
     
                                             </td>
                                             <td style="width: 20%">
@@ -197,14 +190,14 @@
     
     
                                                         <div class="h6 mb-0 mr-1 text-center text-gray-800">
-                                                            <strong>{{ $oneRow['Porcentaje'] }}%</strong>
+                                                            <strong>{{ $llave->porcentaje }}%</strong>
                                                         </div>
     
                                                         <div class="col">
                                                             <div class="progress progress-sm mr-2">
                                                                 <div class="progress-bar bg-<?php echo $bar_indicatorColor; ?>"
                                                                     role="progressbar"
-                                                                    style="width: {{ $oneRow['Porcentaje'] }}%"
+                                                                    style="width: {{ $llave->porcentaje }}%"
                                                                     aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
                                                                 </div>
                                                             </div>
@@ -214,8 +207,8 @@
     
                                             <td style="width: 10%">
                                                 <p class="text-dark text-center">
-                                                    {{ $oneRow['iv_count'] }} / {{ $oneRow['equipos_count'] }}
-                                                    @if ($oneRow['iv_count'] - $oneRow['equipos_count'] > 0)
+                                                    {{ $llave->inventario }} / {{ $llave->equipos }}
+                                                    @if ($llave->inventario - $llave->equipos > 0)
                                                         <a class="text-muted" data-toggle="modal"
                                                             href="#warning-triangle-modal">
                                                             {{-- <i class="fas fa-exclamation-triangle" style="color: orange;" ></i> --}}
@@ -226,7 +219,7 @@
     
                                             </td>
                                             <td>
-                                                <p><a href="{{ route('inventario-por-area', $oneRow['eq_id_area']) }}"
+                                                <p><a href="{{ route('inventario-por-area', $llave->id_area) }}"
                                                         class="btn btn-primary">Detalle</a></p>
     
                                                 {{-- <p><a href="{{ route('actualizacion-inventario', $OneDataRow->id_area) }}" class="btn btn-success">Revisado</a></p> --}}
@@ -305,7 +298,6 @@
                         </div>
 
                     </div>
-
                     <p>
                         <a href="{{ route('home') }}" class="btn btn-primary">
                             < Regresar</a>
@@ -383,8 +375,8 @@
                         $('#js-example-basic-single').select2();
                     });
 
-                    const total_sici_localizados = {!! json_encode($total_SICI_localizados) !!};
-                    const total_22B_detalleInventario = {!! json_encode($total_22B_detalleInventario) !!};
+                    const total_sici_localizados = {!! json_encode($totales['Si']) !!};
+                    const total_22B_detalleInventario = {!! json_encode($totales['total_inventario']) !!};
 
 
                     const ctx = document.getElementById('chart-pie').getContext('2d');
@@ -410,12 +402,12 @@
                         },
                     });
 
-                    const total_equipos = {!! json_encode($total_equipos) !!};
+                    const total_equipos = {!! json_encode($totales['total']) !!};
 
                     const myChart2 = new Chart(ctx2, {
                         type: 'pie',
                         data: {
-                            labels: ['Total equipos', 'localizados detalle inventario 22B'],
+                            labels: ['Total equipos', 'localizados detalle inventario 23A'],
                             datasets: [{
                                 // label: '# of Votes',
                                 data: [total_equipos, total_22B_detalleInventario],

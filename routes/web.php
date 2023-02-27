@@ -81,6 +81,17 @@ Route::get("/imprimirContrato/{prestamo_id}", [
     "uses" => "App\Http\Controllers\FormatoContrato@imprimirContrato",
 ]);
 
+Route::post("/BuscadorEquipos/{id}", [
+    "as" => "BuscadorEquipos",
+    "middleware" => "auth",
+    "uses" => "App\Http\Controllers\PrestamoController@BuscadorEquipos",
+]);
+
+Route::post("/Fechas_diagrama/{id}", [
+    "as" => "Fechas_diagrama",
+    "middleware" => "auth",
+    "uses" => "App\Http\Controllers\PrestamoController@Fechas_diagrama",
+]);
 
 
 Route::get("/personal_export-pdf", [
@@ -196,6 +207,22 @@ Route::post("/guardar-nuevo-prestamo", [
     "middleware" => "auth",
     "uses" => "App\Http\Controllers\PrestamoController@guardarPrestamo",
 ]);
+
+Route::get("/fechas_prestamos", [
+    "as" => "fechas_prestamos",
+    "middleware" => "auth",
+    "uses" => "App\Http\Controllers\PrestamoController@fechas_prestamos",
+]);
+
+
+
+Route::get("/agregarEquipos_prestamoExistente/{id}", [
+    "as" => "agregarEquipos_prestamoExistente",
+    "middleware" => "auth",
+    "uses" => "App\Http\Controllers\PrestamoController@agregarEquipos_prestamoExistente",
+]);
+
+
 Route::get("/quitar-equipo-prestado/{equipo_prestado}/{prestamo_id}", [
     "as" => "quitar-equipo-prestado",
     "middleware" => "auth",
@@ -225,6 +252,14 @@ Route::get("/devolverPrestamo/{prestamo_id}", [
     "middleware" => "auth",
     "uses" => "App\Http\Controllers\PrestamoController@devolver_prestamo",
 ]);
+
+Route::get("/reenovarPrestamo/{prestamo_id}", [
+    "as" => "reenovarPrestamo",
+    "middleware" => "auth",
+    "uses" => "App\Http\Controllers\PrestamoController@reenovar_prestamo",
+]);
+
+
 //////////
 
 Route::get("/revisionTickets", [

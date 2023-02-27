@@ -1,3 +1,4 @@
+
 {{-- @extends('adminlte::page')
 @section('title', 'Dashboard |') --}}
 @extends('layouts.app', ['activePage' => 'dashboard', 'titlePage' => __('Dashboard')])
@@ -68,14 +69,17 @@
                                             <h3 class="card-title">Equipos <br></h3>
                                             <a href="{{ route('equipos.create') }}" class="btn btn-outline-success">Capturar
                                                 Equipo</a>
-                                            <a href="{{ route('prestamos.index') }}" class="btn btn-outline-danger">Consultar
-                                                Préstamos</a>
+                                                <a href="{{ route('prestamos.index') }}" class="btn btn-outline-danger">Consultar
+                                                    Préstamos</a>
+                                                <a href="{{ route('nuevo-prestamo') }}" class="btn btn-outline-info">Crear 
+                                                    Préstamo</a>
+                                            
+                                               
                                         </div>
                                         <div class="card-footer">
                                             <div class="stats">
-                                                <i class="material-icons text-dark">important_devices</i>
-                                                <!-- Botón en HTML (lanza el modal en Bootstrap) -->
-                                                <a href="{{ route('nuevo-prestamo') }}">Crear Préstamo</a>
+                                                <i class="material-icons text-dark">important_devices</i>Préstamos totales:  {{$prestamos}}<i class="material-icons text-dark">access_time</i>Fuera de tiempo: {{ $notificacion }}
+                                                
                                             </div>
                                         </div>
                                     </div>
@@ -187,9 +191,9 @@
                                             </div>
                                             <h3 class="card-title">Cursos</h3>
                                             <a class="btn btn-outline-success"
-                                                href="{{ route('cursos-presenciales', '2023A') }}">Presenciales</a>
+                                                href="{{ route('cursos-presenciales', '2022B') }}">Presenciales</a>
                                             <a class="btn btn-outline-danger"
-                                                href="{{ route('cursos-laboratorios', '2023A') }}">Laboratorios</a>
+                                                href="{{ route('cursos-laboratorios', '2022B') }}">Laboratorios</a>
                                         </div>
                                         <div class="card-footer">
                                             <div class="stats">
@@ -198,7 +202,7 @@
                                                     <a href="{{ route('cursos.create') }}">Capturar</a>
                                                 @endcan
                                                 <i class="material-icons">update</i><a
-                                                    href="{{ url('cursos/2023A') }}">Todos</a>
+                                                    href="{{ url('cursos/2022B') }}">Todos</a>
                                             </div>
                                         </div>
                                     </div>

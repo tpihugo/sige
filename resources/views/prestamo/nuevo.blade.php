@@ -22,6 +22,7 @@
                 </script>
 
             </div>
+       
 
                 <form action="{{route ('guardar-nuevo-prestamo')}}" method="post" enctype="multipart/form-data" class="col-12">
                 <div class="row">
@@ -50,16 +51,41 @@
                             </div>
                             
                         </div>
+
+                        
                         <br>
                         <div class="row g-3 align-items-center">
                             <div class="col-md-6">
                                 <label for="solicitante">Solicitante</label>
                                 <input type="text" class="form-control" id="solicitante" name="solicitante" value="{{old('solicitante')}}" required>
                             </div>
-                            <div class="col-md-6">
+
+                  
+       
+                            <div class="col-md-4">
                                 <label for="cargo">Cargo</label>
-                                <input type="text" class="form-control" id="cargo" name="cargo" value="{{old('cargo')}}" required>
+                                      <select class="form-control"  id="cargo" name="cargo" onchange="Cargos()" required>
+                                        <option disabled>Elegir</option>
+                                        <option value="Alumno" selected>Alumno</option>
+                                        <option value="Administrativo">Administrativo</option>
+                                        <option value="Academico">Académico</option>
+                                        <option value="Otro">Otro</option>
+                                      </select>
+                                    </div>
+
+                            
+                
+                            <div id="otro" class="col-md-6" style="margin-top: 1%" >
+                                <label id="label_cargo" style="display: none">Escribe tu cargo:</label>
+                                <input id="otro_cargo"  type="text" class="form-control"  name="no_seleccionado_input" value="{{old('cargo')}}" style="display: none">
                             </div>
+                    
+                            <div class="col-md-6"  style="margin-top: 1%">
+                                <label id="label_carrera"  for="carrera">Carrera</label>
+                               <input type="text" class="form-control" id="carrera" name="carrera"  value="{{old('carrera')}}">
+                           </div>
+               
+ 
                         </div>
                         <br>
                         <div class="row g-3 align-items-center">
@@ -118,3 +144,47 @@
 
 
 @endsection
+
+<script>
+    function Cargos(){
+  var getSelectValue = document.getElementById("cargo").value;
+  
+  switch (getSelectValue) {
+    case "Alumno": 
+      document.getElementById("otro_cargo").style.display = "none";
+      document.getElementById("label_cargo").style.display = "none";
+      document.getElementById('otro_cargo').name = 'no_seleccionado_input';
+      document.getElementById("label_carrera").style.display = "inline-block";
+      document.getElementById('carrera').style.display = "inline-block";
+      document.getElementById('cargo').name = 'cargo';
+      break;
+      
+    case "Administrativo":
+      document.getElementById("otro_cargo").style.display = "none";
+      document.getElementById("label_cargo").style.display = "none";
+      document.getElementById('otro_cargo').name= 'no_seleccionado_input';
+      document.getElementById("label_carrera").style.display = "none";
+      document.getElementById('carrera').style.display = "none";
+      document.getElementById('cargo').name = 'cargo';
+      break;
+
+      case "Academico":
+      document.getElementById("otro_cargo").style.display = "none";
+      document.getElementById("label_cargo").style.display = "none";
+      document.getElementById('otro_cargo').name = 'no_seleccionado_input';
+      document.getElementById("label_carrera").style.display = "none";
+      document.getElementById('carrera').style.display = "none";
+      document.getElementById('cargo').name = 'cargo';
+      break;
+
+    case "Otro":
+      document.getElementById("otro_cargo").style.display = "inline-block";
+      document.getElementById("label_cargo").style.display = "inline-block";
+      document.getElementById('cargo').name = 'no_seleccionado_select';
+      document.getElementById("label_carrera").style.display = "none";
+      document.getElementById('carrera').style.display = "none";
+      document.getElementById('otro_cargo').name = 'cargo';
+      break;
+  }
+}
+</script>
