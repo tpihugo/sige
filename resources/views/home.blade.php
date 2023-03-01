@@ -1,4 +1,3 @@
-
 {{-- @extends('adminlte::page')
 @section('title', 'Dashboard |') --}}
 @extends('layouts.app', ['activePage' => 'dashboard', 'titlePage' => __('Dashboard')])
@@ -58,7 +57,6 @@
                     <div class="card card-chart">
                         <div class="card-header card-header-success">Sistema Integral de Gesti&oacute;n</div>
                         <div class="row m-1">
-
                             @can('EQUIPOS#ver')
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="card card-stats ">
@@ -66,20 +64,28 @@
                                             <div class="card-icon">
                                                 <i class="material-icons">devices</i>
                                             </div>
-                                            <h3 class="card-title">Equipos <br></h3>
-                                            <a href="{{ route('equipos.create') }}" class="btn btn-outline-success">Capturar
-                                                Equipo</a>
-                                                <a href="{{ route('prestamos.index') }}" class="btn btn-outline-danger">Consultar
-                                                    Préstamos</a>
-                                                <a href="{{ route('nuevo-prestamo') }}" class="btn btn-outline-info">Crear 
-                                                    Préstamo</a>
-                                            
-                                               
+                                            <h3 class="card-title">Equipos<br></h3>
+                                            <div class="row mt-5">
+                                                <div class="col-sm-12 col-auto">
+                                                    <a href="{{ route('equipos.create') }}"
+                                                        class="btn-sm  btn m-1 p-2 btn-outline-success">Capturar
+                                                        Equipo</a>
+                                                    <a href="{{ route('prestamos.index') }}"
+                                                        class="btn-sm  btn m-1 p-2 btn-outline-danger">Consultar
+                                                        Préstamos</a>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <a href="{{ route('nuevo-prestamo') }}"
+                                                        class="btn-sm btn m-1 p-2 btn-outline-info">Crear
+                                                        Préstamo</a>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="card-footer">
                                             <div class="stats">
-                                                <i class="material-icons text-dark">important_devices</i>Préstamos totales:  {{$prestamos}}<i class="material-icons text-dark">access_time</i>Fuera de tiempo: {{ $notificacion }}
-                                                
+                                                <i class="material-icons text-dark">important_devices</i>Préstamos totales:
+                                                {{ $prestamos }}<i class="material-icons text-dark">access_time</i>Fuera de
+                                                tiempo: {{ $notificacion }}
                                             </div>
                                         </div>
                                     </div>
@@ -88,7 +94,7 @@
 
                             <!-- Apartado de Tickets  -->
                             @can('TICKETS#ver')
-                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="col-lg-4 col-md-6 col-sm-12 ">
                                     <div class="card card-stats">
                                         <div class="card-header card-header-danger card-header-icon">
                                             <div class="card-icon">
@@ -100,8 +106,8 @@
                                             <a href="{{ route('tickets.index') }}" class="btn btn-outline-danger">Consultar
                                                 Tickets</a>
                                         </div>
-                                        <div class="card-footer">
-                                            <div class="stats">
+                                        <div class="card-footer ">
+                                            <div class="stats ">
                                                 <i class="material-icons">local_offer</i> La Normal: {{ $ticketsNormal }}
                                                 <i class="material-icons">local_offer</i> Belenes: {{ $ticketsBelenes }}
                                             </div>
@@ -119,12 +125,18 @@
                                                 <i class="material-icons">room_preferences</i>
                                             </div>
                                             <h3 class="card-title">Llaves</h3>
-                                            <a class="btn btn-outline-success" href="{{ route('llaves.create') }}">Capturar
-                                                Llave</a>
+
                                             <a href="{{ route('llaves.index') }}" class="btn btn-outline-danger">Consultar
                                                 Llaves</a>
                                             <a href="{{ route('agregarllaves') }}" class="btn btn-outline-info">Elegir
                                                 Llaves</a>
+                                        </div>
+                                        <div class="card-footer ">
+                                            <div class="stats ">
+                                                <i class="material-icons">local_offer</i> <a class="text-muted border-bottom"
+                                                    href="{{ route('llaves.create') }}">Capturar
+                                                    Llave</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

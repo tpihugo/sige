@@ -78,16 +78,6 @@ class EquipoController extends Controller
         // $equipo->localizado_sici = $request->input('localizado_sici');
         $equipo->save();
 
-	if($request->input('ip_id')!='No Aplica'){
-        $ip = Ip::where('ip','=',$request->input('ip_id'))->first();
-        $ip->gateway = $request->input('gateway');
-        $ip->mascara = $request->input('mascara');
-        $ip->disponible = 'no';
-        $ip->update();
-    }
-
-
-
 
 
 	$movimiento_equipo = new MovimientoEquipo;
@@ -194,39 +184,6 @@ class EquipoController extends Controller
 	    $equipo->resguardante = $request->input('resguardante');
         $equipo->localizado_sici = $request->input('localizado_sici');
 	$equipo->update();
-
-    if(strcmp($equipo->ip,"No Especificado") == 0){//antes era null y veremos que es ahora
-        if($equipo->ip!="No Especificado"){//la selecionada no es null
-            $ip = Ip::where('ip','=',$request->input('ip_id'))->first();
-            $ip->disponible = 'no';
-            $ip->update();
-        }
-    }else{//antes tenia una ip
-        if($equipo_ip!=$equipo->ip){//la ip va a cambiar
-            $ip = Ip::where('ip','=',$equipo_ip)->first();
-            $ip->disponible = 'si';
-            $ip->gateway = $request->input('No Especificado');
-            $ip->mascara = $request->input('No Especificado');
-            $ip->update();
-            if($equipo->ip!="No Especificado"){//la seleccionada no es null
-                $ip = Ip::where('ip','=',$equipo->ip)->first();
-                $ip->disponible = 'no';
-                
-                $ip->update();
-            }else{
-                $ip = Ip::where('ip','=',$equipo_ip)->first();
-                $ip->gateway = $request->input('No Especificado');
-                $ip->mascara = $request->input('No Especificado');
-                $ip->update();
-            }
-        }
-
-
-    }
-
-    return $equipo;
-
-
 
 
 	//
