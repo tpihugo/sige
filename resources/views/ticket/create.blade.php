@@ -61,8 +61,8 @@
                                 <select class="form-control" id="prioridad" name="prioridad">
                                     <option disabled selected>Elegir</option>
                                     <option value="1">No Urgenete | No importante</option>
-                                    <option value="2" selected>Urgente | No importante</option>
-                                    <option value="3" selected>No urgente | Importante</option>
+                                    <option value="2" >Urgente | No importante</option>
+                                    <option value="3" >No urgente | Importante</option>
                                     <option value="4">Urgente | Importante</option>
                                 </select>
                             </div>
