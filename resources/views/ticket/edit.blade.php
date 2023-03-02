@@ -50,9 +50,10 @@
                                 <select class="form-control" id="prioridad" name="prioridad" required>
                                     <option selected value="{{$ticket->prioridad}}">{{$ticket->prioridad}}</option>
                                     <option disabled >Elegir</option>
-                                    <option value="Alta" >Alta</option>
-                                    <option value="Media">Media</option>
-                                    <option value="Baja">Baja</option>
+                                    <option value="1">No Urgenete | No importante</option>
+                                    <option value="2" >Urgente | No importante</option>
+                                    <option value="3" >No urgente | Importante</option>
+                                    <option value="4">Urgente | Importante</option>
                                 </select>
                             </div>
                             <div class="col-md-4">
