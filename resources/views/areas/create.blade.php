@@ -14,13 +14,12 @@
                     <h2>Captura de Área</h2>
                 </div>
                 <hr>
-  		<script type="text/javascript">
-
+                <script type="text/javascript">
                     $(document).ready(function() {
                         $('#js-example-basic-single').select2();
 
                     });
-                    n =  new Date();
+                    n = new Date();
                     //Año
                     y = n.getFullYear();
                     //Mes
@@ -67,10 +66,16 @@
                                     <option value="Belenes">Belenes</option>
                                     <option value="La Normal">La Normal</option>
                                     <option value="Juan Manuel 130">Juan Manuel 130</option>
-                                    <option value="C.U. DE CS. SOCIALES Y HUMANIDADES">C.U. DE CS. SOCIALES Y HUMANIDADES</option>
-					    <option value="Papirolas">Papirolas</option>
-					    <option value="FIL">FIL Expo</option>
-				   <option value="Prestamo Externo">Pr&eacute;stamo Externo</option>
+                                    <option value="C.U. DE CS. SOCIALES Y HUMANIDADES">C.U. DE CS. SOCIALES Y HUMANIDADES
+                                    </option>
+                                    <option value="Papirolas">Papirolas</option>
+                                    <option value="FIL">FIL Expo</option>
+                                    <option value="Prestamo Externo">Pr&eacute;stamo Externo</option>
+                                    <option value="Coronel Calderón #636">Coronel Calderón #636</option>
+                                    <option value="Amsterdam #1537">Amsterdam #1537</option>
+                                    <option value="Bufetes Juridicos Tlaquepaque">Bufetes Juridicos Tlaquepaque</option>
+                                    <option value="Bufetes Juridicos Ciudad Judicial">Bufetes Juridicos Ciudad Judicial</option>
+                                    <option value="Bufetes Juridicos Coronel Calderón">Bufetes Juridicos Coronel Calderón</option>
 
                                 </select>
                             </div>
@@ -104,7 +109,8 @@
                                     <option value="Edificio S">Edificio S</option>
                                     <option value="Edificio T">Edificio T</option>
                                     <option value="Edificio U">Edificio U</option>
-                                    <option value="Edificio Servicios Generales Belenes">Servicios Generales Belenes</option>
+                                    <option value="Edificio Servicios Generales Belenes">Servicios Generales Belenes
+                                    </option>
                                     <option value="Laboratorio de Arqueología">Laboratorio de Arqueología</option>
                                 </select>
                             </div>
@@ -134,18 +140,23 @@
                                     <option value="División de Estudios Históricos y Humanos">División de Estudios
                                         Históricos y Humanos</option>
                                     <option value="División de Estudios Jurídicos">División de Estudios Jurídicos</option>
-                                    <option value="División de Estudios de la Cultura">División de Estudios de la Cultura</option>
-                                    <option value="División de Estudios Políticos y Sociales">División de Estudios Politicos y Sociales
+                                    <option value="División de Estudios de la Cultura">División de Estudios de la Cultura
                                     </option>
-                                    <option value="División de Estudios de Estado y Sociedad">División de Estudios de Estado y Sociedad
+                                    <option value="División de Estudios Políticos y Sociales">División de Estudios Politicos
+                                        y Sociales
                                     </option>
-                                    <option value="C.U. DE CS. SOCIALES Y HUMANIDADES">C.U. DE CS. SOCIALES Y HUMANIDADES</option>
-                                     <option value="Núcleo de Auditorios ">Núcleo de Auditorios </option>
+                                    <option value="División de Estudios de Estado y Sociedad">División de Estudios de Estado
+                                        y Sociedad
+                                    </option>
+                                    <option value="C.U. DE CS. SOCIALES Y HUMANIDADES">C.U. DE CS. SOCIALES Y HUMANIDADES
+                                    </option>
+                                    <option value="Núcleo de Auditorios ">Núcleo de Auditorios </option>
                                 </select>
                             </div>
                             <div class="col-md-6">
                                 <label class="font-weight-bold" for="coordinacion">Coordinación </label>
-                                    <input type="text" class="form-control" id="coordinacion" name="coordinacion" value="{{ old('coordinacion') }}">
+                                <input type="text" class="form-control" id="coordinacion" name="coordinacion"
+                                    value="{{ old('coordinacion') }}">
 
 
                             </div>
@@ -154,7 +165,8 @@
                         <div class="row align-items-center mt-4">
                             <div class="col-md-12">
                                 <label class="font-weight-bold" for="area">Área</label>
-                                <input type="text" class="form-control" id="area" name="area" value="{{ old('area') }}">
+                                <input type="text" class="form-control" id="area" name="area"
+                                    value="{{ old('area') }}">
                             </div>
                         </div>
                         <br>
@@ -184,11 +196,12 @@
                                 <label class="font-weight-bold" for="Equipamento">Equipamento</label>
                                 <select class="form-control" id="equipamiento" name="equipamiento">
                                     <option value="Sin Equipo">Sin equipo</option>
-				    <option value="Botonera">Botonera</option>
-				    <option value="Botonera y pantalla">Botonera y pantalla</option>	
+                                    <option value="Botonera">Botonera</option>
+                                    <option value="Botonera y pantalla">Botonera y pantalla</option>
                                     <option value="Proyector">Proyector</option>
                                     <option value="Proyector, computadora">Proyector y Computadora</option>
-                                    <option value="Proyector, computadora, videoconferencia">Proyector, Computadora y Videoconferencia</option>
+                                    <option value="Proyector, computadora, videoconferencia">Proyector, Computadora y
+                                        Videoconferencia</option>
                                 </select>
                             </div>
                         </div>
@@ -216,7 +229,6 @@
 
             </div>
     </div>
-
 @else
     El periodo de Registro de Proyectos a terminado
     @endif
