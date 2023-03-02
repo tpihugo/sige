@@ -59,10 +59,11 @@
                             <div class="col-md-4">
                                 <label for="prioridad">Prioridad </label>
                                 <select class="form-control" id="prioridad" name="prioridad">
-                                    <option disabled>Elegir</option>
-                                    <option value="No Urgenete | No Importante">No Urgenete | No Importante</option>
-                                    <option value="Media" selected>Media</option>
-                                    <option value="Baja">Baja</option>
+                                    <option disabled selected>Elegir</option>
+                                    <option value="1">No Urgenete | No importante</option>
+                                    <option value="2" selected>Urgente | No importante</option>
+                                    <option value="3" selected>No urgente | Importante</option>
+                                    <option value="4">Urgente | Importante</option>
                                 </select>
                             </div>
                             <div class="col-md-4">
