@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Reportes</title>
+    <title>Reporte de préstamo {{$cargo}}</title>
   
 <!-- Funcion del diagrama cargos-->
     <script src="{{ asset('js/Chart.js') }}"></script>
@@ -33,7 +33,7 @@
     
       
 
-        <h1 class="h3 mb-2 text-gray-800">REPORTE</h1>
+        <h1 class="h3 mb-2 text-gray-800">Reporte de préstamo {{$cargo}}</h1>
     
               <div class="container-fluid">
 
