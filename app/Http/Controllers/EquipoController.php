@@ -286,8 +286,12 @@ class EquipoController extends Controller
             foreach ($vsequipos as $key => $value) {
                 $resguardante = DB::table('empleados')->where('id',$value->id_resguardante)->first();
                 $area = explode('-',$value->area);
+                dd($area);
                 $area[6] = " ".$resguardante->nombre;
-                $value->area = implode('-',$area);
+                if(strcmp($area[6],'Usuario General') != 0){
+                    $value->area = implode('-',$area);
+                }
+                
 
             }
             
