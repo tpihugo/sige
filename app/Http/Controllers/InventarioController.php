@@ -635,15 +635,19 @@ class InventarioController extends Controller
         $listadoEquipos = DB::table('vs_equipo_detalles')->where('vs_equipo_detalles.id', '=', $request->input('id'))
             ->orWhere('vs_equipo_detalles.udg_id', '=', $request->input('id'))
             ->orWhere('vs_equipo_detalles.numero_serie', 'like', '%' . $request->input('id') . '%')
-            ->latest('id')->first();
+            ->latest('id')->get();
         foreach ($listadoEquipos as $key => $value) {
             //echo $key . $value->estatus ." ". $value->inventario."<br>";
+          
             if(strcmp($value->inventario,$ciclo)!=0){
                 $value->estatus = 'No Localizado';
                 
             }
             if($value->inventario == null){
                 $value->inventario = 'Sin registro';
+            }
+            if(!isset($value->notas)){
+                $value->notas = '-';
             }
         }
         
