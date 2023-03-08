@@ -68,7 +68,7 @@
                                                 class="btn btn-primary">Cambiar Ubicación</a></p>
                                     @else
                                         <a class="btn btn-success"
-                                            href="{{ route('registro-inventario', ['equipo_id' => $listadoEquipo->id, 'origen' => 'express']) }}">Registrar
+                                            href="{{ route('registro-inventario', ['equipo_id' => $listadoEquipo->id, 'origen' => '2023A']) }}">Registrar
                                             Equipo</a>
                                         <a href="#AggNota"
                                             onclick="launchModal( '{{ $listadoEquipo->id }}' , '{{ $listadoEquipo->id_area }}' , '{{ $listadoEquipo->notas }}') "

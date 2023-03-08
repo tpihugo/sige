@@ -291,8 +291,7 @@ class EquipoController extends Controller
 
             }
             
-        return $vsequipos;
-
+        
 	   $equipos = $this->cargarDT($vsequipos);
 
            return view('equipo.busqueda')->with('equipos',$equipos)->with('busqueda', $busqueda);

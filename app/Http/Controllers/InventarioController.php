@@ -636,11 +636,6 @@ class InventarioController extends Controller
             ->orWhere('vs_equipo_detalles.udg_id', '=', $request->input('id'))
             ->orWhere('vs_equipo_detalles.numero_serie', 'like', '%' . $request->input('id') . '%')
             ->latest('id')->first();
-
-
-
-        
-            dd($listadoEquipos);
         foreach ($listadoEquipos as $key => $value) {
             //echo $key . $value->estatus ." ". $value->inventario."<br>";
             if(strcmp($value->inventario,$ciclo)!=0){
