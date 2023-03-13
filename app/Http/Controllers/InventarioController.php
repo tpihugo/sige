@@ -632,10 +632,11 @@ class InventarioController extends Controller
     {
         $ciclo = '2023A';
         //Se hace la ruta, la ruta manda llamar el m�todo y el m�todo manda llamar la plantilla
-        $listadoEquipos = DB::table('vs_equipo_detalles')->where('vs_equipo_detalles.id', '=', $request->input('id'))
+        $listadoEquipos = DB::table('vs_equipo_detalles')->distinct('id')->where('vs_equipo_detalles.id', '=', $request->input('id'))
             ->orWhere('vs_equipo_detalles.udg_id', '=', $request->input('id'))
             ->orWhere('vs_equipo_detalles.numero_serie', 'like', '%' . $request->input('id') . '%')
-            ->latest('id')->get();
+            ->latest('inventario')->get()->unique('id');
+        return $listadoEquipos;
         foreach ($listadoEquipos as $key => $value) {
             //echo $key . $value->estatus ." ". $value->inventario."<br>";
           
