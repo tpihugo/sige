@@ -4,6 +4,7 @@ use Illuminate\Routing\Route as RoutingRoute;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TicketHistorialController;
 use App\Http\Controllers\AulaHistorialController;
+use App\Http\Controllers\PlazaController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -785,3 +786,98 @@ Route::get('/equipo-area/{id}', array(
 
 Route::middleware('auth')->get('/historial-tickets',[TicketHistorialController::class, 'index'])->name('historial-tickets');
 Route::middleware('auth')->get('/historial-areas',[AulaHistorialController::class, 'index'])->name('historial-areas');
+
+
+/**
+ * 
+ * Rutas de personal
+ * 
+ * 
+ */
+Route::resource('/plazas', PlazaController::class)->names('plazas');
+
+Route::get("/delete-plaza/{plaza_id}", [
+    "as" => "delete-plaza",
+    "middleware" => "auth",
+    "uses" => "App\Http\Controllers\PlazaController@delete_plaza",
+]);
+
+//Personal
+Route::get("/delete-personal/{id}", [
+    "as" => "delete-personal",
+    "middleware" => "auth",
+    "uses" => "App\Http\Controllers\PersonalController@delete_personal",
+]);
+Route::get("/imprimirpersonal/{id}", [
+    "as" => "imprimirpersonal",
+    "middleware" => "auth",
+    "uses" => "App\Http\Controllers\PDFController@imprimirpersonal",
+]);
+
+Route::get('/documento/{filename}', array(
+    'as'=>'documento_personal',
+    'uses'=>'App\Http\Controllers\PersonalController@getDocumento'
+));
+
+
+/* Apartado de Subredes e IP´S*/
+Route::resource("subredes", "App\Http\Controllers\SubredController");
+
+Route::resource('ips',App\Http\Controllers\IpController::class);
+
+Route::resource("ips", "App\Http\Controllers\IpController");
+
+Route::get("/deletesubred/{id_subred}", [
+    "as" => "deletesubred",
+    "middleware" => "auth",
+    "uses" => "App\Http\Controllers\SubredController@deletesubred",
+]);
+
+Route::get("/disponible/{id}", [
+    "as" => "disponible",
+    "middleware" => "auth",
+    "uses" => "App\Http\Controllers\SubredController@disponible",
+]);
+    Route::get("/ocupadas/{id}", [
+        "as" => "ocupadas",
+        "middleware" => "auth",
+        "uses" => "App\Http\Controllers\SubredController@ocupadas",
+
+]);
+Route::post("/filtroSubredes", [
+    "as" => "filtroSubredes",
+    "middleware" => "auth",
+    "uses" => "App\Http\Controllers\SubredController@filtroSubredes",
+]);
+
+Route::post("/filIps", [
+    "as" => "filIps",
+    "middleware" => "auth",
+    "uses" => "App\Http\Controllers\IpController@filtro_p_ip",
+]);
+
+Route::post("/filtroIps", [
+    "as" => "filtroIps",
+    "middleware" => "auth",
+    "uses" => "App\Http\Controllers\IpController@filtroIps",
+]);
+Route::post("/filtroIpsasig", [
+    "as" => "filtroIpsasig",
+    "middleware" => "auth",
+    "uses" => "App\Http\Controllers\IpController@filtroIpsasig",
+]);
+Route::get("/asignadas", [
+    "as" => "asignadas",
+    "middleware" => "auth",
+    "uses" => "App\Http\Controllers\IpController@asignadas",
+]);
+Route::get("/delete_ip/{id}", [
+    "as" => "delete_ip",
+    "middleware" => "auth",
+    "uses" => "App\Http\Controllers\IpController@delete_ip",
+]);
+Route::get("/desasignarEquipo/{id}", [
+    "as" => "desasignarEquipo",
+    "middleware" => "auth",
+    "uses" => "App\Http\Controllers\IpController@desasignarEquipo",
+]);

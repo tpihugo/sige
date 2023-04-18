@@ -32,13 +32,14 @@ class EquipoController extends Controller
 
     public function create()
     {
-        $empleados = Empleado::where('activo',1)->get()->sortBy('nombre');
-        $areas = Area::where('activo',1)->get();
+        $empleados = Empleado::where('activo', 1)
+            ->get()
+            ->sortBy('nombre');
+        $areas = Area::where('activo', 1)->get();
         $tipo_equipos = Equipo::distinct()
             ->orderby('tipo_equipo', 'asc')
             ->get(['tipo_equipo']);
 
-        
         return view('equipo.create')
             ->with('empleados', $empleados)
             ->with('areas', $areas)
@@ -150,11 +151,9 @@ class EquipoController extends Controller
             if ($idResguardante == 0) {
                 $idResguardante = 39;
             }
-            $resguardante = Empleado::find($idResguardante);
             return view('equipo.edit')
                 ->with('equipo', $equipo)
                 ->with('empleados', $empleados)
-                ->with('resguardante', $resguardante)
                 ->with('tipo_equipos', $tipo_equipos)
                 ->with('ips', $ip)
                 ->with('ip_equipo', $ip_equipo)
@@ -168,6 +167,8 @@ class EquipoController extends Controller
 
     public function update(Request $request, $id)
     {
+
+        
         $equipo = Equipo::find($id);
         $equipo->udg_id = $request->input('udg_id');
         $equipo->tipo_equipo = $request->input('tipo_equipo');
@@ -175,55 +176,14 @@ class EquipoController extends Controller
         $equipo->modelo = $request->input('modelo');
         $equipo->numero_serie = $request->input('numero_serie');
         $equipo->mac = $request->input('mac');
-        /*
-        if(strcmp($request->input('ip_id'),"No Especificado") == 0){
-            $equipo->ip = 'No Especificado';
-        }else{
-            $equipo->ip = $request->input('ip_id');
-            $ip = Ip::where('ip','=',$request->input('ip_id'))->first();
-            $ip->disponible = 'no';
-            $ip->gateway = $request->input('gateway');
-            $ip->mascara = $request->input('mascara');
-            $ip->update();
-        }
-*/
 
         $equipo->tipo_conexion = $request->input('tipo_conexion');
         $equipo->detalles = $request->input('detalles');
-        $equipo->id_resguardante = $request->input('id_resguardante');
-        $equipo->resguardante = $request->input('resguardante');
+
+        $equipo->id_resguardante = $request->input('resguardante.0');
+        $equipo->resguardante = $request->input('resguardante.1');
         $equipo->localizado_sici = $request->input('localizado_sici');
         $equipo->update();
-        /*
-    if(strcmp($equipo->ip,"No Especificado") == 0){//antes era null y veremos que es ahora
-        if($equipo->ip!="No Especificado"){//la selecionada no es null
-            $ip = Ip::where('ip','=',$request->input('ip_id'))->first();
-            $ip->disponible = 'no';
-            $ip->update();
-        }
-    }else{//antes tenia una ip
-        if($equipo_ip!=$equipo->ip){//la ip va a cambiar
-            $ip = Ip::where('ip','=',$equipo_ip)->first();
-            $ip->disponible = 'si';
-            $ip->gateway = $request->input('No Especificado');
-            $ip->mascara = $request->input('No Especificado');
-            $ip->update();
-            if($equipo->ip!="No Especificado"){//la seleccionada no es null
-                $ip = Ip::where('ip','=',$equipo->ip)->first();
-                $ip->disponible = 'no';
-                
-                $ip->update();
-            }else{
-                $ip = Ip::where('ip','=',$equipo_ip)->first();
-                $ip->gateway = $request->input('No Especificado');
-                $ip->mascara = $request->input('No Especificado');
-                $ip->update();
-            }
-        }
-
-
-    }
-/*/
 
         //
         $log = new Log();
@@ -377,15 +337,18 @@ class EquipoController extends Controller
                         ->first()
                 ) {
                     // dd($consult, $consult->registro);
-                    if ($consult->registro == 'En préstamo') {
-                        $consulta = VsPrestamo::where('estado', '=', 'En préstamo')
+
+                    if (strcmp($consult->registro, 'En prÃ©stamo') == 0) {
+                        $consulta = VsPrestamo::where('estado', '=', 'En prÃ©stamo')
                             ->where('lista_equipos', 'LIKE', ' Id SIGE: %' . $id_equipo . '%')
                             ->orderBy('id', 'desc')
-                            ->limit(1)
+                            ->latest()
                             ->first();
 
-                        if ($consulta->activo == 1) {
-                            $equipo->prestamo = $consulta;
+                        if ($consulta != null) {
+                            if ($consulta->activo == 1) {
+                                $equipo->prestamo = $consulta;
+                            }
                         }
                     }
                 }

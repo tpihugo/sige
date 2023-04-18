@@ -27,8 +27,8 @@
                                     {!! csrf_field() !!}
 
                                     @if ($errors->any())
-                                        <div class="alert alert-danger">
-                                            <ul>Debe de escribir un criterio de búsqueda</ul>
+                                        <div class="alert alert-danger text-center">
+                                            Debe de escribir un criterio de búsqueda
                                         </div>
                                     @endif
 
@@ -327,18 +327,16 @@
                                             <div class="card-icon">
                                                 <i class="material-icons">network_ping</i>
                                             </div>
-                                            <h3 class="card-title">Subredes e IP´s</h3>
-                                            <a class="btn btn-outline-success" href="{{ route('subredes.index') }}">Consultar
-                                                Subredes</a>
-                                            <a class="btn btn-outline-danger" href="{{ route('ips.index') }}">Consultar
-                                                IP's</a>
+                                            <h3 class="card-title">Subredes e IP'S</h3>
+                                            <a class="btn btn-outline-success " href="{{ route('subredes.index') }}">Consultar
+                                                Subredes e IP'S</a>
                                         </div>
                                         <div class="card-footer">
                                             <div class="stats">
-                                                <i class="material-icons">info</i><a
-                                                    href="{{ route('subredes.create') }}">Capturar Subred</a>
-                                                <i class="material-icons">info</i><a
-                                                    href="{{ route('ips.create') }}">Capturar Ip</a>
+                                                <center>
+                                                <i class="material-icons btn-sm">info</i>
+                                                <a class="small" href="{{ route('subredes.create') }}">Capturar Subred</a>
+                                                </center>
                                             </div>
                                         </div>
                                     </div>
@@ -386,12 +384,7 @@
                                                 <div class="col"><a class="btn btn-outline-success"
                                                         href="{{ route('estadisticas') }}">Consultar
                                                         Estadisticas</a></div>
-
-
-
-
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
@@ -469,6 +462,11 @@
                                                 Personal</a>
                                             <a href="{{ route('personal.index') }}" class="btn btn-outline-danger">Consultar
                                                 Personal</a>
+                                        </div>
+                                        <div class="card-footer">
+                                            <div class="stats">
+                                                <i class="material-icons">info</i> <a href="{{route('plazas.index')}}"> Ver plazas</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

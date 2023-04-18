@@ -20,6 +20,7 @@ class PDFController extends Controller
         $prestamo = VsPrestamo::where('id', '=', $prestamo_id)->first();
         
         $temp = explode("<fin>,", $prestamo->lista_equipos);
+        $temp = str_replace("<fin>", "", $temp);
         //dd($temp);
         $lista_final = collect();
         $equipo = collect();
@@ -33,7 +34,6 @@ class PDFController extends Controller
             $equipo['marca'] = str_replace(" Marca: ", "", $lista[3]);
             $equipo['modelo'] = str_replace(" Modelo: ", "", $lista[4]);
             $equipo['n_s'] = str_replace(" N/S: ", "", $lista[5]);
-
             //echo $elements[1];
             //var_dump(str_contains('<fin>', $elements[1]));
             if(str_contains('<fin>', $elements[1])){

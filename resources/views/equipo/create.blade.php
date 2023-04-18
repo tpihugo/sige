@@ -45,12 +45,12 @@
                         @endif
                         <br>
                         <div class="row align-items-center">
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label for="udg_id">Id UdeG</label>
                                 <input type="text" class="form-control" id="udg_id" name="udg_id"
                                     value="{{ old('udg_id') }}">
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label for="tipo_equipo">Tipo de Equipo </label>
                                 <select class="form-control" id="tipo_equipo" name="tipo_equipo">
                                     <option disabled selected>Elegir</option>
@@ -59,15 +59,15 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-md-5">
-                                <label for="id_resguardante">Resguardante</label>
-                                <select class="form-control" id="js-example-basic-single" name="id_resguardante">
-                                    <option value="No Aplica" selected>No Aplica</option>
-                                    @foreach ($empleados as $empleado)
-                                        <option value="{{ $empleado->id }}">{{ $empleado->nombre }} {{ $empleado->codigo }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                            <div class="col-md-3">
+                                <label for="id_resguardante">Código resguardante</label>
+                                <input class='form-control' type="text" name="resgaurdante[]" id=""
+                                    value="0">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="resguardante">Resguardante nombre</label>
+                                <input class='form-control' type="text" name="resgaurdante[]" id=""
+                                    value="Usuario General">
                             </div>
                         </div>
                         <br>
@@ -110,24 +110,8 @@
                         </div>
                         <br>
                         <div class="row align-items-center">
-                            <div class="col-md-6">
-                                <label for="resguardante">Dependencia Resguardante</label>
-                                <select name="resguardante" id="resguardante" class="form-control">
-                                    <option disable selected>Elegir</option>
-                                    <option value="Otra dependencia">Otra dependencia</option>
-                                    <option value="CTA">CTA</option>
-                                    <option value="No inventariable">No inventariable</option>
-                                </select>
-                            </div>
-                            {{-- <div class="col-md-6">
-                                <label for="localizado_sici">Inventariable</label>
-                                <select name="localizado_sici" id="localizado_sici" class="form-control">
-				                    <option disable selected>Elegir</option>
-                                    <option value="No">No</option>
-                                    <option value="Si">Si</option>
-                                </select>
-                            </div> --}}
-                            <div class="col-md-6">
+
+                            <div class="col-md-12">
                                 <label for="detalles">Detalles</label>
                                 <textarea class="form-control" id="detalles" name="detalles">{{ old('detalles') }}</textarea>
                             </div>
@@ -148,7 +132,6 @@
                         </div>
                         <br>
                         <hr>
-                        <br><br>
                         <div class="row align-items-center">
                             <div class="col-md-6">
                                 <a href="{{ route('home') }}" class="btn btn-danger">Cancelar</a>

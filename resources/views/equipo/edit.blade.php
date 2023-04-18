@@ -44,9 +44,9 @@
 
                 </div>
                 <div class="row align-items-center">
-                    <div class="col-3">
+                    <div class="col-2">
                         <label for="id">Id SIGE</label>
-                        <input type="text" class="form-control" id="id" name="id" value="{{ $equipo->id }}"
+                        <input type="text" class="form-control-plaintext" id="id" name="id" value="{{ $equipo->id }}"
                             readonly>
                     </div>
                     <div class="col-md-3">
@@ -54,18 +54,13 @@
                         <input type="text" class="form-control" id="udg_id" name="udg_id"
                             value="{{ $equipo->udg_id }}">
                     </div>
-                    <div class="col-md-6">
-                        <label for="id_resguardante">Resguardante</label>
-                        <select class="form-control" class="form-control" id="js-example-basic-single"
-                            name="id_resguardante">
-                            <option value="{{ $resguardante->id }}" selected>{{ $resguardante->nombre }}
-                                {{ $resguardante->codigo }}</option>
-                            <option value="No Aplica">Elegir otro resguardante</option>
-                            @foreach ($empleados as $empleado)
-                                <option value="{{ $empleado->id }}">{{ $empleado->nombre }} - {{ $empleado->codigo }}
-                                </option>
-                            @endforeach
-                        </select>
+                    <div class="col-md-3">
+                        <label for="id_resguardante">Código resguardante</label>
+                        <input class="form-control" type="text" name="resguardante[]" id="resguardante" value="{{ $equipo->id_resguardante}}">          
+                    </div>
+                    <div class="col-md-4">
+                        <label for="resguardante">Resguardante nombre</label>
+                        <input class="form-control" type="text" name="resguardante[]" id="resguardante" value="{{ $equipo->resguardante}}">
                     </div>
                 </div>
                 <br>
@@ -116,20 +111,7 @@
                             <option value="Sin conexión">Sin conexión</option>
                         </select>
                     </div>
-                </div>
-                <br>
-                <div class="row g-3 align-items-center">
-                    <div class="col-md-6">
-                        <label for="resguardante">Resguardante</label>
-                        <select name="resguardante" id="resguardante" class="form-control">
-                            <option selected="">Elegir</option>
-                            <option value="{{ $equipo->resguardante }}" selected>{{ $equipo->resguardante }}</option>
-                            <option value="Otra dependencia">Otra dependencia</option>
-                            <option value="CTA">CTA</option>
-                            <option value="No inventariable">No inventariable</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <label for="localizado_sici">localizado entrega recepción</label>
                         <select name="localizado_sici" id="localizado_sici" class="form-control">
                             <option value="{{ $equipo->localizado_sici }}" selected>{{ $equipo->localizado_sici }}
@@ -139,6 +121,10 @@
                             <option value="Si">Si</option>
                         </select>
                     </div>
+                </div>
+                <br>
+                <div class="row g-3 align-items-center">
+                   
                 </div>
 
                 <br>
