@@ -7,7 +7,7 @@
                 Auth::user()->role == 'redes' ||
                 Auth::user()->role == 'cta'))
 
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
 
