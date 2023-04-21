@@ -9,4 +9,5 @@ class Subred extends Model
 {
     use HasFactory;
     protected $table = 'subredes';
+                      //subredes
 }

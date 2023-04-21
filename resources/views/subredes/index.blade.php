@@ -1,8 +1,6 @@
-
 @extends('layouts.app')
-
 @section('content')
-    @if (Auth::check() && Auth::user()->role == 'admin')
+    @if(Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'cta' || Auth::user()->role == 'auxiliar' || Auth::user()->role == 'redes'))
         <div class="container-fluid">
             <div class="row g-3 align-items-center">
                 <div class="col-md-12">
@@ -10,107 +8,43 @@
                         <div class="alert alert-success">
                             {{ session('message') }}
                         </div>
+                    @elseif (session('error'))
+                     <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
                     @endif
                     <h2>Subredes</h2>
-                    <p align="right">
-                        <a href="{{ route('subredes.create') }}" class="btn btn-success">
-                            <i class="fa fa-plus"></i> Capturar Subred
-                        </a>
-                        <a href="{{ route('home') }}" class="btn btn-primary">
-                            <i class="fa fa-arrow-left"></i> Regresar a Inicio
-                        </a>
-                        <br>
-                        <div>
-                            <a href="{{ route('ips.index') }}" class="btn btn-primary">
-                                <i class="fa fa-list"></i> Ver todas las IPS
-                            </a>
-                        </div>
-                    </p>
                 </div>
             </div>
-            <br>
-            <form action="{{ route('filtroIps') }}" method="post" enctype="multipart/form-data" class="col-12">
-                <div class="row g-3 align-items-center">
-                    <div class="col">
-                        {!! csrf_field() !!}
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-                    </div>
-                    <br>
-                </div>
-
-
-                <div class="row align-items-end">
-                    <div class="col-md-4 pl-0">
-                        <label for=id_subred">Subred </label>
-                        <select class="form-control" id="id_subred" name="id_subred">
-                            @if (isset($subredElegida->id) && !is_null($subredElegida->id))
-                                <option value="{{ $subredElegida->id }}" selected>
-                                    {{ $subredElegida->subred }}
-                                    {{ $subredElegida->mascara }}
-                                    {{ $subredElegida->gateway }}
-                                </option>
-                                <option disabled>Elegir</option>
-                            @else
-                                <option disabled selected>Elegir</option>
-                            @endif
-
-                            @foreach ($subredes as  $subred)
-                                <option value="{{ $subred->id}}">
-                                    Subred: {{ $subred->subred }},
-                                    Mascara: {{ $subred->mascara }},
-                                    Gateway: {{ $subred->gateway }}
-                                </option>
-                            @endforeach
-
-                        </select>
-                    </div>
-                </div>
-                <div>
-                    <div class="col-md-auto mt-3 pl-0">
-                        <button type="submit" class="btn btn-outline-primary">
-                            <i class="fa fa-search"></i> Filtrar
-                        </button>
-                        <a href="{{ route('subredes.index') }}" class="btn btn-outline-success">
-                            <i class="fa fa-search-minus"></i> Quitar Filtro
-                        </a>
-                    </div>
-                </div>
-                <br>
-            </form>
         </div>
+        <div class="container">
+		<div class="row">
+			<div class="col-md-12 col-md-offset-2">
+                        <center>
+                        <a href="{{ route('home') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Regresar a Inicio</a>
+						<a href="{{ route('subredes.create') }}" class="btn btn-success"><i class="fa fa-plus"></i> Capturar Subred</a>
+                        </center>
+			</div>
+		</div>
+	</div>
         <div class="container-fluid">
-            <div class="row">
+            <div class="row-md-6 ">
                 <div class="col-12">
                     <table id="example" class="table table-striped table-bordered" cellspacing="2" width="100%">
                         <thead>
                         <tr>
-                            <th>Acciones</th>
-                            <th>id</th>
-                            <th>Subred</th>
-                            <th>Mascara</th>
-                            <th>Gateway</th>
+                            <th><center>VLAN</center></th>
+                            <th><center>Rango inicial</center></th>
+                            <th><center>Rango final</center></th>
+                            <th><center>Gateway</center></th>
+                            <th><center>Descripción</center></th>
+                            <th><center>N° de IP'S</center></th>
+                            <th><center>Acciones</center></th>
                         </tr>
                         </thead>
                         <tbody>
-
                         </tbody>
                     </table>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <p>
-                        <a href="{{ route('home') }}" class="btn btn-primary">
-                            < Regresar a Inicio</a>
-                    </p>
                 </div>
             </div>
         </div>
@@ -127,9 +61,9 @@
             $(document).ready(function() {
                 $('#example').DataTable({
                     "data": data,
-                    "pageLength": 100,
+                    "pageLength": 10,
                     "order": [
-                        [0, "desc"]
+                        [0, "asc"]
                     ],
                     "language": {
                         "sProcessing": "Procesando...",
@@ -165,12 +99,10 @@
                             orientation: 'landscape',
                             pageSize: 'LETTER',
                         }
-
                     ]
                 })
                 loader(false);
             });
-
 
             jQuery.extend( jQuery.fn.dataTableExt.oSort, {
                 "portugues-pre": function ( data ) {
@@ -200,7 +132,6 @@
                 }
             } );
             //"columnDefs": [{ type: 'portugues', targets: "_all" }],
-
         </script>
     @else
         Acceso No válido

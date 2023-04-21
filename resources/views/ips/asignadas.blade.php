@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @if (Auth::check() && Auth::user()->role == 'admin')
+    @if(Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'cta' || Auth::user()->role == 'auxiliar' || Auth::user()->role == 'redes'))
         <div class="container-fluid">
             <div class="row g-3 align-items-center">
                 <div class="col-md-12">
@@ -10,24 +10,22 @@
                             {{ session('message') }}
                         </div>
                     @endif
-                    <h2>Ips Asignadas</h2>
-                    <p align="right">
-                        <a href="{{ route('ips.create') }}" class="btn btn-success">
-                            <i class="fa fa-plus"></i> Capturar Ip
-                        </a>
-                        <a href="{{ route('ips.index') }}" class="btn btn-primary">
-                            <i class="fa fa-list"></i> Todas las Ips
-                        </a>
-                        <a href="{{ route('subredes.index') }}" class="btn btn-primary">
-                            <i class="fa fa-arrow-left"></i> Regresar a Subredes
-                        </a>
-                    </p>
+                    <h2>IP'S Asignadas</h2>
                 </div>
             </div>
-            <br>
-            <form action="{{ route('filtroIpsasig') }}" method="post" enctype="multipart/form-data" class="col-12">
-                <div class="row g-3 align-items-center">
-                    <div class="col">
+        </div>
+<div class="col-md-12 ">
+        <center>
+            <a href="{{ route('home') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Inicio</a>
+            <a href="{{ route('ips.create') }}" class="btn btn-success"><i class="fa fa-plus"></i> Capturar IP</a>
+            <a href="{{ route('subredes.index') }}" class="btn btn-primary">Subredes</a>
+            <a href="{{ route('ips.index') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Regresar</a>
+        </center>
+</div>
+
+<div class="col-md-12 ">
+            <form action="{{ route('filtroIps') }}" method="post" enctype="multipart/form-data" class="col-12">
+                <div class="row">
                         {!! csrf_field() !!}
                         @if ($errors->any())
                             <div class="alert alert-danger">
@@ -38,49 +36,39 @@
                                 </ul>
                             </div>
                         @endif
-
-                    </div>
-                    <br>
                 </div>
 
-                <div class="row align-items-end">
-                    <div class="col-md-4 pl-0">
-                        <label for=id">Subred </label>
+                <div class="row ">
+                    <div class="col-md-6">
+                        <br>
+                        <label for="id">Subred</label>
                         <select class="form-control" id="id" name="id">
                             @if (isset($subredElegida->id) && !is_null($subredElegida->id))
                                 <option value="{{ $subredElegida->id }}" selected>
-                                    Subred Filtrada: {{ $subredElegida->subred }} /
-                                    Mascara: {{ $subredElegida->mascara }} /
-                                    Gateway: {{ $subredElegida->gateway }} /
+                                    Subred Filtrada: {{ $subredElegida->subred }}
                                 </option>
-                                <option disabled>Elegir</option>
+                                <option value="0" disabled>Elegir</option>
                             @else
-                                <option disabled selected>Elegir</option>
+                                <option disabled value="0" selected>Elegir</option>
                             @endif
                             @foreach ($subredes as $subred)
                                 <option value="{{ $subred->id }}">
-                                    ID: {{$subred->id}} /
-                                    Subred: {{ $subred->subred }} /
-                                    Mascara: {{ $subred->mascara }} /
+                                    VLAN: {{ $subred->vlan }} ,
+                                    Rango de IP: {{ $subred->rangoInicial }} al {{ $subred->rangoFinal }} ,
                                     Gateway: {{ $subred->gateway }}
                                 </option>
                             @endforeach
-
                         </select>
                     </div>
-                </div>
-                <div>
-                    <div class="col-md-auto mt-3 pl-0">
-                        <button type="submit" class="btn btn-outline-primary">
-                            <i class="fa fa-search"></i> Filtrar
-                        </button>
-                        <a href="{{ route('ips.index') }}" class="btn btn-outline-success">
-                            <i class="fa fa-search-minus"></i> Quitar Filtro
-                        </a>
+                    <div class="col-md-4">
+                        <br><br>
+                        <button type="submit" class="btn btn-outline-primary"><i class="fa fa-search"></i> Filtrar</button>
+                        <a href="{{ route('ips.index') }}" class="btn btn-outline-success"><i class="fa fa-search-minus"></i> Quitar Filtro </a>
                     </div>
                 </div>
                 <br>
             </form>
+</div>
         </div>
         <div class="container-fluid">
             <div class="row">
@@ -91,27 +79,12 @@
                             <th>Acciones</th>
                             <th>Subred</th>
                             <th>Ip</th>
-                            <th>Marca</th>
-                            <th>Modelo</th>
-                            <th>Numero_serie</th>
-                            <th>MAC</th>
-                            <th>idUDG</th>
                             <th>idEquipo</th>
-                            <th>Área</th>
-
                         </tr>
                         </thead>
                         <tbody>
                         </tbody>
                     </table>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <p>
-                        <a href="{{ route('subredes.index') }}" class="btn btn-primary">
-                            < Regresar a Subredes</a>
-                    </p>
                 </div>
             </div>
         </div>
@@ -121,11 +94,9 @@
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
         <script type="text/javascript" src="https://cdn.datatables.net/v/bs4-4.1.1/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/r-2.2.7/datatables.min.js"></script>
-
         <script type="text/javascript">
             var data = @json($ips);
-
-            $(document).ready(function() {
+                $(document).ready(function() {
                 $('#example').DataTable({
                     "data": data,
                     "pageLength": 100,
@@ -171,7 +142,6 @@
                 })
                 loader(false);
             });
-
 
             jQuery.extend( jQuery.fn.dataTableExt.oSort, {
                 "portugues-pre": function ( data ) {

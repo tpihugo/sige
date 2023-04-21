@@ -51,9 +51,9 @@
                     <thead class="thead-light">
                         <tr>
                             <th scope="col" colspan="7">
-                                <center>
-                                    <h5>Formato de Préstamo / Recibo de Equipos</h5>
-                                </center>
+                                
+                                    <h5 class="text-center">Formato de Préstamo / Recibo de Equipos</h5>
+                                
                             </th>
                         </tr>
                     </thead>

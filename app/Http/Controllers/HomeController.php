@@ -26,49 +26,63 @@ class HomeController extends Controller
      */
     public function index()
     {
-	$ticketsBelenes=VsTicket::where('activo','=',1)
-            ->where('estatus','=','Abierto')
-	    ->where('sede','=','Belenes')
-            ->where('categoria','<>','Reporte de aula')->count();
-
-	$ticketsNormal=VsTicket::where('activo','=',1)
-            ->where('estatus','=','Abierto')
-	    ->where('sede','=','La Normal')
-            ->where('categoria','<>','Reporte de aula')->count();
-
-            $vsprestamos = VsPrestamo::where('activo','=',1)
-            ->where('estado','En préstamo')->get();
-
-            $prestamos_contador = VsPrestamo::where('activo','=',1)
-            ->where('estado','En préstamo')->count();
-
-            $prestamos_expirados = $this->Notificacion_prestamos($vsprestamos);
+        $ticketsBelenes = VsTicket::where('activo', '=', 1)
+            ->where('estatus', '=', 'Abierto')
+            ->where('sede', '=', 'Belenes')
+            ->count();
 
 
-        return view('home')->with('ticketsNormal',$ticketsNormal)->with('ticketsBelenes',$ticketsBelenes)->with('notificacion',$prestamos_expirados)->with('prestamos', $prestamos_contador);
+        $ticketsNormal = VsTicket::where('activo', '=', 1)
+            ->where('estatus', '=', 'Abierto')
+            ->where('sede', '=', 'La Normal')
+            ->where('categoria', '<>', 'Reporte de aula')
+            ->count();
+
+        $vsprestamos = VsPrestamo::where('activo', '=', 1)
+            ->where('estado', 'En préstamo')
+            ->get();
+
+        $prestamos_contador = VsPrestamo::where('activo', '=', 1)
+            ->where('estado', 'En préstamo')
+            ->count();
+
+        $prestamos_expirados = $this->Notificacion_prestamos($vsprestamos);
+
+        return view('home')
+            ->with('ticketsNormal', $ticketsNormal)
+            ->with('ticketsBelenes', $ticketsBelenes)
+            ->with('notificacion', $prestamos_expirados)
+            ->with('prestamos', $prestamos_contador);
     }
 
-    public function Notificacion_prestamos($vsprestamos){
-        $count = 0; 
-            foreach($vsprestamos as $key => $value){
-                $fechaInicio = $value->fecha_inicio;
-                $fechaActualizacion = $value->fecha_actualizacion;
-                $fechaActualizacion2 = \Carbon\Carbon::parse($fechaActualizacion)->format('Y/m/d');
+    public function Notificacion_prestamos($vsprestamos)
+    {
+        $count = 0;
+        foreach ($vsprestamos as $key => $value) {
+            $fechaInicio = $value->fecha_inicio;
+            $fechaActualizacion = $value->fecha_actualizacion;
+            $fechaActualizacion2 = \Carbon\Carbon::parse($fechaActualizacion)->format('Y/m/d');
 
-               $fechaActual_prestamo = Carbon::now()->parse()->format('Y/m/d');
-               
-                    if($fechaInicio == $fechaActualizacion2 ){
-                        $fechaProxima = \Carbon\Carbon::parse($fechaInicio)->addMonths(6)->format('Y/m/d');
-                    }else{
-                        if($fechaActualizacion2 > $fechaInicio){
-                            $fechaProxima = \Carbon\Carbon::parse($fechaActualizacion2)->addMonths(6)->format('Y/m/d');
-                        }
-                    }
+            $fechaActual_prestamo = Carbon::now()
+                ->parse()
+                ->format('Y/m/d');
 
-                    if( $fechaActual_prestamo > $fechaProxima){
-                       $count++;
-                    }            
-            } 
-                return $count;
+            if ($fechaInicio == $fechaActualizacion2) {
+                $fechaProxima = \Carbon\Carbon::parse($fechaInicio)
+                    ->addMonths(6)
+                    ->format('Y/m/d');
+            } else {
+                if ($fechaActualizacion2 > $fechaInicio) {
+                    $fechaProxima = \Carbon\Carbon::parse($fechaActualizacion2)
+                        ->addMonths(6)
+                        ->format('Y/m/d');
+                }
+            }
+
+            if ($fechaActual_prestamo > $fechaProxima) {
+                $count++;
+            }
+        }
+        return $count;
     }
 }

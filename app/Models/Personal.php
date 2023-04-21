@@ -9,5 +9,5 @@ use Spatie\Permission\Traits\HasRoles;
 class Personal extends Model
 {
     use HasFactory, HasRoles;
-    protected $table ='archivo_personal';
+    protected $table ='nuevo_personal';
 }
