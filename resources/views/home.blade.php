@@ -21,11 +21,8 @@
                                         {{ session('message') }}
                                     </div>
                                 @endif
-
-                                <form action="{{ route('busqueda') }}" method="POST" enctype="multipart/form-data"
-                                    class="col-12">
+                                <form action="{{ route('busqueda') }}" method="POST" enctype="multipart/form-data" class="col-12">
                                     {!! csrf_field() !!}
-
                                     @if ($errors->any())
                                         <div class="alert alert-danger text-center">
                                             Debe de escribir un criterio de búsqueda
