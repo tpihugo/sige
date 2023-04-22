@@ -55,13 +55,10 @@
                                 <th>Horario</th>
                                 <th>Grado de Estudios</th>
                                 <th>Acciones</th>
-
                             </tr>
                         </thead>
                         <tbody>
-
                         </tbody>
-
                     </table>
                 </div>
             </div>
@@ -80,13 +77,12 @@
 
         <script type="text/javascript">
             var data = @json($personal);
-
             $(document).ready(function() {
                 $('#example').DataTable({
                     "data": data,
-                    "pageLength": 100,
+                    "pageLength": 25,
                     "order": [
-                        [0, "desc"]
+                        [0, "asc"]
                     ],
                     "language": {
                         "sProcessing": "Procesando...",

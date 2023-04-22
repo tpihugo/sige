@@ -9,14 +9,12 @@
             @endif
             <div class="row">
                 <h2>Administración de Roles</h2>
-            </div>
-
-            @if( isset($success))
+                @if( isset($success))
                 <div class="alert alert-success">
                     {{ $success }}
                 </div>
             @endif
-
+            </div>
             <div class="row">
                 <div class="col-auto mb-1">
                     <br>
@@ -39,12 +37,11 @@
                     <div class="alert alert-info" id="alert" role="alert">
                         {{ implode("\n",$retorno['Success']) }}
                     </div>
-                @endif
-            
+                @endif            
             @endif
 
             <div class="row align-items-center">
-                <table id="usersTable" class="display table table-striped table-bordered">
+                <table id="usersTable" class="col-sm-12 display table table-striped table-bordered">
                     <thead>
                         <tr>
                             <th>Rol</th>
