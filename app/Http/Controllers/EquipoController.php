@@ -135,15 +135,15 @@ class EquipoController extends Controller
         if ($equipo->id != null) {
             //si el equipo tiene ip asignada
             $ip_equipo = Ip::where('ip', '=', $equipo->ip)->first();
-            $subred_equipo = Ip::join('subredes', 'ips.id_subred', '=', 'subredes.id')
+            $subred_equipo = Ip::join('subredes', 'ips.Subred_id', '=', 'subredes.id')
                 ->select('subredes.*')
                 ->where('ips.ip', '=', $equipo->ip)
                 ->first();
         }
 
-        $ip = IP::join('subredes', 'ips.id_subred', '=', 'subredes.id')
+        $ip = IP::join('subredes', 'ips.Subred_id', '=', 'subredes.id')
             ->select('subredes.*', 'ips.*')
-            ->where('ips.disponible', '=', 'si')
+            ->where('ips.ocupada', '=', 'si')
             ->get();
 
         if ($equipo) {
