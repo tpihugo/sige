@@ -412,7 +412,6 @@ class PersonalController extends Controller
             'area_fisica'=>'required',
             'sede'=>'required',
             ''
-
         ]);
 
         $personal = new Personal();
@@ -440,7 +439,6 @@ class PersonalController extends Controller
             $nombre = $personal->codigo."_".$personal->apellido_paterno."_".$personal->apellido_materno.".pdf";
             $archivo=$request->file('pdf');
             \Storage::disk('documentos')->put($nombre, \File::get($archivo));
-
             $personal->documento=$nombre;
         }
       
