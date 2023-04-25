@@ -167,8 +167,6 @@ class EquipoController extends Controller
 
     public function update(Request $request, $id)
     {
-
-        
         $equipo = Equipo::find($id);
         $equipo->udg_id = $request->input('udg_id');
         $equipo->tipo_equipo = $request->input('tipo_equipo');
@@ -180,8 +178,10 @@ class EquipoController extends Controller
         $equipo->tipo_conexion = $request->input('tipo_conexion');
         $equipo->detalles = $request->input('detalles');
 
-        $equipo->id_resguardante = $request->input('resguardante.0');
-        $equipo->resguardante = $request->input('resguardante.1');
+        /*$equipo->id_resguardante = $request->input('resguardante.0');
+        $equipo->resguardante = $request->input('resguardante.1');*/
+        $equipo->	id_empleado = $request->input('usuario');
+        
         $equipo->localizado_sici = $request->input('localizado_sici');
         $equipo->update();
 
