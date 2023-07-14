@@ -2,10 +2,10 @@
 
 @section('content')
     @if (Auth::check() &&
-        (Auth::user()->role == 'admin' ||
-            Auth::user()->role == 'rh' ||
-            Auth::user()->role == 'redes' ||
-            Auth::user()->role == 'cta'))
+            (Auth::user()->role == 'admin' ||
+                Auth::user()->role == 'rh' ||
+                Auth::user()->role == 'redes' ||
+                Auth::user()->role == 'cta'))
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
@@ -21,27 +21,151 @@
             <div class="row">
                 <div class="col-sm-12 text-center">
                     @foreach ($cantidad as $item => $llave)
-                        <button class="btn btn-primary text-wrap"> <span  class="border-right border-white pr-1">{{ $item }}</span><span > {{ $llave }}</span>
+                        <button class="btn btn-primary text-wrap"> <span
+                                class="border-right border-white pr-1">{{ $item }}</span>
+                                {{ $llave }}
                         </button>
                     @endforeach
                 </div>
             </div>
-            <div class="row justify-content-center">
-                @foreach ($equipo as $item)
-                    <div class="col-md-4 mb-3">
-                        <div class="card h-100 w-100 ">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ $item->tipo_equipo }} - {{ $item->modelo }}</h5>
-                                <hr class="border border-primary">
-                                <p class="card-text">ID UDG: {{ $item->udg_id }}</p>
-                                <p class="card-text">Número Serie: {{ $item->numero_serie }}</p>
-                                <p class="card-text">Detalles: {{ $item->detalles }}</p>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
+            <div class="row">
+                <div class="col-12">
+                    <table id="example" class="table table-striped table-bordered" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>udg_id</th>
+                                <th>resguardante</th>
+                                <th>tipo_equipo</th>
+                                <th>marca</th>
+                                <th>modelo</th>
+                                <th>numero_serie</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($equipo as $item)
+                                <tr>
+                                    <td>{{ $item->id }}</td>
+                                    <td>{{ $item->udg_id }}</td>
+                                    <td>{{ $item->resguardante }}</td>
+                                    <td>{{ $item->tipo_equipo }}</td>
+                                    <td>{{ $item->marca }}</td>
+                                    <td>{{ $item->modelo }}</td>
+                                    <td>{{ $item->numero_serie }}</td>
+                                    
+                                </tr>
+                            @endforeach
+                        </tbody>
+
+                    </table>
+                </div>
             </div>
         </div>
+
+
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+        <script type="text/javascript"
+            src="https://cdn.datatables.net/v/bs4-4.1.1/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/r-2.2.7/datatables.min.js">
+        </script>
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#example').DataTable({
+                    "pageLength": 100,
+                    "order": [
+                        [0, "desc"]
+                    ],
+                    "language": {
+                        "sProcessing": "Procesando...",
+                        "sLengthMenu": "Mostrar _MENU_ registros",
+                        "sZeroRecords": "No se encontraron resultados",
+                        "sEmptyTable": "Ningún dato disponible en esta tabla",
+                        "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                        "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                        "sInfoPostFix": "",
+                        "sSearch": "Buscar:",
+                        "sUrl": "",
+                        "sInfoThousands": ",",
+                        "sLoadingRecords": "Cargando...",
+                        "oPaginate": {
+                            "sFirst": "Primero",
+                            "sLast": "Último",
+                            "sNext": "Siguiente",
+                            "sPrevious": "Anterior"
+                        },
+                        "oAria": {
+                            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                        }
+                    },
+                    responsive: true,
+                    // dom: 'Bfrtip',
+                    dom: '<"col-xs-3"l><"col-xs-5"B><"col-xs-4"f>rtip',
+                    buttons: [
+                        'copy', 'excel',
+                        {
+                            extend: 'pdfHtml5',
+                            orientation: 'landscape',
+                            pageSize: 'LETTER',
+                        }
+
+                    ]
+                })
+            });
+
+
+            jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+                "portugues-pre": function(data) {
+                    var a = 'a';
+                    var e = 'e';
+                    var i = 'i';
+                    var o = 'o';
+                    var u = 'u';
+                    var c = 'c';
+                    var special_letters = {
+                        "Á": a,
+                        "á": a,
+                        "Ã": a,
+                        "ã": a,
+                        "À": a,
+                        "à": a,
+                        "É": e,
+                        "é": e,
+                        "Ê": e,
+                        "ê": e,
+                        "Í": i,
+                        "í": i,
+                        "Î": i,
+                        "î": i,
+                        "Ó": o,
+                        "ó": o,
+                        "Õ": o,
+                        "õ": o,
+                        "Ô": o,
+                        "ô": o,
+                        "Ú": u,
+                        "ú": u,
+                        "Ü": u,
+                        "ü": u,
+                        "ç": c,
+                        "Ç": c
+                    };
+                    for (var val in special_letters)
+                        data = data.split(val).join(special_letters[val]).toLowerCase();
+                    return data;
+                },
+                "portugues-asc": function(a, b) {
+                    return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+                },
+                "portugues-desc": function(a, b) {
+                    return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+                }
+            });
+            //"columnDefs": [{ type: 'portugues', targets: "_all" }],            
+        </script>
     @else
         Acceso No válido
     @endif

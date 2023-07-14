@@ -60,16 +60,27 @@
                                 </select>
                             </div>
                             <div class="col-md-3">
-                                <label for="id_resguardante">Código resguardante</label>
-                                <input class='form-control' type="text" name="resgaurdante[]" id=""
+                                <label for="id_resguardante">CÃ³digo resguardante</label>
+                                <input class='form-control' type="text" name="resguardante[]" id=""
                                     value="0">
                             </div>
                             <div class="col-md-4">
                                 <label for="resguardante">Resguardante nombre</label>
-                                <input class='form-control' type="text" name="resgaurdante[]" id=""
+                                <input class='form-control' type="text" name="resguardante[]" id=""
                                     value="Usuario General">
                             </div>
                         </div>
+<div class="col-md-4">
+                            <label class="form-label" for="usuario">Usuario</label>
+                            <select class="form-control" name="usuario" id="js-example-basic-single">
+                                <option disabled selected>Elige una opciÃ³n</option>
+                                @foreach ($empleados as $item => $value)
+                                    <option value="{{ $value->id }}">{{ $value->nombre }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
                         <br>
                         <div class="row align-items-center">
                             <div class="col-md-4">
@@ -84,7 +95,7 @@
                                     value="{{ old('modelo') }}">
                             </div>
                             <div class="col-md-4">
-                                <label for="numero_serie">Número de Serie </label>
+                                <label for="numero_serie">NÃºmero de Serie </label>
                                 <input type="text" class="form-control" id="numero_serie" name="numero_serie"
                                     value="{{ old('numero_serie') }}">
                             </div>
@@ -98,13 +109,13 @@
                             </div>
 
                             <div class="col-md-4">
-                                <label for="tipo_conexion">Tipo de Conexión</label>
+                                <label for="tipo_conexion">Tipo de ConexiÃ³n</label>
                                 <select class="form-control" id="tipo_conexion" name="tipo_conexion">
                                     <option value="No Aplica" selected>No Aplica</option>
                                     <option value="Red Cableada">Red Cableada</option>
                                     <option value="Solo Wifi<">Solo Wifi</option>
                                     <option value="Wifi y Ethernet">Wifi y Ethernet</option>
-                                    <option value="Sin conexión">Sin conexión</option>
+                                    <option value="Sin conexiÃ³n">Sin conexiÃ³n</option>
                                 </select>
                             </div>
                         </div>

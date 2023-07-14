@@ -1,10 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous">
-    </script>
-
     @if (Auth::check() &&
             (Auth::user()->role == 'admin' ||
                 Auth::user()->role == 'cta' ||
@@ -19,7 +15,7 @@
                     {{ session('message') }}
                 </div>
             @endif
-            <h2>Pr&eacute;stamos / Traslados de Equipos</h2>
+            <h2>Pr&eacute;stamos de Equipos</h2>
             <br>
             <p align="right">
               
@@ -59,23 +55,16 @@
 
             
         </div>
-        @extends('layouts.loader')
-
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-        <script type="text/javascript"
-            src="https://cdn.datatables.net/v/bs4-4.1.1/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/r-2.2.7/datatables.min.js">
-        </script>
-
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script src="https://cdn.datatables.net/v/dt/dt-1.13.5/datatables.min.js"></script>
         <script type="text/javascript">
             var data = @json($prestamos);
 
             $(document).ready(function() {
                 $('#example').DataTable({
                     "data": data,
-                    "pageLength": 20,
+                    "pageLength": 50,
                     "order": [
                         [0, "desc"]
                     ],
@@ -172,9 +161,6 @@
     @else
         Acceso No valido
     @endif
-
-
-
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel_2" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -197,9 +183,13 @@
                             </div>
                         </div>
 
-                        <table class="table table-striped table-bordered" id="historial">
+                    
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered" id="historial">
 
-                        </table>
+                            </table>
+                        </div>
+                        
 
                         <div class="row">
                             <div class="col-sm-12">

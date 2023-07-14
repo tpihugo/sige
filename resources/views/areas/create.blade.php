@@ -76,6 +76,9 @@
                                     <option value="Bufetes Juridicos Tlaquepaque">Bufetes Juridicos Tlaquepaque</option>
                                     <option value="Bufetes Juridicos Ciudad Judicial">Bufetes Juridicos Ciudad Judicial</option>
                                     <option value="Bufetes Juridicos Coronel Calderón">Bufetes Juridicos Coronel Calderón</option>
+				    <option value="Liceo No. 210">Liceo No. 210</option>
+				    <option value="TOMÁS V. GOMEZ #121">TOMÁS V. GOMEZ #121</option>
+			 	    <option value="Paseo Poniente #2093">Paseo Poniente #2093</option>
 
                                 </select>
                             </div>

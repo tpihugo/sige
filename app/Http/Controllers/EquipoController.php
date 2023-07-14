@@ -35,6 +35,7 @@ class EquipoController extends Controller
         $empleados = Empleado::where('activo', 1)
             ->get()
             ->sortBy('nombre');
+
         $areas = Area::where('activo', 1)->get();
         $tipo_equipos = Equipo::distinct()
             ->orderby('tipo_equipo', 'asc')
@@ -65,39 +66,26 @@ class EquipoController extends Controller
         $equipo->modelo = $request->input('modelo');
         $equipo->numero_serie = $request->input('numero_serie');
         $equipo->mac = $request->input('mac');
-        /*
-        if($request->input('ip_id')=="null"){
-            $equipo->ip = null;
-        }else{
-            $equipo->ip = $request->input('ip_id');
-            
-        }*/
-
+	$equipo->id_empleado = $request->input('usuario');
         $equipo->tipo_conexion = $request->input('tipo_conexion');
         $equipo->detalles = $request->input('detalles');
-        $equipo->id_resguardante = $request->input('id_resguardante');
-        $equipo->resguardante = $request->input('resguardante');
+        $equipo->id_resguardante = $request->input('resguardante.0');
+        $equipo->resguardante = $request->input('resguardante.1');
         $equipo->localizado_sici = 'No especificado';
         // $equipo->localizado_sici = $request->input('localizado_sici');
-        $equipo->save();
-        /*
- if($request->input('ip_id')!='No Aplica'){
-        $ip = Ip::where('ip','=',$request->input('ip_id'))->first();
-        $ip->gateway = $request->input('gateway');
-        $ip->mascara = $request->input('mascara');
-        $ip->disponible = 'no';
-        $ip->update();
-    }
-*/
-
+        
+	$equipo->save();
         $movimiento_equipo = new MovimientoEquipo();
         $movimiento_equipo->id_equipo = $equipo->id;
         $movimiento_equipo->id_area = $request->input('area_id');
-        $movimiento_equipo->id_usuario = $request->input('id_resguardante');
+	//return $request->input('usuario');
+        $movimiento_equipo->id_usuario = $request->input('usuario');
         $movimiento_equipo->registro = 'Alta de equipo';
         $movimiento_equipo->fecha = now();
         $movimiento_equipo->comentarios = 'Alta equipo';
         $movimiento_equipo->save();
+
+
 
         //
         $log = new Log();
@@ -199,7 +187,7 @@ class EquipoController extends Controller
         $log->save();
         //
         return redirect('/')->with([
-            'message' => 'El equipo se actualizó correctamente',
+            'message' => 'El equipo se actualizÃ³ correctamente',
         ]);
     }
 
@@ -264,7 +252,7 @@ class EquipoController extends Controller
                 ->with('busqueda', $busqueda);
         } else {
             return redirect('home')->with([
-                'message' => 'Debe introducir un término de búsqueda',
+                'message' => 'Debe introducir un tÃ©rmino de bÃºsqueda',
             ]);
         }
     }
@@ -299,7 +287,7 @@ class EquipoController extends Controller
                 ->with('equipoPorTickets', $equipoPorTickets);
         } else {
             return redirect('home')->with([
-                'message' => 'Debe introducir un término de búsqueda',
+                'message' => 'Debe introducir un tÃ©rmino de bÃºsqueda',
             ]);
         }
     }
@@ -338,8 +326,8 @@ class EquipoController extends Controller
                 ) {
                     // dd($consult, $consult->registro);
 
-                    if (strcmp($consult->registro, 'En prÃ©stamo') == 0) {
-                        $consulta = VsPrestamo::where('estado', '=', 'En prÃ©stamo')
+                    if (strcmp($consult->registro, 'En prÃƒÂ©stamo') == 0) {
+                        $consulta = VsPrestamo::where('estado', '=', 'En prÃƒÂ©stamo')
                             ->where('lista_equipos', 'LIKE', ' Id SIGE: %' . $id_equipo . '%')
                             ->orderBy('id', 'desc')
                             ->latest()
@@ -362,16 +350,14 @@ class EquipoController extends Controller
                 ->with('equipoPorPrestamo', $equipoPorPrestamo);
         } else {
             return redirect('home')->with([
-                'message' => 'Debe introducir un término de búsqueda',
+                'message' => 'Debe introducir un tÃ©rmino de bÃºsqueda',
             ]);
         }
     }
     public function inventario_cta()
     {
-        //Se hace la ruta, la ruta manda llamar el método y el método manda llamar la plantilla
-        $vsequipos = VsEquipo::where('activo', '=', 1)
-            ->Where('resguardante', '=', 'CTA')
-            ->get();
+        //Se hace la ruta, la ruta manda llamar el mÃ©todo y el mÃ©todo manda llamar la plantilla
+        $vsequipos = VsEquipo::where('activo', '=', 1)->get();
         $equipos = $this->cargarDT($vsequipos);
         return view('equipo.inventariocta', [
             'equipos' => $equipos,
@@ -435,7 +421,7 @@ class EquipoController extends Controller
                <div class="modal-dialog" role="document">
                                <div class="modal-content">
                                   <div class="modal-header">
-                                       <h5 class="modal-title" id="exampleModalLabel">¿Seguro que deseas eliminar este equipo?</h5>
+                                       <h5 class="modal-title" id="exampleModalLabel">Â¿Seguro que deseas eliminar este equipo?</h5>
                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                                        </button>

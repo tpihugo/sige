@@ -59,10 +59,10 @@
                             <div class="col-md-4">
                                 <label for="prioridad">Prioridad </label>
                                 <select class="form-control" id="prioridad" name="prioridad">
-                                    <option disabled selected>Elegir</option>
+                                    <option disabled >Elegir</option>
                                     <option value="1">No Urgente | No importante</option>
                                     <option value="2" >Urgente | No importante</option>
-                                    <option value="3" >No urgente | Importante</option>
+                                    <option value="3" selected>No urgente | Importante</option>
                                     <option value="4">Urgente | Importante</option>
                                 </select>
                             </div>
@@ -79,8 +79,8 @@
                             <div class="col-md-4">
                                 <label for="categoria">Categoría </label>
                                 <select class="form-control" id="categoria" name="categoria">
-                                    <option disabled selected>Elegir</option>
-                                    <option value="Incidente">Incidente</option>
+                                    <option disabled >Elegir</option>
+                                    <option value="Incidente" selected>Incidente</option>
                                     <option value="Solicitudes de Servicio">Solicitudes de Servicio</option>
                                     <option value="Reporte de aula">Reporte de aula</option>
 

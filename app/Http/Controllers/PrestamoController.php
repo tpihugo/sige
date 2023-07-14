@@ -28,7 +28,7 @@ class PrestamoController extends Controller
     public function index()
     {
 
-                $vsprestamos = VsPrestamo::where('activo','=',1)
+        $vsprestamos = VsPrestamo::where('activo','=',1)
             ->where('estado','En préstamo')->get();
           $prestamos = $this->cargarDT($vsprestamos);
 
@@ -125,7 +125,7 @@ class PrestamoController extends Controller
 
         $calculo_Otro =  $cargo_Todo - $cargo_Alumno - $cargo_Administracion - $cargo_Academico;
 
-        return view('prestamo\fecha-prestamos')->with('expirados',$prestamos_expirados)->with('cargo_Alumno',$cargo_Alumno)
+        return view('prestamo.fecha-prestamos')->with('expirados',$prestamos_expirados)->with('cargo_Alumno',$cargo_Alumno)
         ->with('cargo_Administracion',$cargo_Administracion)->with('cargo_Academico',$cargo_Academico)->with('calculo_Otro',$calculo_Otro)->with('fechaHoy',$fechaHoy);
     }
 

@@ -23,9 +23,8 @@ class MobiliarioController extends Controller
      public function index()
     {
         $Vsmobiliarios = VsMobiliario::where('activo', '=', 1)->get();
-        $mobiliarios = $this->cargarDT($Vsmobiliarios );
-        $user = Auth::user()->role;
-        return view('mobiliario.index',compact('mobiliarios','user'));
+        $mobiliarios = $this->cargarDT($Vsmobiliarios);
+        return view('mobiliario.index',compact('mobiliarios'));
     }
     public function cargarDT($consulta)
     {
@@ -73,33 +72,30 @@ class MobiliarioController extends Controller
               </div>
             ';
                 $mobiliario[$key] = array(
-                    $acciones,
                     $value['id'],
                     $value['id_udg'],
-                    $value['id_resguardante'],
                     $value['nombre'],
-                    $value['area_id'],
                     $value['area'],
                     $value['descripcion'],
-                    $value['fecha_adquisicion'],
                     $value['ubicacion'],
+                    $value['fecha_adquisicion'],
                     $value['estatus_sici'],
-                    $value['localizado_sici']
+                    $value['localizado_sici'],
+                    $acciones
                 );
             }
+
             else{
                 $mobiliario[$key] = array(
                     $value['id'],
                     $value['id_udg'],
-                    $value['id_resguardante'],
                     $value['nombre'],
-                    $value['area_id'],
                     $value['area'],
                     $value['descripcion'],
-                    $value['fecha_adquisicion'],
                     $value['ubicacion'],
+                    $value['fecha_adquisicion'],
                     $value['estatus_sici'],
-                    $value['localizado_sici']
+                    $value['localizado_sici'],
                 );
             }
 
