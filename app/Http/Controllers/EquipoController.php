@@ -372,7 +372,6 @@ class EquipoController extends Controller
             $cambiarubicacion = route('cambiar-ubicacion', $value['id']);
             $actualizar = route('equipos.edit', $value['id']);
             $expediente = 'expediente/' . $value['id'];
-            $prestamo = route('generar-prestamo', $value['id']);
             $historial = route('historial', $value['id']);
             $ruta = 'eliminar' . $value['id'];
             $eliminar = route('delete-equipo', $value['id']);
@@ -386,11 +385,6 @@ class EquipoController extends Controller
                     $actualizar .
                     '" title="Actualizar">
     <span class="text-success"><span class="material-icons">edit</span></span>
-                        </a>
-                        <a href="' .
-                    $prestamo .
-                    '"  title="Prestamo">
-                            <span class="text-info"><span class="material-icons">feed</span></span>
                         </a>
     <a href="' .
                     $cambiarubicacion .

@@ -25,37 +25,18 @@
                                 <h4>{{ strcmp('Piso 0', $p) == 0 ? 'Planta Baja' : $p }}</h4>
                                 @php
                                     $areas = collect($item);
+                                    $escilos = "";
                                 @endphp
                                 @foreach ($areas as $key => $value)
                                     @if (isset($value['tickets']))
                                         <a onclick="modal({{ collect($value) }})" class="btn bg-danger text-white text-wrap"
                                             data-bs-toggle="modal" data-bs-target="#exampleModal">
-
                                             {{ $value['area'] }}
-                                            @if (str_contains($value['equipamiento'], 'PC'))
-                                                <i class="fa fa-laptop "></i>
-                                            @endif
-                                            @if (str_contains($value['equipamiento'], 'TV') == 1)
-                                                <i class="fa fa-tv "></i>
-                                            @endif
-                                            @if (str_contains($value['equipamiento'], 'Proyector') == 1)
-                                                <i class="fa fa-video "></i>
-                                            @endif
-
                                         </a>
                                     @else
                                         <a onclick="modal({{ collect($value) }})"
                                             class="btn bg-success text-white text-wrap" data-bs-toggle="modal"
                                             data-bs-target="#exampleModal">{{ $value['area'] }}
-                                            @if (str_contains($value['equipamiento'], 'PC') == 1)
-                                                <i class="fa fa-laptop "></i>
-                                            @endif
-                                            @if (str_contains($value['equipamiento'], 'TV') == 1)
-                                                <i class="fa fa-tv "></i>
-                                            @endif
-                                            @if (str_contains($value['equipamiento'], 'Proyector') == 1)
-                                                <i class="fa fa-video "></i>
-                                            @endif
                                         </a>
                                     @endif
                                 @endforeach
@@ -66,51 +47,18 @@
                 </div>
                 <div class="col-md-2 col-sm-12 order-sm-0 order-md-1">
                     <div class="d-flex flex-column align-items-center">
-                        <p class="font-weight-bold">Nomenclatura</p>
-
-                        <div class="row">
-                            <div class="col-6 d-flex flex-column align-items-center">
-                                <button type="button" class="btn btn-danger mt-1" data-toggle="tooltip"
-                                    data-placement="top" title="Ticket Abierto">
-                                </button>
-                                <button type="button" class="btn btn-primary btn-sm mt-1" data-toggle="tooltip"
-                                    data-placement="left" title="Proyector">
-                                    <i class="fas fa-video fa-xs"></i>
-                                </button>
-                                <button type="button" class="btn btn-primary btn-sm mt-1" data-toggle="tooltip"
-                                    data-placement="left" title="Computadora">
-                                    <i class="fa fa-laptop  fa-xs"></i>
-                                </button>
-                            </div>
-                            <div class="col-6 d-flex flex-column align-items-center">
-                                <button type="button" class="btn btn-success mt-1" data-toggle="tooltip"
-                                    data-placement="bottom" title="Sin tickets">
-                                </button>
-                                <button type="button" class="btn btn-primary btn-sm mt-1" data-toggle="tooltip"
-                                    data-placement="left" title="Videoconferencia">
-                                    <i class="fas fa-chalkboard-teacher fa-xs"></i>
-                                </button>
-                                <button type="button" class="btn btn-primary btn-sm mt-1" data-toggle="tooltip"
-                                    data-placement="left" title="Sin equipo">
-                                    <i class="fas fa-ban fa-xs"></i>
-                                </button>
-                            </div>
-                        </div>
-
-                        <label class="font-weight-bold my-3" for="sede">Área </label>
+                        <p class="font-weight-bold">Sedes</p>
                         @if (strcmp($sede, 'Belenes') == 0)
                             <a href="{{ route('area-ticket', 'Belenes') }}"
-                                class="col-auto my-2 btn bg-secondary text-white">Belenes</a>
-                            <a href="{{ route('area-ticket', 'La Normal') }}" class="col-auto my-2 btn ">La
+                                class="col-auto my-2 btn  btn-primary  w-100">Belenes</a>
+                            <a href="{{ route('area-ticket', 'La Normal') }}" class="col-auto my-2 btn btn-outline-dark w-100">La
                                 Normal</a>
                         @else
-                            <a href="{{ route('area-ticket', 'Belenes') }}" class="col-auto my-2 btn ">Belenes</a>
+                            <a href="{{ route('area-ticket', 'Belenes') }}" class="col-auto my-2 btn btn-outline-dark w-100">Belenes</a>
                             <a href="{{ route('area-ticket', 'La Normal') }}"
-                                class="col-auto my-2 btn bg-secondary text-white">La
+                                class="col-auto my-2 btn btn-primary  w-100">La
                                 Normal</a>
                         @endif
-                        <label class="font-weight-bold my-2" for="">Edificio </label>
-
                     </div>
                 </div>
             </div>
@@ -138,7 +86,6 @@
                                 <p>Datos reporte: <span id="datos"></span></p>
                                 <p>Fecha reporte: <span id="fecha"></span></p>
                                 <p>Prioridad: <span id="prioridad"></span></p>
-
                             </div>
                         </div>
                         <div class="row" >
