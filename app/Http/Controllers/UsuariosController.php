@@ -169,8 +169,13 @@ class UsuariosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
-        //
+        $user = ModelsUser::find($id);
+        $user->activo = 0;
+        $user->update();
+        $user->delete();
+
+        return redirect()->route('usuarios.index')->with(['message' => 'Se desactivo correctamente el usuario - ' . $user->name ]);
     }
 }

@@ -19,6 +19,7 @@ use App\Http\Controllers\PlazaController;
 // Route::middleware(['auth:sanctum', 'verified'])->get('/', function () {
 //     return view('home');
 // })->name('dashboard');
+include_once "usuarios.php";
 
 Route::middleware(["auth:sanctum", "verified"])
     ->get("/", [App\Http\Controllers\HomeController::class, "index"])

@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $('#usersTable').DataTable({
-        "pageLength": 5,
+        "pageLength": 25,
         "order": [
             [0, "asc"]
         ],

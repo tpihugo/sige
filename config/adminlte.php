@@ -292,11 +292,16 @@ return [
     'menu' => [
         // Navbar items:
         ['header' => 'Sistema Integral de Gestión'],
-        /*[
+        [
             'type'         => 'navbar-search',
-            'text'         => 'busqueda',
+            'text'         => 'Busqueda General de Equipos',
             'topnav_right' => true,
-        ],*/
+            "url" => "busqueda",
+            "method" => 'post',
+            'input_name' => 'busqueda',
+            "can"=> "BUSQUEDAR#buscar"
+
+        ],
         [
             'type'         => 'fullscreen-widget',
             'topnav_right' => false,
@@ -320,137 +325,146 @@ return [
             'label_color' => 'success',
         ],*/
         [
-            'text'=>'Áreas',
-            'icon'=> 'fas fa-university',
-            'submenu'=> [
+            'text' => 'Áreas',
+            'icon' => 'fas fa-university',
+            "can" => "AREAS#ver",
+            'submenu' => [
                 [
-                    'text'=>'Capturar',
-                    'route'=>'areas.create'
+                    'text' => 'Consultar',
+                    'route' => 'areas.index'
                 ],
                 [
-                    'text'=>'Consultar',
-                    'route'=>'areas.index'
+                    'text' => 'Capturar',
+                    'route' => 'areas.create',
+                    "can" => "AREAS#crear",
                 ],
+                
                 [
-                    'text'=>'Estadísticas',
-                    'route'=>'historial-areas'
-                ],
-            ],
-        ],
-        [
-            'text'=>'Mobiliario',
-            'icon'=> 'fa fa-solid fa-chair',
-            'submenu'=> [
-                [
-                    'text'=>'Capturar',
-                    'route'=>'mobiliarios.create'
-                ],
-                [
-                    'text'=>'Consultar',
-                    'route'=>'mobiliarios.index'
+                    'text' => 'Estadísticas',
+                    'route' => 'historial-areas'
                 ],
             ],
         ],
         [
-            'text'=> 'Equipos',
+            'text' => 'Mobiliario',
+            'icon' => 'fa fa-solid fa-chair',
+            "can" => "MOBILIARIO#ver",
+            'submenu' => [
+                [
+                    'text' => 'Consultar',
+                    'route' => 'mobiliarios.index'
+                ],
+                [
+                    'text' => 'Capturar',
+                    "can"=> "MOBILIARIO#crear",
+                    'route' => 'mobiliarios.create'
+                ],
+                
+            ],
+        ],
+        [
+            'text' => 'Equipos',
             'icon'    => 'fa fa-solid fa-desktop',
-            'submenu'=>[
+            "can" => "EQUIPOS#ver",
+            'submenu' => [
                 [
-                    'text'=>'Capturar',
-                    'route'=> 'equipos.create'
+                    'text' => 'Capturar',
+                    'route' => 'equipos.create'
                 ],
                 [
-                    'text'=>'Consultar Préstamos',
-                    'route'=> 'prestamos.index'
+                    'text' => 'Consultar Préstamos',
+                    'route' => 'prestamos.index'
                 ],
             ],
         ],
         [
-            'text'=>'Tickets',
-            'icon'=> 'fas fa-clipboard-list',
-            'submenu'=> [
+            'text' => 'Tickets',
+            'icon' => 'fas fa-clipboard-list',
+            "can" => "TICKETS#ver",
+            'submenu' => [
                 [
-                    'text'=>'Capturar',
-                    'route'=>'tickets.create'
+                    'text' => 'Capturar',
+                    'route' => 'tickets.create'
                 ],
                 [
-                    'text'=>'Abiertos',
-                    'route'=>'tickets.index'
+                    'text' => 'Abiertos',
+                    'route' => 'tickets.index'
                 ],
                 [
-                    'text'=>'En proceso',
-                    'route'=>'revisionTickets'
+                    'text' => 'En proceso',
+                    'route' => 'revisionTickets'
                 ],
                 [
-                    'text'=>'Estadísticas',
+                    'text' => 'Estadísticas',
                     'route' => 'historial-tickets'
                 ]
             ],
         ],
         [
-            'text'=>'Cursos',
-            'icon'=> 'fas fa-chalkboard-teacher',
-            'submenu'=> [
+            'text' => 'Cursos',
+            'icon' => 'fas fa-chalkboard-teacher',
+            "can" => "CURSOS#ver",
+            'submenu' => [
                 [
-                    'text'=>'Capturar',
-                    'route'=>'cursos.create'
+                    'text' => 'Capturar',
+                    'route' => 'cursos.create'
                 ],
                 [
-                    'text'=>'Todos',
-                    'url'=>'cursos/2021B',
+                    'text' => 'Todos',
+                    'url' => 'cursos/2023A',
                 ],
                 [
-                    'text'=>'Laboratorios',
-                    'url'=>'cursos-laboratorios/2022A',
+                    'text' => 'Laboratorios',
+                    'url' => 'cursos-laboratorios/2023A',
                 ],
                 [
-                    'text'=>'Presenciales',
-                    'url'=>'cursos-presenciales/2022A',
+                    'text' => 'Presenciales',
+                    'url' => 'cursos-presenciales/2023A',
                 ],
             ],
         ],
         [
             'text' => 'Administrador',
             'icon' => 'fas fa-fw fa-user',
-            'can'=> 'USUARIOS#ver',
-            'submenu'=>
+            'can' => 'USUARIOS#ver',
+            'submenu' =>
+            [
                 [
-                    [
-                        'text'=>'Administrar usuarios',
-                        'route'=>'usuarios.index',
-                    ],
+                    'text' => 'Administrar usuarios',
+                    'route' => 'usuarios.index',
                 ],
+            ],
         ],
         [
             'text' => 'Proyectos',
             'icon' => 'fas fa-lightbulb',
-            'can'=> 'PROYECTOS#ver',
-            'submenu'=>
+            'can' => 'PROYECTOS#ver',
+            'submenu' =>
+            [
                 [
-                    [
-                        'text'=>'Capturar',
-                        'route'=>'proyectos.create',
-                    ],
-                    [
-                        'text'=>'Consultar',
-                        'route'=>'proyectos.create',
-                    ],
+                    'text' => 'Capturar',
+                    'route' => 'proyectos.create',
                 ],
-        ],[
+                [
+                    'text' => 'Consultar',
+                    'route' => 'proyectos.create',
+                ],
+            ],
+        ], [
             'text' => 'Servicios',
             'icon' => 'fas fa-inbox',
-            'can'=> 'SERVICIOS#ver',
-            'submenu'=>
+            'can' => 'SERVICIOS#ver',
+            'submenu' =>
+            [
                 [
-                    [
-                        'text'=>'Capturar',
-                        'route'=>'servicios.create',
-                    ],
-                    [
-                        'text'=>'Consultar',
-                        'route'=>'servicios.index',
-                    ],
+                    'text' => 'Capturar',
+                    'route' => 'servicios.create',
                 ],
+                [
+                    'text' => 'Consultar',
+                    'route' => 'servicios.index',
+                ],
+            ],
         ],
         /*['header' => 'account_settings'],*/
         /*[
@@ -560,7 +574,7 @@ return [
             ],
         ],
         'Datatables' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
