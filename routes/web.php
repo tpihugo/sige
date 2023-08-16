@@ -25,7 +25,7 @@ Route::middleware(["auth:sanctum", "verified"])
     ->get("/", [App\Http\Controllers\HomeController::class, "index"])
     ->name("home");
 
-Route::resource("usuarios", "App\Http\Controllers\UsuariosController");
+Route::resource("usuarios", "App\Http\Controllers\UsuariosController")->middleware('auth');
 Route::resource("roles", "App\Http\Controllers\RolesController");
 Route::resource("permisos", "App\Http\Controllers\PermisosController");
 

@@ -30,5 +30,4 @@ $(document).ready(function () {
         },
         responsive: true,
     });
-    loader(false);
 });
