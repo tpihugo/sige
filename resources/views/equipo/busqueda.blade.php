@@ -1,5 +1,14 @@
-{{-- @extends('layouts.appdash', ['activePage' => 'dashboard', 'titlePage' => __('Dashboard')]) --}}
+@extends('adminlte::page')
+@section('title', 'Busqueda')
+{{--
 @extends('layouts.app')
+--}}
+@section('css')
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css"
+        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+@stop
 @section('content')
     @if (Auth::check() &&
             (Auth::user()->role == 'admin' ||
@@ -9,108 +18,71 @@
                 Auth::user()->role == 'redes' ||
                 Auth::user()->role == 'general'))
         <div class="container-fluid">
-
             <div class="row align-items-center">
-                @if (session('message'))
-                    <div class="alert alert-success">
-                        {{ session('message') }}
-                    </div>
-                @endif
-            </div>
-
-            <div class="row align-items-center">
-                <div class="col-lg-12">
+                <div class="col-sm-12">
                     <div class="card card-chart">
-                        <div class="card-header card-header-success">
-                            Listado de equipos encontrados
-                        </div>
                         <div class="card-body">
                             @if (session('message'))
                                 <div class="alert alert-success">
                                     {{ session('message') }}
                                 </div>
                             @endif
-                            <form action="{{ route('busqueda') }}" method="POST" enctype="multipart/form-data">
-                                {!! csrf_field() !!}
-                                @if ($errors->any())
-                                    <div class="alert alert-danger">
-                                        <ul>
-                                            Debe de escribir un criterio de búsqueda
-                                        </ul>
-                                    </div>
-                                @endif
-                                <div class="row align-items-center">
-                                    <div class="col-md-2 offset-md-1">
-                                        <h3 class="card-title"> <span class="text-success"><i
-                                                    class="fa fa-search"></i></span> Búsqueda</3>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input type="text" class="form-control" id="busqueda" name="busqueda">
-                                    </div>
-                                    <div class="col-md-5">
-                                        <button type="submit" class="btn btn-success">Buscar</button>
-                                        @if (Auth::user()->role != 'general')
-                                            <a href="{{ route('equipos.create') }}" class="btn btn-outline-success">Capturar
-                                                Equipo</a>
-                                        @endif
-                                        <a href="{{ route('home') }}" class="btn btn-outline-primary"><i
-                                                class="fas fa-chevron-circle-left"></i> Regresar</a>
-                                    </div>
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        Debe de escribir un criterio de búsqueda
+                                    </ul>
                                 </div>
-                            </form>
-                        </div> {{-- fin de CardBody --}}
-                        <div class="card-footer">
+                            @endif
+                        </div> {{-- fin Cardchart --}}
 
-                        </div>
-                    </div> {{-- fin Cardchart --}}
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="col-sm-12">
+                        <div class="card card-chart">
+                            <div class="card-header card-header-info">
+                                Su búsqueda fue: {{ $busqueda }}
+                            </div>
+                            <div class="card-body">
+                                <table id="example" class="table table-striped table-bordered"
+                                    style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Id UdeG</th>
+                                            <th>Tipo Equipo</th>
+                                            <th>Marca</th>
+                                            <th>Modelo</th>
+                                            <th>Núm. Serie</th>
+                                            <th>Detalles</th>
+                                            <th>Área</th>
+                                            @if (Auth::user()->role != 'general')
+                                                <th width="10%">Acciones</th>
+                                            @endif
+                                        </tr>
+                                    </thead>
+                                    <tbody>
 
+                                    </tbody>
+
+                                </table>
+                            </div> {{-- fin de CardBody --}}
+                            <div class="card-footer">
+
+                            </div>
+                        </div> {{-- fin Cardchart --}}
+
+                    </div>
+                    <div class="col-sm-12">
+                        <p>
+                            <a href="{{ route('home') }}" class="btn btn-primary">
+                                < Regresar</a>
+                        </p>
+                    </div>
                 </div>
             </div>
-            <div class="row align-items-center">
-                <div class="col-md-12">
-                    <div class="card card-chart">
-                        <div class="card-header card-header-info">
-                            Su búsqueda fue: {{ $busqueda }}
-                        </div>
-                        <div class="card-body">
-                            <table id="example" class="table table-striped table-bordered"
-                                style="width:100%;font-size:14;padding-right: 30px;">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Id UdeG</th>
-                                        <th>Tipo Equipo</th>
-                                        <th>Marca</th>
-                                        <th>Modelo</th>
-                                        <th>Núm. Serie</th>
-                                        <th>Detalles</th>
-                                        <th>Área</th>
-                                        @if (Auth::user()->role != 'general')
-                                            <th width="10%">Acciones</th>
-                                        @endif
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                </tbody>
-
-                            </table>
-                        </div> {{-- fin de CardBody --}}
-                        <div class="card-footer">
-
-                        </div>
-                    </div> {{-- fin Cardchart --}}
-
-                </div>
-            </div>
-
-            <p>
-                <a href="{{ route('home') }}" class="btn btn-primary">
-                    < Regresar</a>
-            </p>
         </div>
-        @extends('layouts.loader')
-
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
         <script type="text/javascript"
@@ -163,7 +135,6 @@
 
                     ]
                 })
-                loader(false);
             });
 
 

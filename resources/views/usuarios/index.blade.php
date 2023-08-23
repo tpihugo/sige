@@ -10,18 +10,33 @@
 @section('content')
     <div class="container">
         @if (Auth::check())
-
-            <div class="row">
-                <div class="col-sm-12">
-                    <h2>Administración de Usuarios</h2>
-                </div>
-
-
-                @if (session('message'))
-                    <div class="alert alert-success col-sm-12">
-                        <h4>{{ session('message') }}</h4>
+            <div class="row align-items-center ">
+                @can('BUSQUEDAR#buscar')
+                    <div class="col-md-12">
+                        <div class="card card-chart mt-3">
+                            <div class="card-body">
+                                <div class="col-sm-12">
+                                    <h2>Administración de Usuarios</h2>
+                                </div>
+                                @if (session('status'))
+                                    <div class="alert alert-success" role="alert">
+                                        {{ session('status') }}
+                                    </div>
+                                @endif
+                                @if (session('message'))
+                                    <div class="alert alert-success">
+                                        {{ session('message') }}
+                                    </div>
+                                @endif
+                                @if ($errors->any())
+                                    <div class="alert alert-danger text-center">
+                                        Debe de escribir un criterio de búsqueda
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
                     </div>
-                @endif
+                @endcan
             </div>
             <div class="row">
                 <div class="col-auto mb-1">

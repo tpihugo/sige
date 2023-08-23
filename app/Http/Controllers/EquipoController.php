@@ -66,19 +66,19 @@ class EquipoController extends Controller
         $equipo->modelo = $request->input('modelo');
         $equipo->numero_serie = $request->input('numero_serie');
         $equipo->mac = $request->input('mac');
-	$equipo->id_empleado = $request->input('usuario');
+        $equipo->id_empleado = $request->input('usuario');
         $equipo->tipo_conexion = $request->input('tipo_conexion');
         $equipo->detalles = $request->input('detalles');
         $equipo->id_resguardante = $request->input('resguardante.0');
         $equipo->resguardante = $request->input('resguardante.1');
         $equipo->localizado_sici = 'No especificado';
         // $equipo->localizado_sici = $request->input('localizado_sici');
-        
-	$equipo->save();
+
+        $equipo->save();
         $movimiento_equipo = new MovimientoEquipo();
         $movimiento_equipo->id_equipo = $equipo->id;
         $movimiento_equipo->id_area = $request->input('area_id');
-	//return $request->input('usuario');
+        //return $request->input('usuario');
         $movimiento_equipo->id_usuario = $request->input('usuario');
         $movimiento_equipo->registro = 'Alta de equipo';
         $movimiento_equipo->fecha = now();
@@ -168,8 +168,8 @@ class EquipoController extends Controller
 
         /*$equipo->id_resguardante = $request->input('resguardante.0');
         $equipo->resguardante = $request->input('resguardante.1');*/
-        $equipo->	id_empleado = $request->input('usuario');
-        
+        $equipo->id_empleado = $request->input('usuario');
+
         $equipo->localizado_sici = $request->input('localizado_sici');
         $equipo->update();
 
@@ -320,9 +320,9 @@ class EquipoController extends Controller
                 $id_equipo = $equipo->id;
                 if (
                     $consult = MovimientoEquipo::where('id_equipo', '=', $equipo->id)
-                        ->limit(1)
-                        ->latest()
-                        ->first()
+                    ->limit(1)
+                    ->latest()
+                    ->first()
                 ) {
                     // dd($consult, $consult->registro);
 
@@ -398,12 +398,12 @@ class EquipoController extends Controller
     </a>
                 <a href="' .
                     $expediente .
-                    '" role="button" class="btn btn-success"  title="expediente">
+                    '" role="button" class="btn btn-sm btn-success"  title="expediente">
                                <i class="fas fa-clipboard"></i>
                             </a>
     <a href="#' .
                     $ruta .
-                    '" role="button" class="btn btn-danger" data-toggle="modal" title="Eliminar">
+                    '" role="button" class="btn btn-sm btn-danger" data-toggle="modal" title="Eliminar">
                             <i class="far fa-trash-alt"></i>
                         </a>
    </div>
@@ -434,10 +434,10 @@ class EquipoController extends Controller
                      </p>
                     </div>
  <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
   <a href="' .
                     $eliminar .
-                    '" type="button" class="btn btn-danger">Eliminar</a>
+                    '" type="button" class="btn btn-sm btn-danger">Eliminar</a>
                     </div>
                   </div>
                 </div>

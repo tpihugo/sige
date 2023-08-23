@@ -15,8 +15,8 @@ return [
     */
 
     'title' => '',
-    'title_prefix' => '',
-    'title_postfix' => 'SIGE CUCSH',
+    'title_prefix' => 'SIGE CUCSH |',
+    'title_postfix' => '',
 
     /*
     |--------------------------------------------------------------------------
@@ -84,13 +84,13 @@ return [
     */
 
     'auth_logo' => [
-        'enabled' => false,
+        'enabled' => true,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-            'alt' => 'Auth Logo',
-            'class' => '',
-            'width' => 50,
-            'height' => 50,
+            'path' => 'images/LOGO CTA.png',
+            'alt' => 'sige cucsh',
+            'class' => 'rounded-2',
+            'width' => "100%",
+            'height' => 150,
         ],
     ],
 
@@ -194,7 +194,7 @@ return [
     'classes_content' => '',
     'classes_sidebar' => 'sidebar-dark-primary elevation-4',
     'classes_sidebar_nav' => '',
-    'classes_topnav' => 'navbar-white navbar-light',
+    'classes_topnav' => 'navbar-dark navbar-light ',
     'classes_topnav_nav' => 'navbar-expand',
     'classes_topnav_container' => 'container',
 
@@ -215,7 +215,7 @@ return [
     'sidebar_collapse_auto_size' => false,
     'sidebar_collapse_remember' => false,
     'sidebar_collapse_remember_no_transition' => true,
-    'sidebar_scrollbar_theme' => 'os-theme-light',
+    'sidebar_scrollbar_theme' => 'os-theme-dark',
     'sidebar_scrollbar_auto_hide' => 'l',
     'sidebar_nav_accordion' => true,
     'sidebar_nav_animation_speed' => 300,
@@ -257,8 +257,8 @@ return [
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
-    'password_reset_url' => 'password/reset',
-    'password_email_url' => 'password/email',
+    'password_reset_url' => null,
+    'password_email_url' => null,
     'profile_url' => false,
 
     /*
@@ -296,7 +296,7 @@ return [
             'type'         => 'navbar-search',
             'text'         => 'Busqueda General de Equipos',
             'topnav_right' => true,
-            "url" => "busqueda",
+            "route" => "busqueda",
             "method" => 'post',
             'input_name' => 'busqueda',
             "can"=> "BUSQUEDAR#buscar"
@@ -407,7 +407,8 @@ return [
             'submenu' => [
                 [
                     'text' => 'Capturar',
-                    'route' => 'cursos.create'
+                    'route' => 'cursos.create',
+                    'can' => 'CURSOS#crear'
                 ],
                 [
                     'text' => 'Todos',
@@ -421,10 +422,16 @@ return [
                     'text' => 'Presenciales',
                     'url' => 'cursos-presenciales/2023A',
                 ],
+                [
+                    'text' => 'Sistema de CURSOS',
+                    'url' => 'http://148.202.17.240/cursosCTA/public/',
+                ],
+
+                
             ],
         ],
         [
-            'text' => 'Administrador',
+            'text' => 'Usuarios',
             'icon' => 'fas fa-fw fa-user',
             'can' => 'USUARIOS#ver',
             'submenu' =>
@@ -432,6 +439,15 @@ return [
                 [
                     'text' => 'Administrar usuarios',
                     'route' => 'usuarios.index',
+                    
+                ],
+                [
+                    'text' => 'Administrar permisos',
+                    'route' => 'permisos.index',
+                ],
+                [
+                    'text' => 'Administrar roles',
+                    'route' => 'roles.index',
                 ],
             ],
         ],
@@ -450,6 +466,12 @@ return [
                     'route' => 'proyectos.create',
                 ],
             ],
+        ],
+        [
+            'text' => 'Logs',
+            'icon' => 'fas fa-lightbulb',
+            'can' => 'LOGS#ver',
+            'route' => 'logs.index'
         ], [
             'text' => 'Servicios',
             'icon' => 'fas fa-inbox',
