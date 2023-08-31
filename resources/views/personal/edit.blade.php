@@ -22,20 +22,9 @@
                     </div>
                 @endif
                 <div class="row">
-                    <h2 class="mt-3">Edici&oacute;n de Personal:  {{ $personal->apellido_paterno .' '.$personal->apellido_materno .' '. $personal->nombre }}</h2>
+                    <h2 class="mt-3">Edici&oacute;n de Personal:
+                        {{ $personal->apellido_paterno . ' ' . $personal->apellido_materno . ' ' . $personal->nombre }}</h2>
                     <hr>
-                    <script type="text/javascript">
-                        $(document).ready(function() {
-                            $('#js-example-basic-single').select2();
-                            $('#js-example-basic-single2').select2();
-                            $('#js-example-basic-single3').select2();
-                        });
-
-
-                        var dateControl = document.querySelector('input[type="date"]');
-                        dateControl.value = '2017-06-01';
-                    </script>
-
                 </div>
                 <form action="{{ route('personal.update', $personal->id) }}" method="post" enctype="multipart/form-data"
                     class="col-12">
@@ -384,20 +373,30 @@
                             </button>
                         </div>
                     </div>
-
-                    <div class="row g-3 align-items-center">
-
-                        <br>
-                        <h5>En caso de inconsistencias, favor de reportarlas.</h5>
-                        <hr>
-
-                    </div>
                 </form>
-                <br>
-
         </div>
     @endcan
 @else
     Acceso No válido
     @endif
+@endsection
+
+@section('footer')
+    <div class="row g-3 align-items-center">
+        <h5 class="text-end">En caso de inconsistencias, favor de reportarlas.</h5>
+    </div>
+@endsection
+
+@section('js')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#js-example-basic-single').select2();
+            $('#js-example-basic-single2').select2();
+            $('#js-example-basic-single3').select2();
+        });
+
+
+        var dateControl = document.querySelector('input[type="date"]');
+        dateControl.value = '2017-06-01';
+    </script>
 @endsection

@@ -1,4 +1,9 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+@section('title', 'Personal')
+
+@section('css')
+    @include('layouts.head_2')
+@stop
 @section('content')
     @php
         use App\Models\Area;
@@ -20,36 +25,6 @@
                 <div class="row">
                     <h2>Captura de Personal</h2>
                     <hr>
-                    <script type="text/javascript">
-                        $(document).ready(function() {
-                            $('#js-example-basic-single').select2();
-                        });
-                        $(document).ready(function() {
-                            $('#js-example-basic-single2').select2();
-
-                        });
-                        $(document).ready(function() {
-                            $('#js-example-basic-single3').select2();
-
-                        });
-
-
-                        window.onload = function() {
-
-                            var plazaSelect = document.forms['Alta_Personal'].
-                            elements['js-example-basic-single'];
-                            plazaSelect.options[0].disabled = true;
-
-                            var habitacionesSelect = document.forms['Alta_Personal'].
-                            elements['js-example-basic-single2'];
-                            habitacionesSelect.options[0].disabled = true;
-
-                            var habitacionesSelect = document.forms['Alta_Personal'].
-                            elements['js-example-basic-single3'];
-                            habitacionesSelect.options[0].disabled = true;
-                        }
-                    </script>
-
                 </div>
 
                 <form action="{{ route('personal.store') }}" method="post" enctype="multipart/form-data" class="col-12"
@@ -388,16 +363,48 @@
                     </div>
 
                 </form>
-                <br>
-                <div class="row g-3 align-items-center">
-                    <br>
-                    <h5>En caso de inconsistencias, favor de reportarlas.</h5>
-                    <hr>
-
-                </div>
         </div>
     @endcan
 @else
     Acceso No válido
     @endif
+@endsection
+
+@section('footer')
+    <div class="row g-3 align-items-center">
+        <h5 class="text-end">En caso de inconsistencias, favor de reportarlas.</h5>
+    </div>
+@endsection
+
+
+@section('js')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#js-example-basic-single').select2();
+        });
+        $(document).ready(function() {
+            $('#js-example-basic-single2').select2();
+
+        });
+        $(document).ready(function() {
+            $('#js-example-basic-single3').select2();
+
+        });
+
+
+        window.onload = function() {
+
+            var plazaSelect = document.forms['Alta_Personal'].
+            elements['js-example-basic-single'];
+            plazaSelect.options[0].disabled = true;
+
+            var habitacionesSelect = document.forms['Alta_Personal'].
+            elements['js-example-basic-single2'];
+            habitacionesSelect.options[0].disabled = true;
+
+            var habitacionesSelect = document.forms['Alta_Personal'].
+            elements['js-example-basic-single3'];
+            habitacionesSelect.options[0].disabled = true;
+        }
+    </script>
 @endsection

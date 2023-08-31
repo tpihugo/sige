@@ -21,6 +21,7 @@ use App\Models\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Ip;
 use App\Models\Subred;
+use compra;
 use equipo as GlobalEquipo;
 use Faker\Calculator\Ean;
 
@@ -207,54 +208,46 @@ class EquipoController extends Controller
 
     public function busqueda(Request $request)
     {
-        $this->validate($request, [
+        $request->validate([
             'busqueda' => 'required',
         ]);
 
         $busqueda = $request->input('busqueda');
-        if (isset($busqueda) && !is_null($busqueda)) {
-            $vsequipos = VsEquipo::where('activo', '=', 1)
-                ->where('id', '=', $busqueda)
-                ->orWhere('udg_id', 'LIKE', '%' . $busqueda . '%')
-                ->orWhere('marca', 'LIKE', '%' . $busqueda . '%')
-                ->orWhere('modelo', 'LIKE', '%' . $busqueda . '%')
-                ->orWhere('numero_serie', 'LIKE', '%' . $busqueda . '%')
-                ->orWhere('mac', 'LIKE', '%' . $busqueda . '%')
-                ->orWhere('ip', 'LIKE', '%' . $busqueda . '%')
-                ->orWhere('detalles', 'LIKE', '%' . $busqueda . '%')
-                ->orWhere('tipo_conexion', 'LIKE', '%' . $busqueda . '%')
-                ->orWhere('tipo_equipo', 'LIKE', '%' . $busqueda . '%')
-                ->orWhere('area', 'LIKE', '%' . $busqueda . '%')
-                ->get();
+        $vsequipos = VsEquipo::where('activo', '=', 1)
+            ->where('id', '=', $busqueda)
+            ->orWhere('udg_id', 'LIKE', '%' . $busqueda . '%')
+            ->orWhere('marca', 'LIKE', '%' . $busqueda . '%')
+            ->orWhere('modelo', 'LIKE', '%' . $busqueda . '%')
+            ->orWhere('numero_serie', 'LIKE', '%' . $busqueda . '%')
+            ->orWhere('mac', 'LIKE', '%' . $busqueda . '%')
+            ->orWhere('ip', 'LIKE', '%' . $busqueda . '%')
+            ->orWhere('detalles', 'LIKE', '%' . $busqueda . '%')
+            ->orWhere('tipo_conexion', 'LIKE', '%' . $busqueda . '%')
+            ->orWhere('tipo_equipo', 'LIKE', '%' . $busqueda . '%')
+            ->orWhere('area', 'LIKE', '%' . $busqueda . '%')
+            ->get();
 
-            foreach ($vsequipos as $key => $value) {
-                $resguardante = DB::table('empleados')
-                    ->where('id', $value->id_resguardante)
-                    ->first();
-                $area = explode('-', $value->area);
-                if ($resguardante != null) {
-                    $area[6] = ' ' . $resguardante->nombre;
-                    if (strcmp($area[6], 'Usuario General') != 0) {
-                        $value->area = implode('-', $area);
-                    }
-                } else {
-                    $area[6] = ' ' . 'Usuario General';
-                    if (strcmp($area[6], 'Usuario General') != 0) {
-                        $value->area = implode('-', $area);
-                    }
+        foreach ($vsequipos as $key => $value) {
+            $resguardante = DB::table('empleados')
+                ->where('id', $value->id_resguardante)
+                ->first();
+            $area = explode('-', $value->area);
+            if ($resguardante != null) {
+                $area[6] = ' ' . $resguardante->nombre;
+                if (strcmp($area[6], 'Usuario General') != 0) {
+                    $value->area = implode('-', $area);
+                }
+            } else {
+                $area[6] = ' ' . 'Usuario General';
+                if (strcmp($area[6], 'Usuario General') != 0) {
+                    $value->area = implode('-', $area);
                 }
             }
-
-            $equipos = $this->cargarDT($vsequipos);
-
-            return view('equipo.busqueda')
-                ->with('equipos', $equipos)
-                ->with('busqueda', $busqueda);
-        } else {
-            return redirect('home')->with([
-                'message' => 'Debe introducir un tÃ©rmino de bÃºsqueda',
-            ]);
         }
+
+        $equipos = $this->cargarDT($vsequipos);
+
+        return view('equipo.busqueda',compact('equipos','busqueda'));
     }
     public function busquedaEquiposTicket(Request $request)
     {

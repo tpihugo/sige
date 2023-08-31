@@ -292,16 +292,19 @@ return [
     'menu' => [
         // Navbar items:
         ['header' => 'Sistema Integral de Gestión'],
+
+
         [
             'type'         => 'navbar-search',
             'text'         => 'Busqueda General de Equipos',
             'topnav_right' => true,
             "route" => "busqueda",
             "method" => 'post',
+            'id' => 'buscador',
             'input_name' => 'busqueda',
             "can" => "BUSQUEDAR#buscar",
-            "id" => "buscador",
         ],
+
         [
             'type'         => 'darkmode-widget',
             'topnav_right' => true, // Or "topnav => true" to place on the left.
@@ -394,10 +397,11 @@ return [
                     'text' => 'Abiertos',
                     'route' => 'tickets.index'
                 ],
+                /*
                 [
                     'text' => 'En proceso',
                     'route' => 'revisionTickets'
-                ],
+                ],*/
                 [
                     'text' => 'Estadísticas',
                     'route' => 'historial-tickets'

@@ -177,11 +177,16 @@ Route::get("/registro-inventario/{equipo_id}/{origen}", [
     "middleware" => "auth",
     "uses" => "App\Http\Controllers\InventarioController@registroInventario",
 ]);
+
+
+
 Route::post("/busqueda", [
     "as" => "busqueda",
     "middleware" => "auth",
     "uses" => "App\Http\Controllers\EquipoController@busqueda",
 ]);
+
+
 Route::post("/busquedaEquiposTicket", [
     "as" => "busquedaEquiposTicket",
     "middleware" => "auth",
