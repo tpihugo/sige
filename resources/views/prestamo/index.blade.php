@@ -37,7 +37,7 @@
             <p><a href="{{ route('imprimirPasosDevolucion') }}" class="btn btn-info">Pasos para devolución de equipo</a></p>
 
             </p>
-            <table id="example" class="table table-striped table-bordered" style="width: 100%">
+            <table id="example" class=" display table-striped table-bordered" style="width:100%">
                 <thead>
                     <tr>
                         <th>Folio</th>
@@ -116,7 +116,7 @@
                     <div class="col-xs-12 col-sm-12 col-md-12">
                         <div class="form-group">
 
-                            <table id="reporteAlumno" class="table table-striped table-bordered">
+                            <table id="reporteAlumno" class=" display table-striped table-bordered" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>Folio</th>
