@@ -374,6 +374,10 @@ a {
   }
 }
 
-.dataTables_info{
+.dataTables_info {
   white-space: break-spaces !important;
+}
+
+td {
+  padding: 5px !important;
 }

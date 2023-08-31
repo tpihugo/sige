@@ -31,6 +31,17 @@
                                         Debe de escribir un criterio de búsqueda
                                     </div>
                                 @endif
+                                @if (isset($retorno))
+                                    @if (count($retorno['Error']) > 0)
+                                        <div class="alert alert-danger" id="alert" role="alert">
+                                            {{ implode("\n", $retorno['Error']) }}
+                                        </div>
+                                    @else
+                                        <div class="alert alert-info" id="alert" role="alert">
+                                            {{ implode("\n", $retorno['Success']) }}
+                                        </div>
+                                    @endif
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -49,18 +60,7 @@
                 </div>
             </div>
 
-            @if (isset($retorno))
-                @if (count($retorno['Error']) > 0)
-                    <div class="alert alert-danger" id="alert" role="alert">
-                        {{ implode("\n", $retorno['Error']) }}
-                    </div>
-                @else
-                    <div class="alert alert-info" id="alert" role="alert">
-                        {{ implode("\n", $retorno['Success']) }}
-                    </div>
-                @endif
 
-            @endif
 
             <div class="row">
                 <div class="col-sm-12">
@@ -80,21 +80,21 @@
                                     <td>{{ $usuario->email }}</td>
                                     @if ($usuario->activo == 1)
                                         <td>Activo</td>
-                                        <td>
+                                        <td class="d-flex flex-row">
                                             <a href="{{ route('usuarios.edit', $usuario->id) }}"
-                                                class="btn-sm btn btn-primary">
+                                                class="btn-sm btn m-1 btn-primary">
                                                 Editar
                                             </a>
 
                                             <a href="{{ route('usuarios.delete', $usuario) }}"
-                                                class="btn btn-danger btn-sm">Desactivar</a>
+                                                class="btn m-1 btn-danger btn-sm">Desactivar</a>
                                         </td>
                                     @else
                                         <td><span class="inactivo">Inactivo</span></td>
                                         <td>
                                             <form method="POST" action="{{ route('usuarios.show', $usuario->id) }}">
                                                 @method('GET')
-                                                <button type="submit" class=" btn-sm btn btn-success">
+                                                <button type="submit" class=" btn-sm m-1 btn btn-success">
                                                     {{ __('Activar') }}
                                                 </button>
                                             </form>
@@ -114,9 +114,7 @@
 @endsection
 
 @section('footer')
-    <div class="row g-3 align-items-center mt-3">
-        <h5 class="text-end">En caso de inconsistencias, favor de reportarlas.</h5>
-    </div>
+    <h5 class="text-end">En caso de inconsistencias, favor de reportarlas.</h5>
 @endsection
 
 @section('js')
