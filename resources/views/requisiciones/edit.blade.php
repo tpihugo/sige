@@ -1,14 +1,20 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+@section('title', 'Editar Requisición')
+
+@section('css')
+    @include('layouts.head_2')
+@stop
+
 
 @section('content')
     <div class="container">
 
 
         @if (Auth::check() &&
-            (Auth::user()->role == 'admin' ||
-                Auth::user()->role == 'cta' ||
-                Auth::user()->role == 'auxiliar' ||
-                Auth::user()->role == 'redes'))
+                (Auth::user()->role == 'admin' ||
+                    Auth::user()->role == 'cta' ||
+                    Auth::user()->role == 'auxiliar' ||
+                    Auth::user()->role == 'redes'))
             <div class="row">
                 <div class="row g-3 align-items-center">
                     <div class="col-md-12">
@@ -52,12 +58,13 @@
                 <div class="row g-3 align-items-center">
                     <div class="col-md-6">
                         <label for="" class="form-label">Fecha recibido</label>
-                        <input type="date" name="fecha_recibido" id="v" class="form-control" tabindex="6" value="{{$requisicion->fecha_recibido}}"
-                            required>
+                        <input type="date" name="fecha_recibido" id="v" class="form-control" tabindex="6"
+                            value="{{ $requisicion->fecha_recibido }}" required>
                     </div>
                     <div class="col-md-6">
                         <label for="" class="form-label">Nombre quien recibe</label>
-                        <input type="text" name="quien_recibe" id="quien_recibe" class="form-control" tabindex="7" value="{{$requisicion->quien_recibe}}" required>
+                        <input type="text" name="quien_recibe" id="quien_recibe" class="form-control" tabindex="7"
+                            value="{{ $requisicion->quien_recibe }}" required>
                     </div>
                     <div class="col-md-6">
                         <label for="" class="form-label">Adjuntar requisición</label>
@@ -66,10 +73,15 @@
                     <div class="col-md-6">
                         <label for="estatus" class="form-label">Estatus</label>
                         <select name="estatus" id="estatus" class="form-control">
-                            <option {{($requisicion->estatus == 'En tramite')? 'selected':''}} value="En tramite">En tramite</option>
-                            <option {{($requisicion->estatus == 'Entregado')? 'selected':''}} value="Entregado">Entregado</option>
-                            <option {{($requisicion->estatus == 'Rechazado')? 'selected':''}} value="Rechazado">Rechazado</option>
-                            <option {{($requisicion->estatus == 'Entrega Parcial')? 'selected':''}} value="Entrega Parcial">Entrega Parcial</option>
+                            <option {{ $requisicion->estatus == 'En tramite' ? 'selected' : '' }} value="En tramite">En
+                                tramite</option>
+                            <option {{ $requisicion->estatus == 'Entregado' ? 'selected' : '' }} value="Entregado">Entregado
+                            </option>
+                            <option {{ $requisicion->estatus == 'Rechazado' ? 'selected' : '' }} value="Rechazado">
+                                Rechazado
+                            </option>
+                            <option {{ $requisicion->estatus == 'Entrega Parcial' ? 'selected' : '' }}
+                                value="Entrega Parcial">Entrega Parcial</option>
                         </select>
                     </div>
                 </div><br><br>
@@ -78,15 +90,12 @@
                         <button type="submit" class="btn btn-primary" tabindex="9">Guardar </button>
                     </div>
                 </div>
-    </form>
+            </form>
 
-    <br>
-    <div class="row g-3 align-items-center">
-        <br>
-        <h5>En caso de inconsistencias, favor de reportarlas.</h5>
-        <hr>
-
-    </div>
+            <br>
     </div>
     @endif
+@endsection
+@section('footer')
+    <h5 class="text-end">En caso de inconsistencias, favor de reportarlas.</h5>
 @endsection

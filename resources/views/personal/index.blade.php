@@ -108,12 +108,17 @@
                                     <td id="viernes"></td>
                                     <td id="sabado"></td>
                                 </tr>
+                                <tr>
+                                    <td>Categoria</td>
+                                    <td id="categoria"></td>
+                                    <td>Grado de Estudios</td>
+                                    <td id="grado"></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     </div>
                 </div>
             </div>
@@ -125,7 +130,6 @@
 
 @section('js')
     @include('layouts.scripts')
-
     <script type="text/javascript">
         var data = @json($personal);
         $(document).ready(function() {
@@ -226,14 +230,18 @@
                 return ((a < b) ? 1 : ((a > b) ? -1 : 0));
             }
         });
+
         //"columnDefs": [{ type: 'portugues', targets: "_all" }], 
         function horario(element) {
             const dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado'];
             const horario = element.split(",");
-            for (let i = 0; i <= horario.length; i++) {
+            for (let i = 0; i < 6; i++) {
                 let temp = dias[i];
-                console.log(document.getElementById(temp));
-                document.getElementById(temp).innerHTML = horario[i];
+                if (horario[i] === '') {
+                    document.getElementById(temp).textContent = "No registrado";
+                } else {
+                    document.getElementById(temp).textContent = horario[i];
+                }
             }
         }
     </script>

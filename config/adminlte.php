@@ -497,6 +497,23 @@ return [
                 ],
             ],
         ],
+        [
+            'text' => 'Personal',
+            'icon' => 'fas fa-fw fa-user',
+            'can' => 'cNormal_PERSONAL#ver',
+            'submenu' =>
+            [
+                [
+                    'text' => 'Consultar',
+                    'route' => 'personal.index',
+                ],
+                [
+                    'text' => 'Capturar',
+                    'route' => 'personal.create',
+                ],
+
+            ],
+        ],
         /*['header' => 'account_settings'],*/
         /*[
             'text' => 'change_password',

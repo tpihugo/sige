@@ -33,6 +33,7 @@ class TicketController extends Controller
         $tecnicos = Tecnico::where('activo', '=', 1)->get();
         $tickets = $this->cargarDT($vstickets);
         $id_tecnico = Tecnico::where('activo', 1)->where('user_id', Auth::user()->id)->first();
+
         return view('ticket.index', compact('id_tecnico'))->with('tickets', $tickets)->with('tecnicos', $tecnicos);
     }
     //este el que se modificó fin de la modificación 1
@@ -51,7 +52,7 @@ class TicketController extends Controller
             $tomar = '';
 
             if (Auth::user()->id == 161 || Auth::user()->role  == 'admin') {
-                $tomar = '<button type="button" onclick="tomar_ticket(' . $value['id'] . ')" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#tomar-ticket">
+                $tomar = '<button type="button" onclick="tomar_ticket(' . $value['id'] . ')" class="btn btn-warning btn-sm m-1" data-toggle="modal" data-target="#tomar-ticket">
                 <i class="far fa-hand-paper"></i>
               </button>
               ';
@@ -64,7 +65,7 @@ class TicketController extends Controller
                     $tomar = '';
                 }
                 if ($tecnico->id == $value['tecnico_id']) {
-                    $tomar = '<button type="button" onclick="soltar_ticket(' . $value['id'] . ')"  class="btn btn-sm" style="background-color: #3f6791; color:#fff;" data-toggle="modal" data-target="#soltar-ticket">
+                    $tomar = '<button type="button" onclick="soltar_ticket(' . $value['id'] . ')"  class="m-1 btn btn-sm" style="background-color: #3f6791; color:#fff;" data-toggle="modal" data-target="#soltar-ticket">
                     <i class="far fa-hand-paper"></i>
                   </button>';
                 }
@@ -74,17 +75,17 @@ class TicketController extends Controller
                     $tecnico_nombre = Tecnico::where('user_id', $item->id_user)->first();
                     $item->nombre = $tecnico_nombre->nombre;
                 }
-                $historial = '<button type="button" onclick=' . "'" . 'historial(' . $registro_historial . ')' . "'" . ' class="btn btn-sm"style="background-color: #3f6791; color:#fff;"  data-toggle="modal" data-target="#historial-ticket">
+                $historial = '<button type="button" onclick=' . "'" . 'historial(' . $registro_historial . ')' . "'" . ' class="m-1 btn btn-sm"style="background-color: #3f6791; color:#fff;"  data-toggle="modal" data-target="#historial-ticket">
                 <i class="far fa-list-alt"></i>
                 </button>';
             }
             $acciones = '
                 <div class="btn-acciones">
-                    <div class="btn-circle">
-                        <a href="' . $actualizar . '" class="btn btn-success btn-sm" title="Actualizar">
+                    <div class=" d-flex align-items-center justify-content-center">
+                        <a href="' . $actualizar . '" class="btn btn-success btn-sm m-1 " title="Actualizar">
                             <i class="far fa-edit"></i>
                         </a>
-			            <a href="' . $recibo . '" class="btn btn-primary btn-sm" title="Recibo de Equipo">
+			            <a href="' . $recibo . '" class="btn btn-primary btn-sm m-1 " title="Recibo de Equipo">
                             <i class="far fa-file"></i>
                         </a>'
                 . $tomar . $historial .

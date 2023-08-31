@@ -406,11 +406,13 @@ class PersonalController extends Controller
 
         $personal = new Personal();
         $personal->activo = '1';
-        $personal->codigo = $request->input('codigo');
-        $personal->apellido_paterno = $request->input('apellido_paterno');
-        $personal->apellido_materno = $request->input('apellido_materno');
-        $personal->nombre = $request->input('nombre');
-        $personal->plaza = $request->input('plaza');
+        foreach ($request->request as $key => $value) {
+            if (!is_null($value) && strcmp('_token', $key) != 0) {
+                $personal->$key = $request->$key;
+            }
+        }
+
+        /*$personal->plaza = $request->input('plaza');
         $personal->categoria = $request->input('categoria');
         $personal->carga_horaria = $request->input('carga_horaria');
         $personal->adscripcion = $request->input('adscripcion');
@@ -423,7 +425,7 @@ class PersonalController extends Controller
         $personal->area_fisica = $request->input('area_fisica');
         $personal->sede = $request->input('sede');
         $personal->grado_estudios = $request->input('grado_estudios');
-
+*/
         if ($request->hasFile('pdf')) {
             $nombre = $personal->codigo . "_" . $personal->apellido_paterno . "_" . $personal->apellido_materno . ".pdf";
             $archivo = $request->file('pdf');
@@ -489,23 +491,11 @@ class PersonalController extends Controller
         ]);
 
         $personal = Personal::find($id);
-        $personal->codigo = $request->input('codigo');
-        $personal->apellido_paterno = $request->input('apellido_paterno');
-        $personal->apellido_materno = $request->input('apellido_materno');
-        $personal->nombre = $request->input('nombre');
-        $personal->plaza = $request->input('plaza');
-        $personal->categoria = $request->input('categoria');
-        $personal->carga_horaria = $request->input('carga_horaria');
-        $personal->adscripcion = $request->input('adscripcion');
-        $personal->lunes = $request->input('lunes');
-        $personal->martes = $request->input('martes');
-        $personal->miercoles = $request->input('miercoles');
-        $personal->jueves = $request->input('jueves');
-        $personal->viernes = $request->input('viernes');
-        $personal->sabado = $request->input('sabado');
-        $personal->area_fisica = $request->input('area_fisica');
-        $personal->sede = $request->input('sede');
-        $personal->grado_estudios = $request->input('grado_estudios');
+        foreach ($request->request as $key => $value) {
+            if (!is_null($value) && strcmp('_token', $key) != 0 && strcmp('_method', $key) != 0 ) {
+                $personal->$key = $request->$key;
+            }
+        }
 
         if ($request->hasFile('pdf')) {
             $nombre = $personal->codigo . "_" . $personal->apellido_paterno . "_" . $personal->apellido_materno . ".pdf";

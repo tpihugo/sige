@@ -1,11 +1,13 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+@section('title', 'Crear Requisición')
+
+@section('css')
+    @include('layouts.head_2')
+@stop
 
 @section('content')
     <div class="container">
-        @if (Auth::check() &&
-            (Auth::user()->role == 'admin' ||
-                Auth::user()->role == 'cta' ||
-                Auth::user()->role == 'auxiliar'))
+        @if (Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'cta' || Auth::user()->role == 'auxiliar'))
             <div class="row">
                 <div class="row g-3 align-items-center">
                     <div class="col-md-12">
@@ -80,15 +82,11 @@
                         <button type="submit" class="btn btn-primary" tabindex="9">Guardar </button>
                     </div>
                 </div>
-                
-            </form>
 
-            <br>
-            <div class="row g-3 align-items-center">
-                <br>
-                <h5>En caso de inconsistencias, favor de reportarlas.</h5>
-                <hr>
-            </div>
+            </form>
     </div>
     @endif
+@endsection
+@section('footer')
+    <h5 class="text-end">En caso de inconsistencias, favor de reportarlas.</h5>
 @endsection

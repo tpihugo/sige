@@ -127,10 +127,9 @@
                                     <label for="rol" class="col-md-4 col-form-label text-md-right">Selecciona al
                                         técnico</label>
                                     <div class="col-md-5">
-                                        <select class="form-control w-100" id="asignar_tecnico" name="tecnico">
+                                        <select class="form-control " id="asignar_tecnico" name="tecnico">
                                             @foreach ($tecnicos as $item)
-                                                <option value="{{ $item->id }}" class="w-100">{{ $item->nombre }}
-                                                </option>
+                                                <option value="{{ $item->id }}" class="w-100">{{ $item->nombre }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -207,147 +206,147 @@
         @endif
         <p>
             <a href="{{ route('home') }}" class="btn btn-primary">
-                < Regresar</a>
+                Regresar</a>
         </p>
 
 
         </div>
-        @section('js')
-            @include('layouts.scripts')
-            <script type="text/javascript">
-                $(document).ready(function() {
-                    $('#asignar_tecnico').select2();
-                    $('#tecnico_id').select2();
-
-                });
-
-
-                function tomar_ticket(params) {
-                    var url = "{{ route('tomar-ticket', ':id') }}";
-                    url = url.replace(':id', params);
-                    document.getElementById('asignar').action = url;
-
-                }
-
-                function soltar_ticket(params) {
-                    var url = "{{ route('soltar-ticket', ':id') }}";
-                    url = url.replace(':id', params);
-                    document.getElementById('soltar').action = url;
-                }
-
-                function historial(params) {
-                    document.getElementById('historial').innerHTML = '';
-                    document.getElementById('historial').innerHTML =
-                        '<tr><td>Núm.</td><td>Usuario</td><td>Motivo</td><td>Detalle</td><td>Fecha</td></tr>';
-                    let cont = 1;
-                    params.forEach(element => {
-                        let fecha = new Date(element['created_at']);
-                        fecha = (fecha.getDate() + '/' + (fecha.getMonth() + 1) + '/' + fecha.getFullYear());
-                        document.getElementById('historial').innerHTML += '<td>' + cont + ' </td><td>' + element['nombre'] +
-                            ' </td> <td>' + element['motivo'] + ' </td> <td>' + element['detalles'] + '</td> <td>' + fecha +
-                            '</td>';
-                        cont = cont + 1;
-                    });
-                }
-                var data = @json($tickets);
-                $(document).ready(function() {
-                    $('#example').DataTable({
-                        "data": data,
-                        "pageLength": 25,
-                        "order": [
-                            [0, "desc"]
-                        ],
-                        "language": {
-                            "sProcessing": "Procesando...",
-                            "sLengthMenu": "Mostrar _MENU_ registros",
-                            "sZeroRecords": "No se encontraron resultados",
-                            "sEmptyTable": "Ningún dato disponible en esta tabla",
-                            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                            "sInfoPostFix": "",
-                            "sSearch": "Buscar:",
-                            "sUrl": "",
-                            "sInfoThousands": ",",
-                            "sLoadingRecords": "Cargando...",
-                            "oPaginate": {
-                                "sFirst": "Primero",
-                                "sLast": "Último",
-                                "sNext": "Siguiente",
-                                "sPrevious": "Anterior"
-                            },
-                            "oAria": {
-                                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                            }
-                        },
-                        responsive: true,
-                        // dom: 'Bfrtip',
-                        dom: '<"col-xs-3"l><"col-xs-5"B><"col-xs-4"f>rtip',
-                        buttons: [
-                            'copy', 'excel',
-                            {
-                                extend: 'pdfHtml5',
-                                orientation: 'landscape',
-                                pageSize: 'LETTER',
-                            }
-
-                        ]
-                    })
-                });
-
-
-                jQuery.extend(jQuery.fn.dataTableExt.oSort, {
-                    "portugues-pre": function(data) {
-                        var a = 'a';
-                        var e = 'e';
-                        var i = 'i';
-                        var o = 'o';
-                        var u = 'u';
-                        var c = 'c';
-                        var special_letters = {
-                            "Á": a,
-                            "á": a,
-                            "Ã": a,
-                            "ã": a,
-                            "À": a,
-                            "à": a,
-                            "É": e,
-                            "é": e,
-                            "Ê": e,
-                            "ê": e,
-                            "Í": i,
-                            "í": i,
-                            "Î": i,
-                            "î": i,
-                            "Ó": o,
-                            "ó": o,
-                            "Õ": o,
-                            "õ": o,
-                            "Ô": o,
-                            "ô": o,
-                            "Ú": u,
-                            "ú": u,
-                            "Ü": u,
-                            "ü": u,
-                            "ç": c,
-                            "Ç": c
-                        };
-                        for (var val in special_letters)
-                            data = data.split(val).join(special_letters[val]).toLowerCase();
-                        return data;
-                    },
-                    "portugues-asc": function(a, b) {
-                        return ((a < b) ? -1 : ((a > b) ? 1 : 0));
-                    },
-                    "portugues-desc": function(a, b) {
-                        return ((a < b) ? 1 : ((a > b) ? -1 : 0));
-                    }
-                });
-                //"columnDefs": [{ type: 'portugues', targets: "_all" }],
-            </script>
-        @stop
     @else
         Acceso No válido
     @endif
 @endsection
+@section('js')
+    @include('layouts.scripts')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#asignar_tecnico').select2();
+            $('#tecnico_id').select2();
+
+        });
+
+
+        function tomar_ticket(params) {
+            var url = "{{ route('tomar-ticket', ':id') }}";
+            url = url.replace(':id', params);
+            document.getElementById('asignar').action = url;
+
+        }
+
+        function soltar_ticket(params) {
+            var url = "{{ route('soltar-ticket', ':id') }}";
+            url = url.replace(':id', params);
+            document.getElementById('soltar').action = url;
+        }
+
+        function historial(params) {
+            document.getElementById('historial').innerHTML = '';
+            document.getElementById('historial').innerHTML =
+                '<tr><td>Núm.</td><td>Usuario</td><td>Motivo</td><td>Detalle</td><td>Fecha</td></tr>';
+            let cont = 1;
+            params.forEach(element => {
+                let fecha = new Date(element['created_at']);
+                fecha = (fecha.getDate() + '/' + (fecha.getMonth() + 1) + '/' + fecha.getFullYear());
+                document.getElementById('historial').innerHTML += '<td>' + cont + ' </td><td>' + element['nombre'] +
+                    ' </td> <td>' + element['motivo'] + ' </td> <td>' + element['detalles'] + '</td> <td>' + fecha +
+                    '</td>';
+                cont = cont + 1;
+            });
+        }
+        var data = @json($tickets);
+        $(document).ready(function() {
+            $('#example').DataTable({
+                "data": data,
+                "pageLength": 25,
+                "order": [
+                    [0, "desc"]
+                ],
+                "language": {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                },
+                responsive: true,
+                // dom: 'Bfrtip',
+                dom: '<"col-xs-3"l><"col-xs-5"B><"col-xs-4"f>rtip',
+                buttons: [
+                    'copy', 'excel',
+                    {
+                        extend: 'pdfHtml5',
+                        orientation: 'landscape',
+                        pageSize: 'LETTER',
+                    }
+
+                ]
+            })
+        });
+
+
+        jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+            "portugues-pre": function(data) {
+                var a = 'a';
+                var e = 'e';
+                var i = 'i';
+                var o = 'o';
+                var u = 'u';
+                var c = 'c';
+                var special_letters = {
+                    "Á": a,
+                    "á": a,
+                    "Ã": a,
+                    "ã": a,
+                    "À": a,
+                    "à": a,
+                    "É": e,
+                    "é": e,
+                    "Ê": e,
+                    "ê": e,
+                    "Í": i,
+                    "í": i,
+                    "Î": i,
+                    "î": i,
+                    "Ó": o,
+                    "ó": o,
+                    "Õ": o,
+                    "õ": o,
+                    "Ô": o,
+                    "ô": o,
+                    "Ú": u,
+                    "ú": u,
+                    "Ü": u,
+                    "ü": u,
+                    "ç": c,
+                    "Ç": c
+                };
+                for (var val in special_letters)
+                    data = data.split(val).join(special_letters[val]).toLowerCase();
+                return data;
+            },
+            "portugues-asc": function(a, b) {
+                return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+            },
+            "portugues-desc": function(a, b) {
+                return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+            }
+        });
+        //"columnDefs": [{ type: 'portugues', targets: "_all" }],
+    </script>
+@stop

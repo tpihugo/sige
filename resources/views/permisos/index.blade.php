@@ -1,11 +1,8 @@
 @extends('adminlte::page')
 @section('title', 'Permisos')
-{{--
-@extends('layouts.app')
---}}
+
 @section('css')
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
-        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    @include('layouts.head_2')
 @stop
 @section('content')
     <div class="container">
@@ -68,8 +65,44 @@
             El periodo de Registro de Proyectos a terminado
         @endif
     </div>
-@section('js')
-    <script type="text/javascript" src="{{ asset('js/usuarios/main.js') }}"></script>
-@stop
-
 @endsection
+
+@section('js')
+    @include('layouts.scripts')
+    <script>
+        $(document).ready(function() {
+            $('#usersTable').DataTable({
+                "pageLength": 10,
+                "order": [
+                    [0, "asc"]
+                ],
+                "language": {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                },
+                responsive: true,
+            });
+        });
+    </script>
+@endsection
+

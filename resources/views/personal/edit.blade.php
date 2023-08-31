@@ -50,22 +50,22 @@
                                 <div class="col-md-2">
                                     <label class="font-weight-bold" for="codigo">Código: *</label>
                                     <input class="form-control" id="codigo" name="codigo" type="number"
-                                        value="{{ $personal->codigo }}">
+                                        value="{{ $personal->codigo }}" required>
                                 </div>
                                 <div class="col-md-2">
                                     <label class="font-weight-bold" for="apellido_paterno">Apellido paterno: *</label>
                                     <input class="form-control" id="apellido_paterno" name="apellido_paterno" type="text"
-                                        value="{{ $personal->apellido_paterno }}">
+                                        value="{{ $personal->apellido_paterno }}" required>
                                 </div>
                                 <div class="col-md-2">
                                     <label class="font-weight-bold" for="apellido_materno">Apellido materno: *</label>
                                     <input class="form-control" id="apellido_materno" name="apellido_materno" type="text"
-                                        value="{{ $personal->apellido_materno }}">
+                                        value="{{ $personal->apellido_materno }}" required>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="font-weight-bold" for="nombre">Nombre (s): *</label>
                                     <input class="form-control" id="nombre" name="nombre" type="nombre"
-                                        value="{{ $personal->nombre }}">
+                                        value="{{ $personal->nombre }}" required>
                                 </div>
                             </div>
                             <br>
@@ -79,7 +79,7 @@
                                 <div class="col-md-6">
 
                                     <label class="font-weight-bold" for="plaza">Plaza: *</label>
-                                    <select class="form-control" id="js-example-basic-single2" name="plaza" required>
+                                    <select class="form-control" id="js-example-basic-single2" name="plaza" >
                                         <option>{{ $personal->plaza }}</option>
                                         @foreach ($plazas as $Plaza)
                                             <option value="{{ $Plaza->nombre }}">{{ $Plaza->nombre }}</option>

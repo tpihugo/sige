@@ -18,20 +18,30 @@
                             </div>
                             <div class="col-sm-12">
                                 @if (session('status'))
-                                    <div class="alert alert-success" role="alert">
-                                        {{ session('status') }}
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <strong>{{ session('status') }}
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
                                     </div>
                                 @endif
                                 @if (session('message'))
-                                    <div class="alert alert-success">
-                                        {{ session('message') }}
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <strong>{{ session('message') }}
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
                                     </div>
                                 @endif
                                 @if ($errors->any())
-                                    <div class="alert alert-danger text-center">
-                                        Debe de escribir un criterio de búsqueda
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        <strong>Debe de escribir un criterio de búsqueda
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
                                     </div>
                                 @endif
+
                             </div>
 
                         </div>
@@ -101,7 +111,8 @@
                                             </div>
                                         </div>
                                         <div class="card-footer" style="font-size: 12px">
-                                            <i class="material-icons text-dark" style="font-size: 12px">local_offer</i> La Normal:
+                                            <i class="material-icons text-dark" style="font-size: 12px">local_offer</i> La
+                                            Normal:
                                             {{ $ticketsNormal }}
                                             <i class="material-icons text-dark" style="font-size: 12px">local_offer</i> Belenes:
                                             {{ $ticketsBelenes }}
