@@ -1,4 +1,11 @@
+@extends('adminlte::page')
+@section('title', 'Usuarios')
+{{--
 @extends('layouts.app')
+--}}
+@section('css')
+    @include('layouts.head_2')
+@stop
 
 @section('content')
     <div class="container">

@@ -373,3 +373,7 @@ a {
     flex-direction: column;
   }
 }
+
+.dataTables_info{
+  white-space: break-spaces !important;
+}
