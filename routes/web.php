@@ -21,6 +21,8 @@ use App\Http\Controllers\PlazaController;
 // })->name('dashboard');
 include_once "usuarios.php";
 
+include_once "ips.php";
+
 Route::middleware(["auth:sanctum", "verified"])
     ->get("/", [App\Http\Controllers\HomeController::class, "index"])
     ->name("home");

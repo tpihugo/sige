@@ -1,7 +1,17 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+@section('title', 'Préstamos edit')
+
+@section('css')
+    @include('layouts.head_2')
+@stop
 @section('content')
     <div class="container">
-        @if (Auth::check() && (Auth::user()->role =='admin' ||  Auth::user()->role =='cta' || Auth::user()->role =='aulas' || Auth::user()->role =='redes' || Auth::user()->role =='auxiliar'))
+        @if (Auth::check() &&
+                (Auth::user()->role == 'admin' ||
+                    Auth::user()->role == 'cta' ||
+                    Auth::user()->role == 'aulas' ||
+                    Auth::user()->role == 'redes' ||
+                    Auth::user()->role == 'auxiliar'))
             @if (session('message'))
                 <div class="alert alert-success">
                     <h2>{{ session('message') }}</h2>
@@ -14,7 +24,7 @@
                 <hr>
             </div>
 
-            <form action="{{ route('roles.update',$rol->id) }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('roles.update', $rol->id) }}" method="post" enctype="multipart/form-data">
                 @method('PUT')
                 <div class="row">
                     <div class="col-12">
@@ -35,14 +45,13 @@
                 <div class="row">
                     <div class="col-md-3">
                         <label class="font-weight-bold" for="name">Rol</label>
-                        <input type="text" class="form-control" id="name" name="name" value="{{ $rol->name }}">
+                        <input type="text" class="form-control" id="name" name="name"
+                            value="{{ $rol->name }}">
                     </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <label class="font-weight-bold" for="description">descripción</label>
-                        <input type="text" class="form-control" id="description" name="description" value="{{ $rol->description }}">
+                    <div class="col-md-7">
+                        <label class="font-weight-bold" for="description">Descripción</label>
+                        <input type="text" class="form-control" id="description" name="description"
+                            value="{{ $rol->description }}">
                     </div>
                 </div>
                 <br>
@@ -61,14 +70,6 @@
                     </div>
                 </div>
             </form>
-            <br>
-            <div class="row align-items-center">
-                <br>
-                <div class="col-12 ml-3">
-                    <h6>En caso de inconsistencias, favor de reportarlas.</h6>
-                </div>
-                <hr>
-            </div>
         @endif
     </div>
 @endsection

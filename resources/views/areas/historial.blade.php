@@ -1,8 +1,13 @@
 @extends('adminlte::page')
-@section('title', 'Estadísticas áreas |')
-<link rel="stylesheet" href="{{asset('/css/admin_custom.css')}}">
+@section('title', 'Historial área')
+
+@section('css')
+    @include('layouts.head_2')
+@stop
+
+
 @section('content')
-    {{--{{dd($placesIssues)}}--}}
+    {{-- {{dd($placesIssues)}} --}}
     <div class="row">
         <div class="col-md-12">
             <div class="card card-info">
@@ -17,8 +22,9 @@
                 <div class="card-body">
                     <h4>Tickets relacionados con cada área</h4>
                     <div class="chart">
-                        <canvas id="myChartArea" style="min-height: 250px; height: 250px; max-height: 450px; max-width: 100%;"></canvas>
-                        {{--<canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>--}}
+                        <canvas id="myChartArea"
+                            style="min-height: 250px; height: 250px; max-height: 450px; max-width: 100%;"></canvas>
+                        {{-- <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas> --}}
                     </div>
                 </div>
                 <!-- /.card-body -->
@@ -31,43 +37,59 @@
                 <div class="card-header p-0 pt-1">
                     <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill" href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true">Tickets área administrativa</a>
+                            <a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill"
+                                href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home"
+                                aria-selected="true">Tickets área administrativa</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="custom-tabs-one-profile-tab" data-toggle="pill" href="#custom-tabs-one-profile" role="tab" aria-controls="custom-tabs-one-profile" aria-selected="false">Tickets aulas</a>
+                            <a class="nav-link" id="custom-tabs-one-profile-tab" data-toggle="pill"
+                                href="#custom-tabs-one-profile" role="tab" aria-controls="custom-tabs-one-profile"
+                                aria-selected="false">Tickets aulas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="custom-tabs-one-messages-tab" data-toggle="pill" href="#custom-tabs-one-messages" role="tab" aria-controls="custom-tabs-one-messages" aria-selected="false">Tickets laboratorios</a>
+                            <a class="nav-link" id="custom-tabs-one-messages-tab" data-toggle="pill"
+                                href="#custom-tabs-one-messages" role="tab" aria-controls="custom-tabs-one-messages"
+                                aria-selected="false">Tickets laboratorios</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="custom-tabs-one-area-tab" data-toggle="pill" href="#custom-tabs-one-areas" role="tab" aria-controls="custom-tabs-one-messages" aria-selected="false">Tickets Estatus</a>
+                            <a class="nav-link" id="custom-tabs-one-area-tab" data-toggle="pill"
+                                href="#custom-tabs-one-areas" role="tab" aria-controls="custom-tabs-one-messages"
+                                aria-selected="false">Tickets Estatus</a>
                         </li>
                     </ul>
                 </div>
                 <div class="card-body">
                     <div class="tab-content" id="custom-tabs-one-tabContent">
-                        <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel" aria-labelledby="custom-tabs-one-home-tab">
+                        <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel"
+                            aria-labelledby="custom-tabs-one-home-tab">
                             <h4>Tickets relacionados por tipo de fallas en área administrativa</h4>
                             <div class="chart">
-                                <canvas id="myChartIssue" style="min-height: 250px; height: 250px; max-height: 450px; max-width: 100%;"></canvas>
+                                <canvas id="myChartIssue"
+                                    style="min-height: 250px; height: 250px; max-height: 450px; max-width: 100%;"></canvas>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="custom-tabs-one-profile" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab">
+                        <div class="tab-pane fade" id="custom-tabs-one-profile" role="tabpanel"
+                            aria-labelledby="custom-tabs-one-profile-tab">
                             <h4>Tickets relacionados por tipo de fallas en aulas</h4>
                             <div class="chart">
-                                <canvas id="myChartIssueAula" style="min-height: 250px; height: 250px; max-height: 450px; max-width: 100%;"></canvas>
+                                <canvas id="myChartIssueAula"
+                                    style="min-height: 250px; height: 250px; max-height: 450px; max-width: 100%;"></canvas>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="custom-tabs-one-messages" role="tabpanel" aria-labelledby="custom-tabs-one-messages-tab">
+                        <div class="tab-pane fade" id="custom-tabs-one-messages" role="tabpanel"
+                            aria-labelledby="custom-tabs-one-messages-tab">
                             <h4>Tickets relacionados por tipo de fallas en laboratorios</h4>
                             <div class="chart">
-                                <canvas id="myChartIssueLab" style="min-height: 250px; height: 250px; max-height: 450px; max-width: 100%;"></canvas>
+                                <canvas id="myChartIssueLab"
+                                    style="min-height: 250px; height: 250px; max-height: 450px; max-width: 100%;"></canvas>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="custom-tabs-one-areas" role="tabpanel" aria-labelledby="custom-tabs-one-area-tab">
+                        <div class="tab-pane fade" id="custom-tabs-one-areas" role="tabpanel"
+                            aria-labelledby="custom-tabs-one-area-tab">
                             <h4>Tickets por estatus</h4>
                             <div class="chart">
-                                <canvas id="myChartIssueAreas" style="min-height: 250px; height: 250px; max-height: 450px; max-width: 100%;"></canvas>
+                                <canvas id="myChartIssueAreas"
+                                    style="min-height: 250px; height: 250px; max-height: 450px; max-width: 100%;"></canvas>
                             </div>
                         </div>
                     </div>
@@ -76,7 +98,7 @@
             </div>
         </div>
     </div>
-    {{--<div class="row">
+    {{-- <div class="row">
         <div class="col-md-4">
             <div class="card card-info">
                 <div class="card-header">
@@ -115,12 +137,12 @@
                 <!-- /.card-body -->
             </div>
         </div>
-    </div>--}}
+    </div> --}}
 @stop
 @section('js')
     <script>
         const labelsAreas = JSON.parse('{!! json_encode($places) !!}');
-        const quantityAreas = JSON.parse( '{!! json_encode($itemPlace) !!}' );
+        const quantityAreas = JSON.parse('{!! json_encode($itemPlace) !!}');
 
         const dataArea = {
             labels: labelsAreas,
@@ -152,7 +174,7 @@
         );
 
         const labelsIssues = JSON.parse('{!! json_encode($placesIssues) !!}');
-        const quantityIssues = JSON.parse( '{!! json_encode($issueByPlaces) !!}' );
+        const quantityIssues = JSON.parse('{!! json_encode($issueByPlaces) !!}');
 
         const dataIssues = {
             labels: labelsIssues,
@@ -178,7 +200,7 @@
         );
 
         const labelsIssuesAula = JSON.parse('{!! json_encode($issueByAulas) !!}');
-        const quantityIssuesAula = JSON.parse( '{!! json_encode($aulaIssues) !!}' );
+        const quantityIssuesAula = JSON.parse('{!! json_encode($aulaIssues) !!}');
 
         const dataIssuesAula = {
             labels: labelsIssuesAula,
@@ -204,7 +226,7 @@
         );
 
         const labelsIssuesLab = JSON.parse('{!! json_encode($issueByLab) !!}');
-        const quantityIssuesLab = JSON.parse( '{!! json_encode($labIssues) !!}' );
+        const quantityIssuesLab = JSON.parse('{!! json_encode($labIssues) !!}');
 
         const dataIssuesLab = {
             labels: labelsIssuesLab,
@@ -230,7 +252,7 @@
         );
 
         const labelsIssuesAreas = JSON.parse('{!! json_encode($ticketAreas) !!}');
-        const quantityIssuesAreas = JSON.parse( '{!! json_encode($ticketID) !!}' );
+        const quantityIssuesAreas = JSON.parse('{!! json_encode($ticketID) !!}');
 
         const dataIssuesAreas = {
             labels: labelsIssuesAreas,

@@ -4,8 +4,7 @@
 @extends('layouts.app')
 --}}
 @section('css')
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
-        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    @include('layouts.head_2')
 @stop
 @section('content')
     <div class="container">
@@ -16,7 +15,7 @@
                         <div class="card card-chart mt-3">
                             <div class="card-body">
                                 <div class="col-sm-12">
-                                    <h2>Administración de Usuarios</h2>
+                                    <h3>Administración de Usuarios</h3>
                                 </div>
                                 @if (session('status'))
                                     <div class="alert alert-success" role="alert">

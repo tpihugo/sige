@@ -19,10 +19,8 @@
                         </div>
                     @endif
                 @endforeach
-    
+
             </div>
         </div>
-
-        <hr>
     @endif
 @endif

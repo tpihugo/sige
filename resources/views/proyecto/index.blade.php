@@ -1,7 +1,12 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+@section('title', 'Logs')
+
+@section('css')
+    @include('layouts.head_2')
+@stop
 
 @section('content')
-    @if (Auth::check() && (  Auth::user()->role =='admin' || Auth::user()->role =='cta' ||  Auth::user()->role =='redes'))
+    @if (Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'cta' || Auth::user()->role == 'redes'))
         <div class="container">
             @if (session('message'))
                 <div class="alert alert-success">
@@ -41,20 +46,25 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($proyectos as $proyecto)
+                            @foreach ($proyectos as $proyecto)
                                 <tr>
                                     <td>{{ $proyecto->id }}</td>
                                     <td>{{ $proyecto->titulo }}</td>
                                     <td>{{ $proyecto->area_interna }}</td>
                                     <td>{{ $proyecto->responsable }}</td>
-                                    <td>{{ $proyecto->sede }} - {{ $proyecto->division }} - {{ $proyecto->coordinacion }} - {{ $proyecto->area }}</td>
+                                    <td>{{ $proyecto->sede }} - {{ $proyecto->division }} - {{ $proyecto->coordinacion }} -
+                                        {{ $proyecto->area }}</td>
                                     <td>{{ date('d/m/Y', strtotime($proyecto->fecha_inicio)) }}</td>
                                     <td>{{ date('d/m/Y', strtotime($proyecto->fecha_fin)) }}</td>
                                     <td>
-                                        <a href="{{ route('proyectos.show', $proyecto->id) }}" class="btn btn-outline-primary">Actividades</a></p>
-                                        <a href="{{ route('proyectos.edit', $proyecto->id) }}" class="btn btn-outline-success">Editar</a></p>
-                                        <button class="btn btn-outline-danger eliminar" data-toggle="modal" data-target="#eliminarModal" 
-                                            data-idproyecto="{{ $proyecto->id }}" data-mensaje="{{ $proyecto->titulo }}" onclick="eliminarProyecto(this)">Eliminar
+                                        <a href="{{ route('proyectos.show', $proyecto->id) }}"
+                                            class="btn btn-outline-primary">Actividades</a></p>
+                                        <a href="{{ route('proyectos.edit', $proyecto->id) }}"
+                                            class="btn btn-outline-success">Editar</a></p>
+                                        <button class="btn btn-outline-danger eliminar" data-toggle="modal"
+                                            data-target="#eliminarModal" data-idproyecto="{{ $proyecto->id }}"
+                                            data-mensaje="{{ $proyecto->titulo }}"
+                                            onclick="eliminarProyecto(this)">Eliminar
                                         </button>
                                     </td>
                                 </tr>
@@ -93,100 +103,118 @@
                 </div>
             </div>
         </div>
-
-        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-        <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
-
-        <script>
-            jQuery.extend( jQuery.fn.dataTableExt.oSort, {
-                "portugues-pre": function (data) {
-                    var a = 'a';
-                    var e = 'e';
-                    var i = 'i';
-                    var o = 'o';
-                    var u = 'u';
-                    var c = 'c';
-                    var special_letters = {
-                        "Á": a, "á": a, "Ã": a, "ã": a, "À": a, "à": a,
-                        "É": e, "é": e, "Ê": e, "ê": e,
-                        "Í": i, "í": i, "Î": i, "î": i,
-                        "Ó": o, "ó": o, "Õ": o, "õ": o, "Ô": o, "ô": o,
-                        "Ú": u, "ú": u, "Ü": u, "ü": u,
-                        "ç": c, "Ç": c
-                    };
-                    for (var val in special_letters)
-                        data = data.split(val).join(special_letters[val]).toLowerCase();
-                    return data;
-                },
-                "portugues-asc": function ( a, b ) {
-                    return ((a < b) ? -1 : ((a > b) ? 1 : 0));
-                },
-                "portugues-desc": function ( a, b ) {
-                    return ((a < b) ? 1 : ((a > b) ? -1 : 0));
-                }
-            });
-            // Tabla proyectos
-            $(document).ready(function() {
-                $('#tabla').DataTable( {
-                    "order": [[ 0, "desc" ]],
-                    "language": {
-                        "sProcessing": "Procesando...",
-                        "sLengthMenu": "Mostrar _MENU_ registros",
-                        "sZeroRecords": "No se encontraron resultados",
-                        "sEmptyTable": "Ningún dato disponible en esta tabla",
-                        "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                        "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                        "sInfoPostFix": "",
-                        "sSearch": "Buscar:",
-                        "sUrl": "",
-                        "sInfoThousands": ",",
-                        "sLoadingRecords": "Cargando...",
-                        "oPaginate": {
-                            "sFirst": "Primero",
-                            "sLast": "Último",
-                            "sNext": "Siguiente",
-                            "sPrevious": "Anterior"
-                        },
-                        "oAria": {
-                            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                        }
-                    },
-                    dom: 'Bfrtip',
-                    buttons: [
-                        'copy', 'excel',
-                        {
-                            extend:'pdfHtml5',
-                            orientation: 'landscape',
-                            pageSize:'LETTER',
-                        }
-                    ]
-                });
-            });
-
-            function eliminarProyecto(button) {
-                // Obtiene el id del proyecto 
-                var idProyecto = $(button).data("idproyecto");
-
-                // Obtiene el mensaje
-                var mensaje = $(button).data("mensaje");
-
-                // Genera la url para eliminar el proyecto
-                var href = "{{ route('proyectos.index') }}/" + idProyecto;
-
-                // Añade el mensaje al modal
-                $("#eliminarModal .modal-body p small").text(mensaje);
-
-                // Añade la url al formulario de eliminar
-                $("#eliminarModal .modal-footer form").attr("action", href);
-            }
-
-        </script>
-
     @else
         Acceso No válido
     @endif
-    
+
+@endsection
+@section('js')
+    @include('layouts.scripts')
+    <script>
+        jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+            "portugues-pre": function(data) {
+                var a = 'a';
+                var e = 'e';
+                var i = 'i';
+                var o = 'o';
+                var u = 'u';
+                var c = 'c';
+                var special_letters = {
+                    "Á": a,
+                    "á": a,
+                    "Ã": a,
+                    "ã": a,
+                    "À": a,
+                    "à": a,
+                    "É": e,
+                    "é": e,
+                    "Ê": e,
+                    "ê": e,
+                    "Í": i,
+                    "í": i,
+                    "Î": i,
+                    "î": i,
+                    "Ó": o,
+                    "ó": o,
+                    "Õ": o,
+                    "õ": o,
+                    "Ô": o,
+                    "ô": o,
+                    "Ú": u,
+                    "ú": u,
+                    "Ü": u,
+                    "ü": u,
+                    "ç": c,
+                    "Ç": c
+                };
+                for (var val in special_letters)
+                    data = data.split(val).join(special_letters[val]).toLowerCase();
+                return data;
+            },
+            "portugues-asc": function(a, b) {
+                return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+            },
+            "portugues-desc": function(a, b) {
+                return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+            }
+        });
+        // Tabla proyectos
+        $(document).ready(function() {
+            $('#tabla').DataTable({
+                "order": [
+                    [0, "desc"]
+                ],
+                "language": {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                },
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'excel',
+                    {
+                        extend: 'pdfHtml5',
+                        orientation: 'landscape',
+                        pageSize: 'LETTER',
+                    }
+                ]
+            });
+        });
+
+        function eliminarProyecto(button) {
+            // Obtiene el id del proyecto 
+            var idProyecto = $(button).data("idproyecto");
+
+            // Obtiene el mensaje
+            var mensaje = $(button).data("mensaje");
+
+            // Genera la url para eliminar el proyecto
+            var href = "{{ route('proyectos.index') }}/" + idProyecto;
+
+            // Añade el mensaje al modal
+            $("#eliminarModal .modal-body p small").text(mensaje);
+
+            // Añade la url al formulario de eliminar
+            $("#eliminarModal .modal-footer form").attr("action", href);
+        }
+    </script>
 @endsection

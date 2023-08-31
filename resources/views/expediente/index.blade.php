@@ -1,197 +1,256 @@
 @extends('adminlte::page')
-@section('title', 'Expediente |')
-{{--@extends('layouts.app')--}}
-    <link rel="stylesheet" href="{{asset('/css/admin_custom.css')}}">
+@section('title', 'Expediente ')
 @section('plugins.BsCustomFileInput', true)
 
 @section('content')
-@include('expediente.edit')
-@if(Auth::check() && Auth::user()->role == 'admin')
-    @if (session('message'))
-        <div class="alert alert-success">
-            {{ session('message') }}
-        </div>
-    @endif
-<!-- Content Header (Page header) -->
-    <div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-8">
-                <h1 class="m-0">Expediente</h1>
-            </div><!-- /.col -->
-            <div class="col-sm-4">
-                <ol class="breadcrumb float-sm-right">
-                    <li ><a class="btn bg-gradient-dark mb-0" href="{{route('Imprimirexpediente',$equipo[0])}}" target="_blank"> <i class="fas fa-file-pdf"></i>&nbsp;&nbsp;Imprimir expediente</a></li>
-                </ol>
-            </div><!-- /.col -->
-        </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-</div>
-<!-- /.content-header -->
-
-    {{--Contenido de equipo y tickets--}}
-    <div class="row">
-        {{--card contenido del equipo--}}
-        <div class="col-md-6">
-        <x-adminlte-card title="Información de equipo" theme="success" icon="fas fa-desktop" footer-class="mx-auto bg-white" >
-            @foreach($equipo as $value)
-                <strong><i class="fas fa-desktop"></i> Tipo de Equipo:</strong>
-            <div class="row">
-                <div class="col-md-9">
-
-                <h3 class="m-y3">{{$value[2]}}</h3>
-                </div>
-                <div class="col-md-3">
-                {{--<x-adminlte-button class="btn bg-gradient-info"  data-toggle="modal" data-target="#modal-editar-equipo2" icon="fas fa-edit"/>--}}
-                <a class="btn bg-gradient-info" href="{{route('equipos.edit', $value[0])}}" target="_blank"><i class="fas fa-edit"></i></a>
-                <x-adminlte-button class="btn bg-gradient-danger" data-toggle="modal" data-target="#modal-eliminar" icon="fas fa-trash"/>
-
-                </div>
+    @include('expediente.edit')
+    @if (Auth::check() && Auth::user()->role == 'admin')
+        @if (session('message'))
+            <div class="alert alert-success">
+                {{ session('message') }}
             </div>
-                <hr>
-                <strong><i class="fas fa-book mr-1"></i> Descripción</strong>
-                <p >{{$value[6]}}</p><hr>
-                <strong><i class="fas fa-book mr-1"></i> Modelo:</strong>
-                <p >{{$value[4]}}</p><hr>
-                <strong><i class="fas fa-book mr-1"></i> Marca:</strong>
-                <p >{{$value[3]}}</p><hr>
-            @endforeach
-            <x-slot name="footerSlot" >
-                @if($value[8]=="") <x-adminlte-button class="btn btn-app bg-gradient-info" data-toggle="modal" data-target="#modal-requisicion" label="Requisición" icon="fas fa-inbox"/>
-                @else <a class="btn btn-app bg-gradient-info" href="../../storage/app/documentos/{{$value[8]}}" target="_blank"><i class="fas fa-inbox"></i> Ver requisición</a>@endif
-                @if($value[9]=="")<x-adminlte-button class="btn btn-app bg-gradient-info" data-toggle="modal" data-target="#modal-cotizacion" label="Cotización" icon="fas fa-inbox"/>
-                @else <a class="btn btn-app bg-gradient-info" href="../../storage/app/documentos/{{$value[9]}}" target="_blank"><i class="fas fa-inbox"></i> Ver cotización</a>@endif
-                @if($value[10]="")<x-adminlte-button class="btn btn-app bg-gradient-info" data-toggle="modal" data-target="#modal-factura" label="Factura" icon="fas fa-inbox"/>
-                @else <a class="btn btn-app bg-gradient-info" href="../../storage/app/documentos/{{$value[10]}}" target="_blank"><i class="fas fa-inbox"></i> Ver factura</a>@endif
-                @if($value[11]=="")<x-adminlte-button class="btn btn-app bg-gradient-info" data-toggle="modal" data-target="#modal-otros" label="Otros" icon="fas fa-inbox"/>
-                @else <a class="btn btn-app bg-gradient-info" href="../../storage/app/documentos/{{$value[11]}}" target="_blank"><i class="fas fa-inbox"></i> Ver otros</a>@endif
-
-            </x-slot>
-        </x-adminlte-card>
+        @endif
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-8">
+                        <h1 class="m-0">Expediente</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-4">
+                        <ol class="breadcrumb float-sm-right">
+                            <li><a class="btn bg-gradient-dark mb-0" href="{{ route('Imprimirexpediente', $equipo[0]) }}"
+                                    target="_blank"> <i class="fas fa-file-pdf"></i>&nbsp;&nbsp;Imprimir expediente</a></li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
         </div>
-        {{--card contenido del los tickets del equipo--}}
-        <div class="col-md-6">
-        <x-adminlte-card title="Tickets"  theme="success" icon="fas fa-desktop"  icon="fas fa-file" >
-            <div class="row">
-                <div class="col-md-10">
-                    @if ($ticket)
-                        <ul class="list-group">
-                            @foreach($ticket as $tickets)
-                                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-                                    <div class="d-flex align-items-center">
-                                        <div class="d-flex flex-column">
-                                            <div class="d-flex flex-column">
-                                                <h6 class="mb-1 text-dark text-sm">Id del ticket: {{$tickets[1]}} </h6>
-                                                <h6 class="mb-1 text-dark text-sm">Resguardante: {{$tickets[2]}}</h6>
-                                                {!! $tickets[0] !!}
+        <!-- /.content-header -->
+
+        {{-- Contenido de equipo y tickets --}}
+        <div class="row">
+            {{-- card contenido del equipo --}}
+            <div class="col-md-6">
+                <x-adminlte-card title="Información de equipo" theme="success" icon="fas fa-desktop"
+                    footer-class="mx-auto bg-white">
+                    @foreach ($equipo as $value)
+                        <strong><i class="fas fa-desktop"></i> Tipo de Equipo:</strong>
+                        <div class="row">
+                            <div class="col-md-9">
+
+                                <h3 class="m-y3">{{ $value[2] }}</h3>
+                            </div>
+                            <div class="col-md-3">
+                                {{-- <x-adminlte-button class="btn bg-gradient-info"  data-toggle="modal" data-target="#modal-editar-equipo2" icon="fas fa-edit"/> --}}
+                                <a class="btn bg-gradient-info" href="{{ route('equipos.edit', $value[0]) }}"
+                                    target="_blank"><i class="fas fa-edit"></i></a>
+                                <x-adminlte-button class="btn bg-gradient-danger" data-toggle="modal"
+                                    data-target="#modal-eliminar" icon="fas fa-trash" />
+
+                            </div>
+                        </div>
+                        <hr>
+                        <strong><i class="fas fa-book mr-1"></i> Descripción</strong>
+                        <p>{{ $value[6] }}</p>
+                        <hr>
+                        <strong><i class="fas fa-book mr-1"></i> Modelo:</strong>
+                        <p>{{ $value[4] }}</p>
+                        <hr>
+                        <strong><i class="fas fa-book mr-1"></i> Marca:</strong>
+                        <p>{{ $value[3] }}</p>
+                        <hr>
+                    @endforeach
+                    <x-slot name="footerSlot">
+                        @if ($value[8] == '')
+                            <x-adminlte-button class="btn btn-app bg-gradient-info" data-toggle="modal"
+                                data-target="#modal-requisicion" label="Requisición" icon="fas fa-inbox" />
+                        @else
+                            <a class="btn btn-app bg-gradient-info" href="../../storage/app/documentos/{{ $value[8] }}"
+                                target="_blank"><i class="fas fa-inbox"></i> Ver requisición</a>
+                        @endif
+                        @if ($value[9] == '')
+                            <x-adminlte-button class="btn btn-app bg-gradient-info" data-toggle="modal"
+                                data-target="#modal-cotizacion" label="Cotización" icon="fas fa-inbox" />
+                        @else
+                            <a class="btn btn-app bg-gradient-info" href="../../storage/app/documentos/{{ $value[9] }}"
+                                target="_blank"><i class="fas fa-inbox"></i> Ver cotización</a>
+                        @endif
+                        @if ($value[10] = '')
+                            <x-adminlte-button class="btn btn-app bg-gradient-info" data-toggle="modal"
+                                data-target="#modal-factura" label="Factura" icon="fas fa-inbox" />
+                        @else
+                            <a class="btn btn-app bg-gradient-info" href="../../storage/app/documentos/{{ $value[10] }}"
+                                target="_blank"><i class="fas fa-inbox"></i> Ver factura</a>
+                        @endif
+                        @if ($value[11] == '')
+                            <x-adminlte-button class="btn btn-app bg-gradient-info" data-toggle="modal"
+                                data-target="#modal-otros" label="Otros" icon="fas fa-inbox" />
+                        @else
+                            <a class="btn btn-app bg-gradient-info" href="../../storage/app/documentos/{{ $value[11] }}"
+                                target="_blank"><i class="fas fa-inbox"></i> Ver otros</a>
+                        @endif
+
+                    </x-slot>
+                </x-adminlte-card>
+            </div>
+            {{-- card contenido del los tickets del equipo --}}
+            <div class="col-md-6">
+                <x-adminlte-card title="Tickets" theme="success" icon="fas fa-desktop" icon="fas fa-file">
+                    <div class="row">
+                        <div class="col-md-10">
+                            @if ($ticket)
+                                <ul class="list-group">
+                                    @foreach ($ticket as $tickets)
+                                        <li
+                                            class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
+                                            <div class="d-flex align-items-center">
+                                                <div class="d-flex flex-column">
+                                                    <div class="d-flex flex-column">
+                                                        <h6 class="mb-1 text-dark text-sm">Id del ticket:
+                                                            {{ $tickets[1] }} </h6>
+                                                        <h6 class="mb-1 text-dark text-sm">Resguardante:
+                                                            {{ $tickets[2] }}</h6>
+                                                        {!! $tickets[0] !!}
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            @endforeach
-                        </ul>
-                    @else
-                        <p>Sin tickets</p>
-                    @endif
-                </div>
-                <div class="col-md-2">
-                    <a class="btn bg-gradient-info" icon="fas fa-edit" href="{{ route('tickets.create') }}">Crear</a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @else
+                                <p>Sin tickets</p>
+                            @endif
+                        </div>
+                        <div class="col-md-2">
+                            <a class="btn bg-gradient-info" icon="fas fa-edit"
+                                href="{{ route('tickets.create') }}">Crear</a>
 
-                </div>
+                        </div>
+                    </div>
+
+                </x-adminlte-card>
             </div>
-
-        </x-adminlte-card>
         </div>
-    </div>
-<!-- /.row fin contenido equipo y tickets -->
-    {{--Contenido de matenimientos, revisiónes express y proyectos--}}
-    <div class="row">
-        {{--card contenido mantenimientos--}}
-        <div class="col-md-6">
-            <x-adminlte-card title="Mantenimientos" theme="success" icon="fas fa-desktop" footer-class="mx-auto bg-white" >
-                <div class="row">
-                    <div class="col-md-10">
-                        <ul class="list-group">
-                            @if ($mantenimiento)
-                                    @foreach($mantenimiento as $mantenimiento)
+        <!-- /.row fin contenido equipo y tickets -->
+        {{-- Contenido de matenimientos, revisiónes express y proyectos --}}
+        <div class="row">
+            {{-- card contenido mantenimientos --}}
+            <div class="col-md-6">
+                <x-adminlte-card title="Mantenimientos" theme="success" icon="fas fa-desktop"
+                    footer-class="mx-auto bg-white">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <ul class="list-group">
+                                @if ($mantenimiento)
+                                    @foreach ($mantenimiento as $mantenimiento)
                                         <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
                                             <div class="col-lg-10">
                                                 <h6 class="mb-3 text-sm">Realizo</h6>
-                                                <span class="mb-12 text-xs">Fecha: <span class="text-dark font-weight-bold ms-sm-2">{{\Carbon\Carbon::parse($mantenimiento[2])->format('d/m/Y')}}</span></span>
-                                                <span class="mb-12 text-xs">Detalles: <span class="text-dark ms-sm-2 font-weight-bold">{{$mantenimiento[1]}}</span></span>
-                                                <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="{{route('delete-man-equipo',$mantenimiento[0],$equipo[0])}}"><i class="material-icons text-sm me-2">delete</i>Eliminar</a>
+                                                <span class="mb-12 text-xs">Fecha: <span
+                                                        class="text-dark font-weight-bold ms-sm-2">{{ \Carbon\Carbon::parse($mantenimiento[2])->format('d/m/Y') }}</span></span>
+                                                <span class="mb-12 text-xs">Detalles: <span
+                                                        class="text-dark ms-sm-2 font-weight-bold">{{ $mantenimiento[1] }}</span></span>
+                                                <a class="btn btn-link text-danger text-gradient px-3 mb-0"
+                                                    href="{{ route('delete-man-equipo', $mantenimiento[0], $equipo[0]) }}"><i
+                                                        class="material-icons text-sm me-2">delete</i>Eliminar</a>
                                             </div>
                                     @endforeach
                                 @else
                                     <p>Sin mantenimientos</p>
+                                    </li>
+                                @endif
+                            </ul>
+                        </div>
+                        <div class="col-md-2">
+                            <x-adminlte-button class="btn bg-gradient-info" data-toggle="modal" data-target="#modalManto"
+                                label="Crear" />
+
+                        </div>
+                    </div>
+                </x-adminlte-card>
+            </div>
+            {{-- card contenido revisiones express --}}
+            {{-- card contenido proyectos --}}
+            <div class="col-md-6">
+                <x-adminlte-card title="Proyectos" theme="success" icon="fas fa-desktop" icon="fas fa-file">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <ul class="list-group">
+                                @if ($proyecto)
+                                    @foreach ($proyecto as $proyectos)
+                                        <li
+                                            class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
+                                            <div class="d-flex flex-column">
+
+                                                <h6 class="mb-1 text-dark font-weight-bold text-sm">Titulo:</h6>
+                                                <span class="text-xs">{{ $proyectos[1] }}</span>
+                                            </div>
+                                            <div class="d-flex flex-column">
+                                                <h6 class="mb-1 text-dark font-weight-bold text-sm">Area interna</h6>
+                                                <span>{{ $proyectos[2] }}</span>
+                                            </div>
                                         </li>
-                            @endif
-                        </ul>
-                    </div>
-                    <div class="col-md-2">
-                        <x-adminlte-button class="btn bg-gradient-info" data-toggle="modal" data-target="#modalManto" label="Crear" />
+                                    @endforeach
+                                @else
+                                    <p>Sin proyectos</p>
+                                @endif
 
+                            </ul>
+                        </div>
+                        <div class="col-md-2">
+                            <a href="{{ route('proyectos.create') }}" class="btn bg-gradient-info">Agregar</a>
+                        </div>
                     </div>
-                </div>
-        </x-adminlte-card>
+
+                </x-adminlte-card>
+            </div>
         </div>
-        {{--card contenido revisiones express--}}
-        {{--card contenido proyectos--}}
-        <div class="col-md-6">
-            <x-adminlte-card title="Proyectos"  theme="success" icon="fas fa-desktop"  icon="fas fa-file" >
-            <div class="row">
-                <div class="col-md-10">
+        <div class="row">
+            <div class="col-md-12">
+                <x-adminlte-card title="Revisiones express" theme="success" icon="fas fa-desktop" icon="fas fa-file">
                     <ul class="list-group">
-                        @if($proyecto)
-                            @foreach($proyecto as $proyectos)
-                                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
+                        @if ($revicion)
+                            @foreach ($revicion as $reviciones)
+                                <li class="list-group-item border-0 d-flex p-4 mb-2 mt-3 bg-gray-100 border-radius-lg">
                                     <div class="d-flex flex-column">
-
-                                        <h6 class="mb-1 text-dark font-weight-bold text-sm">Titulo:</h6>
-                                        <span class="text-xs">{{$proyectos[1]}}</span>
-                                    </div>
-                                    <div class="d-flex flex-column">
-                                        <h6 class="mb-1 text-dark font-weight-bold text-sm">Area interna</h6>
-                                        <span>{{$proyectos[2]}}</span>
+                                        <span>
+                                            <h6 class="mb-3 text-sm" style="font-family: Arial, Helvetica, sans-serif">
+                                                Sede: <span
+                                                    class="text-dark ms-sm-2 font-weight-bold">{{ $reviciones[1] }}</span>
+                                            </h6>
+                                        </span>
+                                        <span class="mb-2 text-12" style="font-family: Arial, Helvetica, sans-serif">
+                                            <h6>Area: <span
+                                                    class="text-dark ms-sm-2 font-weight-bold">{{ $reviciones[4] }}</span>&nbsp;
+                                                Piso:<span
+                                                    class="text-dark ms-sm-2 font-weight-bold">{{ $reviciones[3] }}</span>&nbsp;
+                                                Edificio:<span
+                                                    class="text-dark ms-sm-2 font-weight-bold">{{ $reviciones[2] }}</span>
+                                            </h6>
+                                        </span>
+                                        <span class="mb-2 text-xs" style="font-family: Arial, Helvetica, sans-serif">
+                                            <h6>Estatus: <span
+                                                    class="text-dark font-weight-bold ms-sm-2">{{ $reviciones[5] }}</span>
+                                            </h6>
+                                        </span>
+                                        <span class="mb-2 text-12" style="font-family: Arial, Helvetica, sans-serif">
+                                            <h6>Fecha: <span
+                                                    class="text-dark ms-sm-2 font-weight-bold">{{ \Carbon\Carbon::parse($reviciones[6])->format('d/m/y') }}
+                                                    &nbsp;</span>Hora:<span
+                                                    class="text-dark ms-sm-2 font-weight-bold">{{ \Carbon\Carbon::parse($reviciones[6])->format('h:m:s') }}</span>
+                                            </h6>
+                                        </span>
                                     </div>
                                 </li>
                             @endforeach
                         @else
-                            <p>Sin proyectos</p>
+                            <h6>Sin revisiones</h6>
                         @endif
-
                     </ul>
-                </div>
-                <div class="col-md-2">
-                    <a href="{{route('proyectos.create')}}" class="btn bg-gradient-info">Agregar</a>
-                </div>
+                </x-adminlte-card>
             </div>
-
-        </x-adminlte-card>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <x-adminlte-card title="Revisiones express"  theme="success" icon="fas fa-desktop"  icon="fas fa-file" >
-                <ul class="list-group">
-                    @if ($revicion)
-                        @foreach($revicion as $reviciones)
-                            <li class="list-group-item border-0 d-flex p-4 mb-2 mt-3 bg-gray-100 border-radius-lg">
-                                <div class="d-flex flex-column">
-                                    <span><h6 class="mb-3 text-sm" style="font-family: Arial, Helvetica, sans-serif">Sede: <span class="text-dark ms-sm-2 font-weight-bold">{{$reviciones[1]}}</span></h6> </span>
-                                    <span class="mb-2 text-12" style="font-family: Arial, Helvetica, sans-serif"><h6>Area: <span class="text-dark ms-sm-2 font-weight-bold">{{$reviciones[4]}}</span>&nbsp; Piso:<span class="text-dark ms-sm-2 font-weight-bold">{{$reviciones[3]}}</span>&nbsp; Edificio:<span class="text-dark ms-sm-2 font-weight-bold">{{$reviciones[2]}}</span></h6></span>
-                                    <span class="mb-2 text-xs" style="font-family: Arial, Helvetica, sans-serif"><h6>Estatus: <span class="text-dark font-weight-bold ms-sm-2">{{$reviciones[5]}}</span></h6></span>
-                                    <span class="mb-2 text-12" style="font-family: Arial, Helvetica, sans-serif"><h6>Fecha: <span class="text-dark ms-sm-2 font-weight-bold">{{\Carbon\Carbon::parse($reviciones[6])->format('d/m/y')}} &nbsp;</span>Hora:<span class="text-dark ms-sm-2 font-weight-bold">{{\Carbon\Carbon::parse($reviciones[6])->format('h:m:s')}}</span></h6></span>
-                                </div>
-                            </li>
-                        @endforeach
-                    @else
-                        <h6>Sin revisiones</h6>
-                    @endif
-                </ul>
-            </x-adminlte-card>
-        </div>
-    </div>
     @else
         Acceso No válido
     @endif
@@ -204,10 +263,10 @@
                 <div class="alert alert-success">
                     {{ session('message') }}
                 </div>
-            @endif--}}
+            @endif --}}
 
 
-{{--<body class="g-sidenav-show bg-gray-200">
+{{-- <body class="g-sidenav-show bg-gray-200">
 <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
   <div class="container-fluid py-1 px-3">
     <nav aria-label="breadcrumb">
@@ -229,7 +288,7 @@
             <div class="card-header pb-0 p-1">
               <div class="card-body p-1">
                 <ul class="list-group">
-                @foreach($equipo as $equipo)
+                @foreach ($equipo as $equipo)
                   <li class="list-group-item border-0 d-flex p-4 mb-2 mt-3 bg-gray-100 border-radius-lg">
                     <div class="d-flex flex-column">
                       <h3>Información del equipo</h3>
@@ -276,7 +335,7 @@
             <div class="container-fluid">
               <div class="row row-cols-1 row-cols-sm-2 row-cols-md-6">
 
-              @if($equipo[8]=="")
+              @if ($equipo[8] == '')
 
                 <div class="col">
                   <a href="javascript:;" type="button" data-toggle="modal" data-target="#modalR" data-dismiss="modal">
@@ -340,7 +399,7 @@
                 @endif
 
 
-                @if($equipo[9]=="")
+                @if ($equipo[9] == '')
 
                 <div class="col">
                   <a href="javascript:;" type="button" data-toggle="modal" data-target="#modalC" data-dismiss="modal">
@@ -403,7 +462,7 @@
                 </div>
                 @endif
 
-                @if($equipo[10]=="")
+                @if ($equipo[10] == '')
 
                 <div class="col">
                   <a href="javascript:;" type="button" data-toggle="modal" data-target="#modalF" data-dismiss="modal">
@@ -466,7 +525,7 @@
                 </div>
                 @endif
 
-                @if($equipo[11]=="")
+                @if ($equipo[11] == '')
 
                 <div class="col">
                   <a href="javascript:;" type="button" data-toggle="modal" data-target="#modalO" data-dismiss="modal">
@@ -558,7 +617,7 @@
           <ul class="list-group">
 
 
-            @foreach($ticket as $tickets)
+            @foreach ($ticket as $tickets)
 
             <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
               <div class="d-flex align-items-center">
@@ -623,7 +682,7 @@
                   <label for="id_area">Área para mantenimiento</label>
                                 <select class="form-control" class="form-control" id="js-example-basic-single" name="area_id">
                                     <option value="No Aplica" selected>No Aplica</option>
-                                    @foreach($areas as $area)
+                                    @foreach ($areas as $area)
                                         <option value="{{$area->id}}">{{$area->sede}} - {{$area->division}} - {{$area->coordinacion}} - {{$area->area}}</option>
                                     @endforeach
                                 </select>
@@ -631,7 +690,7 @@
                     <label for="tecnico_id">Técnico para mantenimiento</label>
                     <select class="form-control" class="form-control" id="js-example-basic-single2" name="tecnico_id">
                         <option value="No Aplica" selected>No Aplica</option>
-                        @foreach($tecnicos as $tecnicos)
+                        @foreach ($tecnicos as $tecnicos)
                             <option value="{{$tecnicos->id}}">{{$tecnicos->nombre}} - {{$tecnicos->telefono}} - {{$tecnicos->telefono_emergencia}} </option>
                         @endforeach
                     </select>
@@ -650,7 +709,7 @@
         <div class="card-body pt-4 p-3">
           <ul class="list-group">
             @if ($mantenimiento)
-            @foreach($mantenimiento as $mantenimiento)
+            @foreach ($mantenimiento as $mantenimiento)
           <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
 
                   <div class="col-lg-10">
@@ -688,9 +747,9 @@
         </div>
         <div class="card-body p-3 pb-0">
           <ul class="list-group">
-            @if($proyecto)
+            @if ($proyecto)
 
-            @foreach($proyecto as $proyectos)
+            @foreach ($proyecto as $proyectos)
             <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
               <div class="d-flex flex-column">
 
@@ -727,7 +786,7 @@
         <div class="card-body pt-4 p-3">
           <ul class="list-group">
             @if ($revicion)
-            @foreach($revicion as $reviciones)
+            @foreach ($revicion as $reviciones)
             <li class="list-group-item border-0 d-flex p-4 mb-2 mt-3 bg-gray-100 border-radius-lg">
               <div class="d-flex flex-column">
                 <span><h6 class="mb-3 text-sm" style="font-family: Arial, Helvetica, sans-serif">Sede: <span class="text-dark ms-sm-2 font-weight-bold">{{$reviciones[1]}}</span></h6> </span>
@@ -749,30 +808,30 @@
   </div>
 </div>
 </div>
-       @endforeach--}}
+       @endforeach --}}
 
 
 
 
-  <!--   Core JS Files   -->
+<!--   Core JS Files   -->
 {{--  <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
-  <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>--}}
-  <script>
+  <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script> --}}
+<script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
-      var options = {
-        damping: '0.5'
-      }
-      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+        var options = {
+            damping: '0.5'
+        }
+        Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
-  </script>
-  <!-- Github buttons -->
-{{--  <script async defer src="https://buttons.github.io/buttons.js"></script>--}}
-  <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-{{--  <script src="../assets/js/material-dashboard.min.js?v=3.0.0"></script>--}}
-{{--</body>--}}
+</script>
+<!-- Github buttons -->
+{{--  <script async defer src="https://buttons.github.io/buttons.js"></script> --}}
+<!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+{{--  <script src="../assets/js/material-dashboard.min.js?v=3.0.0"></script> --}}
+{{-- </body> --}}
 
 
 {{--

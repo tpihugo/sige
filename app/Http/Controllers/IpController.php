@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use App\Models\Empleado;
 use App\Models\VsDatosIp;
 use App\Models\Equipo;
@@ -203,6 +205,7 @@ class IpController extends Controller
             ->select('subredes.*')
             ->where('ips.id', '=', $id)
             ->first();
+        return $subred;
         //Sentencia para visualizar los datos uniendo las tablas ips, empleados, y la vita vs_equipo, utilizado en la vista create y edit
         $edit = Ip::join('vs_equipos', 'vs_equipos.id', '=', 'ips.id_equipo')
             ->leftJoin('empleados', 'empleados.id', '=', 'vs_equipos.id_resguardante')
@@ -220,12 +223,13 @@ class IpController extends Controller
             )
             ->where('ips.id', '=', $id)
             ->first();
+
         //Sentencia para visualizar los datos uniendo las tablas ips, empleados, y la vita vs_equipo, utilizado en la vista create
-        $vs_equipos = VsEquipo::join('empleados', 'empleados.id', '=', 'vs_equipos.id_resguardante')
+        /* $vs_equipos = VsEquipo::join('empleados', 'empleados.id', '=', 'vs_equipos.id_resguardante')
             ->select('vs_equipos.id', 'vs_equipos.id_resguardante', 'empleados.nombre', 'vs_equipos.udg_id', 'vs_equipos.numero_serie', 'vs_equipos.mac', 'vs_equipos.tipo_equipo', 'vs_equipos.area')
             ->where('vs_equipos.activo', '=', 1)
             ->get();
-
+*/
         $subredes = Subred::where('activo', '=', 1)->get();
 
         //Validación para visualizar si la IP está en uso por un equipo, muestre la vista show y  si no tiene equipo asignado, muestre show1.
@@ -235,16 +239,14 @@ class IpController extends Controller
                 ->with('i', $i)
                 ->with('edit', $edit)
                 ->with('subred', $subred)
-                ->with('subredes', $subredes)
-                ->with('vs_equipos', $vs_equipos);
+                ->with('subredes', $subredes);
         } else {
             return view('ips.show')
                 ->with('i', $i)
                 ->with('ip', $ip)
                 ->with('edit', $edit)
                 ->with('subred', $subred)
-                ->with('subredes', $subredes)
-                ->with('vs_equipos', $vs_equipos);
+                ->with('subredes', $subredes);
         }
     }
 
@@ -257,13 +259,14 @@ class IpController extends Controller
     public function edit($id)
     {
         // Editar IP'S Guardadas
-        $i = Ip::find($id, ['id']);
         $ip = Ip::find($id);
         $subred = Ip::join('subredes', 'ips.Subred_id', '=', 'subredes.id')
             ->select('subredes.*')
             ->where('ips.id', '=', $id)
             ->first();
         //Sentencia para visualizar los datos uniendo las tablas ips, empleados, y la vista vs_equipo, utilizado en la vista create y edit
+
+        /*
         $edit = Ip::join('vs_equipos', 'vs_equipos.id', '=', 'ips.id_equipo')
             ->join('empleados', 'empleados.id', '=', 'vs_equipos.id_resguardante')
             ->select('vs_equipos.id', 'vs_equipos.id_resguardante', 'empleados.nombre', 'vs_equipos.udg_id', 'vs_equipos.numero_serie', 'vs_equipos.mac', 'vs_equipos.tipo_equipo', 'vs_equipos.area')
@@ -271,8 +274,9 @@ class IpController extends Controller
             ->first();
 
         $equipos = Ip::select('id_equipo')->get();
+        */
 
-        $vs_equipos = VsEquipo::select('vs_equipos.id', 'vs_equipos.id_resguardante', Empleado::raw('COUNT(empleados.id) as empleados_count'), 'vs_equipos.udg_id', 'vs_equipos.numero_serie', 'vs_equipos.mac', 'vs_equipos.tipo_equipo', 'vs_equipos.area', Empleado::raw('IFNULL(empleados.nombre, "Sin nombre disponible") AS nombre'))
+        /*$vs_equipos = VsEquipo::select('vs_equipos.id', 'vs_equipos.id_resguardante', Empleado::raw('COUNT(empleados.id) as empleados_count'), 'vs_equipos.udg_id', 'vs_equipos.numero_serie', 'vs_equipos.mac', 'vs_equipos.tipo_equipo', 'vs_equipos.area', Empleado::raw('IFNULL(empleados.nombre, "Sin nombre disponible") AS nombre'))
             ->leftJoin('empleados', 'empleados.id', '=', 'vs_equipos.id_resguardante')
             ->whereIn('vs_equipos.tipo_equipo', ['Access Point', 'Cámara', 'Cámara de Red', 'CPU', 'Impresora', 'Multifuncional', 'Laptop', 'Router', 'Servidor', 'Switch', 'Teléfono'])
             ->groupBy('vs_equipos.id')
@@ -284,28 +288,22 @@ class IpController extends Controller
                     unset($vs_equipos[$key]);
                 }
             }
-        }
+        }*/
 
-        //return '<br>'.$equipos.'<br><br>'.$vs_equipos;
-
-        $subredes = Subred::where('activo', '=', 1)->get();
+        //return '<br>'.$equipos.'<br><br>'.$vs_equipos
 
         if ($ip->id_equipo == 0) {
             return view('ips.edit')
-                ->with('i', $i)
                 ->with('ip', $ip)
-                ->with('subred', $subred)
-                ->with('subredes', $subredes)
-                ->with('edit', $edit)
-                ->with('vs_equipos', $vs_equipos);
+                ->with('subred', $subred);
+            // ->with('edit', $edit);
+
         } else {
             return view('ips.edit1')
-                ->with('i', $i)
                 ->with('ip', $ip)
-                ->with('subred', $subred)
-                ->with('subredes', $subredes)
-                ->with('edit', $edit)
-                ->with('vs_equipos', $vs_equipos);
+                ->with('subred', $subred);
+            //->with('edit', $edit);
+
         }
     }
 
@@ -499,5 +497,14 @@ class IpController extends Controller
         return redirect()
             ->route('disponible', $ip->Subred_id)
             ->with(['message' => 'Equipo desasignado']);
+    }
+
+
+    public function buscar_equipo($equipo)
+    {
+
+        $equipo = VsEquipo::where('activo', 1)->whereIn('tipo_equipo',  ['Access Point', 'Cámara', 'Cámara de Red', 'CPU', 'Impresora', 'Multifuncional', 'Laptop', 'Router', 'Servidor', 'Switch', 'Teléfono'])
+            ->where('id', $equipo)->orwhere('udg_id', $equipo)->orwhere('numero_serie', $equipo)->first();
+        return $equipo;
     }
 }

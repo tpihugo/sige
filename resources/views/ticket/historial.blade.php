@@ -1,6 +1,5 @@
 @extends('adminlte::page')
-@section('title', 'Estadísticas tickets |')
-<link rel="stylesheet" href="{{asset('/css/admin_custom.css')}}">
+@section('title', 'Estadísticas tickets')
 @section('content')
     <div class="row">
         <div class="col-sm-12">

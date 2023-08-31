@@ -15,8 +15,8 @@ return [
     */
 
     'title' => '',
-    'title_prefix' => 'SIGE CUCSH |',
-    'title_postfix' => '',
+    'title_prefix' => '',
+    'title_postfix' => '| SIGE CUCSH',
 
     /*
     |--------------------------------------------------------------------------
@@ -152,7 +152,7 @@ return [
     'layout_boxed' => null,
     'layout_fixed_sidebar' => true,
     'layout_fixed_navbar' => true,
-    'layout_fixed_footer' => null,
+    'layout_fixed_footer' => false,
     'layout_dark_mode' => null,
 
     /*
@@ -210,7 +210,7 @@ return [
     |
     */
 
-    'sidebar_mini' => false,
+    'sidebar_mini' => true,
     'sidebar_collapse' => false,
     'sidebar_collapse_auto_size' => false,
     'sidebar_collapse_remember' => false,
@@ -299,8 +299,12 @@ return [
             "route" => "busqueda",
             "method" => 'post',
             'input_name' => 'busqueda',
-            "can"=> "BUSQUEDAR#buscar"
-
+            "can" => "BUSQUEDAR#buscar",
+            "id" => "buscador",
+        ],
+        [
+            'type'         => 'darkmode-widget',
+            'topnav_right' => true, // Or "topnav => true" to place on the left.
         ],
         [
             'type'         => 'fullscreen-widget',
@@ -338,7 +342,7 @@ return [
                     'route' => 'areas.create',
                     "can" => "AREAS#crear",
                 ],
-                
+
                 [
                     'text' => 'Estadísticas',
                     'route' => 'historial-areas'
@@ -356,10 +360,10 @@ return [
                 ],
                 [
                     'text' => 'Capturar',
-                    "can"=> "MOBILIARIO#crear",
+                    "can" => "MOBILIARIO#crear",
                     'route' => 'mobiliarios.create'
                 ],
-                
+
             ],
         ],
         [
@@ -427,7 +431,7 @@ return [
                     'url' => 'http://148.202.17.240/cursosCTA/public/',
                 ],
 
-                
+
             ],
         ],
         [
@@ -439,7 +443,7 @@ return [
                 [
                     'text' => 'Administrar usuarios',
                     'route' => 'usuarios.index',
-                    
+
                 ],
                 [
                     'text' => 'Administrar permisos',
@@ -458,13 +462,14 @@ return [
             'submenu' =>
             [
                 [
+                    'text' => 'Consultar',
+                    'route' => 'proyectos.index',
+                ],
+                [
                     'text' => 'Capturar',
                     'route' => 'proyectos.create',
                 ],
-                [
-                    'text' => 'Consultar',
-                    'route' => 'proyectos.create',
-                ],
+
             ],
         ],
         [
@@ -616,7 +621,7 @@ return [
             ],
         ],
         'Select2' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
@@ -635,7 +640,7 @@ return [
             'files' => [
                 [
                     'type' => 'js',
-                    'asset' => true,
+                    'asset' => false,
                     'location' => 'https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js',
                 ],
             ],

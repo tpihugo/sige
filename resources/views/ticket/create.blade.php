@@ -1,13 +1,17 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+@section('title', 'Home')
+
+@section('css')
+    @include('layouts.head_2')
+
+@stop
 @section('content')
-
-
     <div class="container">
         @if (Auth::check() &&
-            (Auth::user()->role == 'admin' ||
-                Auth::user()->role == 'cta' ||
-                Auth::user()->role == 'auxiliar' ||
-                Auth::user()->role == 'redes'))
+                (Auth::user()->role == 'admin' ||
+                    Auth::user()->role == 'cta' ||
+                    Auth::user()->role == 'auxiliar' ||
+                    Auth::user()->role == 'redes'))
             @if (session('message'))
                 <div class="alert alert-success">
                     <h2>{{ session('message') }}</h2>
@@ -59,9 +63,9 @@
                             <div class="col-md-4">
                                 <label for="prioridad">Prioridad </label>
                                 <select class="form-control" id="prioridad" name="prioridad">
-                                    <option disabled >Elegir</option>
+                                    <option disabled>Elegir</option>
                                     <option value="1">No Urgente | No importante</option>
-                                    <option value="2" >Urgente | No importante</option>
+                                    <option value="2">Urgente | No importante</option>
                                     <option value="3" selected>No urgente | Importante</option>
                                     <option value="4">Urgente | Importante</option>
                                 </select>
@@ -79,7 +83,7 @@
                             <div class="col-md-4">
                                 <label for="categoria">Categoría </label>
                                 <select class="form-control" id="categoria" name="categoria">
-                                    <option disabled >Elegir</option>
+                                    <option disabled>Elegir</option>
                                     <option value="Incidente" selected>Incidente</option>
                                     <option value="Solicitudes de Servicio">Solicitudes de Servicio</option>
                                     <option value="Reporte de aula">Reporte de aula</option>
@@ -147,18 +151,13 @@
                     </div>
                 </div>
             </form>
-            <br>
-            <div class="row g-3 align-items-center justify-content-end">
-
-                <br>
-                <h5>En caso de inconsistencias, favor de reportarlas.</h5>
-                <hr>
-
-            </div>
     </div>
 @else
     Acceso no Valido
     @endif
-
-
+@endsection
+@section('footer')
+    <div class="row g-3 align-items-center">
+        <h5 class="text-end">En caso de inconsistencias, favor de reportarlas.</h5>
+    </div>
 @endsection

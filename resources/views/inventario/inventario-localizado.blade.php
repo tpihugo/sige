@@ -1,4 +1,9 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+@section('title', 'Tickets')
+
+@section('css')
+    @include('layouts.head_2')
+@stop
 
 @section('content')
     @if(Auth::check() && Auth::user()->role =='admin')
@@ -23,10 +28,10 @@
                         <th>Localizado SICI</th>
                         <th>Marca</th>
                         <th>Modelo</th>
-                        <th>Núm. Serie</th>
+                        <th>NÃºm. Serie</th>
                         <th>Detalles</th>
                         <th>Tipo de Equipo</th>
-                        <th>Área</th>
+                        <th>Ãrea</th>
                         <th>Estatus</th>
                     </tr>
                     </thead>
@@ -61,7 +66,7 @@
                     "sProcessing": "Procesando...",
                     "sLengthMenu": "Mostrar _MENU_ registros",
                     "sZeroRecords": "No se encontraron resultados",
-                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sEmptyTable": "Ningï¿½n dato disponible en esta tabla",
                     "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
                     "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
                     "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
@@ -72,7 +77,7 @@
                     "sLoadingRecords": "Cargando...",
                     "oPaginate": {
                         "sFirst": "Primero",
-                        "sLast": "Último",
+                        "sLast": "ï¿½ltimo",
                         "sNext": "Siguiente",
                         "sPrevious": "Anterior"
                     },
@@ -107,12 +112,12 @@
                 var u = 'u';
                 var c = 'c';
                 var special_letters = {
-                    "Á": a, "á": a, "Ã": a, "ã": a, "À": a, "à": a,
-                    "É": e, "é": e, "Ê": e, "ê": e,
-                    "Í": i, "í": i, "Î": i, "î": i,
-                    "Ó": o, "ó": o, "Õ": o, "õ": o, "Ô": o, "ô": o,
-                    "Ú": u, "ú": u, "Ü": u, "ü": u,
-                    "ç": c, "Ç": c
+                    "ï¿½": a, "ï¿½": a, "ï¿½": a, "ï¿½": a, "ï¿½": a, "ï¿½": a,
+                    "ï¿½": e, "ï¿½": e, "ï¿½": e, "ï¿½": e,
+                    "ï¿½": i, "ï¿½": i, "ï¿½": i, "ï¿½": i,
+                    "ï¿½": o, "ï¿½": o, "ï¿½": o, "ï¿½": o, "ï¿½": o, "ï¿½": o,
+                    "ï¿½": u, "ï¿½": u, "ï¿½": u, "ï¿½": u,
+                    "ï¿½": c, "ï¿½": c
                 };
                 for (var val in special_letters)
                     data = data.split(val).join(special_letters[val]).toLowerCase();
@@ -130,7 +135,7 @@
     </script>
 
         @else
-        Acceso No válido
+        Acceso No vï¿½lido
     @endif
 @endsection
 

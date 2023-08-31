@@ -47,10 +47,11 @@ class TicketController extends Controller
             $recibo = route('recepcionEquipo',  $value['id']);
             $tomar = route('tomar-ticket', $value['id']);
             $registro_historial = ticket_historial::where('id_ticket', $value['id'])->orderBy('created_at')->get();
-
+            $historial = '';
+            $tomar = '';
 
             if (Auth::user()->id == 161 || Auth::user()->role  == 'admin') {
-                $tomar = '<button type="button" onclick="tomar_ticket(' . $value['id'] . ')" class="btn btn-outline-warning" data-toggle="modal" data-target="#tomar-ticket">
+                $tomar = '<button type="button" onclick="tomar_ticket(' . $value['id'] . ')" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#tomar-ticket">
                 <i class="far fa-hand-paper"></i>
               </button>
               ';
@@ -63,33 +64,27 @@ class TicketController extends Controller
                     $tomar = '';
                 }
                 if ($tecnico->id == $value['tecnico_id']) {
-                    $tomar = '<button type="button" onclick="soltar_ticket(' . $value['id'] . ')"  class="btn btn-outline-dark" data-toggle="modal" data-target="#soltar-ticket">
+                    $tomar = '<button type="button" onclick="soltar_ticket(' . $value['id'] . ')"  class="btn btn-sm" style="background-color: #3f6791; color:#fff;" data-toggle="modal" data-target="#soltar-ticket">
                     <i class="far fa-hand-paper"></i>
                   </button>';
                 }
-            } else {
-                $tomar = '';
-                $historial = '';
             }
             if (count($registro_historial) > 0) {
                 foreach ($registro_historial as $item) {
                     $tecnico_nombre = Tecnico::where('user_id', $item->id_user)->first();
                     $item->nombre = $tecnico_nombre->nombre;
                 }
-                $historial = '<button type="button" onclick=' . "'" . 'historial(' . $registro_historial . ')' . "'" . ' class="btn btn-outline-dark" data-toggle="modal" data-target="#historial-ticket">
+                $historial = '<button type="button" onclick=' . "'" . 'historial(' . $registro_historial . ')' . "'" . ' class="btn btn-sm"style="background-color: #3f6791; color:#fff;"  data-toggle="modal" data-target="#historial-ticket">
                 <i class="far fa-list-alt"></i>
                 </button>';
-            } else {
-                $historial = '';
             }
-
             $acciones = '
                 <div class="btn-acciones">
                     <div class="btn-circle">
-                        <a href="' . $actualizar . '" class="btn btn-success" title="Actualizar">
+                        <a href="' . $actualizar . '" class="btn btn-success btn-sm" title="Actualizar">
                             <i class="far fa-edit"></i>
                         </a>
-			            <a href="' . $recibo . '" class="btn btn-primary" title="Recibo de Equipo">
+			            <a href="' . $recibo . '" class="btn btn-primary btn-sm" title="Recibo de Equipo">
                             <i class="far fa-file"></i>
                         </a>'
                 . $tomar . $historial .
@@ -109,7 +104,7 @@ class TicketController extends Controller
             }
 
             $tickets[$key] = array(
-                '',
+
                 $value['id'],
                 $value['fecha_reporte'] = \Carbon\Carbon::parse($value->fecha_reporte)->format('d/m/Y H:i'),
                 $area,
@@ -140,7 +135,7 @@ class TicketController extends Controller
     {
         $equipos = Equipo::all();
         //$areas = Area::pluck('id','area')->prepend('seleciona');
-        $areas = Area::where('activo',1)->get();
+        $areas = Area::where('activo', 1)->get();
         $tecnicos = Tecnico::where('activo', '=', 1)->get();
         return view('ticket.create')->with('equipos', $equipos)->with('areas', $areas)->with('tecnicos', $tecnicos);
     }
@@ -349,7 +344,7 @@ class TicketController extends Controller
         return view('ticket.index', compact('id_tecnico'))->with('tickets', $tickets)->with('tecnicos', $tecnicos)
             ->with('tecnicoElegido', $tecnicoElegido)->with('estatus', $estatus);
     }
-    
+
     public function recepcionEquipo($ticket_id)
     {
         $ticket = VsTicket::find($ticket_id);

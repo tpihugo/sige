@@ -13,7 +13,7 @@ $mueble->muebleListadoPorTipo($mueble->getIdCatalogoM());
 <html lang="es">
     <head>
         <meta charset="UTF-8">
-        <title>Modificar Catálogo Mueble. BPEJ. Sistema Integral de GestiÃ³n</title>
+        <title>Modificar Catálogo Mueble. BPEJ. Sistema Integral de Gestión</title>
         <title>Catálogo Mobiliario. SIGE. BPEJ</title>
         <link rel="shortcut icon" href="favicon.ico">
         <meta name="viewport" content="width=device-width, initial-scale=1">

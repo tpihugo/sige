@@ -1,7 +1,16 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+@section('title', "IP'S")
+
+@section('css')
+    @include('layouts.head_2')
+@stop
 
 @section('content')
-    @if(Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'cta' || Auth::user()->role == 'auxiliar' || Auth::user()->role == 'redes'))
+    @if (Auth::check() &&
+            (Auth::user()->role == 'admin' ||
+                Auth::user()->role == 'cta' ||
+                Auth::user()->role == 'auxiliar' ||
+                Auth::user()->role == 'redes'))
         <div class="container-fluid">
             <div class="row align-items-center">
                 <div class="col-md-12">
@@ -9,202 +18,232 @@
                         <div class="alert alert-success">
                             {{ session('message') }}
                         </div>
-                     @elseif (session('error'))
-                     <div class="alert alert-danger">
+                    @elseif (session('error'))
+                        <div class="alert alert-danger">
                             {{ session('error') }}
                         </div>
                     @endif
                     <h2>IPS</h2>
                 </div>
             </div>
-<div class="col-md-12 ">
-        <center>
-            <a href="{{ route('home') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Regresar a Inicio</a>
+            <div class="col-md-12 ">
+                <center>
+                    <a href="{{ route('home') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Regresar a
+                        Inicio</a>
 
-            <a href="{{ route('subredes.index') }}" class="btn btn-primary">Subredes</a>
-        </center>
-</div>
-
-<div class="col-md-12 ">
-            <div>
-            <form action="{{ route('filtroIps') }}" method="post" enctype="multipart/form-data" class="col-sm-12" style="display: inline-flexbox">
-                <div class="row">
-                        {!! csrf_field() !!}
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-md-6">
-                        <label for="id">Subred</label>
-                        <select class="form-control" id="id" name="id">
-                            @if (isset($subredElegida->id) && !is_null($subredElegida->id))
-                                <option value="{{ $subredElegida->id }}" selected>
-                                    VLAN: {{ $subredElegida->vlan }} ,
-                                    Rango de IP: {{ $subredElegida->rangoInicial }} al {{ $subredElegida->rangoFinal }} ,
-                                    Gateway: {{ $subredElegida->gateway }}
-                                </option>
-                                <option value="0" disabled>Elegir</option>
-                            @else
-                                <option disabled value="0" selected>Elegir</option>
-                            @endif
-                            @foreach ($subredes as $subred)
-                                <option value="{{ $subred->id }}">
-                                    VLAN: {{ $subred->vlan }} ,
-                                    Rango de IP: {{ $subred->rangoInicial }} al {{ $subred->rangoFinal }} ,
-                                    Gateway: {{ $subred->gateway }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-md-3">
-                <label for="ocupadas">Disponibles </label>
-                        <select class="form-control" id="ocupadas" name="ocupadas" value="filtar">
-                            @if (isset($disponibleElegida) && !is_null($disponibleElegida))
-                            @if ($disponibleElegida=="1")
-                                    <option value="2" >
-                                        Disponibles
-                                    </option>
-                                    <option value="null" >Slecione filtro</option>
-                            @elseif ($disponibleElegida=="2")
-                                    <option value="2" selected>
-                                        Disponibles
-                                    </option>
-                                    <option value="" >Slecione filtro</option>
-                            @else
-                                    </option>
-                                    <option value="2" >
-                                        Disponibles
-                                    </option>
-                                    <option value=""  selected>Slecione filtro</option>
-                            @endif
-                            @else
-                                    <option  value="" selected>Slecione filtro</option>
-                                    <option value="2" >
-                                        Disponibles
-                                    </option>
-                            @endif
-                        </select>
-                    </div>
-                    <div class="col-md-3">
-                        <br>
-                        <button type="submit" class="btn btn-outline-primary"><i class="fa fa-search"></i> Filtrar</button>
-                        <a href="{{ route('ips.index') }}" class="btn btn-outline-success"><i class="fa fa-search-minus"></i> Quitar Filtro</a>
-                    </div>
-            </form>
+                    <a href="{{ route('subredes.index') }}" class="btn btn-primary">Subredes</a>
+                </center>
             </div>
 
-</div>
+            <div class="col-md-12 ">
+                <div>
+                    <form action="{{ route('filtroIps') }}" method="post" enctype="multipart/form-data" class="col-sm-12"
+                        style="display: inline-flexbox">
+                        <div class="row">
+                            {!! csrf_field() !!}
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="id">Subred</label>
+                                <select class="form-control" id="id" name="id">
+                                    @if (isset($subredElegida->id) && !is_null($subredElegida->id))
+                                        <option value="{{ $subredElegida->id }}" selected>
+                                            VLAN: {{ $subredElegida->vlan }} ,
+                                            Rango de IP: {{ $subredElegida->rangoInicial }} al
+                                            {{ $subredElegida->rangoFinal }} ,
+                                            Gateway: {{ $subredElegida->gateway }}
+                                        </option>
+                                        <option value="0" disabled>Elegir</option>
+                                    @else
+                                        <option disabled value="0" selected>Elegir</option>
+                                    @endif
+                                    @foreach ($subredes as $subred)
+                                        <option value="{{ $subred->id }}">
+                                            VLAN: {{ $subred->vlan }} ,
+                                            Rango de IP: {{ $subred->rangoInicial }} al {{ $subred->rangoFinal }} ,
+                                            Gateway: {{ $subred->gateway }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="ocupadas">Disponibles </label>
+                                <select class="form-control" id="ocupadas" name="ocupadas" value="filtar">
+                                    @if (isset($disponibleElegida) && !is_null($disponibleElegida))
+                                        @if ($disponibleElegida == '1')
+                                            <option value="2">
+                                                Disponibles
+                                            </option>
+                                            <option value="null">Slecione filtro</option>
+                                        @elseif ($disponibleElegida == '2')
+                                            <option value="2" selected>
+                                                Disponibles
+                                            </option>
+                                            <option value="">Slecione filtro</option>
+                                        @else
+                                            </option>
+                                            <option value="2">
+                                                Disponibles
+                                            </option>
+                                            <option value="" selected>Slecione filtro</option>
+                                        @endif
+                                    @else
+                                        <option value="" selected>Slecione filtro</option>
+                                        <option value="2">
+                                            Disponibles
+                                        </option>
+                                    @endif
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <br>
+                                <button type="submit" class="btn btn-outline-primary"><i class="fa fa-search"></i>
+                                    Filtrar</button>
+                                <a href="{{ route('ips.index') }}" class="btn btn-outline-success"><i
+                                        class="fa fa-search-minus"></i> Quitar Filtro</a>
+                            </div>
+                    </form>
+                </div>
 
-</div>
+            </div>
 
-<div class="container-fluid">
-     <div class="row">
-        <div class="col-12">
+        </div>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
                     <table id="example" class="table table-striped table-bordered" cellspacing="2" width="100%">
                         <thead>
-                        <tr>
-                            <th><center>IP</center></th>
-                            <th><center>IP Ocupada</center></th>
-                            <th><center>Equipo</center></th>
-                            <th><center>Acciones</center></th>
-                        </tr>
+                            <tr>
+                                <th>
+                                    <center>IP</center>
+                                </th>
+                                <th>
+                                    <center>IP Ocupada</center>
+                                </th>
+                                <th>
+                                    <center>Equipo</center>
+                                </th>
+                                <th>
+                                    <center>Acciones</center>
+                                </th>
+                            </tr>
                         </thead>
                         <tbody>
                         </tbody>
                     </table>
-        </div>
-    </div>
-        @extends('layouts.loader')
+                </div>
+            </div>
 
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-        <script type="text/javascript" src="https://cdn.datatables.net/v/bs4-4.1.1/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/r-2.2.7/datatables.min.js"></script>
-
-        <script type="text/javascript">
-            var data = @json($ips);
-            $(document).ready(function() {
-                $('#example').DataTable({
-                    "data": data,
-                    "pageLength": 10,
-                    "order": [
-                        [1, "ASC"]
-                    ],
-                    "language": {
-                        "sProcessing": "Procesando...",
-                        "sLengthMenu": "Mostrar _MENU_ registros",
-                        "sZeroRecords": "No se encontraron resultados",
-                        "sEmptyTable": "Ningún dato disponible en esta tabla",
-                        "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                        "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                        "sInfoPostFix": "",
-                        "sSearch": "Buscar:",
-                        "sUrl": "",
-                        "sInfoThousands": ",",
-                        "sLoadingRecords": "Cargando...",
-                        "oPaginate": {
-                            "sFirst": "Primero",
-                            "sLast": "Último",
-                            "sNext": "Siguiente",
-                            "sPrevious": "Anterior"
+            @section('js')
+                @include('layouts.scripts')
+                <script type="text/javascript">
+                    var data = @json($ips);
+                    $(document).ready(function() {
+                        $('#example').DataTable({
+                            "data": data,
+                            "pageLength": 10,
+                            "order": [
+                                [1, "ASC"]
+                            ],
+                            "language": {
+                                "sProcessing": "Procesando...",
+                                "sLengthMenu": "Mostrar _MENU_ registros",
+                                "sZeroRecords": "No se encontraron resultados",
+                                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                                "sInfoPostFix": "",
+                                "sSearch": "Buscar:",
+                                "sUrl": "",
+                                "sInfoThousands": ",",
+                                "sLoadingRecords": "Cargando...",
+                                "oPaginate": {
+                                    "sFirst": "Primero",
+                                    "sLast": "Último",
+                                    "sNext": "Siguiente",
+                                    "sPrevious": "Anterior"
+                                },
+                                "oAria": {
+                                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                                }
+                            },
+                            responsive: true,
+                            // dom: 'Bfrtip',
+                            dom: '<"col-xs-3"l><"col-xs-5"B><"col-xs-4"f>rtip',
+                            buttons: [
+                                'copy', 'excel',
+                                {
+                                    extend: 'pdfHtml5',
+                                    orientation: 'landscape',
+                                    pageSize: 'LETTER',
+                                }
+                            ]
+                        })
+                    });
+                    jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+                        "portugues-pre": function(data) {
+                            var a = 'a';
+                            var e = 'e';
+                            var i = 'i';
+                            var o = 'o';
+                            var u = 'u';
+                            var c = 'c';
+                            var special_letters = {
+                                "Á": a,
+                                "á": a,
+                                "Ã": a,
+                                "ã": a,
+                                "À": a,
+                                "à": a,
+                                "É": e,
+                                "é": e,
+                                "Ê": e,
+                                "ê": e,
+                                "Í": i,
+                                "í": i,
+                                "Î": i,
+                                "î": i,
+                                "Ó": o,
+                                "ó": o,
+                                "Õ": o,
+                                "õ": o,
+                                "Ô": o,
+                                "ô": o,
+                                "Ú": u,
+                                "ú": u,
+                                "Ü": u,
+                                "ü": u,
+                                "ç": c,
+                                "Ç": c
+                            };
+                            for (var val in special_letters)
+                                data = data.split(val).join(special_letters[val]).toLowerCase();
+                            return data;
                         },
-                        "oAria": {
-                            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                        "portugues-asc": function(a, b) {
+                            return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+                        },
+                        "portugues-desc": function(a, b) {
+                            return ((a < b) ? 1 : ((a > b) ? -1 : 0));
                         }
-                    },
-                    responsive: true,
-                    // dom: 'Bfrtip',
-                    dom: '<"col-xs-3"l><"col-xs-5"B><"col-xs-4"f>rtip',
-                    buttons: [
-                        'copy', 'excel',
-                        {
-                            extend: 'pdfHtml5',
-                            orientation: 'landscape',
-                            pageSize: 'LETTER',
-                        }
-                    ]
-                })
-                loader(false);
-            });
-            jQuery.extend( jQuery.fn.dataTableExt.oSort, {
-                "portugues-pre": function ( data ) {
-                    var a = 'a';
-                    var e = 'e';
-                    var i = 'i';
-                    var o = 'o';
-                    var u = 'u';
-                    var c = 'c';
-                    var special_letters = {
-                        "Á": a, "á": a, "Ã": a, "ã": a, "À": a, "à": a,
-                        "É": e, "é": e, "Ê": e, "ê": e,
-                        "Í": i, "í": i, "Î": i, "î": i,
-                        "Ó": o, "ó": o, "Õ": o, "õ": o, "Ô": o, "ô": o,
-                        "Ú": u, "ú": u, "Ü": u, "ü": u,
-                        "ç": c, "Ç": c
-                    };
-                    for (var val in special_letters)
-                        data = data.split(val).join(special_letters[val]).toLowerCase();
-                    return data;
-                },
-                "portugues-asc": function ( a, b ) {
-                    return ((a < b) ? -1 : ((a > b) ? 1 : 0));
-                },
-                "portugues-desc": function ( a, b ) {
-                    return ((a < b) ? 1 : ((a > b) ? -1 : 0));
-                }
-            } );
-            //"columnDefs": [{ type: 'portugues', targets: "_all" }],
-        </script>
-    @else
-        Acceso No válido
+                    });
+                    //"columnDefs": [{ type: 'portugues', targets: "_all" }],
+                </script>
+            @endsection
+        @else
+            Acceso No válido
     @endif
 @endsection

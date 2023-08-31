@@ -68,7 +68,7 @@ class ServicioController extends Controller
             ';
 
             $servicios[$key] = array(
-               $acciones,
+              
                 $value['id'],
                 $value['nombre'],
                 $value['categoria'],
@@ -77,6 +77,7 @@ class ServicioController extends Controller
                 $value['procedimiento'],
                 $value['contacto'],
                 $value['tiempo_de_respuesta'], 
+                $acciones,
             );
 
         }

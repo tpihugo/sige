@@ -1,5 +1,5 @@
 @extends('adminlte::page')
-@section('title', 'Usuarios')
+@section('title', 'Permisos')
 {{--
 @extends('layouts.app')
 --}}
@@ -9,7 +9,7 @@
 @stop
 @section('content')
     <div class="container">
-        @if(Auth::check())
+        @if (Auth::check())
             @if (session('message'))
                 <div class="alert alert-success">
                     <h2>{{ session('message') }}</h2>
@@ -25,7 +25,8 @@
                         <label for="permiso" class="col-form-label text-md-right">{{ __('Nuevo Permiso') }}</label>
                     </div>
                     <div class="col-mb-5 mx-1">
-                        <input id="permiso" type="text" class="form-control" name="permiso" placeholder="NOMBRE_DEL_MODULO#accion" required>
+                        <input id="permiso" type="text" class="form-control" name="permiso"
+                            placeholder="NOMBRE_DEL_MODULO#accion" required>
                     </div>
                     <div class="col-mb-4 mx-1">
                         <button type="submit" class="btn btn-primary">{{ __('Nuevo Permiso') }}</button>
@@ -33,19 +34,6 @@
                 </div>
             </form>
             <hr>
-
-            @if(isset($retorno))
-                @if(count($retorno['Error']) > 0)
-                    <div class="alert alert-danger" id="alert" role="alert">
-                        {{ implode("\n",$retorno['Error']) }}
-                    </div>
-                @else
-                    <div class="alert alert-info" id="alert" role="alert">
-                        {{ implode("\n",$retorno['Success']) }}
-                    </div>
-                @endif
-
-            @endif
 
             <div class="row align-items-center justify-content-center">
                 <div class="col-sm-12">
@@ -58,10 +46,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($permisos as $permiso)
+                            @foreach ($permisos as $permiso)
                                 <tr>
-                                    <td>{{$permiso['modulo']}}</td>
-                                    <td>{{$permiso['permiso']}}</td>
+                                    <td>{{ $permiso['modulo'] }}</td>
+                                    <td>{{ $permiso['permiso'] }}</td>
                                     <td>
                                         <form method="GET" action="{{ route('permisos.edit', $permiso['id']) }}">
                                             <button type="submit" class="btn btn-danger">
@@ -74,15 +62,14 @@
                         </tbody>
                     </table>
                 </div>
-                
+
             </div>
         @else
             El periodo de Registro de Proyectos a terminado
         @endif
     </div>
-    <script
-        type="text/javascript"
-        src="{{ asset('js/usuarios/main.js') }}"
-    >
-    </script>
+@section('js')
+    <script type="text/javascript" src="{{ asset('js/usuarios/main.js') }}"></script>
+@stop
+
 @endsection

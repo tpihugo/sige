@@ -1,4 +1,9 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+@section('title', 'Préstamos edit')
+
+@section('css')
+    @include('layouts.head_2')
+@stop
 @section('content')
     <div class="container">
         @if (Auth::check() && (Auth::user()->role =='admin' ||  Auth::user()->role =='cta' || Auth::user()->role =='aulas' || Auth::user()->role =='redes' || Auth::user()->role =='auxiliar'))
@@ -30,7 +35,7 @@
                         <br>
                     </div>
                 </div>
-                
+
                 <div class="row">
                     <div class="col-md-3">
                         <label class="font-weight-bold" for="name">Nuevo Rol</label>

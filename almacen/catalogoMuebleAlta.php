@@ -8,7 +8,7 @@ if ($_SESSION['privilegios'] != 'Administrador' and $_SESSION['privilegios'] != 
 <html lang="es">
     <head>
         <meta charset="UTF-8">
-        <title>BPEJ. Sistema Integral de GestiÃ³n</title>
+        <title>BPEJ. Sistema Integral de Gestión</title>
         <link rel="shortcut icon" href="favicon.ico">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="author" content="Equipo de Desarrollo BPEJ">

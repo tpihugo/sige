@@ -1,119 +1,131 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+@section('title', 'Home')
+
+@section('css')
+    @include('layouts.head_2')
+
+@stop
 
 @section('content')
-    @if(Auth::check() && (Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='auxiliar' || Auth::user()->role =='redes'))
+    @if (Auth::check() &&
+            (Auth::user()->role == 'admin' ||
+                Auth::user()->role == 'cta' ||
+                Auth::user()->role == 'auxiliar' ||
+                Auth::user()->role == 'redes'))
 
-    <div class="container-fluid">
-        <div class="row g-3 align-items-center">
-            <div class="col-md-12">
-                @if (session('message'))
-                    <div class="alert alert-success">
-                        {{ session('message') }}
-                    </div>
-                @endif
-                <h2>Tickets MKI</h2>
+        <div class="container-fluid">
+            <div class="row g-3 align-items-center">
+                <div class="col-md-12">
+                    @if (session('message'))
+                        <div class="alert alert-success">
+                            {{ session('message') }}
+                        </div>
+                    @endif
+                    <h2>Tickets MKI</h2>
                     <p align="right">
 
-                        
+
 
                         <a href="{{ route('tickets.create') }}" class="btn btn-success">Capturar Ticket</a>
 
-                        <a href="{{ route('home') }}" class="btn btn-primary">< Regresar</a>
+                        <a href="{{ route('home') }}" class="btn btn-primary">
+                            < Regresar</a>
                     </p>
-            </div>
-        </div>
-        <br>
-        <form action="{{route('filtroTickets')}}" method="post" enctype="multipart/form-data" class="col-12">
-            <div class="row g-3 align-items-center">
-                <div class="col">
-                    {!! csrf_field() !!}
-                    @if($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach($errors->all() as $error)
-                                    <li>{{$error}}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-                </div>
-                <br>
-            </div>
-            <div class="row g-3 align-items-end">
-                <div class="col-md-4">
-                    <label for="tecnico_id">Técnico </label>
-                    <select class="form-control" id="tecnico_id" name="tecnico_id">
-                        @if(isset($tecnicoElegido->id) && !is_null($tecnicoElegido->id))
-                            <option value="{{$tecnicoElegido->id}}" selected>{{$tecnicoElegido->nombre}}</option>
-                            <option disabled >Elegir</option>
-                        @else
-                            <option disabled selected>Elegir</option>
-                        @endif
-
-                        @foreach($tecnicos as $tecnico)
-                            <option value="{{$tecnico->id}}">{{$tecnico->nombre}}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <label for="estatus">Estatus </label>
-                    <select class="form-control" id="estatus" name="estatus">
-                        @if(isset($estatus) && !is_null($estatus))
-                            <option value="{{$estatus}}">{{$estatus}}</option>
-                            <option disabled >Elegir</option>
-                        @else
-                            <option disabled selected>Elegir</option>
-                        @endif
-                        <option value="Abierto">Abierto</option>
-                        <option value="Cerrado">Cerrado</option>
-                        <option value="Escalado">Escalado</option>
-                    </select>
-
-                </div>
-                <div class="col-md-2 " >
-                    <button type="submit" class="btn btn-outline-primary">Filtrar</button>
-                    <a href="{{ route('tickets.index') }}" class="btn btn-outline-success">Quitar Filtro</a>
                 </div>
             </div>
             <br>
+            <form action="{{ route('filtroTickets') }}" method="post" enctype="multipart/form-data" class="col-12">
+                <div class="row g-3 align-items-center">
+                    <div class="col">
+                        {!! csrf_field() !!}
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                    </div>
+                    <br>
+                </div>
+                <div class="row g-3 align-items-end">
+                    <div class="col-md-4">
+                        <label for="tecnico_id">Técnico </label>
+                        <select class="form-control" id="tecnico_id" name="tecnico_id">
+                            @if (isset($tecnicoElegido->id) && !is_null($tecnicoElegido->id))
+                                <option value="{{ $tecnicoElegido->id }}" selected>{{ $tecnicoElegido->nombre }}</option>
+                                <option disabled>Elegir</option>
+                            @else
+                                <option disabled selected>Elegir</option>
+                            @endif
 
-    </form>
-        <div class="row g-3 align-items-center">
-            <table id="example" class="table table-striped table-bordered" style="width:100%">
-                <thead>
-                <tr>
-                    <th>Acciones</th>
-                    <th>Folio</th>
+                            @foreach ($tecnicos as $tecnico)
+                                <option value="{{ $tecnico->id }}">{{ $tecnico->nombre }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="estatus">Estatus </label>
+                        <select class="form-control" id="estatus" name="estatus">
+                            @if (isset($estatus) && !is_null($estatus))
+                                <option value="{{ $estatus }}">{{ $estatus }}</option>
+                                <option disabled>Elegir</option>
+                            @else
+                                <option disabled selected>Elegir</option>
+                            @endif
+                            <option value="Abierto">Abierto</option>
+                            <option value="Cerrado">Cerrado</option>
+                            <option value="Escalado">Escalado</option>
+                        </select>
 
-                    <th>Fecha Reporte</th>
-                    <th>Área</th>
-                    <th>Solicitante</th>
-                    <th>Contacto</th>
-                    <th>Técnico</th>
-                    <th>Categoría y Prioridad</th>
-                    <th>Reporte</th>
-                    <th>Solución y cierre</th>
+                    </div>
+                    <div class="col-md-2 ">
+                        <button type="submit" class="btn btn-outline-primary">Filtrar</button>
+                        <a href="{{ route('tickets.index') }}" class="btn btn-outline-success">Quitar Filtro</a>
+                    </div>
+                </div>
+                <br>
 
-                </tr>
-                </thead>
-                <tbody>
+            </form>
+            <div class="row g-3 align-items-center">
+                <table id="example" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
 
+                            <th>Folio</th>
 
-                </tbody>
+                            <th>Fecha Reporte</th>
+                            <th>Área</th>
+                            <th>Solicitante</th>
+                            <th>Contacto</th>
+                            <th>Técnico</th>
+                            <th>Categoría y Prioridad</th>
+                            <th>Reporte</th>
+                            <th>Solución y cierre</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
 
-            </table>
+                </table>
 
+            </div>
+            <p>
+                <a href="{{ route('home') }}" class="btn btn-primary">
+                    < Regresar</a>
+            </p>
         </div>
-        <p>
-            <a href="{{ route('home') }}" class="btn btn-primary">< Regresar</a>
-        </p>
-    </div>
 
-    @extends('layouts.loader')
+        @extends('layouts.loader')
 
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-        <script type="text/javascript" src="https://cdn.datatables.net/v/bs4-4.1.1/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/r-2.2.7/datatables.min.js"></script>
+        <script type="text/javascript"
+            src="https://cdn.datatables.net/v/bs4-4.1.1/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/r-2.2.7/datatables.min.js">
+        </script>
 
         <script type="text/javascript">
             var data = @json($tickets);
@@ -162,42 +174,60 @@
 
                     ]
                 })
-               loader(false);
+                loader(false);
             });
 
 
-            jQuery.extend( jQuery.fn.dataTableExt.oSort, {
-            "portugues-pre": function ( data ) {
-                var a = 'a';
+            jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+                "portugues-pre": function(data) {
+                    var a = 'a';
                     var e = 'e';
                     var i = 'i';
                     var o = 'o';
                     var u = 'u';
                     var c = 'c';
                     var special_letters = {
-                        "Á": a, "á": a, "Ã": a, "ã": a, "À": a, "à": a,
-                        "É": e, "é": e, "Ê": e, "ê": e,
-                        "Í": i, "í": i, "Î": i, "î": i,
-                        "Ó": o, "ó": o, "Õ": o, "õ": o, "Ô": o, "ô": o,
-                        "Ú": u, "ú": u, "Ü": u, "ü": u,
-                        "ç": c, "Ç": c
+                        "Á": a,
+                        "á": a,
+                        "Ã": a,
+                        "ã": a,
+                        "À": a,
+                        "à": a,
+                        "É": e,
+                        "é": e,
+                        "Ê": e,
+                        "ê": e,
+                        "Í": i,
+                        "í": i,
+                        "Î": i,
+                        "î": i,
+                        "Ó": o,
+                        "ó": o,
+                        "Õ": o,
+                        "õ": o,
+                        "Ô": o,
+                        "ô": o,
+                        "Ú": u,
+                        "ú": u,
+                        "Ü": u,
+                        "ü": u,
+                        "ç": c,
+                        "Ç": c
                     };
                     for (var val in special_letters)
                         data = data.split(val).join(special_letters[val]).toLowerCase();
                     return data;
                 },
-                "portugues-asc": function ( a, b ) {
+                "portugues-asc": function(a, b) {
                     return ((a < b) ? -1 : ((a > b) ? 1 : 0));
                 },
-                "portugues-desc": function ( a, b ) {
+                "portugues-desc": function(a, b) {
                     return ((a < b) ? 1 : ((a > b) ? -1 : 0));
                 }
-            } );
+            });
             //"columnDefs": [{ type: 'portugues', targets: "_all" }],            
-
         </script>
-
-@else
-    Acceso No válido
-@endif
+    @else
+        Acceso No válido
+    @endif
 @endsection

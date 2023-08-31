@@ -68,7 +68,7 @@ class LicenciaController extends Controller
             ';
 
             $licencia[$key] = array(
-               $acciones,
+               
                 $value['id'],
                 $value['numero_de_requisicion'],
                 $value['presupuesto'],
@@ -81,6 +81,7 @@ class LicenciaController extends Controller
                 $value['correo_de_contacto'],
                 $value['telefono_de_contacto'],
                 $value['observaciones'],
+                $acciones,
             );
 
         }

@@ -1,4 +1,9 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+@section('title', 'Licencias')
+
+@section('css')
+    @include('layouts.head_2')
+@stop
 @section('content')
     <div class="container">
         @if (Auth::check())
@@ -34,43 +39,43 @@
                         <div class="row align-items-center">
                             <div class="col-md-3">
                                 <label class="font-weight-bold" for="fecha_compra">Fecha de compra </label>
-                                <input type="date" name="fecha_compra" id="fecha_compra">
+                                <input type="date" class="form-control"  name="fecha_compra" id="fecha_compra">
                             </div>
                             <div class="col-md-3">
                                 <label class="font-weight-bold" for="proveedor">Proveedor </label>
-                                <input type="text" name="proveedor" id="proveedor">
+                                <input type="text" class="form-control"  name="proveedor" id="proveedor">
                             </div>
                             <div class="col-md-3">
                                 <label class="font-weight-bold" for="producto">Producto </label>
-                                <input type="text" name="producto" id="producto">
+                                <input type="text" class="form-control"  name="producto" id="producto">
                             </div>
                             <div class="col-md-3">
                                 <label class="font-weight-bold" for="numero_de_licencia">Numero de licencia </label>
-                                <input type="text" name="numero_de_licencia" id="numero_de_licencia">
+                                <input type="text" class="form-control"  name="numero_de_licencia" id="numero_de_licencia">
                             </div>
                             <div class="col-md-3">
                                 <label class="font-weight-bold" for="solicitante">Solicitante </label>
-                                <input type="text" name="solicitante" id="solicitante">
+                                <input type="text" class="form-control"  name="solicitante" id="solicitante">
                             </div>
                             <div class="col-md-3">
                                 <label class="font-weight-bold" for="fecha_de_instalacion">Fecha de instalacion </label>
-                                <input type="date" name="fecha_de_instalacion" id="fecha_de_instalacion">
+                                <input type="date" class="form-control"  name="fecha_de_instalacion" id="fecha_de_instalacion">
                             </div>
                             <div class="col-md-3">
                                 <label class="font-weight-bold" for="correo_de_contacto">Correo de contacto </label>
-                                <input type="email" name="correo_de_contacto" id="correo_de_contacto">                                
+                                <input type="email" class="form-control"  name="correo_de_contacto" id="correo_de_contacto">
                             </div>
                             <div class="col-md-3">
                                 <label class="font-weight-bold" for="telefono_de_contacto">Telefono de contacto </label>
-                                <input type="text" name="telefono_de_contacto" id="telefono_de_contacto">
+                                <input type="text" class="form-control"  name="telefono_de_contacto" id="telefono_de_contacto">
                             </div>
                             <div class="col-md-3">
                                 <label class="font-weight-bold" for="observaciones"> Observaciones</label>
-                                <input type="text" name="observaciones" id="observaciones">
+                                <input type="text" class="form-control"  name="observaciones" id="observaciones">
                             </div>
                         </div>
-                        
-                        <div class="row align-items-center">
+
+                        <div class="row align-items-center mt-2">
                             <div class="col-md-6">
                                 <a href="{{ route('home') }}" class="btn btn-danger">Cancelar</a>
                                 <button type="submit" class="btn btn-success">
@@ -93,7 +98,6 @@
 
             </div>
     </div>
-
 @else
     Accceso no autorizado
     @endif

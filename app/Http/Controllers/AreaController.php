@@ -42,12 +42,12 @@ class AreaController extends Controller
                     <div class="btn-circle">
                         <a href="' .
                 $actualizar .
-                '" role="button" class="btn btn-success" title="Actualizar">
+                '" role="button" class="btn btn-success btn-sm" title="Actualizar">
                             <i class="far fa-edit"></i>
                         </a>
                         <a href="#' .
                 $ruta .
-                '" role="button" class="btn btn-danger" data-toggle="modal" title="Eliminar">
+                '" role="button" class="btn btn-danger btn-sm" data-toggle="modal" title="Eliminar">
                             <i class="far fa-trash-alt"></i>
                         </a>
                     </div>
@@ -67,9 +67,9 @@ class AreaController extends Controller
                       <p class="text-primary">
                         <small>
                             ' .
-                $value['id'] .
-                ', ' .
-                $value['descripcion'] .
+                $value['id'] . 
+                ', ' . $value['sede'] . ", ".
+                $value['area'] .
                 '                 </small>
                       </p>
                     </div>
@@ -84,7 +84,7 @@ class AreaController extends Controller
               </div>
             ';
 
-            $area[$key] = [$acciones, $value['id'], $value['tipo_espacio'], $value['sede'], $value['edificio'], $value['piso'], $value['division'], $value['coordinacion'], $value['area']];
+            $area[$key] = [$value['id'], $value['tipo_espacio'], $value['sede'], $value['edificio'], $value['piso'], $value['division'], $value['coordinacion'], $value['area'], $acciones];
         }
 
         return $area;
@@ -318,77 +318,49 @@ class AreaController extends Controller
         //dd($dia);
 
         foreach ($areas as $item) {
-            
-                if(isset(explode(' ', $item->edificio)[1])){
-                    $edificio = explode(' ', $item->edificio)[1];
-                }else{
-                    $edificio = $item->edificio;
-                }
-                
-                // Se obtienen los tickets abiertos para el aula
-                $ticket = VsTicket::select('id', 'datos_reporte', 'area', 'area_id', 'solicitante', 'fecha_reporte', 'prioridad', 'contacto')
-                    ->where('activo', 1)
-                    ->where('area_id', '=', $item->id)
-                    ->where('estatus', 'Abierto')
-                    ->get();
 
-                if (strcmp('Planta Baja', $item->piso) == 0) {
-                    $item->piso = 'Piso 0';
-                }
+            if (isset(explode(' ', $item->edificio)[1])) {
+                $edificio = explode(' ', $item->edificio)[1];
+            } else {
+                $edificio = $item->edificio;
+            }
 
-                // Obtener cursos del aula
-                // return $dia;
-                //dd($item->id);
-                $cursos = Curso::select('id', 'curso', 'horario', 'profesor')
-                    ->Where('id_area', $item->id)
-                    ->Where('ciclo', '=', '2023A')
-                    ->Where(function ($query) {
-                        $dias = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado'];
-                        $dia = $dias[date('w')];
-                        $query
-                            ->Where('lunes', $dia)
-                            ->orWhere('martes', $dia)
-                            ->orWhere('miercoles', $dia)
-                            ->orWhere('jueves', $dia)
-                            ->orWhere('viernes', $dia)
-                            ->orWhere('sabado', $dia);
-                    })
-                    ->get();
+            // Se obtienen los tickets abiertos para el aula
+            $ticket = VsTicket::select('id', 'datos_reporte', 'area', 'area_id', 'solicitante', 'fecha_reporte', 'prioridad', 'contacto')
+                ->where('activo', 1)
+                ->where('area_id', '=', $item->id)
+                ->where('estatus', 'Abierto')
+                ->get();
 
-                // Obtiene la clase actual
-                foreach ($cursos as $clases => $value) {
-                    $horario = explode('-', $value->horario);
-                    if ($horario[0] <= $hora && $horario[1] >= $hora) {
-                        $item->clase = $value;
-                    }
-                }
-                // Verifica si tiene ticket's, si no los tiene guarda directamente el aula, en caso contrario recupera los tickets
-                if (count($ticket) > 0) {
-                    $item->tickets = $ticket;
-                    if (array_key_exists($edificio, $areas_f)) {
-                        if (array_key_exists($item->piso, $areas_f[$edificio])) {
-                            array_push($areas_f[$edificio][$item->piso], $item->toArray());
-                        } else {
-                            $areas_f[$edificio][$item->piso] = [$item->toArray()];
-                        }
+            if (strcmp('Planta Baja', $item->piso) == 0) {
+                $item->piso = 'Piso 0';
+            }
+            // Verifica si tiene ticket's, si no los tiene guarda directamente el aula, en caso contrario recupera los tickets
+            if (count($ticket) > 0) {
+                $item->tickets = $ticket;
+                if (array_key_exists($edificio, $areas_f)) {
+                    if (array_key_exists($item->piso, $areas_f[$edificio])) {
+                        array_push($areas_f[$edificio][$item->piso], $item->toArray());
                     } else {
                         $areas_f[$edificio][$item->piso] = [$item->toArray()];
                     }
                 } else {
-                    if (isset($areas_f[$edificio])) {
-                        if (array_key_exists($item->piso, $areas_f[$edificio])) {
-                            array_push($areas_f[$edificio][$item->piso], $item->toArray());
-                        } else {
-                            $areas_f[$edificio][$item->piso] = [$item->toArray()];
-                        }
+                    $areas_f[$edificio][$item->piso] = [$item->toArray()];
+                }
+            } else {
+                if (isset($areas_f[$edificio])) {
+                    if (array_key_exists($item->piso, $areas_f[$edificio])) {
+                        array_push($areas_f[$edificio][$item->piso], $item->toArray());
                     } else {
                         $areas_f[$edificio][$item->piso] = [$item->toArray()];
                     }
+                } else {
+                    $areas_f[$edificio][$item->piso] = [$item->toArray()];
                 }
-                //dd($areas_f[$edificio][$item->piso]);
-                //dd($areas_f[$edificio]);
-                ksort($areas_f[$edificio]);
-            
+            }
+            //dd($areas_f[$edificio][$item->piso]);
+            //dd($areas_f[$edificio]);
+            ksort($areas_f[$edificio]);
         }
         $areas = collect($areas_f);
         //return $areas;
@@ -400,14 +372,13 @@ class AreaController extends Controller
             ->where('id', $id)
             ->first();
 
-        $equipo = VsEquipo::where('activo', 1)->select('id','udg_id','resguardante','marca','modelo','numero_serie','tipo_equipo')->
-            where('id_area', '=', $id)
-            ->whereIn('tipo_equipo', ['CPU', 'Proyector', 'Pantalla', 'No break', 'Bocinas', 'Soporte para Proyector', 'Botonera','Camara'])->orderBy('tipo_equipo')
+        $equipo = VsEquipo::where('activo', 1)->select('id', 'udg_id', 'resguardante', 'marca', 'modelo', 'numero_serie', 'tipo_equipo')->where('id_area', '=', $id)
+            ->whereIn('tipo_equipo', ['CPU', 'Proyector', 'Pantalla', 'No break', 'Bocinas', 'Soporte para Proyector', 'Botonera', 'Camara'])->orderBy('tipo_equipo')
             ->get();
 
         $grupos = VsEquipo::where('activo', 1)
             ->where('id_area', '=', $id)
-            ->whereIn('tipo_equipo', ['CPU', 'Proyector', 'Pantalla', 'No break', 'Bocinas', 'Soporte para Proyector', 'Botonera','Camara'])->get()->groupBy(function ($elmento) {
+            ->whereIn('tipo_equipo', ['CPU', 'Proyector', 'Pantalla', 'No break', 'Bocinas', 'Soporte para Proyector', 'Botonera', 'Camara'])->get()->groupBy(function ($elmento) {
                 return $elmento->tipo_equipo;
             });
 

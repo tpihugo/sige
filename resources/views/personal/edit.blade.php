@@ -1,4 +1,9 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+@section('title', 'Editar Personal')
+
+@section('css')
+    @include('layouts.head_2')
+@stop
 @section('content')
     @php
         use App\Models\Area;
@@ -17,7 +22,7 @@
                     </div>
                 @endif
                 <div class="row">
-                    <h2>Edici&oacute;n de Personal: {{ $personal->nombre }}</h2>
+                    <h2 class="mt-3">Edici&oacute;n de Personal:  {{ $personal->apellido_paterno .' '.$personal->apellido_materno .' '. $personal->nombre }}</h2>
                     <hr>
                     <script type="text/javascript">
                         $(document).ready(function() {

@@ -1,4 +1,9 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+@section('title', 'Editar área')
+
+@section('css')
+    @include('layouts.head_2')
+@stop
 @section('content')
     <div class="container">
         @if (Auth::check())
@@ -17,7 +22,8 @@
 
             <div class="row">
                 <div class="col-12">
-                    <form action="{{route('areas.update',$area->id)}}" method="post" enctype="multipart/form-data" class="col-12">
+                    <form action="{{ route('areas.update', $area->id) }}" method="post" enctype="multipart/form-data"
+                        class="col-12">
                         {!! csrf_field() !!}
                         {{ method_field('PUT') }}
                         @if ($errors->any())
@@ -35,41 +41,42 @@
                             <div class="col-md-3">
                                 <label class="font-weight-bold" for="tipo_espacio">Tipo de Espacio </label>
                                 <select class="form-control" id="tipo_espacio" name="tipo_espacio">
-                                 <option value="{{$area->tipo_espacio}}" selected>{{$area->tipo_espacio}}</option>
-                                    @if($area->tipo_espacio == 'Administrativo')
-                                       <option value="Aula">Aula</option>
-                                       <option value="Laboratorio">Laboratorio</option>
+                                    <option value="{{ $area->tipo_espacio }}" selected>{{ $area->tipo_espacio }}</option>
+                                    @if ($area->tipo_espacio == 'Administrativo')
+                                        <option value="Aula">Aula</option>
+                                        <option value="Laboratorio">Laboratorio</option>
                                     @endif
-                                    @if($area->tipo_espacio == 'Aula')
-                                       <option value="Administrativo">Administrativo</option>
-                                       <option value="Laboratorio">Laboratorio</option>
+                                    @if ($area->tipo_espacio == 'Aula')
+                                        <option value="Administrativo">Administrativo</option>
+                                        <option value="Laboratorio">Laboratorio</option>
                                     @endif
-                                    @if($area->tipo_espacio == 'Laboratorio')
-                                       <option value="Administrativo">Administrativo</option>
-                                       <option value="Aula">Aula</option>
+                                    @if ($area->tipo_espacio == 'Laboratorio')
+                                        <option value="Administrativo">Administrativo</option>
+                                        <option value="Aula">Aula</option>
                                     @endif
                                 </select>
                             </div>
                             <div class="col-md-3">
                                 <label class="font-weight-bold" for="sede">Sede </label>
                                 <select class="form-control" id="sede" name="sede">
-                                    <option value="{{$area->sede}}" selected>{{$area->sede}}</option>
+                                    <option value="{{ $area->sede }}" selected>{{ $area->sede }}</option>
                                     <option disabled>Elegir</option>
-                                    <option value="Belenes" >Belenes</option>
+                                    <option value="Belenes">Belenes</option>
                                     <option value="La Normal">La Normal</option>
                                     <option value="Juan Manuel 130">Juan Manuel 130</option>
-                                    <option value="C.U. DE CS. SOCIALES Y HUMANIDADES">C.U. DE CS. SOCIALES Y HUMANIDADES</option>
-					    <option value="Papirolas">Papirolas</option>
-					    <option value="FIL">FIL Expo</option>
-				<option value="Prestamo Externo">Pr&eacute;stamo Externo</option>
+                                    <option value="C.U. DE CS. SOCIALES Y HUMANIDADES">C.U. DE CS. SOCIALES Y HUMANIDADES
+                                    </option>
+                                    <option value="Papirolas">Papirolas</option>
+                                    <option value="FIL">FIL Expo</option>
+                                    <option value="Prestamo Externo">Pr&eacute;stamo Externo</option>
 
                                 </select>
                             </div>
                             <div class="col-md-3">
                                 <label class="font-weight-bold" for="edificio">Edificio </label>
                                 <select class="form-control" id="edificio" name="edificio">
-                                    <option value="{{$area->edificio}}" selected>{{$area->edificio}}</option>
-                                    <option disabled >Elegir</option>
+                                    <option value="{{ $area->edificio }}" selected>{{ $area->edificio }}</option>
+                                    <option disabled>Elegir</option>
                                     <option value="Edificio A">Edificio A</option>
                                     <option value="Edificio B">Edificio B</option>
                                     <option value="Edificio C">Edificio C</option>
@@ -81,7 +88,7 @@
                                     <option value="Edificio F 3">Edificio F 3</option>
                                     <option value="Edificio F 4">Edificio F 4</option>
                                     <option value="Edificio F 5">Edificio F 5</option>
-                                    
+
                                     <option value="Edificio G">Edificio G</option>
                                     <option value="Edificio H">Edificio H</option>
                                     <option value="Edificio I">Edificio I</option>
@@ -97,14 +104,15 @@
                                     <option value="Edificio S">Edificio S</option>
                                     <option value="Edificio T">Edificio T</option>
                                     <option value="Edificio U">Edificio U</option>
-                                    <option value="Edificio Servicios Generales Belenes">Servicios Generales Belenes</option>
+                                    <option value="Edificio Servicios Generales Belenes">Servicios Generales Belenes
+                                    </option>
                                 </select>
                             </div>
                             <div class="col-md-3">
                                 <label class="font-weight-bold" for="piso">Piso </label>
                                 <select class="form-control" id="piso" name="piso">
-                                    <option value="{{$area->piso}}" selected>{{$area->piso}}</option>
-                                    <option disabled >Elegir</option>
+                                    <option value="{{ $area->piso }}" selected>{{ $area->piso }}</option>
+                                    <option disabled>Elegir</option>
                                     <option value="Planta Baja">Planta Baja</option>
                                     <option value="Piso 1">Piso 1</option>
                                     <option value="Piso 2">Piso 2</option>
@@ -120,8 +128,8 @@
                             <div class="col-md-6">
                                 <label class="font-weight-bold" for="division">División </label>
                                 <select class="form-control" id="division" name="division">
-                                    <option value="{{$area->division}}" selected>{{$area->division}}</option>
-                                    <option disabled >Elegir</option>
+                                    <option value="{{ $area->division }}" selected>{{ $area->division }}</option>
+                                    <option disabled>Elegir</option>
                                     <option value="Rectoría">Rectoría</option>
                                     <option value="Secretaría Académica">Secretaría Académica</option>
                                     <option value="Secretaría Administrativa">Secretaría Administrativa</option>
@@ -129,18 +137,21 @@
                                         Históricos y Humanos</option>
                                     <option value="División de Estudios Jurídicos">División de Estudios Jurídicos</option>
                                     <option value="División de Estudios de la Cultura">División de la Cultura</option>
-                                    <option value="División de Estudios Políticos y Sociales">División de Estudios Politicos y Sociales
+                                    <option value="División de Estudios Políticos y Sociales">División de Estudios
+                                        Politicos y Sociales
                                     </option>
-                                    <option value="División de Estudios de Estado y Sociedad">División de Estudios de Estado y sociedad
+                                    <option value="División de Estudios de Estado y Sociedad">División de Estudios de
+                                        Estado y sociedad
                                     </option>
-                                    <option value="C.U. DE CS. SOCIALES Y HUMANIDADES">C.U. DE CS. SOCIALES Y HUMANIDADES</option>
+                                    <option value="C.U. DE CS. SOCIALES Y HUMANIDADES">C.U. DE CS. SOCIALES Y HUMANIDADES
+                                    </option>
                                 </select>
                             </div>
                             <div class="col-md-6">
                                 <label class="font-weight-bold" for="coordinacion">Coordinación </label>
                                 <select class="form-control" id="coordinacion" name="coordinacion">
-                                    <option value="{{$area->coordinacion}}" selected>{{$area->coordinacion}}</option>
-                                    <option disabled >Elegir</option>
+                                    <option value="{{ $area->coordinacion }}" selected>{{ $area->coordinacion }}</option>
+                                    <option disabled>Elegir</option>
                                     <option value='Auditorio Belenes'>Auditorio Belenes</option>
                                     <option value='Auditorio Salvador Allende'>Auditorio Salvador Allende</option>
                                     <option value='Biblioteca Central La Normal'>Biblioteca Central La Normal</option>
@@ -157,8 +168,10 @@
                                     <option value='Control Escolar'>Control Escolar</option>
                                     <option value='CTA'>CTA</option>
                                     <option value='CTA - Espacion comunes'>CTA - Espacion comunes</option>
-                                    <option value="C.U. DE CS. SOCIALES Y HUMANIDADES">C.U. DE CS. SOCIALES Y HUMANIDADES</option>
-                                    <option value='Departamento de Estudios de Lenguas Modernas'>Departamento de Estudios de
+                                    <option value="C.U. DE CS. SOCIALES Y HUMANIDADES">C.U. DE CS. SOCIALES Y HUMANIDADES
+                                    </option>
+                                    <option value='Departamento de Estudios de Lenguas Modernas'>Departamento de Estudios
+                                        de
                                         Lenguas Modernas</option>
                                     <option value='Departamento de Estudios del Pacífico'>Departamento de Estudios del
                                         Pacífico</option>
@@ -174,7 +187,8 @@
                                     </option>
                                     <option value='Derecho Público, Departamento de'>Derecho Público, Departamento de
                                     </option>
-                                    <option value='Derecho Social, Departamento de'>Derecho Social, Departamento de</option>
+                                    <option value='Derecho Social, Departamento de'>Derecho Social, Departamento de
+                                    </option>
                                     <option value='Desarrollo local y territorio, Maestría'>Desarrollo local y territorio,
                                         Maestría</option>
                                     <option value='Desarrollo Social , Departamento de'>Desarrollo Social , Departamento de
@@ -184,14 +198,16 @@
                                     <option value='Difusión, Coordinación'>Difusión, Coordinación</option>
                                     <option value='Disciplinas sobre el Derecho, Departamento de'>Disciplinas sobre el
                                         Derecho, Departamento de</option>
-                                    <option value='División de Estudios de Estado y Sociedad'>División de Estudios de Estado
+                                    <option value='División de Estudios de Estado y Sociedad'>División de Estudios de
+                                        Estado
                                         y Sociedad</option>
                                     <option value='División de Estudios de la Cultura'>División de Estudios de la Cultura
                                     </option>
                                     <option value='División de Estudios Históricos y Humanos'>División de Estudios
                                         Históricos y Humanos</option>
                                     <option value='División de Estudios Jurídicos'>División de Estudios Jurídicos</option>
-                                    <option value='División de Estudios Políticos y Sociales'>División de Estudios Políticos
+                                    <option value='División de Estudios Políticos y Sociales'>División de Estudios
+                                        Políticos
                                         y Sociales</option>
                                     <option value='Docencia, Coordinación'>Docencia, Coordinación</option>
                                     <option value='Doctorado en Derecho'>Doctorado en Derecho</option>
@@ -255,7 +271,8 @@
                                     <option value='Servicios Generales, Coordinación'>Servicios Generales, Coordinación
                                     </option>
                                     <option value='Sociología, Departamento de'>Sociología, Departamento de</option>
-                                    <option value='Trabajo Social, Departamento de'>Trabajo Social, Departamento de</option>
+                                    <option value='Trabajo Social, Departamento de'>Trabajo Social, Departamento de
+                                    </option>
                                     <option value='Vinculación'>Vinculación</option>
 
                                 </select>
@@ -267,34 +284,38 @@
                                 <label class="font-weight-bold" for="imagen_1">Imagen 1</label>
                                 <div class="custom-file">
                                     <input name="imagen_1" type="file" class="custom-file-input" id="customFileLang"
-                                        lang="es"  value="{{$area->imagen_1}}">
+                                        lang="es" value="{{ $area->imagen_1 }}">
                                     <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
                                 </div>
-				{{--<a href="storage/app/images/{{$area->imagen_1}}" class="thumb" title="Nombre imagen" target="_blank">Nombre imagen</a>--}}
+                                {{-- <a href="storage/app/images/{{$area->imagen_1}}" class="thumb" title="Nombre imagen" target="_blank">Nombre imagen</a> --}}
                             </div>
                             <div class="col-md-4">
                                 <label class="font-weight-bold" for="imagen_2">Imagen 2</label>
                                 <div class="custom-file">
                                     <input name="imagen_2" type="file" class="custom-file-input" id="customFileLang"
-                                        lang="es" value="{{$area->imagen_2}}">
+                                        lang="es" value="{{ $area->imagen_2 }}">
                                     <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
                                 </div>
-				{{--<a href="storage/app/images/{{$area->imagen_2}}" class="thumb" title="Nombre imagen" target="_blank">Nombre imagen</a>--}}
-                            </div>			
+                                {{-- <a href="storage/app/images/{{$area->imagen_2}}" class="thumb" title="Nombre imagen" target="_blank">Nombre imagen</a> --}}
+                            </div>
                             <div class="col-md-4">
                                 <label class="font-weight-bold" for="Equipamiento">Equipamiento</label>
                                 <select class="form-control" id="equipamiento" name="equipamiento">
-                                    <option {{($area->equipamiento =='Sin Equipo')? 'selected': ''}} value="Sin Equipo">Sin equipo</option>
-                                    <option {{($area->equipamiento =='PC')? 'selected': ''}} value="PC">PC</option>
-                                    <option {{($area->equipamiento =='TV,PC')? 'selected': ''}} value="TV,PC">Pantalla TV - PC</option>
-                                    <option {{($area->equipamiento =='Proyector,PC')? 'selected': ''}} value="Proyector,PC">Proyector - PC</option>
+                                    <option {{ $area->equipamiento == 'Sin Equipo' ? 'selected' : '' }} value="Sin Equipo">
+                                        Sin equipo</option>
+                                    <option {{ $area->equipamiento == 'PC' ? 'selected' : '' }} value="PC">PC</option>
+                                    <option {{ $area->equipamiento == 'TV,PC' ? 'selected' : '' }} value="TV,PC">Pantalla
+                                        TV - PC</option>
+                                    <option {{ $area->equipamiento == 'Proyector,PC' ? 'selected' : '' }}
+                                        value="Proyector,PC">Proyector - PC</option>
                                 </select>
                             </div>
                         </div>
                         <div class="row align-items-center mt-4">
                             <div class="col-md-12">
                                 <label class="font-weight-bold" for="area">Área</label>
-                                <input type="text" class="form-control" id="area" name="area" value="{{$area->area}}" >
+                                <input type="text" class="form-control" id="area" name="area"
+                                    value="{{ $area->area }}">
                             </div>
                         </div>
                         <br>
@@ -321,7 +342,6 @@
 
             </div>
     </div>
-
 @else
     El periodo de Registro de Proyectos a terminado
     @endif

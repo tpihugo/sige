@@ -1,4 +1,9 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+@section('title', 'Logs')
+
+@section('css')
+    @include('layouts.head_2')
+@stop
 
 @section('content')
     @if (Auth::check() && (  Auth::user()->role =='admin' || Auth::user()->role =='cta' ||  Auth::user()->role =='redes'))

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Log;
@@ -27,24 +28,24 @@ class PersonalController extends Controller
      */
 
 
-    
+
 
     public function search(Request $request)
     {
 
-      if($request->ajax()){
-        if($request->input('filterBy') == 'nombre'){
-          $data = Personal::where('nombre', 'like', '%'.$request->input('filter'). '%')->get();
-        }else if($request->input('filterBy') == 'codigo'){
-          $data = Personal::where('codigo',$request->input('filter') )->get();
+        if ($request->ajax()) {
+            if ($request->input('filterBy') == 'nombre') {
+                $data = Personal::where('nombre', 'like', '%' . $request->input('filter') . '%')->get();
+            } else if ($request->input('filterBy') == 'codigo') {
+                $data = Personal::where('codigo', $request->input('filter'))->get();
+            }
         }
-      }
 
-      $output = '';
-      if(count($data) > 0){
-              foreach ($data as $row) {
+        $output = '';
+        if (count($data) > 0) {
+            foreach ($data as $row) {
 
-                $ruta = "eliminar".$row['id'];
+                $ruta = "eliminar" . $row['id'];
                 $eliminar = route('delete-personal', $row['id']);
                 $actualizar =  route('personal.edit', $row['id']);
                 $acciones = '';
@@ -79,46 +80,44 @@ class PersonalController extends Controller
                   </div>
                   @endcan
                 `;
-
-
-
                 $output .= '
                 <tr>
-                  <td>'.$acciones.'</td>
-                  <td>'.$row->codigo.'</td>
-                  <td>'.$row->apellido_paterno.'</td>
-                  <td>'.$row->apellido_materno.'</td>
-                  <td>'.$row->nombre.'</td>
-                  <td>'.$row->plaza.'</td>
-                  <td>'.$row->categoria.'</td>
-                  <td>'.$row->carga_horaria.'</td>
-                  <td>'.$row->adscripcion.'</td>
-                  <td>'.$row->lunes.'</td>
-                  <td>'.$row->martes.'</td>
-                  <td>'.$row->miercoles.'</td>
-                  <td>'.$row->jueves.'</td>
-                  <td>'.$row->viernes.'</td>
-                  <td>'.$row->sabado.'</td>
-                  <td>'.$row->area_fisica.'</td>
-                  <td>'.$row->sede.'</td>
-                  <td>'.$row->grado_estudios.'</td>
+                  
+                  <td>' . $row->codigo . '</td>
+                  <td>' . $row->apellido_paterno . '</td>
+                  <td>' . $row->apellido_materno . '</td>
+                  <td>' . $row->nombre . '</td>
+                  <td>' . $row->plaza . '</td>
+                  <td>' . $row->categoria . '</td>
+                  <td>' . $row->carga_horaria . '</td>
+                  <td>' . $row->adscripcion . '</td>
+                  <td>' . $row->lunes . '</td>
+                  <td>' . $row->martes . '</td>
+                  <td>' . $row->miercoles . '</td>
+                  <td>' . $row->jueves . '</td>
+                  <td>' . $row->viernes . '</td>
+                  <td>' . $row->sabado . '</td>
+                  <td>' . $row->area_fisica . '</td>
+                  <td>' . $row->sede . '</td>
+                  <td>' . $row->grado_estudios . '</td>
+                  <td>' . $acciones . '</td>
                  
                    </td>
                   <td>
 
                  </tr> ';
-              }
-      }else{
-        $output = "no data found";
-      }
-      return $output;
+            }
+        } else {
+            $output = "no data found";
+        }
+        return $output;
     }
 
     public function DT_exportExcel()
     {
         $perExport = new PersonalsExport;
         // $perExport->setValue($valueParameter);
-        return Excel::download($perExport , 'personal.xlsx' );
+        return Excel::download($perExport, 'personal.xlsx');
     }
 
     public function DT_exportPDF()
@@ -143,11 +142,11 @@ class PersonalController extends Controller
             'sede',
         )->get();
 
-         $dompdf = new Dompdf();
-         $dompdf->loadHtml($this->table_to_PDF($query));
-         $dompdf->setPaper('A2', 'landscape');
-         $dompdf->render();
-         $dompdf->stream('Infomes.pdf', ['Attachment'=>false]);
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml($this->table_to_PDF($query));
+        $dompdf->setPaper('A2', 'landscape');
+        $dompdf->render();
+        $dompdf->stream('Infomes.pdf', ['Attachment' => false]);
     }
 
     private function table_to_PDF($query)
@@ -212,78 +211,78 @@ class PersonalController extends Controller
               </tr>
               ';
 
-              $i = 0;
-        foreach($query as $row){
+        $i = 0;
+        foreach ($query as $row) {
             // if($i > 100)
             //     break;
-              $output .= '
+            $output .= '
                <tr>
                    <td style="border: 1px solid; padding:5px;">
-                       '.$row->codigo.'
+                       ' . $row->codigo . '
                    </td>
                    <td style="border: 1px solid; padding:5px;">
-                      '.$row->apellido_paterno.'
+                      ' . $row->apellido_paterno . '
                   </td>
 
                   <td style="border: 1px solid; padding:5px;">
-                       '.$row->apellido_materno.'
+                       ' . $row->apellido_materno . '
                    </td>
                    <td style="border: 1px solid; padding:5px;">
-                         '.$row->nombre.'
+                         ' . $row->nombre . '
                      </td>
                      <td style="border: 1px solid; padding:5px;">
-                        '.$row->plaza.'
+                        ' . $row->plaza . '
                     </td>
                     <td style="border: 1px solid; padding:5px;">
-                        '.$row->categoria.'
+                        ' . $row->categoria . '
                     </td>
                     <td style="border: 1px solid; padding:5px;">
-                        '.$row->carga_horaria.'
+                        ' . $row->carga_horaria . '
                     </td>
                     <td style="border: 1px solid; padding:5px;">
-                        '.$row->adscripcion.'
+                        ' . $row->adscripcion . '
                     </td>
                     <td style="border: 1px solid; padding:5px;">
-                          '.$row->lunes.'
+                          ' . $row->lunes . '
                       </td>
                       <td style="border: 1px solid; padding:5px;">
-                          '.$row->martes.'
+                          ' . $row->martes . '
                       </td>
                       <td style="border: 1px solid; padding:5px;">
-                          '.$row->miercoles.'
+                          ' . $row->miercoles . '
                       </td>
                       <td style="border: 1px solid; padding:5px;">
-                          '.$row->jueves.'
+                          ' . $row->jueves . '
                       </td>
                       <td style="border: 1px solid; padding:5px;">
-                          '.$row->viernes.'
+                          ' . $row->viernes . '
                       </td>
                       <td style="border: 1px solid; padding:5px;">
-                          '.$row->sabado.'
+                          ' . $row->sabado . '
                       </td>
                       <td style="border: 1px solid; padding:5px;">
-                         '.$row->area_fisica.'
+                         ' . $row->area_fisica . '
                      </td>
                      <td style="border: 1px solid; padding:5px;">
-                         '.$row->sede.'
+                         ' . $row->sede . '
                      </td>
                      <td style="border: 1px solid; padding:5px;">
-                         '.$row->grado_estudios.'
+                         ' . $row->grado_estudios . '
                      </td>
                      
 
               </tr>
               ';
-              $i++;
-          }
-         $output .= '</table>';
+            $i++;
+        }
+        $output .= '</table>';
         return $output;
     }
     public function index()
     {
-        $vspersonal = Personal::where('activo','=',1)->get();
+        $vspersonal = Personal::where('activo', '=', 1)->get();
         $personal = $this->cargarDT($vspersonal);
-        return view('personal.index')->with('personal',$personal);
+        return view('personal.index')->with('personal', $personal);
     }
     public function cargarDT($consulta)
     {
@@ -344,29 +343,34 @@ class PersonalController extends Controller
 
 
             //$temp = "<a href='". $this->getImage($value['documento']) ."' > Ver documento <a/>";
-            
-            
+
+            if (strcmp($value['documento'], '-') == 0) {
+                $documento = " <b>Sin documento</b>";
+            } else {
+                $documento = "<a href='" . url('/storage/documentos/' . $value['documento']) . "' target='blank_'> Ver documento <a/>";
+            }
+
+            $horario = '<button onclick="horario(' .  "'" .  $value->horario . "'" . ')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+            Horario
+          </button>';
 
             $personal[$key] = [
-            $value['codigo'], 
-            $value['apellido_paterno'], 
-            $value['apellido_materno'], 
-            $value['nombre'], 
-            $value['plaza'],
-            $value['carga_horaria'], 
-            $value['categoria'], 
-            $value['adscripcion'],
-            $value['area_fisica'],
-            $value['sede'],
-            "<a href='". url('/storage/documentos/'. $value['documento']) ."' target='blank_'> Ver documento <a/>",
-            "Lunes: ".$value['lunes'].
-            "<ol/>Martes: ".$value['martes'].
-            "<ol/>Miércoles: ".$value['miercoles'].
-            "<ol/>Jueves: ".$value['jueves'].
-            "<ol/>Viernes: ".$value['viernes'].
-            "<ol/>Sábado: ".$value['sabado'], 
-            $value['grado_estudios'],
-            $acciones];
+                $value['id'],
+                $value['codigo'],
+                $value['apellido_paterno'],
+                $value['apellido_materno'],
+                $value['nombre'],
+                $value['plaza'],
+                $value['carga_horaria'],
+                $value['categoria'],
+                $value['adscripcion'],
+                $value['area_fisica'],
+                $value['sede'],
+                $value['grado_estudios'],
+                $documento,
+                $horario,
+                $acciones
+            ];
         }
 
         return $personal;
@@ -392,26 +396,12 @@ class PersonalController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {      
-        $validateData = $this->validate($request,[
-            'codigo'=>'required',   
-            'apellido_paterno'=>'required',
-            'apellido_materno'=>'required',
-            'nombre'=>'required',
-            'grado_estudios'=>'required',
-            'plaza'=>'required',
-            'categoria'=>'required',
-            'carga_horaria'=>'required|numeric|min:0',
-            'adscripcion'=>'required',
-            'lunes'=>'required',
-            'martes'=>'required',
-            'miercoles'=>'required',
-            'jueves'=>'required',
-            'viernes'=>'required',
-            'sabado'=>'required',
-            'area_fisica'=>'required',
-            'sede'=>'required',
-            ''
+    {
+        $this->validate($request, [
+            'codigo' => 'required',
+            'apellido_paterno' => 'required',
+            'apellido_materno' => 'required',
+            'nombre' => 'required',
         ]);
 
         $personal = new Personal();
@@ -434,30 +424,29 @@ class PersonalController extends Controller
         $personal->sede = $request->input('sede');
         $personal->grado_estudios = $request->input('grado_estudios');
 
-        if($request->hasFile('pdf'))
-        {
-            $nombre = $personal->codigo."_".$personal->apellido_paterno."_".$personal->apellido_materno.".pdf";
-            $archivo=$request->file('pdf');
+        if ($request->hasFile('pdf')) {
+            $nombre = $personal->codigo . "_" . $personal->apellido_paterno . "_" . $personal->apellido_materno . ".pdf";
+            $archivo = $request->file('pdf');
             \Storage::disk('documentos')->put($nombre, \File::get($archivo));
-            $personal->documento=$nombre;
+            $personal->documento = $nombre;
         }
-      
+
         $personal->save();
-	//
+        //
         $log = new Log();
         $log->tabla = "nuevo_personal";
-        $mov="";
-        $mov=$mov." activo: ". $personal->activo ." codigo:". $personal->codigo ." apellido_paterno:". $personal->apellido_paterno ." apellido_materno:" . $personal->apellido_materno . " nombre:".$personal->nombre ." plaza:". $personal->plaza ." categoria:" .$personal->categoria ." carga_horaria:" .$personal->carga_horaria. " adscripcion:" .$personal->adscripcion;
-        $mov=$mov." lunes:" .$personal->lunes. " martes:" .$personal->martes. " miercoles:" .$personal->miercoles. " jueves:" .$personal->jueves. " viernes:" .$personal->viernes. " sabado:" .$personal->sabado. " area_fisica:" .$personal->area_fisica. " sede:" .$personal->sede. " grado_estudios:" .$personal->grado_estudios;
+        $mov = "";
+        $mov = $mov . " activo: " . $personal->activo . " codigo:" . $personal->codigo . " apellido_paterno:" . $personal->apellido_paterno . " apellido_materno:" . $personal->apellido_materno . " nombre:" . $personal->nombre . " plaza:" . $personal->plaza . " categoria:" . $personal->categoria . " carga_horaria:" . $personal->carga_horaria . " adscripcion:" . $personal->adscripcion;
+        $mov = $mov . " lunes:" . $personal->lunes . " martes:" . $personal->martes . " miercoles:" . $personal->miercoles . " jueves:" . $personal->jueves . " viernes:" . $personal->viernes . " sabado:" . $personal->sabado . " area_fisica:" . $personal->area_fisica . " sede:" . $personal->sede . " grado_estudios:" . $personal->grado_estudios;
         $log->movimiento = $mov;
         $log->usuario_id = Auth::user()->id;
         $log->acciones = "Insercion";
         $log->save();
 
-       
+
         //
         return redirect('personal')->with([
-            'message'=>'El personal se guardó correctamente'
+            'message' => 'El personal se guardó correctamente'
         ]);
     }
     /**
@@ -492,24 +481,11 @@ class PersonalController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validateData = $this->validate($request,[
-            'codigo'=>'required',
-            'apellido_paterno'=>'required',
-            'apellido_materno'=>'required',
-            'nombre'=>'required',
-            'grado_estudios'=>'required',
-            'plaza'=>'required',
-            'categoria'=>'required',
-            'carga_horaria'=>'required',
-            'adscripcion'=>'required',
-            'lunes'=>'required',
-            'martes'=>'required',
-            'miercoles'=>'required',
-            'jueves'=>'required',
-            'viernes'=>'required',
-            'sabado'=>'required',
-            'area_fisica'=>'required',
-            'sede'=>'required',
+        $this->validate($request, [
+            'codigo' => 'required',
+            'apellido_paterno' => 'required',
+            'apellido_materno' => 'required',
+            'nombre' => 'required',
         ]);
 
         $personal = Personal::find($id);
@@ -531,30 +507,29 @@ class PersonalController extends Controller
         $personal->sede = $request->input('sede');
         $personal->grado_estudios = $request->input('grado_estudios');
 
-        if($request->hasFile('pdf'))
-        {
-            $nombre = $personal->codigo."_".$personal->apellido_paterno."_".$personal->apellido_materno.".pdf";
-            $archivo=$request->file('pdf');
+        if ($request->hasFile('pdf')) {
+            $nombre = $personal->codigo . "_" . $personal->apellido_paterno . "_" . $personal->apellido_materno . ".pdf";
+            $archivo = $request->file('pdf');
             \Storage::disk('documentos')->put($nombre, \File::get($archivo));
 
-            $personal->documento=$nombre;
+            $personal->documento = $nombre;
         }
         $personal->update();
-	//
+        //
         $log = new Log();
         $log->tabla = "nuevo_personal";
-        $mov="";
-        $mov=$mov." codigo: ".$personal->codigo ." apellido_paterno: ". $personal->apellido_paterno ." apellido_materno: " .$personal->apellido_materno;
-        $mov=$mov." nombre: ".$personal->nombre ." plaza: ". $personal->plaza ." categoria " .$personal->categoria ." carga_horaria: " .$personal->carga_horaria. 
-        "adscripcion: " .$personal->adscripcion. "lunes: " .$personal->lunes. "martes: " .$personal->martes. "miercoles: " .$personal->miercoles. "jueves: " .$personal->jueves. 
-        "viernes: " .$personal->viernes. "sabado: " .$personal->sabado. "area_fisica: " .$personal->area_fisica. "sede" .$personal->sede. "grado_estudios" .$personal->grado_estudios;
+        $mov = "";
+        $mov = $mov . " codigo: " . $personal->codigo . " apellido_paterno: " . $personal->apellido_paterno . " apellido_materno: " . $personal->apellido_materno;
+        $mov = $mov . " nombre: " . $personal->nombre . " plaza: " . $personal->plaza . " categoria " . $personal->categoria . " carga_horaria: " . $personal->carga_horaria .
+            "adscripcion: " . $personal->adscripcion . "lunes: " . $personal->lunes . "martes: " . $personal->martes . "miercoles: " . $personal->miercoles . "jueves: " . $personal->jueves .
+            "viernes: " . $personal->viernes . "sabado: " . $personal->sabado . "area_fisica: " . $personal->area_fisica . "sede" . $personal->sede . "grado_estudios" . $personal->grado_estudios;
         $log->movimiento = $mov;
         $log->usuario_id = Auth::user()->id;
         $log->acciones = "Edicion";
         $log->save();
         //
         return redirect('personal')->with(array(
-            'message'=>'El personal se actualizó Correctamente'
+            'message' => 'El personal se actualizó Correctamente'
         ));
     }
 
@@ -569,43 +544,40 @@ class PersonalController extends Controller
         //
     }
 
-    public function delete_personal($id){
+    public function delete_personal($id)
+    {
         $personal = Personal::find($id);
-        if($personal){
+        if ($personal) {
             $personal->activo = 0;
             $personal->update();
-	    //
-        $log = new Log();
-        $log->tabla = "nuevo_personal";
-        $mov="";
-        $mov=$mov." codigo:".$personal->codigo ." apellido_paterno:". $personal->apellido_paterno ." apellido_materno:" .$personal->apellido_materno;
-        $mov=$mov." nombre:".$personal->nombre ." plaza:". $personal->plaza ." categoria" .$personal->categoria ." carga_horaria" .$personal->carga_horaria. "adscripcion" .$personal->adscripcion. "lunes:" .$personal->lunes. "martes:" .$personal->martes. "miercoles:" .$personal->miercoles. "jueves:" .$personal->jueves. "viernes:" .$personal->viernes. "sabado:" .$personal->sabado. "area_fisica:" .$personal->area_fisica. "sede" .$personal->sede. "grado_estudios" .$personal->grado_estudios;
-        $log->movimiento = $mov;
-        $log->usuario_id = Auth::user()->id;
+            //
+            $log = new Log();
+            $log->tabla = "nuevo_personal";
+            $mov = "";
+            $mov = $mov . " codigo:" . $personal->codigo . " apellido_paterno:" . $personal->apellido_paterno . " apellido_materno:" . $personal->apellido_materno;
+            $mov = $mov . " nombre:" . $personal->nombre . " plaza:" . $personal->plaza . " categoria" . $personal->categoria . " carga_horaria" . $personal->carga_horaria . "adscripcion" . $personal->adscripcion . "lunes:" . $personal->lunes . "martes:" . $personal->martes . "miercoles:" . $personal->miercoles . "jueves:" . $personal->jueves . "viernes:" . $personal->viernes . "sabado:" . $personal->sabado . "area_fisica:" . $personal->area_fisica . "sede" . $personal->sede . "grado_estudios" . $personal->grado_estudios;
+            $log->movimiento = $mov;
+            $log->usuario_id = Auth::user()->id;
             $log->acciones = "Borrado";
             $log->save();
             //
             return redirect()->route('personal.index')->with(array(
-               "message" => "El personal se ha eliminado correctamente"
+                "message" => "El personal se ha eliminado correctamente"
             ));
-        }else{
+        } else {
             return redirect()->route('home')->with(array(
-               "message" => "El personal que trata de eliminar no existe"
+                "message" => "El personal que trata de eliminar no existe"
             ));
         }
-
     }
 
-  
-    public function getDocumento($filename){
-        $file=\Storage::disk('documentos')->get($filename);
+
+    public function getDocumento($filename)
+    {
+        $file = \Storage::disk('documentos')->get($filename);
         //dd($file);
         header('Content-type: application/pdf');
 
         return new Response($file, 200);
-
-        }
-   
-   
-
+    }
 }

@@ -1,4 +1,9 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+@section('title', 'Articulos')
+
+@section('css')
+    @include('layouts.head_2')
+@stop
 
 @section('content')
 

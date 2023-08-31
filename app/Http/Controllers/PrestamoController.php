@@ -286,12 +286,12 @@ class PrestamoController extends Controller
         $acciones = '';
 
        $imprimir_prestamo = '
-       <a href="'.$prestamo.'" class="btn btn-primary"  title="Formato de Préstamo" target="_blank">
+       <a href="'.$prestamo.'" class="btn btn-primary btn-sm m-1"  title="Formato de Préstamo" target="_blank">
        <i class="far fa-file-alt"></i>
        </a>
        ';
        $imprimir_contrato = '
-       <a href="'.$prestamo_contrato.'" class="btn btn-info"  title="Formato de Contrato" target="_blank">
+       <a href="'.$prestamo_contrato.'" class="btn btn-info btn-sm m-1"  title="Formato de Contrato" target="_blank">
        <i class="far fa-file-alt"></i>
        </a>
        ';
@@ -323,7 +323,7 @@ class PrestamoController extends Controller
         $acciones = '
             <div class="btn-acciones">
                 <div class="btn-circle">
-                    <a href="'.$actualizar.'" class="btn btn-success" title="Actualizar">
+                    <a href="'.$actualizar.'" class="btn btn-success btn-sm m-1" title="Actualizar">
                         <i class="far fa-edit"></i>
                     </a>
 
@@ -333,10 +333,10 @@ class PrestamoController extends Controller
             </div>
                 <div class="btn-acciones">
                 <div class="btn-circle">
-                    <a href="#'.$ruta.'" role="button" class="btn btn-danger" data-toggle="modal" title="Eliminar">
+                    <a href="#'.$ruta.'" role="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" title="Eliminar">
                             <i class="far fa-trash-alt"></i>
                     </a>
-                    <a href="'.$devolverPrestamo.'" class="btn btn-success"  title="Devolución de Préstamo">
+                    <a href="'.$devolverPrestamo.'" class="btn btn-success btn-sm m-1"  title="Devolución de Préstamo">
                     <i class="fas fa-check"></i>
                     </a>
                 </div>    

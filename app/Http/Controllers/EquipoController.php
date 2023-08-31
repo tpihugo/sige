@@ -187,7 +187,7 @@ class EquipoController extends Controller
         $log->save();
         //
         return redirect('/')->with([
-            'message' => 'El equipo se actualizÃ³ correctamente',
+            'message' => 'El equipo se actualizó correctamente',
         ]);
     }
 

@@ -1,49 +1,32 @@
 @extends('adminlte::page')
-@section('title', 'Usuarios')
-{{--
-@extends('layouts.app')
---}}
+@section('title', 'Préstamos edit')
+
 @section('css')
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
-        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    @include('layouts.head_2')
 @stop
 @section('content')
     <div class="container">
         @if (Auth::check())
-            @if (session('message'))
-                <div class="alert alert-success">
-                    <h2>{{ session('message') }}</h2>
-                </div>
-            @endif
+
             <div class="row">
-                <h2>Administración de Roles</h2>
-                @if (isset($success))
-                    <div class="alert alert-success">
-                        {{ $success }}
+                <div class="col-sm-12">
+                    <h2 class="text-center">Administración de Roles</h2>
+                </div>
+                @if (session('message'))
+                    <div class="col-sm-12">
+                        <div class="alert alert-success">
+                            <h4>{{ session('message') }}</h4>
+                        </div>
                     </div>
                 @endif
             </div>
-            <div class="row">
+            <div class="row justify-content-end">
                 <div class="col-auto mb-1">
-                    <a type="submit" href="{{ route('roles.create') }}" class="btn btn-primary">
+                    <a href="{{ route('roles.create') }}" class="btn btn-primary">
                         {{ __('Nuevo Rol') }}
                     </a>
-
                 </div>
             </div>
-
-            @if (isset($retorno))
-                @if (count($retorno['Error']) > 0)
-                    <div class="alert alert-danger" id="alert" role="alert">
-                        {{ implode("\n", $retorno['Error']) }}
-                    </div>
-                @else
-                    <div class="alert alert-info" id="alert" role="alert">
-                        {{ implode("\n", $retorno['Success']) }}
-                    </div>
-                @endif
-            @endif
-
             <div class="row align-items-center justify-content-center">
                 <div class="col-sm-12">
                     <table id="usersTable" class=" display table table-striped table-bordered">
@@ -73,7 +56,7 @@
                         </tbody>
                     </table>
                 </div>
-                
+
             </div>
         @else
             El periodo de Registro de Proyectos a terminado

@@ -1,4 +1,11 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+@section('title', 'Licencias')
+
+@section('css')
+    @include('layouts.head_2')
+@stop
+@section('content')
+
 @section('content')
     <div class="container">
         @if (Auth::check() &&
@@ -70,7 +77,8 @@
                                                 <label for="" class="font-weight-bold">Rango inicial <span
                                                         style="color: red"><b>*</b></span></label>
                                                 <input type="text" class="form-control" id="rangoInicial"
-                                                    name="rangoInicial" pattern="((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$"
+                                                    name="rangoInicial"
+                                                    pattern="((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$"
                                                     title="El campo debe ser llenado en el formato correcto.
                                             &#013; Ejemplo: 192.168.1.0"
                                                     placeholder="192.168.1.0" value="{{ old('rangoInicial') }}"required>

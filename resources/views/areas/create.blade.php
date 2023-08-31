@@ -1,4 +1,9 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+@section('title', 'Editar área')
+
+@section('css')
+    @include('layouts.head_2')
+@stop
 @section('content')
     <div class="container">
         @if (Auth::check())
@@ -13,24 +18,6 @@
                 <div class="col-md-auto ml-3">
                     <h2>Captura de Área</h2>
                 </div>
-                <hr>
-                <script type="text/javascript">
-                    $(document).ready(function() {
-                        $('#js-example-basic-single').select2();
-
-                    });
-                    n = new Date();
-                    //Año
-                    y = n.getFullYear();
-                    //Mes
-                    m = n.getMonth() + 1;
-                    //Día
-                    d = n.getDate();
-
-                    //Lo ordenas a gusto.
-                    document.getElementById("date").innerHTML = d + "/" + m + "/" + y;
-                </script>
-
             </div>
 
             <div class="row">

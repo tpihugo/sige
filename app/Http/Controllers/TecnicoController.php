@@ -63,10 +63,8 @@ class TecnicoController extends Controller
             ';
 
             $tecnicos[$key] = array(
-                $acciones,
-                $value['id'],
-                $value['ciclo_inicio'],
                 $value['nombre'],
+                $value['ciclo_inicio'],
                 $value['telefono'],
                 $value['telefono_emergencia'],
                 $value['asistencia'],
@@ -74,6 +72,7 @@ class TecnicoController extends Controller
                 $value['institucion'],
                 $value['orden'],
                 $value['comentarios'],
+                $acciones,
             );
 
         }

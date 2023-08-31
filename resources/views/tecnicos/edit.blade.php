@@ -1,7 +1,11 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+@section('title', 'Préstamos edit')
+
+@section('css')
+    @include('layouts.head_2')
+@stop
+
 @section('content')
-
-
     <div class="container">
         @if (Auth::check())
             @if (session('message'))
@@ -10,18 +14,8 @@
 
                 </div>
             @endif
-            <div class="row">
-                <h2>Edición de Técnico {{ $tecnico->nombre }}</h2>
-                
-                <script type="text/javascript">
-                    $(document).ready(function() {
-                        $('#usuario').select2();
-
-                    });
-                    var dateControl = document.querySelector('input[type="date"]');
-                    dateControl.value = '2017-06-01';
-                </script>
-
+            <div class="row ">
+                <h2 class="mt-3">Edición de Técnico - {{ $tecnico->nombre }}</h2>
             </div>
             <hr>
             <div class="row">
@@ -44,7 +38,8 @@
                             <div class="row g-3 align-items-center">
                                 <div class="col-md-6">
                                     <label for="nombre">Nombre del Técnico</label>
-                                    <input class="form-control" id="nombre" name="nombre" value="{{ $tecnico->nombre }} ">
+                                    <input class="form-control" id="nombre" name="nombre"
+                                        value="{{ $tecnico->nombre }} ">
                                 </div>
                                 <div class="col-md-6">
                                     <label for="ciclo_inicio">Ciclo de Inicio</label>
@@ -68,7 +63,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label for="carrera">Carrera</label>
-                                    <input class="form-control" id="carrera" name="carrera" value="{{ $tecnico->carrera }} ">
+                                    <input class="form-control" id="carrera" name="carrera"
+                                        value="{{ $tecnico->carrera }} ">
                                 </div>
                                 <div class="col-md-6">
                                     <label for="institucion">Institución</label>
@@ -80,23 +76,19 @@
                                     <input class="form-control" id="comentarios" name="comentarios"
                                         value="{{ $tecnico->comentarios }}">
                                 </div>
-                                <div class="form-group row">
-                                    <label for="rol" class="col-md-4 col-form-label text-md-right">Seleccioan el usuario relacionado con el técnico</label>
-        
-                                    <div class="col-md-6">
+                                <div class="form-group row col-sm-10 mt-2">
+                                    <label for="rol" class="col-md-5 col-form-label text-md-right">Selecciona el
+                                        usuario relacionado con el técnico</label>
+                                    <div class="col-md-7">
                                         <select class="form-control" id="usuario" name="usuario">
                                             <option disabled selected>Selecciona un usuario</option>
-                                            @foreach ( $users as $item)
-                                            <option value="{{$item->id}}">{{ $item->name }}</option>
+                                            @foreach ($users as $item)
+                                                <option value="{{ $item->id }}">{{ $item->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
-    
-    
                             </div>
-    
-                            <br>
                             <div class="row g-3 align-items-center">
                                 <div class="col-md-6">
                                     <a href="{{ route('home') }}" class="btn btn-danger">Cancelar</a>
@@ -105,21 +97,25 @@
                             </div>
                         </div>
                         <br>
-    
+
                     </div>
                 </form>
-            </div>
-
-            <br>
-            <div class="row g-3 align-items-center">
-
-                <br>
-                <h5>En caso de inconsistencias, favor de reportarlas.</h5>
-                <hr>
-
             </div>
     </div>
 @else
     Acceso No válido
     @endif
 @endsection
+
+@section('js')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#usuario').select2();
+
+        });
+    </script>
+@endsection
+
+@section('footer')
+    <h5>En caso de inconsistencias, favor de reportarlas.</h5>
+@stop

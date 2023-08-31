@@ -1,4 +1,10 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+@section('title', 'Home')
+
+@section('css')
+    @include('layouts.head_2')
+
+@stop
 @section('content')
     <div class="container">
         @if (Auth::check() &&
@@ -18,14 +24,8 @@
                 <script type="text/javascript">
                     $(document).ready(function() {
                         $('#js-example-basic-single').select2();
-
-                    });
-                    $(document).ready(function() {
                         $('#js-example-basic-single2').select2();
-
-                    });
-                    $(document).ready(function() {
-                        $('#js-example-basic-single3').select2();
+                        $('#tipo_equipo').select2();
 
                     });
                 </script>
@@ -60,7 +60,7 @@
                                 </select>
                             </div>
                             <div class="col-md-3">
-                                <label for="id_resguardante">CÃ³digo resguardante</label>
+                                <label for="id_resguardante">Código resguardante</label>
                                 <input class='form-control' type="text" name="resguardante[]" id=""
                                     value="0">
                             </div>
@@ -70,10 +70,10 @@
                                     value="Usuario General">
                             </div>
                         </div>
-<div class="col-md-4">
+                        <div class="col-md-4">
                             <label class="form-label" for="usuario">Usuario</label>
                             <select class="form-control" name="usuario" id="js-example-basic-single">
-                                <option disabled selected>Elige una opciÃ³n</option>
+                                <option disabled selected>Elige una opción</option>
                                 @foreach ($empleados as $item => $value)
                                     <option value="{{ $value->id }}">{{ $value->nombre }}
                                     </option>
@@ -95,7 +95,7 @@
                                     value="{{ old('modelo') }}">
                             </div>
                             <div class="col-md-4">
-                                <label for="numero_serie">NÃºmero de Serie </label>
+                                <label for="numero_serie">Número de Serie </label>
                                 <input type="text" class="form-control" id="numero_serie" name="numero_serie"
                                     value="{{ old('numero_serie') }}">
                             </div>
@@ -109,19 +109,18 @@
                             </div>
 
                             <div class="col-md-4">
-                                <label for="tipo_conexion">Tipo de ConexiÃ³n</label>
+                                <label for="tipo_conexion">Tipo de Conexión</label>
                                 <select class="form-control" id="tipo_conexion" name="tipo_conexion">
                                     <option value="No Aplica" selected>No Aplica</option>
                                     <option value="Red Cableada">Red Cableada</option>
                                     <option value="Solo Wifi<">Solo Wifi</option>
                                     <option value="Wifi y Ethernet">Wifi y Ethernet</option>
-                                    <option value="Sin conexiÃ³n">Sin conexiÃ³n</option>
+                                    <option value="Sin conexión">Sin conexión</option>
                                 </select>
                             </div>
                         </div>
                         <br>
                         <div class="row align-items-center">
-
                             <div class="col-md-12">
                                 <label for="detalles">Detalles</label>
                                 <textarea class="form-control" id="detalles" name="detalles">{{ old('detalles') }}</textarea>
@@ -157,8 +156,6 @@
             </form>
             <br>
             <div class="row align-items-center">
-
-                <br>
                 <h5>En caso de inconsistencias enviar un correo a victor.ramirez@academicos.udg.mx</h5>
                 <hr>
 
