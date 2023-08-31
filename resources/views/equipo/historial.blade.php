@@ -4,6 +4,7 @@
 @section('css')
     @include('layouts.head_2')
 @stop
+
 @section('content')
 
     @if (Auth::check())
@@ -75,7 +76,7 @@
             <br>
             <div class="row">
                 <div class="col-md-12 col-xs-12">
-                    <table id="example" class="table table-striped table-bordered" style="width:100%">
+                    <table id="example" class=" display table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
                                 <th>IdMovimiento</th>
@@ -91,8 +92,6 @@
                                 <th>Registro</th>
                                 <th>Fecha</th>
                                 <th>Comentarios</th>
-                                <th>-</th>
-
                             </tr>
                         </thead>
                         <tbody>
@@ -112,10 +111,6 @@
                                     <td>{{ $historialMovimiento->registro }}</td>
                                     <td>{{ \Carbon\Carbon::parse($historialMovimiento->fecha)->format('d/m/Y') }}</td>
                                     <td>{{ $historialMovimiento->comentarios }}</td>
-                                    <td>
-                                        <p><a href="#" class="btn btn-secondary">-</a></p>
-                                    </td>
-
                                 </tr>
                             @endforeach
                         </tbody>
@@ -136,6 +131,52 @@
 @section('js')
     @include('layouts.scripts')
     <script>
+        //"columnDefs": [{ type: 'portugues', targets: "_all" }],
+
+        $(document).ready(function() {
+            $('#example').DataTable({
+                "pageLength": 50,
+                "order": [
+                    [0, "asc"]
+                ],
+                "language": {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                },
+                responsive: true,
+                // dom: 'Bfrtip',
+                dom: '<"col-xs-3"l><"col-xs-5"B><"col-xs-4"f>rtip',
+                buttons: [
+                    'copy', 'excel',
+                    {
+                        extend: 'pdfHtml5',
+                        orientation: 'landscape',
+                        pageSize: 'LETTER',
+                    }
+
+                ]
+            })
+        });
         jQuery.extend(jQuery.fn.dataTableExt.oSort, {
             "portugues-pre": function(data) {
                 var a = 'a';
@@ -182,50 +223,6 @@
             "portugues-desc": function(a, b) {
                 return ((a < b) ? 1 : ((a > b) ? -1 : 0));
             }
-        });
-        //"columnDefs": [{ type: 'portugues', targets: "_all" }],
-
-        $(document).ready(function() {
-            $('#example').DataTable({
-
-                "order": [
-                    [0, "desc"]
-                ],
-                "language": {
-                    "sProcessing": "Procesando...",
-                    "sLengthMenu": "Mostrar _MENU_ registros",
-                    "sZeroRecords": "No se encontraron resultados",
-                    "sEmptyTable": "Ningún dato disponible en esta tabla",
-                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                    "sInfoPostFix": "",
-                    "sSearch": "Buscar:",
-                    "sUrl": "",
-                    "sInfoThousands": ",",
-                    "sLoadingRecords": "Cargando...",
-                    "oPaginate": {
-                        "sFirst": "Primero",
-                        "sLast": "Último",
-                        "sNext": "Siguiente",
-                        "sPrevious": "Anterior"
-                    },
-                    "oAria": {
-                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                    }
-                },
-                dom: 'Bfrtip',
-                buttons: [
-                    'copy', 'excel',
-                    {
-                        extend: 'pdfHtml5',
-                        orientation: 'landscape',
-                        pageSize: 'LETTER',
-                    }
-
-                ]
-            });
         });
     </script>
 @endsection
