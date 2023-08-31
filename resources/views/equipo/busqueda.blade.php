@@ -2,11 +2,9 @@
 @section('title', 'Búsqueda')
 
 @section('css')
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
-        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" type="text/css"
-        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    @include('layouts.head_2')
 @stop
+
 @section('content')
     @if (Auth::check() &&
             (Auth::user()->role == 'admin' ||
@@ -43,7 +41,7 @@
                                 Su búsqueda fue: {{ $busqueda }}
                             </div>
                             <div class="card-body">
-                                <table id="example" class="table table-striped table-bordered" style="width:100%;">
+                                <table id="example" class=" display table-striped table-bordered" style="width:100%">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
