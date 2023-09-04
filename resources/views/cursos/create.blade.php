@@ -1,16 +1,18 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+@section('title', 'Crear Curso')
+
+@section('css')
+    @include('layouts.head_2')
+@stop
 @section('content')
-    <script type="text/javascript">
-
-        $(document).ready(function() {
-            $('#js-example-basic-single').select2();
-
-        });
-        //var dateControl = document.querySelector('input[type="date"]');
-        //dateControl.value = '2017-06-01';
-    </script>
     <div class="container">
-        @if (Auth::check() && (Auth::user()->role =='admin' ||  Auth::user()->role =='cta' || Auth::user()->role =='aulas' || Auth::user()->role =='redes' || Auth::user()->role =='auxiliar'))
+        @if (Auth::check() &&
+                (Auth::user()->role == 'admin' ||
+                    Auth::user()->role == 'cta' ||
+                    Auth::user()->role == 'aulas' ||
+                    Auth::user()->role == 'redes' ||
+                    Auth::user()->role == 'auxiliar'))
+                    
             @if (session('message'))
                 <div class="alert alert-success">
                     <h2>{{ session('message') }}</h2>
@@ -18,10 +20,7 @@
                 </div>
             @endif
             <div class="row">
-                <div class="col-md-auto ml-3">
-                    <h2>Captura de Curso</h2>
-                </div>
-                <hr>
+                <h2 class="text-center border-bottom">Captura de Curso</h2>
             </div>
 
             <div class="row">
@@ -73,8 +72,7 @@
                             <div class="row align-items-center">
                                 <div class="col-md-6">
                                     <label class="font-weight-bold" for="id_area">Aula</label>
-                                    <select class="form-control" id="js-example-basic-single"
-                                        name="id_area">
+                                    <select class="form-control" id="js-example-basic-single" name="id_area">
                                         <option value="Elegir" selected>Elegir</option>
                                         @foreach ($areas as $area)
                                             <option value="{{ $area->id }}">{{ $area->sede }} -
@@ -127,8 +125,8 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label class="font-weight-bold" for="pe">Pe </label>
-                                    <input type="text" class="form-control" id="pe" name="pe" value="{{ old('pe') }}"
-                                        max="20">
+                                    <input type="text" class="form-control" id="pe" name="pe"
+                                        value="{{ old('pe') }}" max="20">
                                 </div>
                             </div>
                             <br>
@@ -160,19 +158,23 @@
                     </form>
                 </div>
             </div>
-            <br>
-            <div class="row align-items-center">
-                <br>
-                <div class="col-12 ml-3">
-                    <h5>En caso de inconsistencias, favor de reportarlas.</h5>
-                </div>
-                <hr>
-            </div>
     </div>
-
 @else
-    El periodo de Registro de Proyectos a terminado
-    @endif
+    
+    <h5 class="text-end">El periodo de Registro de Proyectos a terminado</h5>
+@endif
 
 
+@endsection
+@section('footer')
+    <h5 class="text-end">En caso de inconsistencias, favor de reportarlas.</h5>
+@endsection
+
+@section('js')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#js-example-basic-single').select2();
+
+        });
+    </script>
 @endsection

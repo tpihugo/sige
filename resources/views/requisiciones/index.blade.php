@@ -65,28 +65,28 @@
                                         <div class="btn-circle">
                                             <form action="{{ route('requisiciones.destroy', $requisicion->id) }}"
                                                 method="POST">
-                                                <a class="btn btn-info" title="Editar"
+                                                <a class="btn btn-info btn-sm" title="Editar"
                                                     href="{{ route('requisiciones.edit', $requisicion->id) }}"><i
                                                         class="far fa-edit"></i></a>
 
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" title="Borrar" class="btn btn-danger"> <i
+                                                <button type="submit" title="Borrar" class="btn btn-danger btn-sm"> <i
                                                         class="far fa-trash-alt"></i></button>
                                             </form>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="btn-circle">
-                                            <a class="btn btn-success" title="Agregar artículos"
+                                            <a class="btn btn-success btn-sm" title="Agregar artículos"
                                                 href="{{ route('requisicion-articulos-create', $requisicion->id) }}"><i
                                                     class="far fa-edit"></i></a>
-                                            <a class="btn btn-primary" title="Ver"
+                                            <a class="btn btn-primary btn-sm" title="Ver"
                                                 href="{{ route('requisicion-articulos', $requisicion->id) }}"><i
                                                     class="fas fa-check"></i></a>
-                                            <a class="btn btn-warning" title="Imprimir formato"
+                                            <a class="btn btn-warning btn-sm" title="Imprimir formato"
                                                 href=" {{ route('imprimirrequisicion', $requisicion->id) }}"
-                                                target="blank"><i class="far fa-file-alt"></i></a></center>
+                                                target="blank"><i class="far fa-file-alt"></i></a>
 
                                         </div>
 

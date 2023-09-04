@@ -108,12 +108,6 @@
                                     <td id="viernes"></td>
                                     <td id="sabado"></td>
                                 </tr>
-                                <tr>
-                                    <td>Categoria</td>
-                                    <td id="categoria"></td>
-                                    <td>Grado de Estudios</td>
-                                    <td id="grado"></td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>

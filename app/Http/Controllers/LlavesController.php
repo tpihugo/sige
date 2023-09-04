@@ -34,11 +34,11 @@ class LlavesController extends Controller
 
             $acciones = '
                 <div class="btn-acciones">
-                    <div class="btn-circle">
-                        <a href="' . $actualizar . '" class="btn btn-success" title="Actualizar">
+                    <div class="btn-circle d-flex justify-content-center">
+                        <a href="' . $actualizar . '" class="btn btn-success btn-sm" title="Actualizar">
                             <i class="far fa-edit"></i>
                         </a>
-                        <a href="#' . $ruta . '" role="button" class="btn btn-danger" data-toggle="modal" title="Eliminar">
+                        <a href="#' . $ruta . '" role="button" class="btn btn-danger btn-sm" data-toggle="modal" title="Eliminar">
                             <i class="far fa-trash-alt"></i>
                         </a>
                     </div>
@@ -62,7 +62,7 @@ class LlavesController extends Controller
             ';
 
             $llaves[$key] = array(
-                $value['id_llave'],
+                
                 "Área :".$value['area'] . " </br>Núm. llaves:".$value['num_copias'] . " </br>Comantarios: ".$value['comentarios'] ,
                 $value['usuario'],
                 $acciones

@@ -1,16 +1,20 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+@section('title', 'Editar curso')
+
+@section('css')
+    @include('layouts.head_2')
+
+@stop
+
 @section('content')
-    <script type="text/javascript">
 
-        $(document).ready(function() {
-            $('#js-example-basic-single').select2();
-
-        });
-        //var dateControl = document.querySelector('input[type="date"]');
-        //dateControl.value = '2017-06-01';
-    </script>
     <div class="container">
-        @if (Auth::check() && (Auth::user()->role =='admin' ||  Auth::user()->role =='cta' || Auth::user()->role =='aulas' || Auth::user()->role =='redes' || Auth::user()->role =='auxiliar'))
+        @if (Auth::check() &&
+                (Auth::user()->role == 'admin' ||
+                    Auth::user()->role == 'cta' ||
+                    Auth::user()->role == 'aulas' ||
+                    Auth::user()->role == 'redes' ||
+                    Auth::user()->role == 'auxiliar'))
             @if (session('message'))
                 <div class="alert alert-success">
                     <h2>{{ session('message') }}</h2>
@@ -127,8 +131,8 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label class="font-weight-bold" for="pe">Pe </label>
-                                    <input type="text" class="form-control" id="pe" name="pe" value="{{ $curso->pe }}"
-                                        max="20">
+                                    <input type="text" class="form-control" id="pe" name="pe"
+                                        value="{{ $curso->pe }}" max="20">
                                 </div>
                             </div>
                             <br>
@@ -170,10 +174,18 @@
                 <hr>
             </div>
     </div>
-
 @else
     El periodo de Registro de Proyectos a terminado
     @endif
 
 
+@endsection
+
+@section('js')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#js-example-basic-single').select2();
+
+        });
+    </script>
 @endsection

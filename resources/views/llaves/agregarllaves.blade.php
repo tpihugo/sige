@@ -1,5 +1,5 @@
 @extends('adminlte::page')
-@section('title', 'Llaves')
+@section('title', 'Agreagr Llave')
 
 @section('css')
     @include('layouts.head_2')

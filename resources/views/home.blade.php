@@ -48,7 +48,7 @@
 
                         <div class="row m-2">
                             @can('EQUIPOS#ver')
-                                <div class="col-lg-4 col-sm-12 col-md-6  col-md-6 my-3">
+                                <div class="col-lg-4 col-sm-12  col-md-6 my-3">
                                     <div class="card card-margin h-100">
                                         <div class="card-body pt-2">
                                             <div class="widget-49">
@@ -88,7 +88,7 @@
 
                             <!-- Apartado de Tickets  -->
                             @can('TICKETS#ver')
-                                <div class="col-lg-4 col-sm-12 col-md-6  my-3">
+                                <div class="col-lg-4 col-sm-12  col-md-6  my-3">
                                     <div class="card card-margin h-100">
                                         <div class="card-body pt-2">
                                             <div class="widget-49">
@@ -123,7 +123,7 @@
 
                             <!-- Apartado de LLaves   -->
                             @can('LLAVES#ver')
-                                <div class="col-lg-4 col-sm-12 col-md-6  my-3">
+                                <div class="col-lg-4 col-sm-12  col-md-6  my-3">
                                     <div class="card card-margin h-100">
                                         <div class="card-body pt-2">
                                             <div class="widget-49">
@@ -157,7 +157,7 @@
 
                             <!-- Apartado de Inventario   -->
                             @can('INVENTARIOS#ver')
-                                <div class="col-lg-4 col-sm-12 col-md-6  my-3">
+                                <div class="col-lg-4 col-sm-12  col-md-6  my-3">
                                     <div class="card card-margin h-100">
                                         <div class="card-body pt-2">
                                             <div class="widget-49">
@@ -191,7 +191,7 @@
 
                             <!-- Apartado de Aulas y áreas   -->
                             @can('AULAS_AREAS#ver')
-                                <div class="col-lg-4 col-sm-12 col-md-6  my-3">
+                                <div class="col-lg-4 col-sm-12  col-md-6  my-3">
                                     <div class="card card-margin h-100">
                                         <div class="card-body pt-2">
                                             <div class="widget-49">
@@ -223,7 +223,7 @@
 
                             <!-- Apartado de Cursos   -->
                             @can('CURSOS#ver')
-                                <div class="col-lg-4 col-sm-12 my-3">
+                                <div class="col-lg-4 col-sm-12  col-md-6  my-3">
                                     <div class="card card-margin h-100">
                                         <div class="card-body pt-2">
                                             <div class="widget-49">
@@ -260,7 +260,7 @@
 
                             <!-- Apartado de Usuarios   -->
                             @can('USUARIOS#ver')
-                                <div class="col-lg-4 col-sm-12 my-3">
+                                <div class="col-lg-4 col-sm-12  col-md-6  my-3">
                                     <div class="card card-margin h-100">
                                         <div class="card-body pt-2">
                                             <div class="widget-49">
@@ -291,7 +291,7 @@
 
                             <!-- Apartado de Mobiliario -->
                             @can('MOBILIARIO#ver')
-                                <div class="col-lg-4 col-sm-12 my-3">
+                                <div class="col-lg-4 col-sm-12  col-md-6  my-3">
                                     <div class="card card-margin h-100">
                                         <div class="card-body pt-2">
                                             <div class="widget-49">
@@ -321,7 +321,7 @@
 
                             <!-- Apartado de Proyectos -->
                             @can('PROYECTOS#ver')
-                                <div class="col-lg-4 col-sm-12 my-3">
+                                <div class="col-lg-4 col-sm-12  col-md-6  my-3">
                                     <div class="card card-margin h-100">
                                         <div class="card-body pt-2">
                                             <div class="widget-49">
@@ -349,7 +349,7 @@
 
                             <!-- Apartado de Licencias -->
                             @can('LICENCIAS#ver')
-                                <div class="col-lg-4 col-sm-12 my-3">
+                                <div class="col-lg-4 col-sm-12  col-md-6  my-3">
                                     <div class="card card-margin h-100">
                                         <div class="card-body pt-2">
                                             <div class="widget-49">
@@ -377,7 +377,7 @@
 
                             <!-- Apartado de Redes e IPs -->
                             @can('SUBREDES_IP#ver')
-                                <div class="col-lg-4 col-sm-12 my-3">
+                                <div class="col-lg-4 col-sm-12  col-md-6  my-3">
                                     <div class="card card-margin h-100">
                                         <div class="card-body pt-2">
                                             <div class="widget-49">
@@ -407,7 +407,7 @@
                             <!-- Apartado de Estadisticas -->
                             {{--
                             @can('ESTADISTICAS#ver')
-                                <div class="col-lg-4 col-sm-12 my-3">
+                                <div class="col-lg-4 col-sm-12  col-md-6  my-3">
                                     <div class="card card-margin h-100">
                                         <div class="card-body pt-2">
                                             <div class="widget-49">
@@ -433,7 +433,7 @@
 --}}
                             <!-- Apartado de Logs -->
                             @can('LOGS#ver')
-                                <div class="col-lg-4 col-sm-12 my-3">
+                                <div class="col-lg-4 col-sm-12  col-md-6  my-3">
                                     <div class="card card-margin h-100">
                                         <div class="card-body pt-2">
                                             <div class="widget-49">
@@ -464,7 +464,7 @@
 
                             <!-- Apartado de Mantenimiento   -->
                             @can('MANTENIMIENTO#ver')
-                                <div class="col-lg-4 col-sm-12 my-3">
+                                <div class="col-lg-4 col-sm-12  col-md-6  my-3">
                                     <div class="card card-margin h-100">
                                         <div class="card-body pt-2">
                                             <div class="widget-49">
@@ -494,7 +494,7 @@
 
                             <!-- Apartado de Requisiciones -->
                             @can('REQUISICIONES#ver')
-                                <div class="col-lg-4 col-sm-12 my-3">
+                                <div class="col-lg-4 col-sm-12  col-md-6  my-3">
                                     <div class="card card-margin h-100">
                                         <div class="card-body pt-2">
                                             <div class="widget-49">
@@ -522,7 +522,7 @@
                             @endcan
 
                             @can('cNormal_PERSONAL#ver')
-                                <div class="col-lg-4 col-sm-12 my-3">
+                                <div class="col-lg-4 col-sm-12  col-md-6  my-3">
                                     <div class="card card-margin h-100">
                                         <div class="card-body pt-2">
                                             <div class="widget-49">
@@ -555,7 +555,7 @@
                             @endcan
 
                             @can('TECNICOS#ver')
-                                <div class="col-lg-4 col-sm-12 my-3">
+                                <div class="col-lg-4 col-sm-12  col-md-6  my-3">
                                     <div class="card card-margin h-100">
                                         <div class="card-body pt-2">
                                             <div class="widget-49">
