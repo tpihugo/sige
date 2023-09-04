@@ -137,12 +137,12 @@ class InventarioController extends Controller
                     <div class="btn-circle">
                         <a href="' .
                 $actualizar .
-                '" class="btn btn-success" title="Actualizar">
+                '" class="btn btn-success btn-sm" title="Actualizar">
                             <i class="fa fa-edit"></i>
                         </a>
                         <a href="#' .
                 $ruta .
-                '" role="button" class="btn btn-danger" data-toggle="modal" title="Eliminar">
+                '" role="button" class="btn btn-danger btn-sm" data-toggle="modal" title="Eliminar">
                             <i class="far fa-trash-alt"></i>
                         </a>
                     </div>
@@ -184,7 +184,19 @@ class InventarioController extends Controller
               </div>
             ';
 
-            $inventario_localizado[$key] = [$acciones, $value['id'], $value['udg_id'], $value['localizado_sici'], $value['marca'], $value['modelo'], $value['numero_serie'], $value['detalles'], $value['tipo_equipo'], $value['area'], $value['estatus']];
+            $inventario_localizado[$key] = [
+                $value['id'],
+                $value['udg_id'],
+                $value['tipo_equipo'],
+                $value['marca'],
+                $value['modelo'],
+                $value['numero_serie'],
+                $value['detalles'],
+                $value['area'],
+                $value['localizado_sici'],
+                $value['estatus'],
+                $acciones
+            ];
         }
 
         return $inventario_localizado;
@@ -198,29 +210,32 @@ class InventarioController extends Controller
     public function inventario_express2()
     {
         $inventario = '2023A';
+        
 
         $total = VsEquipo::where('activo', 1)
-            ->where('tipo_sici', '!=', null)
+            ->where('tipo_sici', '=', 'equipo')
             ->count();
 
         $sici = VsEquipo::where('activo', 1)
-            ->select('localizado_sici', DB::raw('count(*) as total'))->whereIn('localizado_sici',['Si','No'])
+            ->select('localizado_sici', DB::raw('count(*) as total'))->where('tipo_sici','equipo')->whereIn('localizado_sici', ['Si', 'No','S','N'])
             ->groupBy('localizado_sici')
             ->pluck('total', 'localizado_sici');
 
+        
 
         $totales = ['total' => $total];
-
+        
         foreach ($sici as $item => $llave) {
             $totales[$item] = $llave;
         }
+        return $totales;
 
         $total_inventario = DB::table('inventariodetalle')
             ->where('inventario', '=', $inventario)
             ->count();
 
         $totales['total_inventario'] = $total_inventario;
-        
+
 
 
         $areas = DB::table('vs_equipos')
@@ -229,13 +244,12 @@ class InventarioController extends Controller
             ->where('activo', 1)
             ->groupBy('id_area')
             ->get();
-            
+
         foreach ($areas as $key => $value) {
             $cantidad = DB::table('vs_inventariodetalle')
                 ->where('inventario', '=', '2023A')
-                ->where('IdArea', $value->id_area)->where('tipo_sici','!=',null)
+                ->where('IdArea', $value->id_area)->where('tipo_sici', '!=', null)
                 ->count();
-
             if ($value->id_area == null) {
                 $value->id_area = 0;
                 $value->area = 'Desconocido';

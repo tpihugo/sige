@@ -1,66 +1,65 @@
 @extends('adminlte::page')
-@section('title', 'Tickets')
+@section('title', 'Inventario Localizado')
 
 @section('css')
     @include('layouts.head_2')
 @stop
 
 @section('content')
-    @if(Auth::check() && Auth::user()->role =='admin')
+    @if (Auth::check() && Auth::user()->role == 'admin')
 
-    <div class="container-fluid">
-        <div class="row g-3 align-items-center">
-            <div class="col-md-12">
-                @if (session('message'))
-                    <div class="alert alert-success">
-                        {{ session('message') }}
-                    </div>
-                @endif
-                <h2>Localizados </h2>
-            </form>
+        <div class="container-fluid">
             <div class="row g-3 align-items-center">
-                <table id="example" class="table table-striped table-bordered" style="width:100%">
-                    <thead>
-                    <tr>
-                        <th>Acciones</th>
-                        <th>Id SIGE</th>
-                        <th>Id UdeG</th>
-                        <th>Localizado SICI</th>
-                        <th>Marca</th>
-                        <th>Modelo</th>
-                        <th>Núm. Serie</th>
-                        <th>Detalles</th>
-                        <th>Tipo de Equipo</th>
-                        <th>Área</th>
-                        <th>Estatus</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+                <div class="col-md-12">
+                    @if (session('message'))
+                        <div class="alert alert-success">
+                            {{ session('message') }}
+                        </div>
+                    @endif
+                    <h2>Localizados </h2>
+                    </form>
+                    <div class="row g-3 align-items-center">
+                        <table id="example" class="table table-striped table-bordered" style="width:100%">
+                            <thead>
+                                <tr>
 
-                    </tbody>
+                                    <th>Id SIGE</th>
+                                    <th>Id UdeG</th>
+                                    <th>Tipo de Equipo</th>
+                                    <th>Marca</th>
+                                    <th>Modelo</th>
+                                    <th>Núm. Serie</th>
+                                    <th>Detalles</th>
+                                    <th>Área</th>
+                                    <th>Localizado SICI</th>
+                                    <th>Estatus</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                </table>
+                            </tbody>
 
-            </div>
-            <p>
-                <a href="{{ route('home') }}" class="btn btn-primary">< Regresar</a>
-            </p>
-        </div>
-        @extends('layouts.loader')
+                        </table>
 
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4-4.1.1/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/r-2.2.7/datatables.min.js"></script>
+                    </div>
+                </div>
+            @else
+                Acceso No válido
+    @endif
+@endsection
 
+@section('js')
+    @include('layouts.scripts')
     <script type="text/javascript">
         var data = @json($inventariolocalizado);
 
         $(document).ready(function() {
             $('#example').DataTable({
                 "data": data,
-                "pageLength": 100,
+                "pageLength": 25,
                 "order": [
-                    [0, "desc"]
+                    [0, "asc"]
                 ],
                 "language": {
                     "sProcessing": "Procesando...",
@@ -99,43 +98,57 @@
 
                 ]
             })
-           loader(false);
+            loader(false);
         });
 
 
-        jQuery.extend( jQuery.fn.dataTableExt.oSort, {
-        "portugues-pre": function ( data ) {
-            var a = 'a';
+        jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+            "portugues-pre": function(data) {
+                var a = 'a';
                 var e = 'e';
                 var i = 'i';
                 var o = 'o';
                 var u = 'u';
                 var c = 'c';
                 var special_letters = {
-                    "�": a, "�": a, "�": a, "�": a, "�": a, "�": a,
-                    "�": e, "�": e, "�": e, "�": e,
-                    "�": i, "�": i, "�": i, "�": i,
-                    "�": o, "�": o, "�": o, "�": o, "�": o, "�": o,
-                    "�": u, "�": u, "�": u, "�": u,
-                    "�": c, "�": c
+                    "�": a,
+                    "�": a,
+                    "�": a,
+                    "�": a,
+                    "�": a,
+                    "�": a,
+                    "�": e,
+                    "�": e,
+                    "�": e,
+                    "�": e,
+                    "�": i,
+                    "�": i,
+                    "�": i,
+                    "�": i,
+                    "�": o,
+                    "�": o,
+                    "�": o,
+                    "�": o,
+                    "�": o,
+                    "�": o,
+                    "�": u,
+                    "�": u,
+                    "�": u,
+                    "�": u,
+                    "�": c,
+                    "�": c
                 };
                 for (var val in special_letters)
                     data = data.split(val).join(special_letters[val]).toLowerCase();
                 return data;
             },
-            "portugues-asc": function ( a, b ) {
+            "portugues-asc": function(a, b) {
                 return ((a < b) ? -1 : ((a > b) ? 1 : 0));
             },
-            "portugues-desc": function ( a, b ) {
+            "portugues-desc": function(a, b) {
                 return ((a < b) ? 1 : ((a > b) ? -1 : 0));
             }
-        } );
+        });
         //"columnDefs": [{ type: 'portugues', targets: "_all" }],
-
     </script>
-
-        @else
-        Acceso No v�lido
-    @endif
 @endsection
-

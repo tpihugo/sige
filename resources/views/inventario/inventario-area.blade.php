@@ -1,5 +1,5 @@
 @extends('adminlte::page')
-@section('title', 'Tickets')
+@section('title', 'Invenatrio Área')
 
 @section('css')
     @include('layouts.head_2')
@@ -13,7 +13,7 @@
 
                 </div>
             @endif
-            <h3 class="text-center">Inventario por área 2023A </h3>
+            <h3 class="text-center">Inventario por área</h3>
             
             <h5 class="text-center"> <span hidden> {{ $area_actual->id }}</span> <strong> Area: </strong>
                 {{ $area_actual->Area }} </h5>

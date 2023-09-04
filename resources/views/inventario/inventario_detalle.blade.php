@@ -1,5 +1,5 @@
 @extends('adminlte::page')
-@section('title', 'Tickets')
+@section('title', 'Inventario Detalle')
 
 @section('css')
     @include('layouts.head_2')
@@ -10,7 +10,7 @@
 
             <div class="row g-3 align-items-center">
                 <div class="col-md-4">
-                    <h5>Inventario 2021</h5>
+                    <h5>Inventario</h5>
                 </div>
             </div>
             <div class="row g-3 align-items-center">

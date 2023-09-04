@@ -350,7 +350,7 @@ class EquipoController extends Controller
     public function inventario_cta()
     {
         //Se hace la ruta, la ruta manda llamar el mÃ©todo y el mÃ©todo manda llamar la plantilla
-        $vsequipos = VsEquipo::where('activo', '=', 1)->get();
+        $vsequipos = VsEquipo::where('activo', '=', 1)->where('tipo_sici','equipo')->get();
         $equipos = $this->cargarDT($vsequipos);
         return view('equipo.inventariocta', [
             'equipos' => $equipos,

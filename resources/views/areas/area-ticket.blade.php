@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 @php
-    $titulo = 'Reporte Aulas '  . $sede ;
+    $titulo = 'Reporte Aulas ' . $sede;
 @endphp
 @section('title', $titulo)
 
@@ -28,15 +28,14 @@
                             <hr class="border">
                             @foreach ($pisos as $p => $item)
                                 <h4>{{ strcmp('Piso 0', $p) == 0 ? 'Planta Baja' : $p }}</h4>
-                                @php
-                                    $areas = collect($item);
-                                    if (isset($value['tickets'])) {
-                                        $estilos = 'btn bg-danger text-white text-wrap m-1';
-                                    } else {
-                                        $estilos = 'btn bg-success text-white text-wrap m-1';
-                                    }
-                                @endphp
-                                @foreach ($areas as $key => $value)
+                                @foreach (collect($item) as $key => $value)
+                                    @php
+                                        if (isset($value['tickets'])) {
+                                            $estilos = 'btn bg-danger text-white text-wrap m-1';
+                                        } else {
+                                            $estilos = 'btn bg-success text-white text-wrap m-1';
+                                        }
+                                    @endphp
                                     <a onclick="modal({{ collect($value) }})" class="{{ $estilos }}"
                                         data-bs-toggle="modal" data-bs-target="#exampleModal">
                                         {{ $value['area'] }}

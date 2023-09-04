@@ -1,5 +1,5 @@
 @extends('adminlte::page')
-@section('title', 'Tickets')
+@section('title', 'Inventario Express')
 
 @section('css')
     @include('layouts.head_2')
@@ -10,11 +10,11 @@
             @if (session('message'))
                 <div class="alert alert-success">
                     <h2>{{ session('message') }}</h2>
-
                 </div>
             @endif
+
             <div class="row">
-                <h1 class="text-center">Inventario Detalle por Ciclo 2022B</h1>
+                <h1 class="text-center">Inventario Detalle</h1>
                 <hr>
             </div>
             <br>
@@ -26,7 +26,7 @@
                             <div class="col-sm-12">
                                 <h2 class="text-muted">Gráficas</h2>
                             </div>
-    
+
                             <div class="col-sm-12 col-md-6 col-lg-6">
                                 <div class="app-card app-card-stats-table h-10 shadow-sm">
                                     <div class="app-card-header p-3">
@@ -41,7 +41,7 @@
                                     <!--//app-card-header-->
                                     <div class="app-card-body p-3 p-lg-4">
                                         <div>
-                                            <h4>Total de Equipos {{$totales['total']}}</h4>
+                                            <h4>Total de Equipos {{ $totales['total'] }}</h4>
                                         </div>
                                         <div class="table{{-- -responsive --}}">
                                             <table class="table table-borderless mb-0">
@@ -53,18 +53,18 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-    
+
                                                     <tr>
-    
-    
+
+
                                                     <tr>
                                                         <td><span>Localizados SICI</span></td>
                                                         <td class="stat-cell">
-                                                            
+
                                                             {{ $totales['Si'] - $totales['total_inventario'] }}
                                                         </td>
                                                         <td>
-                                                            <?php echo $Percentage_SICI = round((($totales['Si'] * 100) / $totales['total']), 2); ?>%
+                                                            <?php echo $Percentage_SICI = round(($totales['Si'] * 100) / $totales['total'], 2); ?>%
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -73,36 +73,36 @@
                                                             {{ $totales['No'] - $totales['total_inventario'] }}
                                                         </td>
                                                         <td>
-                                                            <?php echo $Percentage_SICI = round((($totales['No'] * 100) / $totales['total']), 2); ?>%
+                                                            <?php echo $Percentage_SICI = round(($totales['No'] * 100) / $totales['total'], 2); ?>%
                                                         </td>
                                                     </tr>
                                                     @foreach ($totales as $item => $llave)
                                                         @if ($item != 'Si' && $item != 'No' && $item != 'total' && $item != 'total_inventario')
-                                                        <tr>
-                                                            <td><span>{{$item}}</span></td>
-                                                            <td class="stat-cell">
-                                                                {{ $llave - $totales['total_inventario'] }}
-                                                            </td>
-                                                            <td>
-                                                                <?php echo $Percentage_SICI = round((($llave * 100) / $totales['total']), 2); ?>%
-                                                            </td>
-                                                        </tr>
+                                                            <tr>
+                                                                <td><span>{{ $item }}</span></td>
+                                                                <td class="stat-cell">
+                                                                    {{ $llave - $totales['total_inventario'] }}
+                                                                </td>
+                                                                <td>
+                                                                    <?php echo $Percentage_SICI = round(($llave * 100) / $totales['total'], 2); ?>%
+                                                                </td>
+                                                            </tr>
                                                         @endif
                                                     @endforeach
-    
+
                                                     <tr>
                                                         <td><span>Revision inventario</span></td>
                                                         <td class="stat-cell">{{ $totales['total_inventario'] }}</td>
                                                         <td class="stat-cell">
                                                             <p class="text-center">{{-- --}} </p>
                                                         </td>
-    
+
                                                         <td>
                                                             <p class="text-center">{{-- --}} </p>
                                                         </td>
                                                     </tr>
-    
-    
+
+
                                                 </tbody>
                                             </table>
                                         </div>
@@ -112,8 +112,8 @@
                                 </div>
                                 <!--//app-card-->
                             </div>
-    
-    
+
+
                             <div class="col-sm-12 col-md-6 col-lg-3">
                                 <div class="app-card app-card-chart h-100 shadow-sm">
                                     <div class="app-card-header p-3 border-0">
@@ -130,8 +130,8 @@
                                 <!--//app-card-->
                             </div>
                             <!--//col-->
-    
-    
+
+
                             <div class="col-sm-12 col-md-6 col-lg-3">
                                 <div class="app-card app-card-chart h-100 shadow-sm">
                                     <div class="app-card-header p-3 border-0">
@@ -149,12 +149,6 @@
                         </div>
                     </div>
 
-
-
-
-                    <!-- <hr> -->
-
-
                     <div class="row">
                         <div class="table-responsive">
                             <table id="example" class="table table-striped table-bordered" style="width:100%">
@@ -165,14 +159,14 @@
                                         <th>Progreso</th>
                                         <th> Avances <a href="#Help_info" class="text-reset" data-toggle="modal"> <strong> ?
                                                 </strong> </a> </th>
-    
+
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-    
+
                                     @php($cont = 1)
-    
+
                                     @foreach ($areas as $oneRow => $llave)
                                         @php($bar_indicatorColor = 'success')
                                         @if ($llave->porcentaje < '50.00')
@@ -180,36 +174,37 @@
                                         @elseif($llave->porcentaje < '90.00')
                                             @php($bar_indicatorColor = 'warning')
                                         @endif
-    
+
                                         <tr>
                                             <td>{{ $cont++ }}</td>
                                             <td>
-    
+
                                                 <p class="font-weight-normal">{{ $llave->area }}</p>
-    
+
                                             </td>
                                             <td style="width: 20%">
-    
+
                                                 <div class="container-fluid wd-200">
                                                     <div class="row no-gutters align-items-center">
-    
-    
+
+
                                                         <div class="h6 mb-0 mr-1 text-center text-gray-800">
                                                             <strong>{{ $llave->porcentaje }}%</strong>
                                                         </div>
-    
+
                                                         <div class="col">
                                                             <div class="progress progress-sm mr-2">
                                                                 <div class="progress-bar bg-<?php echo $bar_indicatorColor; ?>"
                                                                     role="progressbar"
                                                                     style="width: {{ $llave->porcentaje }}%"
-                                                                    aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                                                                    aria-valuenow="50" aria-valuemin="0"
+                                                                    aria-valuemax="100">
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-    
+
                                             <td style="width: 10%">
                                                 <p class="text-dark text-center">
                                                     {{ $llave->inventario }} / {{ $llave->equipos }}
@@ -221,21 +216,21 @@
                                                     @endif
                                                 </p>
                                             </td>
-    
+
                                             </td>
                                             <td>
                                                 <p><a href="{{ route('inventario-por-area', $llave->id_area) }}"
                                                         class="btn btn-primary">Detalle</a></p>
-    
+
                                                 {{-- <p><a href="{{ route('actualizacion-inventario', $OneDataRow->id_area) }}" class="btn btn-success">Revisado</a></p> --}}
                                             </td>
                                         </tr>
                                         {{-- @endif --}}
                                     @endforeach
-    
-    
+
+
                                 </tbody>
-    
+
                                 {{-- Modal equipos invenriables vs localizados  --}}
                                 <div id="Help_info" class="modal fade">
                                     <div class="modal-dialog">
@@ -247,7 +242,7 @@
                                                         <div class="col-md-12">
                                                             <p class="text-dark text-center">Valor 1 / Valor 2 </p>
                                                         </div>
-    
+
                                                         <div class="container">
                                                             <div class="row">
                                                                 <div class="col-sm">
@@ -260,7 +255,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-    
+
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
@@ -271,8 +266,8 @@
                                         </div>
                                     </div>
                                 </div>
-    
-    
+
+
                                 {{-- Modal incongruencia de equipos inventariables vs localizados por area --}}
                                 <div class="modal fade" id="warning-triangle-modal" tabindex="-1" role="dialog"
                                     aria-labelledby="warning-triangle-modal" aria-hidden="true">
@@ -291,146 +286,130 @@
                                                 </p>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-info" data-dismiss="modal">Ok</button>
+                                                <button type="button" class="btn btn-info"
+                                                    data-dismiss="modal">Ok</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-    
-    
-    
+
+
+
                             </table>
                         </div>
 
                     </div>
-                    <p>
-                        <a href="{{ route('home') }}" class="btn btn-primary">
-                            < Regresar</a>
-                    </p>
-
-                    <br>
-                    <div class="row g-3 align-items-center">
-
-                        <br>
-                        <hr>
-                        <h5>Coordinación de Tecnologías para el Aprendizaje. CUCSH</h5>
-
-
-                    </div>
                 </div>
-                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-                <script ript type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-                <script type="text/javascript"
-                    src="https://cdn.datatables.net/v/bs4-4.1.1/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/r-2.2.7/datatables.min.js">
-                </script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.js"
-                    integrity="sha512-CWVDkca3f3uAWgDNVzW+W4XJbiC3CH84P2aWZXj+DqI6PNbTzXbl1dIzEHeNJpYSn4B6U8miSZb/hCws7FnUZA=="
-                    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-                <script>
-                                $(document).ready(function() {
-                $('#example').DataTable({
-                    "pageLength": 50,
-                    "order": [
-                        [1, "desc"]
-                    ],
-                    "language": {
-                        "sProcessing": "Procesando...",
-                        "sLengthMenu": "Mostrar _MENU_ registros",
-                        "sZeroRecords": "No se encontraron resultados",
-                        "sEmptyTable": "Ningún dato disponible en esta tabla",
-                        "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                        "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                        "sInfoPostFix": "",
-                        "sSearch": "Buscar:",
-                        "sUrl": "",
-                        "sInfoThousands": ",",
-                        "sLoadingRecords": "Cargando...",
-                        "oPaginate": {
-                            "sFirst": "Primero",
-                            "sLast": "Último",
-                            "sNext": "Siguiente",
-                            "sPrevious": "Anterior"
-                        },
-                        "oAria": {
-                            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                        }
-                    },
-                    responsive: true,
-                    // dom: 'Bfrtip',
-                    dom: '<"col-xs-3"l><"col-xs-5"B><"col-xs-4"f>rtip',
-                    buttons: [
-                        'copy', 'excel',
-                        {
-                            extend: 'pdfHtml5',
-                            orientation: 'landscape',
-                            pageSize: 'LETTER',
-                        }
-
-                    ]
-                })
-                loader(false);
-            });
-                </script>
-
-
-                <script type="text/javascript">
-                    $(document).ready(function() {
-                        $('#js-example-basic-single').select2();
-                    });
-
-                    const total_sici_localizados = {!! json_encode($totales['Si']) !!};
-                    const total_22B_detalleInventario = {!! json_encode($totales['total_inventario']) !!};
-
-
-                    const ctx = document.getElementById('chart-pie').getContext('2d');
-                    const ctx2 = document.getElementById('chart-pie2').getContext('2d');
-
-                    const myChart = new Chart(ctx, {
-                        type: 'pie',
-                        data: {
-                            labels: ['localizados SICI CTA', 'localizados detalle inventario 22B'],
-                            datasets: [{
-                                // label: '# of Votes',
-                                data: [total_sici_localizados, total_22B_detalleInventario],
-                                backgroundColor: [
-                                    'rgb(240,173,78)',
-                                    'rgb(92,184,92)',
-                                ],
-                                borderColor: [
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(54, 162, 235, 1)',
-                                ],
-                                borderWidth: 1
-                            }]
-                        },
-                    });
-
-                    const total_equipos = {!! json_encode($totales['total']) !!};
-
-                    const myChart2 = new Chart(ctx2, {
-                        type: 'pie',
-                        data: {
-                            labels: ['Total equipos', 'localizados detalle inventario 23A'],
-                            datasets: [{
-                                // label: '# of Votes',
-                                data: [total_equipos, total_22B_detalleInventario],
-                                backgroundColor: [
-                                    'rgb(240,173,78)',
-                                    'rgb(92,184,92)',
-                                ],
-                                borderColor: [
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(54, 162, 235, 1)',
-                                ],
-                                borderWidth: 1
-                            }]
-                        },
-                    });
-                </script>
             @else
                 El periodo de Registro de Proyectos a terminado
         @endif
+    </div>
+@endsection
 
-    @endsection
+@section('footer')
+    <h5 class="text-end">Coordinación de Tecnologías para el Aprendizaje. CUCSH</h5>
+@endsection
+
+@section('js')
+    @include('layouts.scrtips')
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable({
+                "pageLength": 50,
+                "order": [
+                    [1, "desc"]
+                ],
+                "language": {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                },
+                responsive: true,
+                // dom: 'Bfrtip',
+                dom: '<"col-xs-3"l><"col-xs-5"B><"col-xs-4"f>rtip',
+                buttons: [
+                    'copy', 'excel',
+                    {
+                        extend: 'pdfHtml5',
+                        orientation: 'landscape',
+                        pageSize: 'LETTER',
+                    }
+
+                ]
+            })
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#js-example-basic-single').select2();
+        });
+
+        const total_sici_localizados = {!! json_encode($totales['Si']) !!};
+        const total_22B_detalleInventario = {!! json_encode($totales['total_inventario']) !!};
+
+
+        const ctx = document.getElementById('chart-pie').getContext('2d');
+        const ctx2 = document.getElementById('chart-pie2').getContext('2d');
+
+        const myChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['localizados SICI CTA', 'localizados detalle inventario 22B'],
+                datasets: [{
+                    // label: '# of Votes',
+                    data: [total_sici_localizados, total_22B_detalleInventario],
+                    backgroundColor: [
+                        'rgb(240,173,78)',
+                        'rgb(92,184,92)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+        });
+
+        const total_equipos = {!! json_encode($totales['total']) !!};
+
+        const myChart2 = new Chart(ctx2, {
+            type: 'pie',
+            data: {
+                labels: ['Total equipos', 'localizados detalle inventario 23A'],
+                datasets: [{
+                    // label: '# of Votes',
+                    data: [total_equipos, total_22B_detalleInventario],
+                    backgroundColor: [
+                        'rgb(240,173,78)',
+                        'rgb(92,184,92)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+        });
+    </script>
+@endsection
