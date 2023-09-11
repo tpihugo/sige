@@ -7,7 +7,6 @@
 
 @section('content')
     @if (Auth::check())
-
         <div class="container-fluid">
             <div class="col-md-12 mt-3">
                 @if (session('message'))
@@ -23,6 +22,7 @@
                 <h2 class="mt-3">Tickets </h2>
                 <p align="right">
                     <a href="{{ route('tickets.create') }}" class="btn btn-success">Capturar Ticket</a>
+                    <a href="{{ route('tickets.reporte') }}" class="btn btn-primary">Reporte Ticket</a>
                 </p>
             </div>
         </div>
@@ -215,6 +215,8 @@
         Acceso No válido
     @endif
 @endsection
+
+
 @section('js')
     @include('layouts.scripts')
     <script type="text/javascript">
@@ -223,21 +225,17 @@
             $('#tecnico_id').select2();
 
         });
-
-
         function tomar_ticket(params) {
             var url = "{{ route('tomar-ticket', ':id') }}";
             url = url.replace(':id', params);
             document.getElementById('asignar').action = url;
 
         }
-
         function soltar_ticket(params) {
             var url = "{{ route('soltar-ticket', ':id') }}";
             url = url.replace(':id', params);
             document.getElementById('soltar').action = url;
         }
-
         function historial(params) {
             document.getElementById('historial').innerHTML = '';
             document.getElementById('historial').innerHTML =

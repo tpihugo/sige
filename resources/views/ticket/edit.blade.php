@@ -14,7 +14,7 @@
                 </div>
             @endif
             <div class="row">
-                <h2 class="mt-3">Edición de ticket folio  {{ $ticket->id }}</h2>
+                <h2 class="mt-3">Edición de ticket folio {{ $ticket->id }}</h2>
                 <hr>
                 <script type="text/javascript">
                     $(document).ready(function() {
@@ -50,15 +50,10 @@
                                 <label for="prioridad">Prioridad </label>
                                 <select class="form-control" id="prioridad" name="prioridad" required>
                                     <option disabled>Elegir</option>
-                                    <option value="1" {{ $ticket->prioridad == 1 ? 'selected' : '' }}>No Urgenete |
-                                        No
-                                        importante</option>
-                                    <option value="2" {{ $ticket->prioridad == 2 ? 'selected' : '' }}>Urgente | No
-                                        importante</option>
-                                    <option value="3" {{ $ticket->prioridad == 3 ? 'selected' : '' }}>No urgente |
-                                        Importante</option>
-                                    <option value="4" {{ $ticket->prioridad == 4 ? 'selected' : '' }}>Urgente |
-                                        Importante</option>
+                                    <option value="1" {{ $ticket->prioridad == 1 ? 'selected' : '' }}>1</option>
+                                    <option value="2" {{ $ticket->prioridad == 2 ? 'selected' : '' }}>2</option>
+                                    <option value="3" {{ $ticket->prioridad == 3 ? 'selected' : '' }}>3</option>
+                                    <option value="4" {{ $ticket->prioridad == 4 ? 'selected' : '' }}>4</option>
                                 </select>
                             </div>
                             <div class="col-md-4">
@@ -80,7 +75,9 @@
                                     <option value="Incidente">Incidente</option>
                                     <option value="Solicitudes de Servicio">Solicitudes de Servicio</option>
                                     <option value="Reporte de aula">Reporte de aula</option>
-
+                                    <option value="Reinstalación  de S.O.">Reinstalación de S.O.</option>
+                                    <option value="Instalación de Paqueteria">Instalación de Paqueteria</option>
+                                    <option value="Asignación de IP">Asignación de IP</option>
                                 </select>
                             </div>
                         </div>
@@ -157,8 +154,7 @@
                                     value="{{ $ticket->fecha_inicio }}">
                             </div>
                             <div class="col-md-4">
-                                <label for="fecha_termino">Fecha Termino (Al poner la fecha de t&eacutermino, el ticket se
-                                    cerrar&aacute)</label>
+                                <label for="fecha_termino">Fecha Termino</label>
                                 <input type="date" class="form-control" id="fecha_termino" name="fecha_termino"
                                     value="{{ $ticket->fecha_termino }}">
                             </div>
@@ -170,6 +166,10 @@
                                     <option value="Falla en Hardware">Falla en Hardware</option>
                                     <option value="Software">Software</option>
                                     <option value="Capacitación">Capacitación</option>
+                                    <option value="Reporte de aula">Reporte de aula</option>
+                                    <option value="Reinstalación  de S.O.">Reinstalación de S.O.</option>
+                                    <option value="Instalación de Paqueteria">Instalación de Paqueteria</option>
+                                    <option value="Asignación de IP">Asignación de IP</option>
                                     <option value="Otro">Otro</option>
                                 </select>
                             </div>

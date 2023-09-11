@@ -13,7 +13,9 @@ use App\Models\VsTicket;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\EquipoTicket;
+use DateTime;
 use App\Models\Log;
+use compra;
 use Illuminate\Support\Facades\Auth;
 use Detection\MobileDetect as MobileDetect;
 
@@ -468,5 +470,57 @@ class TicketController extends Controller
         return redirect()->route('tickets.index')->with(array(
             'message' => 'Se libero el ticket correctamente'
         ));
+    }
+
+    public function ticket_reporte()
+    {
+        $tickets = VsTicket::select('fecha_reporte', 'id', 'tipo_espacio', 'area')->where('fecha_reporte', '!=', null)->where('activo', 1)->get()
+            ->groupBy(function ($date) {
+                return Carbon::parse($date->fecha_reporte)->format('Y-W');
+            });
+
+        $totales = collect([]);
+        $maximo = 0;
+        foreach ($tickets as $key => $value) {
+            $year = intval(explode('-', $key)[0]);
+            $week = intval(explode('-', $key)[1]);
+            $dto = new DateTime();
+            $aulas = $value->groupBy('tipo_espacio');
+            $aula = 0;
+            if (isset($aulas["Aula"]) || isset($aulas["Laboratorio"])) {
+                $aula = (isset($aulas["Aula"])) ? count($aulas["Aula"]) : 0;
+                $laboratorio = (isset($aulas["Laboratorio"])) ? count($aulas["Laboratorio"]) : 0;
+                $aula = $aula + $laboratorio;
+                if ($aula > $maximo) {
+                    $maximo = $aula;
+                }
+            }
+            $temp = number_format(($aula / $value->count()) * 100, 1);
+            $array = [
+                "Inicio" => $dto->setISODate($year, $week)->format('Y-m-d'),
+                "Fin" => $dto->modify('+6 days')->format('Y-m-d'),
+                "General" => $value->count(),
+                "Aulas" => $aula,
+                'Porcentaje' => [$temp, 100 - $temp],
+            ];
+            $totales->put($key, $array);
+        }
+        return  view('ticket.reportes.index', compact('totales', 'maximo'));
+    }
+    public function reporte_area($fecha)
+    {
+        $fechas = explode(",", $fecha);
+        $ticket = VsTicket::select('fecha_reporte', 'area')->where('fecha_reporte', '>=', $fechas[0])->where('fecha_reporte', '<=', $fechas[1])->get();
+
+
+        foreach ($ticket as $key => $value) {
+            $value->division = explode("-", $value->area)[0];
+            $value->departamento = explode("-", $value->area)[1];
+        }
+
+        $ticket = $ticket->groupBy('division');
+        //return $ticket;
+
+        return view('ticket.reportes.tabla', compact('ticket'))->render();
     }
 }

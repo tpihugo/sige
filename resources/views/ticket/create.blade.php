@@ -64,10 +64,9 @@
                                 <label for="prioridad">Prioridad </label>
                                 <select class="form-control" id="prioridad" name="prioridad">
                                     <option disabled>Elegir</option>
-                                    <option value="1">No Urgente | No importante</option>
-                                    <option value="2">Urgente | No importante</option>
-                                    <option value="3" selected>No urgente | Importante</option>
-                                    <option value="4">Urgente | Importante</option>
+                                    <option value="Baja">Baja</option>
+                                    <option value="Media">Media</option>
+                                    <option value="Alta" selected>Alta</option>
                                 </select>
                             </div>
                             <div class="col-md-4">
@@ -87,7 +86,9 @@
                                     <option value="Incidente" selected>Incidente</option>
                                     <option value="Solicitudes de Servicio">Solicitudes de Servicio</option>
                                     <option value="Reporte de aula">Reporte de aula</option>
-
+                                    <option value="Reinstalación  de S.O.">Reinstalación de S.O.</option>
+                                    <option value="Instalación de Paqueteria">Instalación de Paqueteria</option>
+                                    <option value="Asignación de IP">Asignación de IP</option>
                                 </select>
                             </div>
                         </div>

@@ -26,7 +26,6 @@
                             <div class="col-sm-12">
                                 <h2 class="text-muted">Gráficas</h2>
                             </div>
-
                             <div class="col-sm-12 col-md-6 col-lg-6">
                                 <div class="app-card app-card-stats-table h-10 shadow-sm">
                                     <div class="app-card-header p-3">
@@ -53,31 +52,27 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-
-                                                    <tr>
-
-
                                                     <tr>
                                                         <td><span>Localizados SICI</span></td>
                                                         <td class="stat-cell">
 
-                                                            {{ $totales['Si'] - $totales['total_inventario'] }}
+                                                            {{ $totales['S'] - $totales['total_inventario'] }}
                                                         </td>
                                                         <td>
-                                                            <?php echo $Percentage_SICI = round(($totales['Si'] * 100) / $totales['total'], 2); ?>%
+                                                            <?php echo $Percentage_SICI = round(($totales['S'] * 100) / $totales['total'], 2); ?>%
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td><span>No Localizados SICI</span></td>
                                                         <td class="stat-cell">
-                                                            {{ $totales['No'] - $totales['total_inventario'] }}
+                                                            {{ $totales['N'] - $totales['total_inventario'] }}
                                                         </td>
                                                         <td>
-                                                            <?php echo $Percentage_SICI = round(($totales['No'] * 100) / $totales['total'], 2); ?>%
+                                                            <?php echo $Percentage_SICI = round(($totales['N'] * 100) / $totales['total'], 2); ?>%
                                                         </td>
                                                     </tr>
                                                     @foreach ($totales as $item => $llave)
-                                                        @if ($item != 'Si' && $item != 'No' && $item != 'total' && $item != 'total_inventario')
+                                                        @if ($item != 'S' && $item != 'N' && $item != 'total' && $item != 'total_inventario')
                                                             <tr>
                                                                 <td><span>{{ $item }}</span></td>
                                                                 <td class="stat-cell">
@@ -219,6 +214,7 @@
 
                                             </td>
                                             <td>
+
                                                 <p><a href="{{ route('inventario-por-area', $llave->id_area) }}"
                                                         class="btn btn-primary">Detalle</a></p>
 
@@ -292,9 +288,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-
-
                             </table>
                         </div>
 
@@ -311,13 +304,13 @@
 @endsection
 
 @section('js')
-    @include('layouts.scrtips')
+    @include('layouts.scripts')
     <script>
         $(document).ready(function() {
             $('#example').DataTable({
                 "pageLength": 50,
                 "order": [
-                    [1, "desc"]
+                    [2, "desc"]
                 ],
                 "language": {
                     "sProcessing": "Procesando...",
@@ -363,7 +356,7 @@
             $('#js-example-basic-single').select2();
         });
 
-        const total_sici_localizados = {!! json_encode($totales['Si']) !!};
+        const total_sici_localizados = {!! json_encode($totales['S']) !!};
         const total_22B_detalleInventario = {!! json_encode($totales['total_inventario']) !!};
 
 

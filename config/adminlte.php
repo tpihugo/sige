@@ -293,7 +293,6 @@ return [
         // Navbar items:
         ['header' => 'Sistema Integral de Gestión'],
 
-
         [
             'type'         => 'navbar-search',
             'text'         => 'Busqueda General de Equipos',
@@ -311,7 +310,7 @@ return [
         ],
         [
             'type'         => 'fullscreen-widget',
-            'topnav_right' => false,
+            'topnav_right' => true,
         ],
 
         // Sidebar items:

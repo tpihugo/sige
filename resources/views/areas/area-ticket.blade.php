@@ -91,7 +91,7 @@
                                 <p>Prioridad: <span id="prioridad"></span></p>
                             </div>
                         </div>
-                        <div class="row justify-content-center ">
+                        <div class="row justify-content-center mt-2">
                             <div class="col-sm-12 col-md-3">
                                 <a href="" id="historial" class="btn btn-primary">Historial</a>
                             </div>
@@ -121,14 +121,14 @@
                 document.getElementById('slide').style.display = 'none';
             } else {
                 document.getElementById('slide').style.display = 'block';
-                var url = "{{ route('area_imagenes', ':id') }}";
+                var url = "{{ url('storage/images/:id') }}";
                 url = url.replace(':id', params['imagen_1']);
                 $('#img1').attr("src", url);
                 if (params['imagen_2'] == 'Sin imagen') {
                     document.getElementById('slide_2').style.display = 'none';
                 } else {
                     document.getElementById('slide_2').style.display = 'block';
-                    var url = "{{ route('area_imagenes', ':id') }}";
+                    var url = "{{ url('storage/images/:id') }}";
                     url = url.replace(':id', params['imagen_2']);
                     $('#img2').attr("src", url);
                 }
@@ -142,6 +142,7 @@
                 $("#contacto").html(params['tickets'][0]['contacto']);
             } else {
                 document.getElementById('row_datos').style.display = 'none';
+                Ñ
             }
             var id = params['id'].toString();
             var url = "{{ route('ticket-historial', ':id') }}";

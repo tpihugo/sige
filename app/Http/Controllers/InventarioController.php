@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Area;
+use App\Models\Equipo;
 use App\Models\InventarioDetalle;
 use App\Models\Vs_Conteo_Por_Area;
 use App\Models\Vs_Equipo_Localizado;
@@ -13,6 +14,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use function PHPUnit\Framework\isNull;
 use App\Models\Log;
+use App\Models\VsTicket;
+use DateTime;
 use Illuminate\Support\Facades\Auth;
 
 class InventarioController extends Controller
@@ -209,59 +212,79 @@ class InventarioController extends Controller
 
     public function inventario_express2()
     {
-        $inventario = '2023A';
-        
+        $inventario = '2023B';
 
-        $total = VsEquipo::where('activo', 1)
-            ->where('tipo_sici', '=', 'equipo')
-            ->count();
-
-        $sici = VsEquipo::where('activo', 1)
-            ->select('localizado_sici', DB::raw('count(*) as total'))->where('tipo_sici','equipo')->whereIn('localizado_sici', ['Si', 'No','S','N'])
+        $sici = VsEquipo::select('tipo_sici', DB::raw('count(*) as total'), 'localizado_sici')->where('tipo_sici', '=', 'equipo')
+            ->where('activo', 1)
             ->groupBy('localizado_sici')
             ->pluck('total', 'localizado_sici');
 
-        
+        $inventario_area = DB::table('vs_inventariodetalle')
+            ->select('id_area', DB::raw('count(*) as total'), 'inventario')->where('tipo_sici', '=', 'equipo')->where('inventario', $inventario)
+            ->groupBy('id_area')
+            ->pluck('total', 'id_area');
 
-        $totales = ['total' => $total];
-        
-        foreach ($sici as $item => $llave) {
-            $totales[$item] = $llave;
+        $areas = Area::with('inventario')->where('activo',1)->where('sede','=','Belenes')->get();
+/*
+        foreach ($areas as $key => $value) {
+            echo $value->id . "  Area: ". $value->area ."  Inventario: ". $value->inventario->count()  . "<br>";
         }
-        return $totales;
+        */
 
-        $total_inventario = DB::table('inventariodetalle')
-            ->where('inventario', '=', $inventario)
-            ->count();
+        $total_inventario =  DB::table('vs_inventariodetalle')->where('inventario', '=', $inventario)->count();
+
 
         $totales['total_inventario'] = $total_inventario;
 
+        $totales['total'] = $sici['S'] + $sici['N'];
 
+        $totales['S'] = $sici['S'];
+        $totales['N'] = $sici['N'];
 
         $areas = DB::table('vs_equipos')
             ->select(DB::raw('COUNT(*) as equipos, id_area, area'))
-            ->where('tipo_sici', '!=', null)
-            ->where('activo', 1)
+            ->where('tipo_sici', '=', 'equipo')->where('activo', 1)->orderBy('id_area')
             ->groupBy('id_area')
             ->get();
 
         foreach ($areas as $key => $value) {
-            $cantidad = DB::table('vs_inventariodetalle')
-                ->where('inventario', '=', '2023A')
-                ->where('IdArea', $value->id_area)->where('tipo_sici', '!=', null)
-                ->count();
+            //echo  $value->id_area . " ";
+            $id_area = $value->id_area;
+            if (isset($inventario_area[$id_area])) {
+                //echo  $inventario[$id_area] ;
+                $value->inventario =  $inventario_area[$id_area];
+            } else {
+                $value->inventario =  0;
+            }
+
             if ($value->id_area == null) {
                 $value->id_area = 0;
                 $value->area = 'Desconocido';
             }
-
-            $value->porcentaje = number_format(($cantidad / $value->equipos) * 100, 1);
-
-            $value->inventario = $cantidad;
+            $value->porcentaje = number_format(($value->inventario / $value->equipos) * 100, 1);
+            //echo "<br>";
+            //dd($value);
         }
-
-        $areas = collect($areas);
         return view('inventario.inventario_express2', compact('totales', 'areas'));
+        return $areas;
+        /*;
+        $areas = collect($areas);
+        return view('inventario.inventario_express2', compact('totales', 'areas'));*/
+    }
+
+    public function recorrer($value)
+    {
+        $inventario = "2023A";
+
+
+        if ($value->id_area == null) {
+            $value->id_area = 0;
+            $value->area = 'Desconocido';
+        }
+        $value->porcentaje = number_format(($cantidad / $value->equipos) * 100, 1);
+        $value->inventario = $cantidad;
+        //return $value;
+        print_r($value);
     }
 
     public function AutomaticallyUpdateArea($area_id)
@@ -293,16 +316,16 @@ class InventarioController extends Controller
         $equipo_id = $request->input('equipo_id');
         $area_id = $request->input('area_id');
         $user_id = $request->input('user_id');
-        $inventario = '2023A';
+        $inventario = '2023B';
         $nota = $request->input('nota');
-        $articulosRegistrados = InventarioDetalle::where([['IdEquipo', '=', $equipo_id], ['inventario', '=', $inventario]])->count();
+        $articulosRegistrados = InventarioDetalle::where([['id_equipo', '=', $equipo_id], ['inventario', '=', $inventario]])->count();
         if ($articulosRegistrados == 0) {
             $listadoEquipos = VsEquipo::where('id', '=', $equipo_id)->first();
             $registroInventario = new InventarioDetalle();
-            $registroInventario->IdEquipo = $equipo_id;
-            $registroInventario->IdArea = $area_id;
-            $registroInventario->IdRevisor = $user_id;
-            $registroInventario->fechaHora = Carbon::now();
+            $registroInventario->id_equipo = $equipo_id;
+            $registroInventario->id_area = $area_id;
+            $registroInventario->id_usuario = $user_id;
+            $registroInventario->fecha = Carbon::now();
             $registroInventario->inventario = $inventario;
             $registroInventario->estatus = 'Localizado';
             $registroInventario->notas = $nota;
@@ -311,8 +334,8 @@ class InventarioController extends Controller
             $log = new Log();
             $log->tabla = 'InventarioDetalle';
             $mov = '';
-            $mov = $mov . ' IdEquipo:' . $registroInventario->IdEquipo . ' IdArea:' . $registroInventario->IdArea . ' IdRevisor' . $registroInventario->IdRevisor;
-            $mov = $mov . ' fechaHora:' . $registroInventario->fechaHora . ' inventario:' . $registroInventario->inventario . ' estatus' . $registroInventario->estatus;
+            $mov = $mov . ' id_equipo:' . $registroInventario->id_equipo . ' id_area:' . $registroInventario->id_area . ' id_usuario' . $registroInventario->id_usuario;
+            $mov = $mov . ' fecha:' . $registroInventario->fecha . ' inventario:' . $registroInventario->inventario . ' estatus' . $registroInventario->estatus;
             $mov = $mov . ' notas:' . $registroInventario->notas . '.';
             $log->movimiento = $mov;
             $log->usuario_id = Auth::user()->id;
@@ -321,7 +344,7 @@ class InventarioController extends Controller
             //
             $mensaje = 'El articulo se registro como Localizado con Nota';
         } elseif ($articulosRegistrados == 1 && $nota) {
-            $ArticuloSeleccionado = InventarioDetalle::where('IdEquipo', $equipo_id)
+            $ArticuloSeleccionado = InventarioDetalle::where('id_equipo', $equipo_id)
                 ->where('inventario', $inventario)
                 ->first();
             $ArticuloSeleccionado->IdRevisor = $request->input('user_id');
@@ -398,131 +421,50 @@ class InventarioController extends Controller
     }*/
     public function inventario_por_area($area_id = 249)
     {
-        $inventario = '2023A';
+
+        $inventario = '2023B';
         /*Total equipos_en_sici*/
-        $equipos_en_sici = DB::table('vs_equipos')
-            ->select(DB::raw('COUNT(*) as cuenta_equipos'))
-            ->where('resguardante', '=', 'CTA')
-            ->where('id_area', '=', $area_id)
-            ->first();
 
-        $grupos = VsEquipo::where('activo', 1)
-            ->where('id_area', '=', $area_id)
-            ->where('resguardante', '=', 'CTA')
-            ->whereIn('localizado_sici', ['Si', 'No', '-', 'No especificado', 'Elegir'])
-            ->get()
-            ->groupBy(function ($elmento) {
-                return $elmento->localizado_sici;
-            });
-        $cantidad = [];
-        foreach ($grupos as $item => $llave) {
-            $cantidad[$item] = count($llave);
-        }
-        //return $grupos;
+        $sici = VsEquipo::select('id_area', DB::raw('count(*) as total'), 'localizado_sici')->where('tipo_sici', '=', 'equipo')
+            ->where('activo', 1)->where('id_area', '=', $area_id)
+            ->groupBy('localizado_sici')
+            ->pluck('total', 'localizado_sici');
 
-        /*Total equipos_localizados_sici*/
-        $equipos_en_sici_localizados = DB::table('vs_equipos')
-            ->select(DB::raw('COUNT(*) as cuenta_equipos'))
-            ->where('resguardante', '=', 'CTA')
-            ->where('localizado_sici', '=', 'Si')
-            ->where('id_area', '=', $area_id)
-            ->first();
-        /*Total equipos_no_localizados_sici*/
-        $equipos_en_sici_no_localizados = DB::table('vs_equipos')
-            ->select(DB::raw('COUNT(*) as cuenta_equipos'))
-            ->where('resguardante', '=', 'CTA')
-            ->where('localizado_sici', '=', 'No')
-            ->where('id_area', '=', $area_id)
-            ->first();
         /* Localizados inventario Express*/
-        $total_equipos_localizados = DB::table('vs_inventariodetalle as iv')
-            ->select(DB::raw('COUNT(*) as total_locales'))
-            ->whereIn(
-                'iv.IdEquipo',
-                DB::table('vs_equipos as eq')
-                    ->select('eq.id')
-                    ->where('eq.resguardante', 'CTA')
-                    ->where('eq.id_area', $area_id),
-            )
-            ->where('iv.IdArea', $area_id)
-            ->where('inventario', '2023A')
-            ->first();
-
-        $total_equipos_localizados = $total_equipos_localizados->total_locales;
-
-        $total_equipos_del_area = DB::table('vs_equipos')
-            ->select(DB::raw('COUNT(*) as totalE'))
-            ->where('resguardante', 'CTA')
+        $total_equipos_localizados = DB::table('vs_inventariodetalle')
             ->where('id_area', $area_id)
-            ->first();
+            ->where('inventario', $inventario)
+            ->count();
 
-        //return $total_equipos_del_area;
 
-        $total_equipos_del_area = $total_equipos_del_area->totalE;
-
-        $total_equipos_localizados_externos = DB::table('vs_inventariodetalle as iv')
-            ->select(DB::raw('COUNT(*) as total_externos'))
-            ->whereNotIn(
-                'iv.IdEquipo',
-                DB::table('vs_equipos as eq')
-                    ->select('eq.id')
-                    ->where('eq.resguardante', 'CTA')
-                    ->where('eq.id_area', $area_id),
-            )
-            ->where('iv.IdArea', $area_id)
-            ->where('inventario', '2023A')
-            ->first();
-        $total_equipos_localizados_externos = $total_equipos_localizados_externos->total_externos;
-
-        /*AREAS*/
-        $origen = 'inventario-area';
-
-        /*DATA TABLE*/
-
-        $inventario = '2023A';
-        $equipos_dataTable_externos = DB::table('vs_inventariodetalle as iv')
-            ->join('vs_equipos', 'iv.IdEquipo', '=', 'vs_equipos.id')
-            // ->select( DB::raw("eq.*"), 'iv.estatus', 'iv.notas')
-            ->whereNotIn(
-                'iv.IdEquipo',
-                DB::table('vs_equipos as eq')
-                    ->select('eq.id')
-                    ->where('eq.resguardante', 'CTA')
-                    ->where('eq.id_area', $area_id),
-            )
-            ->where('iv.IdArea', $area_id)
-            ->where('inventario', '2023A')
-            ->get(['vs_equipos.*', 'iv.estatus', 'iv.notas']);
+        $inventario = '2023B';
 
         $equipos_locales = DB::table('vs_equipos')
             ->select('id', 'udg_id', 'tipo_equipo', 'marca', 'modelo', 'numero_serie', 'detalles', 'area', 'id_area')
-            ->where('vs_equipos.id_area', $area_id)
-            ->where('vs_equipos.resguardante', 'CTA')
+            ->where('id_area', $area_id)
+            ->where('tipo_sici', '=', 'equipo')
             ->get();
 
-        //dd($equipos_locales);
         foreach ($equipos_locales as $key => $value) {
-            //dd($value);
             $ultimo_invemtario = DB::table('vs_inventariodetalle')
-                ->where('IdArea', $area_id)
-                ->where('IdEquipo', $value->id)
+                ->where('id_area', $area_id)
+                ->where('id_equipo', $value->id)
                 ->where('inventario', $inventario)
                 ->latest()
                 ->first();
-
             if ($ultimo_invemtario == null) {
-                $ultimo_invemtario = DB::table('inventariodetalle')
-                    ->where('IdArea', $area_id)
-                    ->where('IdEquipo', $value->id)
+                $ultimo_invemtario = DB::table('inventario_detalles')
+                    ->where('id_area', $area_id)
+                    ->where('id_equipo', $value->id)
                     ->latest()
                     ->first();
                 if ($ultimo_invemtario != null) {
-                    $value->ultimo_inventario = ['estatus' => 'No localizado', 'fecha' => 'Ultimo inventario realizado' . $ultimo_invemtario->fechaHora, 'notas' => $ultimo_invemtario->notas];
+                    $value->ultimo_inventario = ['estatus' => 'No localizado', 'fecha' => 'Ultimo inventario realizado' . $ultimo_invemtario->fecha, 'notas' => $ultimo_invemtario->notas];
                 } else {
                     $value->ultimo_inventario = ['estatus' => 'No localizado', 'fecha' => 'Nunca'];
                 }
             } else {
-                $value->ultimo_inventario = ['estatus' => $ultimo_invemtario->estatus, 'fecha' => $ultimo_invemtario->fechaHora, 'notas' => $ultimo_invemtario->notas];
+                $value->ultimo_inventario = ['estatus' => $ultimo_invemtario->estatus, 'fecha' => $ultimo_invemtario->fecha, 'notas' => $ultimo_invemtario->notas];
             }
         }
 
@@ -532,11 +474,8 @@ class InventarioController extends Controller
 
         return view('inventario.inventario-area')
             ->with('area_actual', $currentArea)
-            ->with('totales', $cantidad)
             ->with('total_equipos_localizados', $total_equipos_localizados)
-            ->with('total_equipos_localizados_externos', $total_equipos_localizados_externos)
             ->with('equipos', $equipos_locales)
-            ->with('origen', $origen)
             ->with('area_id', $area_id);
     }
     public function listarEquipoEncontrado(Request $request)
@@ -582,20 +521,19 @@ class InventarioController extends Controller
     }
     public function registroInventario($equipo_id, $origen = 'revision-inventario')
     {
-        $inventario = '2023A';
         $revisor_id = Auth::user()->id;
-        $articulosRegistrados = InventarioDetalle::where('IdEquipo', $equipo_id)
-            ->where('inventario', $inventario)
+        $articulosRegistrados = InventarioDetalle::where('id_equipo', $equipo_id)
+            ->where('inventario', $origen)
             ->count();
 
         if ($articulosRegistrados == 0) {
             $listadoEquipos = VsEquipo::where('id', '=', $equipo_id)->first();
             $registroInventario = new InventarioDetalle();
-            $registroInventario->IdEquipo = $equipo_id;
-            $registroInventario->IdArea = $listadoEquipos->id_area;
-            $registroInventario->IdRevisor = $revisor_id;
-            $registroInventario->fechaHora = Carbon::now();
-            $registroInventario->inventario = $inventario;
+            $registroInventario->id_equipo = $equipo_id;
+            $registroInventario->id_area = $listadoEquipos->id_area;
+            $registroInventario->id_usuario = $revisor_id;
+            $registroInventario->fecha = Carbon::now();
+            $registroInventario->inventario = $origen;
             $registroInventario->estatus = 'Localizado';
             $registroInventario->notas = '-';
             $registroInventario->save();
@@ -603,8 +541,8 @@ class InventarioController extends Controller
             $log = new Log();
             $log->tabla = 'InventarioDetalle';
             $mov = '';
-            $mov = $mov . ' IdEquipo:' . $registroInventario->IdEquipo . ' IdArea:' . $registroInventario->IdArea . ' IdRevisor' . $registroInventario->IdRevisor;
-            $mov = $mov . ' fechaHora:' . $registroInventario->fechaHora . ' inventario:' . $registroInventario->inventario . ' estatus' . $registroInventario->estatus;
+            $mov = $mov . ' id_equipo:' . $registroInventario->id_equipo . ' IdArea:' . $registroInventario->id_area . ' id_usuario' . $registroInventario->id_usuario;
+            $mov = $mov . ' fecha:' . $registroInventario->fecha . ' inventario:' . $registroInventario->inventario . ' estatus' . $registroInventario->estatus;
             $mov = $mov . ' notas:' . $registroInventario->notas . '.';
             $log->movimiento = $mov;
             $log->usuario_id = Auth::user()->id;

@@ -22,6 +22,7 @@ use App\Http\Controllers\PlazaController;
 include_once "usuarios.php";
 
 include_once "ips.php";
+include_once 'tickets.php';
 
 Route::middleware(["auth:sanctum", "verified"])
     ->get("/", [App\Http\Controllers\HomeController::class, "index"])
@@ -463,11 +464,6 @@ Route::get("/area-ticket/{sede}", [
     "as" => "area-ticket",
     "middleware" => "auth",
     "uses" => "App\Http\Controllers\AreaController@area_ticket",
-]);
-Route::get("/images/{filename}", [
-    "as" => "area_imagenes",
-    "middleware" => "auth",
-    "uses" => "App\Http\Controllers\AreaController@getImage",
 ]);
 Route::get("/ticket-historial/{id?}", [
     "as" => "ticket-historial",
