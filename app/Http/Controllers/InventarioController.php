@@ -229,9 +229,15 @@ class InventarioController extends Controller
         foreach ($areas as $key => $value) {
             echo $value->id . "  Area: ". $value->area ."  Inventario: ". $value->inventario->count()  . "<br>";
         }
+
+
+
         */
 
         $total_inventario =  DB::table('vs_inventariodetalle')->where('inventario', '=', $inventario)->count();
+
+
+        
 
 
         $totales['total_inventario'] = $total_inventario;
