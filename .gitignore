@@ -14,3 +14,4 @@ yarn-error.log
 index.php
 /resources/lang/vendor
 /.idea
+/storage/logs/*.log
