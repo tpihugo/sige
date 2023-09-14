@@ -20,8 +20,8 @@ class ArticuloController extends Controller
      */
     public function index($id)
     {
-        $articulos = Articulo::where('requisicion_id',$id)->where('activo',1)->get();
-        return view('articulos.index',compact('id'))->with('articulos', $articulos);
+        $articulos = Articulo::where('requisicion_id', $id)->where('activo', 1)->get();
+        return view('articulos.index', compact('id'))->with('articulos', $articulos);
     }
 
     /**
@@ -32,7 +32,7 @@ class ArticuloController extends Controller
     public function create(Requisicion $id)
     {
         $requisicion = $id->id;
-        return view('articulos.create',compact('requisicion'));
+        return view('articulos.create', compact('requisicion'));
     }
 
     /**
@@ -43,23 +43,25 @@ class ArticuloController extends Controller
      */
     public function store(Request $request)
     {
-        $validateData = $this->validate($request,[
-            'codigo'=>'required',
-            'descripcion'=>'required',
-            'cantidad'=>'required',
-            'observacion'=>'required',
+        $id = $request->requisicion_id;
+        $temp = $request->except(['_token', 'requisicion_id']);
+        $limit = count($temp['status']);
+        $this->validate($request, [
+            'codigo.0'  => 'required',
+            'descripcion.0'  => 'required',
+            'cantidad.0'  => 'required',
+            'observacion.0' => 'required',
         ]);
-
-        $articulos = new Articulo();
-        $articulos->codigo = $request->get('codigo');
-        $articulos->cantidad = $request->get('cantidad');
-        $articulos->descripcion = $request->get('descripcion');
-        $articulos->observacion = $request->get('observacion');
-        $articulos->status = $request->get('status');
-        $articulos->requisicion_id	 = $request->get('requisicion_id');
-
-        $articulos->save();
-
+        for ($i=0; $i < $limit ; $i++) {
+            $articulos = new Articulo();
+            $articulos->codigo = $temp['codigo'][$i];
+            $articulos->cantidad = $temp['cantidad'][$i];
+            $articulos->descripcion = $temp['descripcion'][$i];
+            $articulos->observacion = $temp['observacion'][$i];
+            $articulos->status = $temp['status'][$i];
+            $articulos->requisicion_id = $id;
+            $articulos->save();
+        }
         return redirect()->route('requisiciones.index');
     }
 
@@ -105,6 +107,7 @@ class ArticuloController extends Controller
         $articulo->requisicion_id = $request->get('requisicion_id');
         //dd($articulo);
         $articulo->save();
+        
 
         return redirect()->route('requisicion.index');
     }
@@ -121,6 +124,5 @@ class ArticuloController extends Controller
         $articulo->activo = 0;
 
         return redirect()->route('requisicion.index');
-
     }
 }

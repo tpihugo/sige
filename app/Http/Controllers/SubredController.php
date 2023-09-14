@@ -1,11 +1,15 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use App\Models\Ip;
 use App\Models\Subred;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Models\VsEquipo;
 use App\Models\Empleado;
+use App\Models\VsIps;
+use compra;
 use Nette\Utils\Strings;
 use PHPUnit\Framework\Constraint\Count;
 
@@ -414,10 +418,22 @@ class SubredController extends Controller
             ->where('ips.activo', '=', 1)
             ->where('ips.ocupada', '=', 'si')
             ->get();
-            
+
         return view('subredes.ocupadas')
             ->with('Ips', $Ips)
             ->with('num', $Ips->count())
             ->with('subred', $subred);
+    }
+
+    public function busqueda_equipo(Request $request)
+    {
+        if ($request->ajax()) {
+            $equipo = VsIps::where('id_equipo',  'like', '%' .$request->equipo. '%')
+                ->orwhere('udg_id', 'like', '%' .$request->equipo. '%')
+                ->orwhere('numero_serie', 'like', '%' .$request->equipo. '%')
+                ->orwhere('ip', 'like', '%' .$request->equipo. '%')->get();
+            return view('subredes.tabla', compact('equipo'))->render();
+        }
+        return 0;
     }
 }

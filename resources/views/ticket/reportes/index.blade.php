@@ -29,6 +29,15 @@
                 <h2 class="mt-3 text-center">Reporte de Tickets </h2>
                 <a href="{{ route('tickets.create') }}" class="btn btn-success col-auto m-1">Capturar Ticket</a>
             </div>
+            <div class="text-center">
+                <span class=" mx-1 px-1">
+                    <button class="btn " style="background-color:#007bff;"></button> Tickets de Aulas
+                </span>
+
+                <span>
+                    <button class="btn btn-success"></button> Tickets de Generales
+                </span>
+            </div>
             <div class="row align-items-center">
                 <div class="table-responsive">
                     <table id="example" class=" display table-striped table-bordered" style="width:100%">
@@ -130,7 +139,6 @@
                 data: params
             }).done(function(data) {
                 $('#reportes').html(data);
-                $('#table_reportes').DataTable();
             });
         }
     </script>
@@ -180,7 +188,7 @@
                         extend: 'excelHtml5',
                         title: "Reporte de tickets",
                         exportOptions: {
-                            columns: [ 0, 1, 4 ]
+                            columns: [0, 1, 4]
                         }
                     }
                 ],

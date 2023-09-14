@@ -42,18 +42,9 @@
                                 <label class="font-weight-bold" for="tipo_espacio">Tipo de Espacio </label>
                                 <select class="form-control" id="tipo_espacio" name="tipo_espacio">
                                     <option value="{{ $area->tipo_espacio }}" selected>{{ $area->tipo_espacio }}</option>
-                                    @if ($area->tipo_espacio == 'Administrativo')
                                         <option value="Aula">Aula</option>
                                         <option value="Laboratorio">Laboratorio</option>
-                                    @endif
-                                    @if ($area->tipo_espacio == 'Aula')
                                         <option value="Administrativo">Administrativo</option>
-                                        <option value="Laboratorio">Laboratorio</option>
-                                    @endif
-                                    @if ($area->tipo_espacio == 'Laboratorio')
-                                        <option value="Administrativo">Administrativo</option>
-                                        <option value="Aula">Aula</option>
-                                    @endif
                                 </select>
                             </div>
                             <div class="col-md-3">
@@ -143,139 +134,13 @@
                                     <option value="División de Estudios de Estado y Sociedad">División de Estudios de
                                         Estado y sociedad
                                     </option>
-                                    <option value="C.U. DE CS. SOCIALES Y HUMANIDADES">C.U. DE CS. SOCIALES Y HUMANIDADES
+                                    <option value="C.U. DE CS. SOCIALES Y HUMANIDADES">C.U. DE CIENCIAS SOCIALES Y HUMANIDADES
                                     </option>
                                 </select>
                             </div>
                             <div class="col-md-6">
                                 <label class="font-weight-bold" for="coordinacion">Coordinación </label>
-                                <select class="form-control" id="coordinacion" name="coordinacion">
-                                    <option value="{{ $area->coordinacion }}" selected>{{ $area->coordinacion }}</option>
-                                    <option disabled>Elegir</option>
-                                    <option value='Auditorio Belenes'>Auditorio Belenes</option>
-                                    <option value='Auditorio Salvador Allende'>Auditorio Salvador Allende</option>
-                                    <option value='Biblioteca Central La Normal'>Biblioteca Central La Normal</option>
-                                    <option value='Bufetes jurídicos'>Bufetes jurídicos</option>
-                                    <option value='CALAS'>CALAS</option>
-                                    <option value='Cátedra Emile Durkheim.'>Cátedra Emile Durkheim.</option>
-                                    <option value='Cátedra José Martí'>Cátedra José Martí</option>
-                                    <option value='Cátedra Latinoamericana Julio Cortázar'>Cátedra Latinoamericana Julio
-                                        Cortázar</option>
-                                    <option value='Cátedra UNESCO'>Cátedra UNESCO</option>
-                                    <option value='Ciencias Sociales, Doctorado'>Ciencias Sociales, Doctorado</option>
-                                    <option value='Comité de Alumnos'>Comité de Alumnos</option>
-                                    <option value='Contraloría'>Contraloría</option>
-                                    <option value='Control Escolar'>Control Escolar</option>
-                                    <option value='CTA'>CTA</option>
-                                    <option value='CTA - Espacion comunes'>CTA - Espacion comunes</option>
-                                    <option value="C.U. DE CS. SOCIALES Y HUMANIDADES">C.U. DE CS. SOCIALES Y HUMANIDADES
-                                    </option>
-                                    <option value='Departamento de Estudios de Lenguas Modernas'>Departamento de Estudios
-                                        de
-                                        Lenguas Modernas</option>
-                                    <option value='Departamento de Estudios del Pacífico'>Departamento de Estudios del
-                                        Pacífico</option>
-                                    <option value='Departamento de Estudios en Educación'>Departamento de Estudios en
-                                        Educación</option>
-                                    <option value='Departamento de Estudios Ibéricos y Latinoamericanos'>Departamento de
-                                        Estudios Ibéricos y Latinoamericanos</option>
-                                    <option value='Departamento de Estudios Socio Urbanos'>Departamento de Estudios Socio
-                                        Urbanos</option>
-                                    <option value='Derecho Global, Departamento de '>Derecho Global, Departamento de
-                                    </option>
-                                    <option value='Derecho Privado, Departamento de '>Derecho Privado, Departamento de
-                                    </option>
-                                    <option value='Derecho Público, Departamento de'>Derecho Público, Departamento de
-                                    </option>
-                                    <option value='Derecho Social, Departamento de'>Derecho Social, Departamento de
-                                    </option>
-                                    <option value='Desarrollo local y territorio, Maestría'>Desarrollo local y territorio,
-                                        Maestría</option>
-                                    <option value='Desarrollo Social , Departamento de'>Desarrollo Social , Departamento de
-                                    </option>
-                                    <option value='DESMOS. Departamento de Estudios sobre Movimientos Sociales'>DESMOS.
-                                        Departamento de Estudios sobre Movimientos Sociales</option>
-                                    <option value='Difusión, Coordinación'>Difusión, Coordinación</option>
-                                    <option value='Disciplinas sobre el Derecho, Departamento de'>Disciplinas sobre el
-                                        Derecho, Departamento de</option>
-                                    <option value='División de Estudios de Estado y Sociedad'>División de Estudios de
-                                        Estado
-                                        y Sociedad</option>
-                                    <option value='División de Estudios de la Cultura'>División de Estudios de la Cultura
-                                    </option>
-                                    <option value='División de Estudios Históricos y Humanos'>División de Estudios
-                                        Históricos y Humanos</option>
-                                    <option value='División de Estudios Jurídicos'>División de Estudios Jurídicos</option>
-                                    <option value='División de Estudios Políticos y Sociales'>División de Estudios
-                                        Políticos
-                                        y Sociales</option>
-                                    <option value='Docencia, Coordinación'>Docencia, Coordinación</option>
-                                    <option value='Doctorado en Derecho'>Doctorado en Derecho</option>
-                                    <option value='Enseñanza Incorporada, Unidad'>Enseñanza Incorporada, Unidad</option>
-                                    <option value='Estudios de la Comunicación Social, , Departamento de'>Estudios de la
-                                        Comunicación Social, , Departamento de</option>
-                                    <option value='Estudios del Pacífico'>Estudios del Pacífico</option>
-                                    <option value='Estudios Internacionales, Departamento de'>Estudios Internacionales,
-                                        Departamento de</option>
-                                    <option value='Estudios Literarios, Departamento de'>Estudios Literarios, Departamento
-                                        de</option>
-                                    <option value='Estudios Políticos, Departamento de'>Estudios Políticos, Departamento de
-                                    </option>
-                                    <option value='Extensión, , Coordinación'>Extensión, , Coordinación</option>
-                                    <option value='Festival Internacional de Cine de Guadalajara (FICG)'>Festival
-                                        Internacional de Cine de Guadalajara (FICG)</option>
-                                    <option value='Filosofía, Departamento de'>Filosofía, Departamento de</option>
-                                    <option value='Finanzas, Coordinación'>Finanzas, Coordinación</option>
-                                    <option value='Geografía y Ordenación Territorial'>Geografía y Ordenación Territorial
-                                    </option>
-                                    <option value='Historia, Departamento de'>Historia, Departamento de</option>
-                                    <option value='Investigación, Coordinación'>Investigación, Coordinación</option>
-                                    <option value='Laboratorio Estudios Históricos y Humanos I'>Laboratorio Estudios
-                                        Históricos y Humanos I</option>
-                                    <option value='Laboratorio Estudios Históricos y Humanos II'>Laboratorio Estudios
-                                        Históricos y Humanos II</option>
-                                    <option value='Laboratorios Consulta de Acervo Bibliográfico'>Laboratorios Consulta de
-                                        Acervo Bibliográfico</option>
-                                    <option value='Laboratorios Documentación Electrónica'>Laboratorios Documentación
-                                        Electrónica</option>
-                                    <option value='Laboratorios Estudios Internacionales (Deshabilitado)'>Laboratorios
-                                        Estudios Internacionales (Deshabilitado)</option>
-                                    <option value='Lenguas Indígenas, , Departamento de'>Lenguas Indígenas, , Departamento
-                                        de</option>
-                                    <option value='Lenguas Modernas, Departamento de'>Lenguas Modernas, Departamento de
-                                    </option>
-                                    <option value='Letras, Departamento de'>Letras, Departamento de</option>
-                                    <option value='Licenciatura en Comunicación Pública'>Licenciatura en Comunicación
-                                        Pública</option>
-                                    <option value='Maestría en Ciencias Sociales'>Maestría en Ciencias Sociales</option>
-                                    <option value='Maestría en Derecho'>Maestría en Derecho</option>
-                                    <option value='Maestría Interinstitucional en deutsch als fremdes...'>Maestría
-                                        Interinstitucional en deutsch als fremdes...</option>
-                                    <option value='Mesoamericanos y Mexicanos, Departamento de'>Mesoamericanos y Mexicanos,
-                                        Departamento de</option>
-                                    <option value='Observatorio (Division Jurídicos)'>Observatorio (Division Jurídicos)
-                                    </option>
-                                    <option value='Personal, Coordinación'>Personal, Coordinación</option>
-                                    <option value='Planeación, Coordinación'>Planeación, Coordinación</option>
-                                    <option value='Posgrado, Coordinación'>Posgrado, Coordinación</option>
-                                    <option value='Rectoría'>Rectoría</option>
-                                    <option value='Secretaría Académica'>Secretaría Académica</option>
-                                    <option value='Secretaría Administrativa'>Secretaría Administrativa</option>
-                                    <option value='Secretaría Particular'>Secretaría Particular</option>
-                                    <option value='Servicio Social'>Servicio Social</option>
-                                    <option value='Servicios Academicos, Coordinación'>Servicios Academicos, Coordinación
-                                    </option>
-                                    <option value='Servicios Generales'>Servicios Generales</option>
-                                    <option value='Servicios Generales Belenes'>Servicios Generales Belenes</option>
-                                    <option value='Servicios Generales La Normal'>Servicios Generales La Normal</option>
-                                    <option value='Servicios Generales, Coordinación'>Servicios Generales, Coordinación
-                                    </option>
-                                    <option value='Sociología, Departamento de'>Sociología, Departamento de</option>
-                                    <option value='Trabajo Social, Departamento de'>Trabajo Social, Departamento de
-                                    </option>
-                                    <option value='Vinculación'>Vinculación</option>
-
-                                </select>
+                                <input type="text" class="form-control"  name="coordinacion" value="{{ $area->coordinacion }}">
                             </div>
                         </div>
                         <br>

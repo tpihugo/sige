@@ -23,6 +23,7 @@ include_once "usuarios.php";
 
 include_once "ips.php";
 include_once 'tickets.php';
+include_once 'subredes.php';
 
 Route::middleware(["auth:sanctum", "verified"])
     ->get("/", [App\Http\Controllers\HomeController::class, "index"])

@@ -86,7 +86,7 @@
                             <div class="col-md-3">
                                 <label for="cargo">Cargo</label>
                                 <select class="form-control" id="cargo" name="cargo" onchange="Cargos()" required>
-                                    <option selected disabled>{{ $prestamo->cargo }}</option>
+                                    <option selected value="{{ $prestamo->cargo }}">{{ $prestamo->cargo }}</option>
                                     <option disabled>Elegir</option>
                                     <option value="Alumno">Alumno</option>
                                     <option value="Administrativo">Administrativo</option>
@@ -119,7 +119,7 @@
                             <div class="col-md-4">
                                 <label for="fecha_inicio">Fecha:</label>
                                 <input readonly type="text" class="form-control" id="fecha_inicio" name="fecha_inicio"
-                                    value="{{ \Carbon\Carbon::parse($prestamo->fecha_inicio)->format('d/m/Y H:i') }}">
+                                    value="{{ \Carbon\Carbon::parse($prestamo->fecha_inicio)->format('Y-m-d H:i:s') }}">
                             </div>
                         </div>
                         <br>

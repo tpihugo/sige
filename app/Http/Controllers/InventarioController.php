@@ -224,6 +224,7 @@ class InventarioController extends Controller
             ->groupBy('id_area')
             ->pluck('total', 'id_area');
 
+
         $areas = Area::with('inventario')->where('activo',1)->where('sede','=','Belenes')->get();
 /*
         foreach ($areas as $key => $value) {
@@ -235,10 +236,6 @@ class InventarioController extends Controller
         */
 
         $total_inventario =  DB::table('vs_inventariodetalle')->where('inventario', '=', $inventario)->count();
-
-
-        
-
 
         $totales['total_inventario'] = $total_inventario;
 
@@ -252,6 +249,7 @@ class InventarioController extends Controller
             ->where('tipo_sici', '=', 'equipo')->where('activo', 1)->orderBy('id_area')
             ->groupBy('id_area')
             ->get();
+
 
         foreach ($areas as $key => $value) {
             //echo  $value->id_area . " ";
@@ -278,21 +276,6 @@ class InventarioController extends Controller
         return view('inventario.inventario_express2', compact('totales', 'areas'));*/
     }
 
-    public function recorrer($value)
-    {
-        $inventario = "2023A";
-
-
-        if ($value->id_area == null) {
-            $value->id_area = 0;
-            $value->area = 'Desconocido';
-        }
-        $value->porcentaje = number_format(($cantidad / $value->equipos) * 100, 1);
-        $value->inventario = $cantidad;
-        //return $value;
-        print_r($value);
-    }
-
     public function AutomaticallyUpdateArea($area_id)
     {
         $area = Area::find($area_id);
@@ -303,7 +286,7 @@ class InventarioController extends Controller
             $log = new Log();
             $log->tabla = 'area';
             $mov = '';
-            $mov = $mov . ' IdEquipo:' . $area->ultimo_inventario . 'se modifico desde:actualizacion_inventario.';
+            $mov = $mov . ' IdEquipo: ' . $area->ultimo_inventario . ' se modifico desde:actualizacion_inventario.';
             $log->movimiento = $mov;
             $log->usuario_id = Auth::user()->id;
             $log->acciones = 'Edicion';
@@ -442,9 +425,6 @@ class InventarioController extends Controller
             ->where('inventario', $inventario)
             ->count();
 
-
-        $inventario = '2023B';
-
         $equipos_locales = DB::table('vs_equipos')
             ->select('id', 'udg_id', 'tipo_equipo', 'marca', 'modelo', 'numero_serie', 'detalles', 'area', 'id_area')
             ->where('id_area', $area_id)
@@ -465,7 +445,7 @@ class InventarioController extends Controller
                     ->latest()
                     ->first();
                 if ($ultimo_invemtario != null) {
-                    $value->ultimo_inventario = ['estatus' => 'No localizado', 'fecha' => 'Ultimo inventario realizado' . $ultimo_invemtario->fecha, 'notas' => $ultimo_invemtario->notas];
+                    $value->ultimo_inventario = ['estatus' => 'No localizado', 'fecha' => 'Ultimo inventario realizado' . $ultimo_invemtario->fecha, 'notas ' => $ultimo_invemtario->notas];
                 } else {
                     $value->ultimo_inventario = ['estatus' => 'No localizado', 'fecha' => 'Nunca'];
                 }
@@ -486,7 +466,7 @@ class InventarioController extends Controller
     }
     public function listarEquipoEncontrado(Request $request)
     {
-        $ciclo = '2023A';
+        $ciclo = '2023B';
         //Se hace la ruta, la ruta manda llamar el m�todo y el m�todo manda llamar la plantilla
         $listadoEquipos = DB::table('vs_equipo_detalles')
             ->distinct('id')
@@ -564,7 +544,7 @@ class InventarioController extends Controller
         //  return redirect()->route('inventario-por-area', $listadoEquipos->id_area)->with(array('message' => $mensaje));
         //}else{
         return redirect()
-            ->route('revision-inventario')
+            ->route('panel-inventario')
             ->with([
                 'message' => $mensaje,
             ]);

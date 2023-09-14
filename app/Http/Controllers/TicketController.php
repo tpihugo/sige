@@ -60,7 +60,7 @@ class TicketController extends Controller
               ';
             } elseif (isset($tecnico)) {
                 if ($tecnico->id != $value['tecnico_id']) {
-                    $tomar = '<a href="' . $tomar . '" class="btn btn-warning" title="Tomar ticket">
+                    $tomar = '<a href="' . $tomar . '" class="btn btn-warning btn-sm" title="Tomar ticket">
                     <i class="far fa-hand-paper"></i>
                </a>';
                 } else {
@@ -250,6 +250,7 @@ class TicketController extends Controller
         $ticket->fecha_inicio  = $request->input('fecha_inicio ');
 
         $ticket->fecha_termino = $request->input('fecha_termino');
+
         if (!is_null($ticket->fecha_termino) && isset($ticket->fecha_termino)) {
             $ticket->estatus = 'Cerrado';
         }
@@ -260,16 +261,16 @@ class TicketController extends Controller
         $log = new Log();
         $log->tabla = "tickets";
         $mov = "";
-        $mov = $mov . " area_id:" . $ticket->area_id . " solicitante:" . $ticket->solicitante . " contacto" . $ticket->contacto;
-        $mov = $mov . " tecnico_id:" . $ticket->tecnico_id . " categoria:" . $ticket->categoria . " prioridad" . $ticket->prioridad;
+        $mov = $mov . " area_id: " . $ticket->area_id . " solicitante: " . $ticket->solicitante . " contacto " . $ticket->contacto;
+        $mov = $mov . " tecnico_id: " . $ticket->tecnico_id . " categoria: " . $ticket->categoria . " prioridad " . $ticket->prioridad;
         if (!is_null($ticket->fecha_termino) && isset($ticket->fecha_termino)) {
             $mov = $mov . " estatus: Cerrado";
         } else {
             $mov = $mov . " estatus:" . $ticket->estatus;
         }
-        $mov = $mov . " datos_reporte:" . $ticket->datos_reporte . " fecha_reporte" . $ticket->fecha_reporte;
-        $mov = $mov . " fecha_inicio:" . $ticket->fecha_inicio . " datos_reporte:" . $ticket->datos_reporte . " fecha_termino" . $ticket->fecha_termino;
-        $mov = $mov . " problema:" . $ticket->problema . " solucion:" . $ticket->solucion . ".";
+        $mov = $mov . " datos_reporte: " . $ticket->datos_reporte . " fecha_reporte " . $ticket->fecha_reporte;
+        $mov = $mov . " fecha_inicio: " . $ticket->fecha_inicio . " datos_reporte: " . $ticket->datos_reporte . " fecha_termino " . $ticket->fecha_termino;
+        $mov = $mov . " problema: " . $ticket->problema . " solucion: " . $ticket->solucion . ".";
         $log->movimiento = $mov;
         $log->usuario_id = Auth::user()->id;
         $log->acciones = "Edicion";

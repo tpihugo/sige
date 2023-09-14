@@ -205,7 +205,7 @@ class IpController extends Controller
             ->select('subredes.*')
             ->where('ips.id', '=', $id)
             ->first();
-        return $subred;
+        
         //Sentencia para visualizar los datos uniendo las tablas ips, empleados, y la vita vs_equipo, utilizado en la vista create y edit
         $edit = Ip::join('vs_equipos', 'vs_equipos.id', '=', 'ips.id_equipo')
             ->leftJoin('empleados', 'empleados.id', '=', 'vs_equipos.id_resguardante')
@@ -231,7 +231,7 @@ class IpController extends Controller
             ->get();
 */
         $subredes = Subred::where('activo', '=', 1)->get();
-
+        return $ip;
         //Validación para visualizar si la IP está en uso por un equipo, muestre la vista show y  si no tiene equipo asignado, muestre show1.
         if ($ip->id_equipo == 0) {
             return view('ips.show1')

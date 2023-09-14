@@ -1,5 +1,5 @@
 @extends('adminlte::page')
-@section('title', 'Préstamos edit')
+@section('title', 'Técnicos edit')
 
 @section('css')
     @include('layouts.head_2')
@@ -38,8 +38,8 @@
                         {{-- <a href="{{ route('') }}" class="btn btn-success">Capturar servicio</a> --}}
                         <a href="{{ route('home') }}" class="btn btn-primary">
                             Regresar</a>
-                                <a href="{{ route('tecnicos.create') }}" class="btn btn-success">
-                                    Capturar Técnico</a>
+                        <a href="{{ route('tecnicos.create') }}" class="btn btn-success">
+                            Capturar Técnico</a>
                     </p>
                     <table id="example" class="table table-striped table-bordered" style="width:100%">
                         <thead>

@@ -142,14 +142,15 @@
                 $("#contacto").html(params['tickets'][0]['contacto']);
             } else {
                 document.getElementById('row_datos').style.display = 'none';
-                Ñ
+                
             }
             var id = params['id'].toString();
             var url = "{{ route('ticket-historial', ':id') }}";
             url = url.replace(':id', id);
-            document.getElementById('historial').href = url;
+
             var url = "{{ route('equipo-area', ':id') }}";
             url = url.replace(':id', id);
+            console.log(url);
             document.getElementById('equipos').href = url;
         }
     </script>

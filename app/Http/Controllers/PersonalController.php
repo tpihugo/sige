@@ -385,8 +385,8 @@ class PersonalController extends Controller
     {
         //$plaza = Personal::distinct()->orderby('plaza','asc')->get(['plaza']);
         $plazas = Plaza::all();
-        $Area = Area::all();
-        return view('personal.create');
+        $areas = Area::where('activo', 1)->where('tipo_espacio', '!=', 'Aula')->where('tipo_espacio', '!=', 'Laboratorio')->get();
+        return view('personal.create', compact('areas', 'plazas'));
     }
 
     /**
@@ -412,7 +412,7 @@ class PersonalController extends Controller
             }
         }
 
-        /*$personal->plaza = $request->input('plaza');
+        /* $personal->plaza = $request->input('plaza');
         $personal->categoria = $request->input('categoria');
         $personal->carga_horaria = $request->input('carga_horaria');
         $personal->adscripcion = $request->input('adscripcion');
@@ -492,7 +492,7 @@ class PersonalController extends Controller
 
         $personal = Personal::find($id);
         foreach ($request->request as $key => $value) {
-            if (!is_null($value) && strcmp('_token', $key) != 0 && strcmp('_method', $key) != 0 ) {
+            if (!is_null($value) && strcmp('_token', $key) != 0 && strcmp('_method', $key) != 0) {
                 $personal->$key = $request->$key;
             }
         }
