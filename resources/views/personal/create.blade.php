@@ -82,16 +82,13 @@
                                         <option>Operativo</option>
                                     </select>
                                 </div>
-                                <div class="col-md-2">
-                                    <label class="font-weight-bold" for="carga_horaria">Carga Horaria: *</label>
-                                    <input class="form-control" id="carga_horaria" name="carga_horaria" type="number">
-                                </div>
+                                
                                 <div class="col-md-6">
                                     <label class="font-weight-bold" for="adscripcion">Adscripción: *</label>
                                     <select class="form-control" id="js-example-basic-single3" name="adscripcion">
                                         <option disable selected>-Elegir</option>
                                         @foreach ($areas as $item)
-                                            <option value="{{ $item->id }}"> {{ $item->division }} -
+                                            <option value="{{ $item->id }}-{{ $item->area }}"> {{ $item->division }} -
                                                 {{ $item->coordinacion }} - {{ $item->area }}
                                             </option>
                                         @endforeach
@@ -221,7 +218,6 @@
             $('#js-example-basic-single3').select2();
 
         });
-
 
         window.onload = function() {
 

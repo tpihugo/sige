@@ -131,7 +131,7 @@
                 "data": data,
                 "pageLength": 10,
                 "order": [
-                    [0, "asc"]
+                    [2, "asc"]
                 ],
                 "language": {
                     "sProcessing": "Procesando...",

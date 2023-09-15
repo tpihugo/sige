@@ -244,8 +244,7 @@ class SubredController extends Controller
     {
         $subredes = Subred::where('activo', '=', 1)->get();
 
-        $subredElegida = Subred::all()
-            ->where('subredes.id', '=', $subred)
+        $subredElegida = Subred::where('subredes.id', '=', $subred)
             ->get();
 
         $subred = $this->cargarDT($subredElegida);
@@ -254,7 +253,7 @@ class SubredController extends Controller
             ->leftJoin('empleados', 'empleados.id', '=', 'vs_equipos.id_resguardante')
             ->join('subredes', 'ips.Subred_id', '=', 'subredes.id')
             ->select('subredes.vlan', 'ips.Subred_id', 'ips.ip', 'ips.id', 'ips.activo', 'ips.ocupada', 'vs_equipos.numero_serie', 'vs_equipos.mac', 'vs_equipos.tipo_equipo', 'vs_equipos.area', 'vs_equipos.udg_id', 'empleados.nombre')
-            ->where('ips.Subred_id', '=', $id)
+            ->where('ips.Subred_id', '=', $subred)
             ->where('ips.activo', '=', 1)
             ->where('ips.ocupada', '=', 'si')
             ->where(function ($query) {
