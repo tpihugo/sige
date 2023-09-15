@@ -866,23 +866,3 @@ Route::post("/filtroIps", [
     "middleware" => "auth",
     "uses" => "App\Http\Controllers\IpController@filtroIps",
 ]);
-Route::post("/filtroIpsasig", [
-    "as" => "filtroIpsasig",
-    "middleware" => "auth",
-    "uses" => "App\Http\Controllers\IpController@filtroIpsasig",
-]);
-Route::get("/asignadas", [
-    "as" => "asignadas",
-    "middleware" => "auth",
-    "uses" => "App\Http\Controllers\IpController@asignadas",
-]);
-Route::get("/delete_ip/{id}", [
-    "as" => "delete_ip",
-    "middleware" => "auth",
-    "uses" => "App\Http\Controllers\IpController@delete_ip",
-]);
-Route::get("/desasignarEquipo/{id}", [
-    "as" => "desasignarEquipo",
-    "middleware" => "auth",
-    "uses" => "App\Http\Controllers\IpController@desasignarEquipo",
-]);

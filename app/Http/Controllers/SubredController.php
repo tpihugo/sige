@@ -426,11 +426,12 @@ class SubredController extends Controller
 
     public function busqueda_equipo(Request $request)
     {
+
         if ($request->ajax()) {
-            $equipo = VsIps::where('id_equipo',  'like', '%' .$request->equipo. '%')
-                ->orwhere('udg_id', 'like', '%' .$request->equipo. '%')
-                ->orwhere('numero_serie', 'like', '%' .$request->equipo. '%')
-                ->orwhere('ip', 'like', '%' .$request->equipo. '%')->get();
+            $equipo = VsIps::where('id_equipo',  '=', $request->equipo)
+                ->orWhere('udg_id',  '=', $request->equipo)
+                ->orWhere('numero_serie', 'like', '%' . $request->equipo . '%')
+                ->orWhere('ip', 'like', '%' . $request->equipo . '%')->get();
             return view('subredes.tabla', compact('equipo'))->render();
         }
         return 0;

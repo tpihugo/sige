@@ -231,7 +231,6 @@ class IpController extends Controller
             ->get();
 */
         $subredes = Subred::where('activo', '=', 1)->get();
-        return $ip;
         //Validación para visualizar si la IP está en uso por un equipo, muestre la vista show y  si no tiene equipo asignado, muestre show1.
         if ($ip->id_equipo == 0) {
             return view('ips.show1')
@@ -488,9 +487,9 @@ class IpController extends Controller
             ->with('ipElegida', $ipElegida);
     }
 
-    public function desasignarEquipo($id)
+    public function desasignarEquipo($ip)
     {
-        $ip = Ip::find($id);
+        $ip = Ip::where('ip',$ip)->first();
         $ip->id_equipo = 0;
         $ip->ocupada = 'no';
         $ip->update();

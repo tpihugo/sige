@@ -94,9 +94,8 @@
                                 <center>
                                     <a href="{{ route('ocupadas', $ip->Subred_id) }}" class="btn btn-primary"><i
                                             class="fa fa-arrow-left"></i> Regresar</a>
-                                    <a href="{{ route('desasignarEquipo', $ip->id) }}" class="btn btn-info"
-                                        title=""><i class="bi bi-pc-display-horizontal">
-                                        </i> Desasignar Equipo</a>
+                                    <a href="{{ route('desasignarEquipo', $ip->ip) }}" class="btn btn-info"
+                                        title="">Desasignar Equipo</a>
                                 </center>
                             </div>
                         </div>

@@ -45,8 +45,7 @@
                     @method('POST')
                     <input type="text" name="equipo" placeholder="Buscar equipo" id="equipo" class="form-control">
                     <!-- Button trigger modal -->
-                    <button type="button" onclick="busqueda()" class="btn btn-primary btn-sm" data-toggle="modal"
-                        data-target="#exampleModal">
+                    <button type="button" onclick="busqueda()" class="btn btn-primary btn-sm">
                         Buscar
                     </button>
                 </form>
@@ -101,9 +100,6 @@
                     <div class="modal-body" id="contenedor">
 
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    </div>
                 </div>
             </div>
         </div>
@@ -119,6 +115,7 @@
                         data: $('#form-busqueda').serialize()
                     }).done(function(data) {
                         $('#contenedor').html(data);
+                        $('#exampleModal').modal('show');
                     });
                 }
                 var data = @json($listasubredes);
@@ -166,7 +163,6 @@
                             }
                         ]
                     })
-                    loader(false);
                 });
 
                 jQuery.extend(jQuery.fn.dataTableExt.oSort, {
