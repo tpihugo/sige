@@ -1,5 +1,5 @@
 @extends('adminlte::page')
-@section('title', 'Licencias')
+@section('title', 'Crear Subred')
 
 @section('css')
     @include('layouts.head_2')

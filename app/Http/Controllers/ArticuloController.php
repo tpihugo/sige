@@ -52,7 +52,7 @@ class ArticuloController extends Controller
             'cantidad.0'  => 'required',
             'observacion.0' => 'required',
         ]);
-        for ($i=0; $i < $limit ; $i++) {
+        for ($i = 0; $i < $limit; $i++) {
             $articulos = new Articulo();
             $articulos->codigo = $temp['codigo'][$i];
             $articulos->cantidad = $temp['cantidad'][$i];
@@ -107,7 +107,7 @@ class ArticuloController extends Controller
         $articulo->requisicion_id = $request->get('requisicion_id');
         //dd($articulo);
         $articulo->save();
-        
+
 
         return redirect()->route('requisicion.index');
     }
@@ -124,5 +124,14 @@ class ArticuloController extends Controller
         $articulo->activo = 0;
 
         return redirect()->route('requisicion.index');
+    }
+
+    public function buscador_articulos(Request $request)
+    {
+
+        $articulos = Articulo::join('requisiciones', 'articulos.requisicion_id', '=', 'requisiciones.id')
+            ->where('articulos.descripcion', 'like', '%' . $request->articulo . '%')->orderBy('articulos.requisicion_id','desc')->get();
+
+        return view('requisiciones.tabla', compact('articulos'))->render();
     }
 }

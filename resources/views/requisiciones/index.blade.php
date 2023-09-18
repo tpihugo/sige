@@ -25,11 +25,25 @@
                         <a href="{{ route('requisiciones.create') }}" class="btn btn-success">Capturar requisición</a>
                         <a href="{{ route('home') }}" class="btn btn-primary">Regresar</a>
                     </p>
+
                 </div>
             </div>
 
-            <br>
-
+            <div class="row justify-content-center mt-3">
+                <div class="col-sm-4">
+                    <form method="post" class="d-flex" id="form-busqueda">
+                        @csrf
+                        @method('POST')
+                        <input type="text" name="articulo" placeholder="Buscar artículo" id="articulo"
+                            class="form-control">
+                        <!-- Button trigger modal -->
+                        <button type="button" onclick="busqueda()" class="btn btn-primary btn-sm" data-toggle="modal"
+                            data-target="#exampleModal">
+                            Buscar
+                        </button>
+                    </form>
+                </div>
+            </div>
             <div class="row g-3 align-items-center">
                 <div class="col-sm-12 mb-3">
                     <table id="example" class="table table-striped table-bordered " style="width:100%">
@@ -99,6 +113,25 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Búsqueda de artículos</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="contenedor">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     @else
         Acceso No válido
     @endif
@@ -106,6 +139,18 @@
 @section('js')
     @include('layouts.scripts')
     <script type="text/javascript">
+        function busqueda() {
+            //let search = $('#equipo').val();
+            //console.log(search);
+            $.ajax({
+                url: "{{ route('articulos.buscador') }}",
+                method: 'POST',
+                data: $('#form-busqueda').serialize()
+            }).done(function(data) {
+                $('#contenedor').html(data);
+                //$('#exampleModal').modal('show');
+            });
+        }
         $(document).ready(function() {
             $('#example').DataTable();
         });

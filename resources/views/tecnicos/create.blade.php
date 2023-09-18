@@ -1,7 +1,10 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+@section('title', 'Tecnico edit')
+
+@section('css')
+    @include('layouts.head_2')
+@stop
 @section('content')
-
-
     <div class="container">
         @if (Auth::check())
             @if (session('message'))
@@ -12,14 +15,6 @@
             <div class="row">
                 <h2>Captura de Técnico</h2>
                 <hr>
-                <script type="text/javascript">
-                    $(document).ready(function() {
-                        $('#js-example-basic-single').select2();
-                        $('#js-example-basic-single2').select2();
-                        $('#equipos').select2();
-                    });
-                </script>
-
             </div>
             <div class="row">
                 <form action="{{ route('tecnicos.store') }}" method="post" class="col-sm-12">
@@ -91,16 +86,12 @@
                     </div>
                 </form>
             </div>
-            <br>
-            <div class="row g-3 align-items-center">
-
-                <br>
-                <h5>En caso de inconsistencias, favor de reportarlas.</h5>
-                <hr>
-
-            </div>
     </div>
 @else
     Acceso No válido
     @endif
+@endsection
+
+@section('footer')
+    <h5 class="text-end">En caso de inconsistencias, favor de reportarlas.</h5>
 @endsection

@@ -208,7 +208,7 @@ class IpController extends Controller
         
         //Sentencia para visualizar los datos uniendo las tablas ips, empleados, y la vita vs_equipo, utilizado en la vista create y edit
         $edit = Ip::join('vs_equipos', 'vs_equipos.id', '=', 'ips.id_equipo')
-            ->leftJoin('empleados', 'empleados.id', '=', 'vs_equipos.id_resguardante')
+            ->leftJoin('empleados', 'empleados.codigo', '=', 'vs_equipos.id_resguardante')
             ->select(
                 'vs_equipos.id',
                 'ips.id',
@@ -501,7 +501,6 @@ class IpController extends Controller
 
     public function buscar_equipo($equipo)
     {
-
         $equipo = VsEquipo::where('activo', 1)->whereIn('tipo_equipo',  ['Access Point', 'Cámara', 'Cámara de Red', 'CPU', 'Impresora', 'Multifuncional', 'Laptop', 'Router', 'Servidor', 'Switch', 'Teléfono'])
             ->where('id', $equipo)->orwhere('udg_id', $equipo)->orwhere('numero_serie', $equipo)->first();
         return $equipo;

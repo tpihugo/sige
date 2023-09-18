@@ -1,5 +1,5 @@
 @extends('adminlte::page')
-@section('title', 'Llaves')
+@section('title', 'Asignación IP')
 
 @section('css')
     @include('layouts.head_2')

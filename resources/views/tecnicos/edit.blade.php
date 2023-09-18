@@ -1,5 +1,5 @@
 @extends('adminlte::page')
-@section('title', 'Préstamos edit')
+@section('title', 'Tecnico edit')
 
 @section('css')
     @include('layouts.head_2')
@@ -107,13 +107,7 @@
     @endif
 @endsection
 
-@section('js')
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#usuario').select2();
 
-        });
-    </script>
 @endsection
 
 @section('footer')

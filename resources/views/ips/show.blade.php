@@ -1,5 +1,5 @@
 @extends('adminlte::page')
-@section('title', 'Llaves')
+@section('title', 'Ver asignación')
 
 @section('css')
     @include('layouts.head_2')
@@ -20,13 +20,9 @@
             @endif
             <div class="row">
                 <div class="col-md-12">
-                    <div class="row align-items-end">
-                        <div class="col-md-8 pl-0">
-                            <h2>
-                                <center><b>IP:</b> {{ $ip->ip }}</center>
-                            </h2>
-                        </div>
-                    </div>
+                    <h2 class="text-center">
+                        <b>IP:</b> {{ $ip->ip }}
+                    </h2>
                 </div>
                 <div class="row">
                     <div class="col-12">

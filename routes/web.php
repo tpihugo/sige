@@ -24,6 +24,8 @@ include_once "usuarios.php";
 include_once "ips.php";
 include_once 'tickets.php';
 include_once 'subredes.php';
+include_once 'requisiciones.php';
+include_once 'articulos.php';
 
 Route::middleware(["auth:sanctum", "verified"])
     ->get("/", [App\Http\Controllers\HomeController::class, "index"])
@@ -72,7 +74,7 @@ Route::resource("expedientes", "App\Http\Controllers\ExpedienteController");
     "mantenimientoEquipos",
     "App\Http\Controllers\mantenimientoEquipoController"
 );*/
-Route::resource('requisicion', 'App\Http\Controllers\RequisicionController');
+
 Route::resource('articulo', 'App\Http\Controllers\ArticuloController');
 
 Route::post("personal_search", [
@@ -167,7 +169,7 @@ Route::post("/equipo-encontrado/{origen?}", [
     "as" => "equipo-encontrado",
     "middleware" => "auth",
     "uses" =>
-        "\App\Http\Controllers\InventarioController@listarEquipoEncontrado",
+    "\App\Http\Controllers\InventarioController@listarEquipoEncontrado",
 ]);
 Route::get("/delete-equipo/{equipo_id}", [
     "as" => "delete-equipo",
@@ -398,13 +400,13 @@ Route::get("/actualizacion-inventario/{area_id}", [
     "as" => "actualizacion-inventario",
     "middleware" => "auth",
     "uses" =>
-        "App\Http\Controllers\InventarioController@actualizacion_inventario",
+    "App\Http\Controllers\InventarioController@actualizacion_inventario",
 ]);
 Route::get("/revision-inventario-anual", [
     "as" => "revision-inventario-anual",
     "middleware" => "auth",
     "uses" =>
-        "App\Http\Controllers\RevisionAnualEquipo@revision_inventario_anual",
+    "App\Http\Controllers\RevisionAnualEquipo@revision_inventario_anual",
 ]);
 Route::get("/inventario-localizado", [
     "as" => "inventario-localizado",
@@ -557,7 +559,7 @@ Route::get("/delete-mantenimiento/{id}", [
     "as" => "delete-mantenimiento",
     "middleware" => "auth",
     "uses" =>
-        "App\Http\Controllers\MantenimientoController@delete_mantenimiento",
+    "App\Http\Controllers\MantenimientoController@delete_mantenimiento",
 ]);
 Route::get("/update-mantenimiento", [
     "as" => "update-mantenimiento",
@@ -568,31 +570,31 @@ Route::post("/busquedaEquiposMantenimiento", [
     "as" => "busquedaEquiposMantenimiento",
     "middleware" => "auth",
     "uses" =>
-        "App\Http\Controllers\MantenimientoController@busquedaEquiposMantenimiento",
+    "App\Http\Controllers\MantenimientoController@busquedaEquiposMantenimiento",
 ]);
 Route::get("/agregarequipomantenimiento/{mantenimiento_id}/{equipo_id}", [
     "as" => "agregarequipomantenimiento",
     "middleware" => "auth",
     "uses" =>
-        "App\Http\Controllers\MantenimientoController@agregarequipomantenimiento",
+    "App\Http\Controllers\MantenimientoController@agregarequipomantenimiento",
 ]);
 Route::get("/eliminarequipomantenimiento/{mantenimiento_id}/{equipo_id}", [
     "as" => "eliminarequipomantenimiento",
     "middleware" => "auth",
     "uses" =>
-        "App\Http\Controllers\MantenimientoController@eliminarequipomantenimiento",
+    "App\Http\Controllers\MantenimientoController@eliminarequipomantenimiento",
 ]);
 Route::get("/estadoMantenimiento/{mantenimiento_id}/{equipo_id}", [
     "as" => "estadoMantenimiento",
     "middleware" => "auth",
     "uses" =>
-        "App\Http\Controllers\MantenimientoController@estadoMantenimiento",
+    "App\Http\Controllers\MantenimientoController@estadoMantenimiento",
 ]);
 Route::get("/mantenimiento_detalle", [
     "as" => "mantenimiento_detalle",
     "middleware" => "auth",
     "uses" =>
-        "App\Http\Controllers\MantenimientoController@mantenimiento_detalle",
+    "App\Http\Controllers\MantenimientoController@mantenimiento_detalle",
 ]);
 Route::get("/agregar-equipos", [
     "as" => "agregar-equipos",
@@ -629,12 +631,7 @@ Route::get('/Imprimirexpediente/{equipo}/', array(
     'uses' => 'App\Http\Controllers\ExpedienteController@Imprimirexpediente'
 ));
 
-//Requisicion
-Route::post("/crear_requisicion", [
-    "as" => "crear_requisicion",
-    "middleware" => "auth",
-    "uses" => "App\Http\Controllers\RequisicionController@store",
-]);
+
 //Llaves
 Route::get("/delete_llaves/{id}", [
     "as" => "delete_llaves",
@@ -726,52 +723,30 @@ Route::get("/switches", [
     "uses" => "App\Http\Controllers\EquipoController@switches",
 ]);
 
- Route::get("/create_switch",[
+Route::get("/create_switch", [
     "as" => "create_switch",
     "uses" => "App\Http\Controllers\EquipoController@createSw",
- ]);
+]);
 
- Route::post("/created_switch",[
+Route::post("/created_switch", [
     "as" => "created_switch",
     "uses" => "App\Http\Controllers\EquipoController@storeSw",
- ]);
+]);
 
- Route::get("/{id}/edit_switch",[
+Route::get("/{id}/edit_switch", [
     "as" => "equipo.edit_switch",
     "uses" => "App\Http\Controllers\EquipoController@editSW",
- ]);
+]);
 
 
- Route::post("update-switch/{id}", [
+Route::post("update-switch/{id}", [
     "as" => "update-switch",
     "middleware" => "auth",
     "uses" => "App\Http\Controllers\EquipoController@updateSW",
 ]);
-//Requisicion
-Route::resource('requisiciones', '\App\Http\Controllers\RequisicionController');
 
-Route::get('/imprimirrequisicion/{id}', array(
-    'as' => 'imprimirrequisicion',
-    'middleware' => 'auth',
-    'uses' => 'App\Http\Controllers\PDFController@imprimirrequisicion'
-));
-//Articulo_requisicion
-Route::resource('articulos', '\App\Http\Controllers\ArticuloController');
 
-Route::get('requisicion/{id}/articulos/create',);
-
-Route::get('requisicion/{id}/articulos/create', array(
-    'as' => 'requisicion-articulos-create',
-    'middleware' => 'auth',
-    'uses' => '\App\Http\Controllers\ArticuloController@create'
-));
-Route::get('requisicion/{id}/articulos/', array(
-    'as' => 'requisicion-articulos',
-    'middleware' => 'auth',
-    'uses' => '\App\Http\Controllers\ArticuloController@index'
-));
-
-Route::match(['get', 'post'],'/tickets/tomar-ticket/{id}', array(
+Route::match(['get', 'post'], '/tickets/tomar-ticket/{id}', array(
     'as' => 'tomar-ticket',
     'middleware' => 'auth',
     'uses' => '\App\Http\Controllers\TicketController@tomar_ticket'
@@ -789,8 +764,8 @@ Route::get('/equipo-area/{id}', array(
     'uses' => '\App\Http\Controllers\AreaController@equipo_area'
 ));
 
-Route::middleware('auth')->get('/historial-tickets',[TicketHistorialController::class, 'index'])->name('historial-tickets');
-Route::middleware('auth')->get('/historial-areas',[AulaHistorialController::class, 'index'])->name('historial-areas');
+Route::middleware('auth')->get('/historial-tickets', [TicketHistorialController::class, 'index'])->name('historial-tickets');
+Route::middleware('auth')->get('/historial-areas', [AulaHistorialController::class, 'index'])->name('historial-areas');
 
 
 /**
@@ -820,15 +795,15 @@ Route::get("/imprimirpersonal/{id}", [
 ]);
 
 Route::get('/documento/{filename}', array(
-    'as'=>'documento_personal',
-    'uses'=>'App\Http\Controllers\PersonalController@getDocumento'
+    'as' => 'documento_personal',
+    'uses' => 'App\Http\Controllers\PersonalController@getDocumento'
 ));
 
 
 /* Apartado de Subredes e IP´S*/
 Route::resource("subredes", "App\Http\Controllers\SubredController");
 
-Route::resource('ips',App\Http\Controllers\IpController::class);
+Route::resource('ips', App\Http\Controllers\IpController::class);
 
 Route::resource("ips", "App\Http\Controllers\IpController");
 
@@ -843,10 +818,10 @@ Route::get("/disponible/{id}", [
     "middleware" => "auth",
     "uses" => "App\Http\Controllers\SubredController@disponible",
 ]);
-    Route::get("/ocupadas/{id}", [
-        "as" => "ocupadas",
-        "middleware" => "auth",
-        "uses" => "App\Http\Controllers\SubredController@ocupadas",
+Route::get("/ocupadas/{id}", [
+    "as" => "ocupadas",
+    "middleware" => "auth",
+    "uses" => "App\Http\Controllers\SubredController@ocupadas",
 
 ]);
 Route::post("/filtroSubredes", [

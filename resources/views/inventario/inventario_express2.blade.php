@@ -17,8 +17,6 @@
                 <h1 class="text-center">Inventario Detalle</h1>
                 <hr>
             </div>
-            <br>
-
             <div class="container-fluid">
                 <div class="row">
                     <div class="container">
@@ -43,7 +41,7 @@
                                             <h4>Total de Equipos {{ $totales['total'] }}</h4>
                                         </div>
                                         <div class="table{{-- -responsive --}}">
-                                            <table class="table table-borderless mb-0">
+                                            <table class="table  mb-0">
                                                 <thead>
                                                     <tr>
                                                         <th class="meta">Dispositivos</th>
@@ -89,10 +87,6 @@
                                                         <td><span>Revision inventario</span></td>
                                                         <td class="stat-cell">{{ $totales['total_inventario'] }}</td>
                                                         <td class="stat-cell">
-                                                            <p class="text-center">{{-- --}} </p>
-                                                        </td>
-
-                                                        <td>
                                                             <p class="text-center">{{-- --}} </p>
                                                         </td>
                                                     </tr>

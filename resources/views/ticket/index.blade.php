@@ -129,7 +129,8 @@
                                     <div class="col-md-5">
                                         <select class="form-control " id="asignar_tecnico" name="tecnico">
                                             @foreach ($tecnicos as $item)
-                                                <option value="{{ $item->id }}" class="w-100">{{ $item->nombre }}</option>
+                                                <option value="{{ $item->id }}" class="w-100">{{ $item->nombre }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -204,11 +205,6 @@
                 </div>
             </div>
         @endif
-        <p>
-            <a href="{{ route('home') }}" class="btn btn-primary">
-                Regresar</a>
-        </p>
-
 
         </div>
     @else
@@ -225,17 +221,20 @@
             $('#tecnico_id').select2();
 
         });
+
         function tomar_ticket(params) {
             var url = "{{ route('tomar-ticket', ':id') }}";
             url = url.replace(':id', params);
             document.getElementById('asignar').action = url;
 
         }
+
         function soltar_ticket(params) {
             var url = "{{ route('soltar-ticket', ':id') }}";
             url = url.replace(':id', params);
             document.getElementById('soltar').action = url;
         }
+
         function historial(params) {
             document.getElementById('historial').innerHTML = '';
             document.getElementById('historial').innerHTML =

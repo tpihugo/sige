@@ -130,8 +130,7 @@ class RequisicionController extends Controller
     {
         $requisicion = Requisicion::find($id);
         $requisicion->delete();
-
         return redirect()->route('requisiciones.index');
-
     }
+
 }

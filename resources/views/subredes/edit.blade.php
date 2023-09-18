@@ -1,5 +1,5 @@
 @extends('adminlte::page')
-@section('title', 'Licencias')
+@section('title', 'Editar Subred')
 
 @section('css')
     @include('layouts.head_2')
@@ -100,16 +100,12 @@
                     </form>
                 </div>
             </div>
-            <br>
-            <div class="row align-items-center">
-                <br>
-                <div class="col-12 ml-3">
-                    <h5>En caso de inconsistencias, favor de reportarlas.</h5>
-                </div>
-                <hr>
-            </div>
     </div>
 @else
     El periodo de Registro de Proyectos a terminado
     @endif
+@endsection
+
+@section('footer')
+    <h5 class="text-end">En caso de inconsistencias, favor de reportarlas.</h5>
 @endsection
