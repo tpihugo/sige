@@ -14,10 +14,9 @@
                 </div>
             @endif
             <div class="row">
-                <div class="col-md-auto ml-3">
+                <div class="col-md-12 mt-5 text-center">
                     <h2>Edici&oacute;n de Área</h2>
                 </div>
-                <hr>
             </div>
 
             <div class="row">
@@ -42,9 +41,9 @@
                                 <label class="font-weight-bold" for="tipo_espacio">Tipo de Espacio </label>
                                 <select class="form-control" id="tipo_espacio" name="tipo_espacio">
                                     <option value="{{ $area->tipo_espacio }}" selected>{{ $area->tipo_espacio }}</option>
-                                        <option value="Aula">Aula</option>
-                                        <option value="Laboratorio">Laboratorio</option>
-                                        <option value="Administrativo">Administrativo</option>
+                                    <option value="Aula">Aula</option>
+                                    <option value="Laboratorio">Laboratorio</option>
+                                    <option value="Administrativo">Administrativo</option>
                                 </select>
                             </div>
                             <div class="col-md-3">
@@ -134,17 +133,29 @@
                                     <option value="División de Estudios de Estado y Sociedad">División de Estudios de
                                         Estado y sociedad
                                     </option>
-                                    <option value="C.U. DE CS. SOCIALES Y HUMANIDADES">C.U. DE CIENCIAS SOCIALES Y HUMANIDADES
+                                    <option value="C.U. DE CS. SOCIALES Y HUMANIDADES">C.U. DE CIENCIAS SOCIALES Y
+                                        HUMANIDADES
                                     </option>
                                 </select>
                             </div>
                             <div class="col-md-6">
                                 <label class="font-weight-bold" for="coordinacion">Coordinación </label>
-                                <input type="text" class="form-control"  name="coordinacion" value="{{ $area->coordinacion }}">
+                                <input type="text" class="form-control" name="coordinacion"
+                                    value="{{ $area->coordinacion }}">
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="font-weight-bold" for="area">Área</label>
+                                <input type="text" class="form-control" id="area" name="area"
+                                    value="{{ $area->area }}">
                             </div>
                         </div>
-                        <br>
-                        <div class="row align-items-center">
+                        
+                        <div class="row align-items-center mt-2">
+                            <div class="col-md-12">
+                                <label class="font-weight-bold" for="imagen_1">Exclusivo para aulas o laboratorios</label>
+                            </div>
+                            <hr>
                             <div class="col-md-4">
                                 <label class="font-weight-bold" for="imagen_1">Imagen 1</label>
                                 <div class="custom-file">
@@ -163,28 +174,52 @@
                                 </div>
                                 {{-- <a href="storage/app/images/{{$area->imagen_2}}" class="thumb" title="Nombre imagen" target="_blank">Nombre imagen</a> --}}
                             </div>
-                            <div class="col-md-4">
-                                <label class="font-weight-bold" for="Equipamiento">Equipamiento</label>
-                                <select class="form-control" id="equipamiento" name="equipamiento">
-                                    <option {{ $area->equipamiento == 'Sin Equipo' ? 'selected' : '' }} value="Sin Equipo">
-                                        Sin equipo</option>
-                                    <option {{ $area->equipamiento == 'PC' ? 'selected' : '' }} value="PC">PC</option>
-                                    <option {{ $area->equipamiento == 'TV,PC' ? 'selected' : '' }} value="TV,PC">Pantalla
-                                        TV - PC</option>
-                                    <option {{ $area->equipamiento == 'Proyector,PC' ? 'selected' : '' }}
-                                        value="Proyector,PC">Proyector - PC</option>
-                                </select>
+                            <div class="col-md-4 ">
+                                <h6 class="font-weight-bold " for="Equipamiento">Equipamiento</h6>
+                                <div class="d-flex flex-row flex-wrap">
+                                    <div class="form-check d-flex flex-row m-1">
+                                        <input class="form-check-input" type="checkbox" {{$equipamiento['Bocinas']}} name="equipamiento[]"
+                                            value="Bocinas" id="equipamiento_bocinas">
+                                        <label class="form-check-label" for="equipamiento_bocinas">
+                                            Bocinas
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check d-flex flex-row m-1">
+                                        <input class="form-check-input" type="checkbox" {{$equipamiento['Pantalla']}} name="equipamiento[]"
+                                            value="Pantalla" id="equipamiento_pantalla">
+                                        <label class="form-check-label" for="equipamiento_pantalla">
+                                            Pantalla
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check d-flex flex-row m-1">
+                                        <input class="form-check-input" type="checkbox" {{$equipamiento['PC']}} name="equipamiento[]"
+                                            value="PC" id="equipamiento_pc">
+                                        <label class="form-check-label" for="equipamiento_pc">
+                                            PC
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check d-flex flex-row m-1">
+                                        <input class="form-check-input" type="checkbox" {{$equipamiento['Proyector']}} name="equipamiento[]"
+                                            value="Proyetor" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Proyector
+                                        </label>
+                                    </div>
+                                    <div class="form-check d-flex flex-row m-1">
+                                        <input class="form-check-input" type="checkbox" {{$equipamiento['Pantalla Proyección']}} name="equipamiento[]"
+                                            value="Pantalla Proyección" id="equipamiento_proyeccion">
+                                        <label class="form-check-label" for="equipamiento_proyeccion">
+                                            Pantalla Proyección
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="row align-items-center mt-4">
-                            <div class="col-md-12">
-                                <label class="font-weight-bold" for="area">Área</label>
-                                <input type="text" class="form-control" id="area" name="area"
-                                    value="{{ $area->area }}">
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row align-items-center">
+                        
+                        <div class="row align-items-center mt-3">
                             <div class="col-md-6">
                                 <a href="{{ route('home') }}" class="btn btn-danger">Cancelar</a>
                                 <button type="submit" class="btn btn-success">
@@ -197,18 +232,13 @@
                     </form>
                 </div>
             </div>
-            <br>
-            <div class="row align-items-center">
-
-                <br>
-                <hr>
-                <h5>Coordinación de Tecnologías para el Aprendizaje. CUCSH</h5>
-
-
-            </div>
     </div>
 @else
     El periodo de Registro de Proyectos a terminado
     @endif
 
+@endsection
+
+@section('footer')
+    <h5 class="text-end">En caso de inconsistencias, favor de reportarlas</h5>
 @endsection

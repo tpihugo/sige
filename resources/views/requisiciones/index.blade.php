@@ -136,26 +136,24 @@
         Acceso No válido
     @endif
 @endsection
+@section('footer')
+    <h5 class="text-end">En caso de inconsistencias, favor de reportarlas.</h5>
+@endsection
+
 @section('js')
     @include('layouts.scripts')
     <script type="text/javascript">
         function busqueda() {
-            //let search = $('#equipo').val();
-            //console.log(search);
             $.ajax({
                 url: "{{ route('articulos.buscador') }}",
                 method: 'POST',
                 data: $('#form-busqueda').serialize()
             }).done(function(data) {
                 $('#contenedor').html(data);
-                //$('#exampleModal').modal('show');
             });
         }
         $(document).ready(function() {
             $('#example').DataTable();
         });
     </script>
-@endsection
-@section('footer')
-    <h5 class="text-end">En caso de inconsistencias, favor de reportarlas.</h5>
 @endsection

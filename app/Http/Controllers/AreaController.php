@@ -67,8 +67,8 @@ class AreaController extends Controller
                       <p class="text-primary">
                         <small>
                             ' .
-                $value['id'] . 
-                ', ' . $value['sede'] . ", ".
+                $value['id'] .
+                ', ' . $value['sede'] . ", " .
                 $value['area'] .
                 '                 </small>
                       </p>
@@ -115,7 +115,6 @@ class AreaController extends Controller
             'piso' => 'required',
             'division' => 'required',
             'coordinacion' => 'required',
-            'equipamiento' => 'required',
             'area' => 'required',
         ]);
 
@@ -126,7 +125,11 @@ class AreaController extends Controller
         $area->piso = $request->input('piso');
         $area->division = $request->input('division');
         $area->coordinacion = $request->input('coordinacion');
-        $area->equipamiento = $request->input('equipamiento');
+        if (isset($request->equipamiento)) {
+            $equipamiento = implode(",", $request->input('equipamiento'));
+            $area->equipamiento = $equipamiento;
+        }
+
         $area->area = $request->input('area');
 
         $imagen_1 = $request->file('imagen_1');
@@ -144,7 +147,7 @@ class AreaController extends Controller
 
             $area->imagen_2 = $image_path;
         }
-
+        
         $area->save();
         //
         $log = new Log();
@@ -182,8 +185,18 @@ class AreaController extends Controller
      */
     public function edit($id)
     {
+        $equipamiento = ['Pantalla Proyección' => '', 'Proyector' => '', 'PC' => '', 'Pantalla' => '', 'Bocinas' => ''];
         $area = Area::find($id);
-        return view('areas.edit')->with('area', $area);
+        $equipos_area = explode(",", $area->equipamiento);
+
+        for ($i=0; $i < count($equipos_area) ; $i++) { 
+            $temp = $equipos_area[$i];
+            if (array_key_exists($temp, $equipamiento)) {
+               $equipamiento[$temp] = "checked";
+            }
+        }
+        //return $equipamiento;
+        return view('areas.edit',compact('equipamiento'))->with('area', $area);
     }
 
     /**
@@ -195,14 +208,13 @@ class AreaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validateData = $this->validate($request, [
+        $this->validate($request, [
             'tipo_espacio' => 'required',
             'sede' => 'required',
             'edificio' => 'required',
             'piso' => 'required',
             'division' => 'required',
             'coordinacion' => 'required',
-            'equipamiento' => 'required',
             'area' => 'required',
         ]);
 
@@ -213,7 +225,11 @@ class AreaController extends Controller
         $area->piso = $request->input('piso');
         $area->division = $request->input('division');
         $area->coordinacion = $request->input('coordinacion');
-        $area->equipamiento = $request->input('equipamiento');
+        if (isset($request->equipamiento)) {
+            $equipamiento = implode(",", $request->input('equipamiento'));
+            $area->equipamiento = $equipamiento;
+        }
+
         $area->area = $request->input('area');
 
         $imagen_1 = $request->file('imagen_1');
@@ -231,6 +247,7 @@ class AreaController extends Controller
 
             $area->imagen_2 = $image_path;
         }
+
 
         $area->update();
         //

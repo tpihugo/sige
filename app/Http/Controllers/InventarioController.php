@@ -219,14 +219,16 @@ class InventarioController extends Controller
             ->groupBy('localizado_sici')
             ->pluck('total', 'localizado_sici');
 
+
+  
         $inventario_area = DB::table('vs_inventariodetalle')
             ->select('id_area', DB::raw('count(*) as total'), 'inventario')->where('tipo_sici', '=', 'equipo')->where('inventario', $inventario)
             ->groupBy('id_area')
             ->pluck('total', 'id_area');
 
 
-        $areas = Area::with('inventario')->where('activo',1)->where('sede','=','Belenes')->get();
-/*
+        $areas = Area::with('inventario')->where('activo', 1)->where('sede', '=', 'Belenes')->get();
+        /*
         foreach ($areas as $key => $value) {
             echo $value->id . "  Area: ". $value->area ."  Inventario: ". $value->inventario->count()  . "<br>";
         }
@@ -244,6 +246,7 @@ class InventarioController extends Controller
         $totales['S'] = $sici['S'];
         $totales['N'] = $sici['N'];
 
+        
         $areas = DB::table('vs_equipos')
             ->select(DB::raw('COUNT(*) as equipos, id_area, area'))
             ->where('tipo_sici', '=', 'equipo')->where('activo', 1)->orderBy('id_area')
@@ -270,7 +273,6 @@ class InventarioController extends Controller
             //dd($value);
         }
         return view('inventario.inventario_express2', compact('totales', 'areas'));
-        return $areas;
         /*;
         $areas = collect($areas);
         return view('inventario.inventario_express2', compact('totales', 'areas'));*/

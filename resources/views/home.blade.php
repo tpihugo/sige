@@ -19,33 +19,31 @@
                             <div class="col-sm-12">
                                 @if (session('status'))
                                     <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                        <strong>{{ session('status') }}
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
+                                        {{ session('status') }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+
                                     </div>
                                 @endif
                                 @if (session('message'))
                                     <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                        <strong>{{ session('message') }}
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
+                                        {{ session('message') }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
                                     </div>
                                 @endif
                                 @if ($errors->any())
                                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                        <strong>Debe de escribir un criterio de búsqueda
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
+                                        Debe de escribir un criterio de búsqueda
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
                                     </div>
                                 @endif
-
                             </div>
-
                         </div>
-
                         <div class="row m-2">
                             @can('EQUIPOS#ver')
                                 <div class="col-lg-4 col-sm-12  col-md-6 my-3">

@@ -5,14 +5,13 @@
     @include('layouts.head_2')
 @stop
 @section('content')
-    <div class="container">
+    <div class="container mb-2">
         @if (Auth::check())
             @if (session('message'))
                 <div class="alert alert-success">
                     <h2>{{ session('message') }}</h2>
                 </div>
             @endif
-
             <div class="row">
                 <h1 class="text-center">Inventario Detalle</h1>
                 <hr>
@@ -22,10 +21,10 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-12">
-                                <h2 class="text-muted">Gráficas</h2>
+                                <h2 class="text-muted text-center">Gráficas</h2>
                             </div>
-                            <div class="col-sm-12 col-md-6 col-lg-6">
-                                <div class="app-card app-card-stats-table h-10 shadow-sm">
+                            <div class="col-sm-12 col-md-6 col-lg-6 mb-3">
+                                <div class="app-card app-card-stats-table h-100 shadow-sm border ">
                                     <div class="app-card-header p-3">
                                         <div class="row justify-content-between align-items-center">
                                             <div class="col-auto">
@@ -36,7 +35,7 @@
                                         <!--//row-->
                                     </div>
                                     <!--//app-card-header-->
-                                    <div class="app-card-body p-3 p-lg-4">
+                                    <div class="app-card-body px-3">
                                         <div>
                                             <h4>Total de Equipos {{ $totales['total'] }}</h4>
                                         </div>
@@ -54,7 +53,7 @@
                                                         <td><span>Localizados SICI</span></td>
                                                         <td class="stat-cell">
 
-                                                            {{ $totales['S'] - $totales['total_inventario'] }}
+                                                            {{ $totales['S'] }}
                                                         </td>
                                                         <td>
                                                             <?php echo $Percentage_SICI = round(($totales['S'] * 100) / $totales['total'], 2); ?>%
@@ -63,7 +62,7 @@
                                                     <tr>
                                                         <td><span>No Localizados SICI</span></td>
                                                         <td class="stat-cell">
-                                                            {{ $totales['N'] - $totales['total_inventario'] }}
+                                                            {{ $totales['N'] }}
                                                         </td>
                                                         <td>
                                                             <?php echo $Percentage_SICI = round(($totales['N'] * 100) / $totales['total'], 2); ?>%
@@ -143,19 +142,17 @@
                             <table id="example" class="table table-striped table-bordered" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>Núm.</th>
+
                                         <th class="text-center">Área</th>
                                         <th>Progreso</th>
-                                        <th> Avances <a href="#Help_info" class="text-reset" data-toggle="modal"> <strong> ?
-                                                </strong> </a> </th>
-
+                                        <th> Avances
+                                            <a href="#Help_info" class="text-reset" data-toggle="modal"> <strong> ?
+                                                </strong> </a>
+                                        </th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-
-                                    @php($cont = 1)
-
                                     @foreach ($areas as $oneRow => $llave)
                                         @php($bar_indicatorColor = 'success')
                                         @if ($llave->porcentaje < '50.00')
@@ -163,24 +160,17 @@
                                         @elseif($llave->porcentaje < '90.00')
                                             @php($bar_indicatorColor = 'warning')
                                         @endif
-
                                         <tr>
-                                            <td>{{ $cont++ }}</td>
+
                                             <td>
-
                                                 <p class="font-weight-normal">{{ $llave->area }}</p>
-
                                             </td>
                                             <td style="width: 20%">
-
                                                 <div class="container-fluid wd-200">
                                                     <div class="row no-gutters align-items-center">
-
-
                                                         <div class="h6 mb-0 mr-1 text-center text-gray-800">
                                                             <strong>{{ $llave->porcentaje }}%</strong>
                                                         </div>
-
                                                         <div class="col">
                                                             <div class="progress progress-sm mr-2">
                                                                 <div class="progress-bar bg-<?php echo $bar_indicatorColor; ?>"
@@ -291,10 +281,11 @@
                 El periodo de Registro de Proyectos a terminado
         @endif
     </div>
+    </div>
 @endsection
 
 @section('footer')
-    <h5 class="text-end">Coordinación de Tecnologías para el Aprendizaje. CUCSH</h5>
+    <p class="text-end">Coordinación de Tecnologías para el Aprendizaje. CUCSH</p>
 @endsection
 
 @section('js')

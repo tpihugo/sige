@@ -1,5 +1,5 @@
 @extends('adminlte::page')
-@section('title', 'Editar área')
+@section('title', 'Crear área')
 
 @section('css')
     @include('layouts.head_2')
@@ -15,7 +15,7 @@
             @endif
 
             <div class="row">
-                <div class="col-md-auto ml-3">
+                <div class="col-md-12 mt-5 text-center">
                     <h2>Captura de Área</h2>
                 </div>
             </div>
@@ -61,11 +61,13 @@
                                     <option value="Coronel Calderón #636">Coronel Calderón #636</option>
                                     <option value="Amsterdam #1537">Amsterdam #1537</option>
                                     <option value="Bufetes Juridicos Tlaquepaque">Bufetes Juridicos Tlaquepaque</option>
-                                    <option value="Bufetes Juridicos Ciudad Judicial">Bufetes Juridicos Ciudad Judicial</option>
-                                    <option value="Bufetes Juridicos Coronel Calderón">Bufetes Juridicos Coronel Calderón</option>
-				    <option value="Liceo No. 210">Liceo No. 210</option>
-				    <option value="TOMÁS V. GOMEZ #121">TOMÁS V. GOMEZ #121</option>
-			 	    <option value="Paseo Poniente #2093">Paseo Poniente #2093</option>
+                                    <option value="Bufetes Juridicos Ciudad Judicial">Bufetes Juridicos Ciudad Judicial
+                                    </option>
+                                    <option value="Bufetes Juridicos Coronel Calderón">Bufetes Juridicos Coronel Calderón
+                                    </option>
+                                    <option value="Liceo No. 210">Liceo No. 210</option>
+                                    <option value="TOMÁS V. GOMEZ #121">TOMÁS V. GOMEZ #121</option>
+                                    <option value="Paseo Poniente #2093">Paseo Poniente #2093</option>
 
                                 </select>
                             </div>
@@ -117,9 +119,7 @@
                                     <option value="Piso 6">Piso 6</option>
                                 </select>
                             </div>
-                        </div>
-                        <br>
-                        <div class="row align-items-center">
+
                             <div class="col-md-6">
                                 <label class="font-weight-bold" for="division">División </label>
                                 <select class="form-control" id="division" name="division">
@@ -132,10 +132,12 @@
                                     <option value="División de Estudios Jurídicos">División de Estudios Jurídicos</option>
                                     <option value="División de Estudios de la Cultura">División de Estudios de la Cultura
                                     </option>
-                                    <option value="División de Estudios Políticos y Sociales">División de Estudios Politicos
+                                    <option value="División de Estudios Políticos y Sociales">División de Estudios
+                                        Politicos
                                         y Sociales
                                     </option>
-                                    <option value="División de Estudios de Estado y Sociedad">División de Estudios de Estado
+                                    <option value="División de Estudios de Estado y Sociedad">División de Estudios de
+                                        Estado
                                         y Sociedad
                                     </option>
                                     <option value="C.U. DE CS. SOCIALES Y HUMANIDADES">C.U. DE CS. SOCIALES Y HUMANIDADES
@@ -150,21 +152,19 @@
 
 
                             </div>
-                        </div>
 
-                        <div class="row align-items-center mt-4">
                             <div class="col-md-12">
                                 <label class="font-weight-bold" for="area">Área</label>
                                 <input type="text" class="form-control" id="area" name="area"
                                     value="{{ old('area') }}">
                             </div>
                         </div>
-                        <br>
-                        <div class="row align-items-center">
+
+                        <div class="row align-items-center mt-2">
                             <div class="col-md-12">
                                 <label class="font-weight-bold" for="imagen_1">Exclusivo para aulas o laboratorios</label>
                             </div>
-
+                            <hr>
                             <div class="col-md-4">
 
                                 <label class="font-weight-bold" for="imagen_1">Imagen 1</label>
@@ -182,20 +182,50 @@
                                     <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <label class="font-weight-bold" for="Equipamento">Equipamento</label>
-                                <select class="form-control" id="equipamiento" name="equipamiento">
-                                    <option value="Sin Equipo">Sin equipo</option>
-                                    <option value="Botonera">Botonera</option>
-                                    <option value="Botonera y pantalla">Botonera y pantalla</option>
-                                    <option value="Proyector">Proyector</option>
-                                    <option value="Proyector, computadora">Proyector y Computadora</option>
-                                    <option value="Proyector, computadora, videoconferencia">Proyector, Computadora y
-                                        Videoconferencia</option>
-                                </select>
+                            <div class="col-md-4 ">
+                                <h6 class="font-weight-bold " for="Equipamiento">Equipamiento</h6>
+                                <div class="d-flex flex-row flex-wrap">
+                                    <div class="form-check d-flex flex-row m-1">
+                                        <input class="form-check-input" type="checkbox" name="equipamiento[]"
+                                            value="Bocinas" id="equipamiento_bocinas">
+                                        <label class="form-check-label" for="equipamiento_bocinas">
+                                            Bocinas
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check d-flex flex-row m-1">
+                                        <input class="form-check-input" type="checkbox" name="equipamiento[]"
+                                            value="Pantalla" id="equipamiento_pantalla">
+                                        <label class="form-check-label" for="equipamiento_pantalla">
+                                            Pantalla
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check d-flex flex-row m-1">
+                                        <input class="form-check-input" type="checkbox" name="equipamiento[]"
+                                            value="PC" id="equipamiento_pc">
+                                        <label class="form-check-label" for="equipamiento_pc">
+                                            PC
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check d-flex flex-row m-1">
+                                        <input class="form-check-input" type="checkbox" name="equipamiento[]"
+                                            value="Proyetor" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Proyector
+                                        </label>
+                                    </div>
+                                    <div class="form-check d-flex flex-row m-1">
+                                        <input class="form-check-input" type="checkbox" name="equipamiento[]"
+                                            value="Pantalla Proyección" id="equipamiento_proyeccion">
+                                        <label class="form-check-label" for="equipamiento_proyeccion">
+                                            Pantalla Proyección
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <br>
                         <div class="row align-items-center">
                             <div class="col-md-6">
                                 <a href="{{ route('home') }}" class="btn btn-danger">Cancelar</a>
@@ -209,18 +239,12 @@
                     </form>
                 </div>
             </div>
-            <br>
-            <div class="row align-items-center">
-
-                <br>
-                <hr>
-                <h5>Coordinación de Tecnologías para el Aprendizaje. CUCSH</h5>
-
-
-            </div>
     </div>
 @else
     El periodo de Registro de Proyectos a terminado
     @endif
 
+@endsection
+@section('footer')
+    <h5 class="text-end">En caso de inconsistencias, favor de reportarlas</h5>
 @endsection
