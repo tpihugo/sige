@@ -108,8 +108,16 @@
 @endsection
 
 
-@endsection
-
 @section('footer')
     <h5>En caso de inconsistencias, favor de reportarlas.</h5>
 @stop
+
+
+@section('js')
+    @include('layouts.scripts')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#usuario').select2();
+        });
+    </script>
+@endsection

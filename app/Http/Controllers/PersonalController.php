@@ -500,7 +500,8 @@ class PersonalController extends Controller
         $personal->id_adscripcion = explode('-', $request->adscripcion)[0];
         $personal->adscripcion = explode('-', $request->adscripcion)[1];
 
-        return $personal;
+        
+
         if ($request->hasFile('pdf')) {
             $nombre = $personal->codigo . "_" . $personal->apellido_paterno . "_" . $personal->apellido_materno . ".pdf";
             $archivo = $request->file('pdf');

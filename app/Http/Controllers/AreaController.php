@@ -147,7 +147,7 @@ class AreaController extends Controller
 
             $area->imagen_2 = $image_path;
         }
-        
+
         $area->save();
         //
         $log = new Log();
@@ -185,7 +185,7 @@ class AreaController extends Controller
      */
     public function edit($id)
     {
-        $equipamiento = ['Pantalla Proyección' => '', 'Proyector' => '', 'PC' => '', 'Pantalla' => '', 'Bocinas' => ''];
+        $equipamiento = ['Pantalla Proyección' => '', 'Proyector' => '', 'PC' => '', 'Pantalla' => '', 'Bocinas' => '','Camara'=>''];
         $area = Area::find($id);
         $equipos_area = explode(",", $area->equipamiento);
 

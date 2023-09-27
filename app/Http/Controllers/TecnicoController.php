@@ -156,7 +156,7 @@ class TecnicoController extends Controller
     public function edit($id)
     {
         $tecnico = Tecnico::find($id);
-        $users = User::where('activo',1)->get();
+        $users = User::where('activo',1)->orderBy('name')->get();
         return view('tecnicos.edit',compact('users'))->with('tecnico', $tecnico);
     }
 

@@ -223,6 +223,15 @@
                                             Pantalla Proyección
                                         </label>
                                     </div>
+
+                                    <div class="form-check d-flex flex-row m-1">
+                                        <input class="form-check-input" type="checkbox" name="equipamiento[]"
+                                            value="Camara" id="equipamiento_camara">
+                                        <label class="form-check-label" for="equipamiento_camara">
+                                            Camara
+                                        </label>
+                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>
