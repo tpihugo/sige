@@ -327,8 +327,13 @@ class AreaController extends Controller
         $hora = str_replace(':', '', date('H:i'));
 
         //dd($dia);
+        $equipamiento = ['Pantalla Proyección' => 'crop_square', 'Proyector' => '', 'PC' => 'computer', 'Pantalla' => 'tv', 'Bocinas' => 'speaker','Camara'=>'videocam'];
 
         foreach ($areas as $item) {
+            $item->equipamiento_icon = '';
+            $item->
+
+            dd($item);
 
             if (isset(explode(' ', $item->edificio)[1])) {
                 $edificio = explode(' ', $item->edificio)[1];
@@ -369,12 +374,9 @@ class AreaController extends Controller
                     $areas_f[$edificio][$item->piso] = [$item->toArray()];
                 }
             }
-            //dd($areas_f[$edificio][$item->piso]);
-            //dd($areas_f[$edificio]);
             ksort($areas_f[$edificio]);
         }
         $areas = collect($areas_f);
-        //return $areas;
         return view('areas.area-ticket', compact('areas', 'sede'));
     }
     public function equipo_area($id)

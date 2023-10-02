@@ -22,7 +22,7 @@
                 <h2 class="mt-3">Tickets </h2>
                 <p align="right">
                     <a href="{{ route('tickets.create') }}" class="btn btn-success">Capturar Ticket</a>
-                    <a href="{{ route('tickets.reporte') }}" class="btn btn-primary">Reporte Ticket</a>
+                    <a href="{{ route('tickets.reporte') }}" class="btn btn-primary">Estadisticas de Ticket's</a>
                 </p>
             </div>
         </div>

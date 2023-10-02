@@ -211,10 +211,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-footer" style="font-size: 12px">
-                                            <i class="material-icons" style="font-size: 12px">inventory</i><a
-                                                href="{{ route('inventario-cta') }}"> Inventario General</a>
-                                        </div>
                                     </div>
                                 </div>
                             @endcan

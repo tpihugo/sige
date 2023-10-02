@@ -50,10 +50,12 @@
                                 <label for="prioridad">Prioridad </label>
                                 <select class="form-control" id="prioridad" name="prioridad" required>
                                     <option disabled>Elegir</option>
-                                    <option value="1" {{ $ticket->prioridad == 1 ? 'selected' : '' }}>1</option>
-                                    <option value="2" {{ $ticket->prioridad == 2 ? 'selected' : '' }}>2</option>
-                                    <option value="3" {{ $ticket->prioridad == 3 ? 'selected' : '' }}>3</option>
-                                    <option value="4" {{ $ticket->prioridad == 4 ? 'selected' : '' }}>4</option>
+                                    <option value="Baja" {{ strcmp($ticket->prioridad, 'Baja') == 0 ? 'selected' : '' }}>Baja
+                                    </option>
+                                    <option value="Media" {{ strcmp($ticket->prioridad, 'Media') == 0 ? 'selected' : '' }}>
+                                        Media</option>
+                                    <option value="Alta" {{ strcmp($ticket->prioridad, 'Alta') == 0 ? 'selected' : '' }}>Alta
+                                    </option>
                                 </select>
                             </div>
                             <div class="col-md-4">
@@ -90,7 +92,6 @@
                                 <select class="form-control" class="form-control" id="js-example-basic-single"
                                     name="area_id" required>
                                     <option value="{{ $ticket->area_id }}" selected>{{ $ticket->area }}</option>
-                                    <option value="No Aplica">Cambiar...</option>
                                     @foreach ($areas as $area)
                                         <option value="{{ $area->id }}">{{ $area->sede }} - {{ $area->division }} -
                                             {{ $area->coordinacion }} - {{ $area->area }}</option>

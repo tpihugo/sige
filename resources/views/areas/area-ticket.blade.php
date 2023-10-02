@@ -17,15 +17,15 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 col-md-10 order-sm-1 order-md-0">
-                    <h2>Sede {{ $sede }}</h2>
+                    <h2 class="text-center mt-4">Sede {{ $sede }}</h2>
                     @foreach ($areas as $clave => $valor)
                         {{-- Muestra el listado de Aulas --}}
-                        <div class="mb-2 p-4 shadow w-100">
-                            <h2>Edificio {{ $clave }}</h2>
+                        <div class="mb-3 p-4 shadow-sm w-100 border">
+                            <h2 class="text-center">Edificio {{ $clave }}</h2>
                             @php
                                 $pisos = collect($valor);
                             @endphp
-                            <hr class="border">
+                            <hr class="border border-dark">
                             @foreach ($pisos as $p => $item)
                                 <h4>{{ strcmp('Piso 0', $p) == 0 ? 'Planta Baja' : $p }}</h4>
                                 @foreach (collect($item) as $key => $value)
@@ -36,9 +36,13 @@
                                             $estilos = 'btn bg-success text-white text-wrap m-1';
                                         }
                                     @endphp
-                                    <a onclick="modal({{ collect($value) }})" class="{{ $estilos }}"
+                                    <a onclick="modal({{ collect($value) }})" class=" {{ $estilos }}"
                                         data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                        {{ $value['area'] }}
+                                        <span class="d-flex">
+                                            {{ $value['area'] }} 
+                                            <span class="mx-1 material-icons md-10">videocam photo_camera</span>
+                                        </span>
+                                        
                                     </a>
                                 @endforeach
                             @endforeach
@@ -47,7 +51,7 @@
 
                 </div>
                 <div class="col-md-2 col-sm-12 order-sm-0 order-md-1">
-                    <div class="d-flex flex-column align-items-center">
+                    <div class="d-flex flex-column align-items-center ">
                         <p class="font-weight-bold">Sedes</p>
                         @if (strcmp($sede, 'Belenes') == 0)
                             <a href="{{ route('area-ticket', 'Belenes') }}"

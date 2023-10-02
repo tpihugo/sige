@@ -32,7 +32,7 @@ class TicketController extends Controller
         $vstickets = VsTicket::where('activo', '=', 1)
             ->where('estatus', '=', 'Abierto')->get();
 
-        $tecnicos = Tecnico::where('activo', '=', 1)->get();
+        $tecnicos = Tecnico::where('activo', '=', 1)->orderBy('nombre')->get();
         $tickets = $this->cargarDT($vstickets);
         $id_tecnico = Tecnico::where('activo', 1)->where('user_id', Auth::user()->id)->first();
 
@@ -139,7 +139,7 @@ class TicketController extends Controller
         $equipos = Equipo::all();
         //$areas = Area::pluck('id','area')->prepend('seleciona');
         $areas = Area::where('activo', 1)->get();
-        $tecnicos = Tecnico::where('activo', '=', 1)->get();
+        $tecnicos = Tecnico::where('activo', '=', 1)->orderBy('nombre')->get();
         return view('ticket.create')->with('equipos', $equipos)->with('areas', $areas)->with('tecnicos', $tecnicos);
     }
 
@@ -212,7 +212,7 @@ class TicketController extends Controller
         //$areas = Area::pluck('id','area')->prepend('seleciona');
         $areas = Area::all();
         $ticket = VsTicket::find($id);
-        $tecnicos = Tecnico::where('activo', '=', 1)->get();
+        $tecnicos = Tecnico::where('activo', '=', 1)->orderBy('nombre')->get();
         return view('ticket.edit')->with('ticket', $ticket)->with('equipos', $equipos)->with('areas', $areas)->with('tecnicos', $tecnicos);
     }
 
@@ -510,18 +510,22 @@ class TicketController extends Controller
     }
     public function reporte_area($fecha)
     {
+        
         $fechas = explode(",", $fecha);
-        $ticket = VsTicket::select('fecha_reporte', 'area')->where('fecha_reporte', '>=', $fechas[0])->where('fecha_reporte', '<=', $fechas[1])->get();
-
-
+        $inicio = $fechas[0];
+        $fin = $fechas[1];
+        $ticket = VsTicket::select('fecha_reporte', 'area')->where('fecha_reporte', '>=', $inicio)->where('fecha_reporte', '<=', $fin)->get();
         foreach ($ticket as $key => $value) {
             $value->division = explode("-", $value->area)[0];
-            $value->departamento = explode("-", $value->area)[1];
+            if($value->area != null){
+                $value->departamento = explode("-", $value->area)[1];
+            }else{
+                $value->division = "Sin Área ";
+                $value->departamento = "Área Desconocida";
+            }
         }
-
         $ticket = $ticket->groupBy('division');
         //return $ticket;
-
         return view('ticket.reportes.tabla', compact('ticket'))->render();
     }
 }
