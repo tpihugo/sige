@@ -331,9 +331,6 @@ class AreaController extends Controller
 
         foreach ($areas as $item) {
             $item->equipamiento_icon = '';
-            $item->
-
-            dd($item);
 
             if (isset(explode(' ', $item->edificio)[1])) {
                 $edificio = explode(' ', $item->edificio)[1];
@@ -379,6 +376,8 @@ class AreaController extends Controller
         $areas = collect($areas_f);
         return view('areas.area-ticket', compact('areas', 'sede'));
     }
+
+    
     public function equipo_area($id)
     {
         $area = Area::select('ultimo_inventario', 'tipo_espacio', 'sede', 'edificio', 'piso', 'division', 'coordinacion', 'area')

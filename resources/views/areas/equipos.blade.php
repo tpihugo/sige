@@ -13,14 +13,13 @@
                 Auth::user()->role == 'cta'))
         <div class="container">
             <div class="row">
-                <div class="col-sm-12">
+                <div class="col-sm-12 mt-5">
                     <h3 class="text-center">
                         {{ $area->sede . ' - ' . $area->edificio . ' - ' . $area->piso . ' - ' . $area->area }}
                     </h3>
                     <hr class="border border-dark">
                     <p class="text-center"><b>Ultimo Inventario:</b> {{ $area->ultimo_inventario }} / <b>Tipo de Espacio:</b>
-                        {{ $area->tipo_espacio }}</p>
-                    <p class="text-center "><span></span> <b>Total de equipos: </b> {{ count($equipo) }}</p>
+                        {{ $area->tipo_espacio }} / <b>Total de equipos: </b> {{ count($equipo) }}</p>
                 </div>
             </div>
             <div class="row">
@@ -38,14 +37,13 @@
                     <table id="example" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
-                                <th>id</th>
-                                <th>udg_id</th>
-                                <th>resguardante</th>
-                                <th>tipo_equipo</th>
-                                <th>marca</th>
-                                <th>modelo</th>
-                                <th>numero_serie</th>
-
+                                <th>ID</th>
+                                <th>ID UDG</th>
+                                <th>Resguardante</th>
+                                <th>Tipo Equipo</th>
+                                <th>Marca</th>
+                                <th>Modelo</th>
+                                <th>Número de Serie</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -58,7 +56,6 @@
                                     <td>{{ $item->marca }}</td>
                                     <td>{{ $item->modelo }}</td>
                                     <td>{{ $item->numero_serie }}</td>
-
                                 </tr>
                             @endforeach
                         </tbody>
@@ -77,7 +74,7 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $('#example').DataTable({
-                "pageLength": 100,
+                "pageLength": 10,
                 "order": [
                     [0, "desc"]
                 ],

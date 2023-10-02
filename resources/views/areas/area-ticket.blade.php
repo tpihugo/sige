@@ -19,9 +19,10 @@
                 <div class="col-sm-12 col-md-10 order-sm-1 order-md-0">
                     <h2 class="text-center mt-4">Sede {{ $sede }}</h2>
                     @foreach ($areas as $clave => $valor)
+                    <hr>
                         {{-- Muestra el listado de Aulas --}}
-                        <div class="mb-3 p-4 shadow-sm w-100 border">
-                            <h2 class="text-center">Edificio {{ $clave }}</h2>
+                        <div class="mb-3 p-4 shadow-sm w-100 border  ">
+                            <h2 class="text-center text-dark">Edificio {{ $clave }}</h2>
                             @php
                                 $pisos = collect($valor);
                             @endphp
@@ -36,11 +37,13 @@
                                             $estilos = 'btn bg-success text-white text-wrap m-1';
                                         }
                                     @endphp
-                                    <a onclick="modal({{ collect($value) }})" class=" {{ $estilos }}"
+                                    <a onclick="modal({{ collect($value) }})" class="text-white {{ $estilos }}"
                                         data-bs-toggle="modal" data-bs-target="#exampleModal">
                                         <span class="d-flex">
                                             {{ $value['area'] }} 
-                                            <span class="mx-1 material-icons md-10">videocam photo_camera</span>
+                                            {{--
+                                            <span class="mx-1 material-icons md-10 ">videocam photo_camera</span>
+                                            --}}
                                         </span>
                                         
                                     </a>
@@ -95,13 +98,12 @@
                                 <p>Prioridad: <span id="prioridad"></span></p>
                             </div>
                         </div>
-                        <div class="row justify-content-center mt-2">
-                            <div class="col-sm-12 col-md-3">
-                                <a href="" id="historial" class="btn btn-primary">Historial</a>
-                            </div>
-                            <div class="col-sm-12 col-md-3">
-                                <a href="" id="equipos" class="btn btn-primary">Equipos</a>
-                            </div>
+                        <div class="d-flex justify-content-center mt-2">
+                            
+                                <a href="" id="historial" class="mx-2 btn btn-primary">Historial</a>
+                            
+                                <a href="" id="equipos" class="mx-2 btn btn-primary">Equipos</a>
+                           
                         </div>
                     </div>
                     <div class="modal-footer">
