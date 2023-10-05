@@ -22,7 +22,7 @@
                     <hr>
                         {{-- Muestra el listado de Aulas --}}
                         <div class="mb-3 p-4 shadow-sm w-100 border  ">
-                            <h2 class="text-center text-dark">Edificio {{ $clave }}</h2>
+                            <h2 class="text-center "><a class="text-dark" href="{{route('area.edificio_equipos',[$sede,$clave])}}">Edificio {{ $clave }}</a> </h2>
                             @php
                                 $pisos = collect($valor);
                             @endphp

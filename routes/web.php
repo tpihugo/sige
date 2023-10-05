@@ -26,6 +26,7 @@ include_once 'tickets.php';
 include_once 'subredes.php';
 include_once 'requisiciones.php';
 include_once 'articulos.php';
+include_once 'areas.php';
 
 Route::middleware(["auth:sanctum", "verified"])
     ->get("/", [App\Http\Controllers\HomeController::class, "index"])

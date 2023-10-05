@@ -185,18 +185,18 @@ class AreaController extends Controller
      */
     public function edit($id)
     {
-        $equipamiento = ['Pantalla Proyección' => '', 'Proyector' => '', 'PC' => '', 'Pantalla' => '', 'Bocinas' => '','Camara'=>''];
+        $equipamiento = ['Pantalla Proyección' => '', 'Proyector' => '', 'PC' => '', 'Pantalla' => '', 'Bocinas' => '', 'Camara' => ''];
         $area = Area::find($id);
         $equipos_area = explode(",", $area->equipamiento);
 
-        for ($i=0; $i < count($equipos_area) ; $i++) { 
+        for ($i = 0; $i < count($equipos_area); $i++) {
             $temp = $equipos_area[$i];
             if (array_key_exists($temp, $equipamiento)) {
-               $equipamiento[$temp] = "checked";
+                $equipamiento[$temp] = "checked";
             }
         }
         //return $equipamiento;
-        return view('areas.edit',compact('equipamiento'))->with('area', $area);
+        return view('areas.edit', compact('equipamiento'))->with('area', $area);
     }
 
     /**
@@ -327,7 +327,7 @@ class AreaController extends Controller
         $hora = str_replace(':', '', date('H:i'));
 
         //dd($dia);
-        $equipamiento = ['Pantalla Proyección' => 'crop_square', 'Proyector' => '', 'PC' => 'computer', 'Pantalla' => 'tv', 'Bocinas' => 'speaker','Camara'=>'videocam'];
+        $equipamiento = ['Pantalla Proyección' => 'crop_square', 'Proyector' => '', 'PC' => 'computer', 'Pantalla' => 'tv', 'Bocinas' => 'speaker', 'Camara' => 'videocam'];
 
         foreach ($areas as $item) {
             $item->equipamiento_icon = '';
@@ -377,7 +377,7 @@ class AreaController extends Controller
         return view('areas.area-ticket', compact('areas', 'sede'));
     }
 
-    
+
     public function equipo_area($id)
     {
         $area = Area::select('ultimo_inventario', 'tipo_espacio', 'sede', 'edificio', 'piso', 'division', 'coordinacion', 'area')
@@ -401,5 +401,19 @@ class AreaController extends Controller
 
         $cantidad = collect($cantidad);
         return view('areas.equipos', compact('area', 'equipo', 'cantidad'));
+    }
+
+    public function buscar_edificio($sede, $edificio)
+    {
+        $edificio =  "Edificio " . $edificio;
+        $areas = Area::select('id')->where('sede',$sede)->whereIn('tipo_espacio',['Aula','Laboratorio'])->where('edificio', $edificio)->get()->toArray();
+        $equipos = VsEquipo::where('activo', 1)->whereIn('id_area',$areas)->get();
+        $temp = $equipos->groupBy('tipo_equipo');
+        $cantidad = [];
+        foreach ($temp as $item => $llave) {
+            $cantidad[$item] = count($llave);
+        }
+        return view('areas.equipos_edificio', compact('sede', 'edificio', 'equipos','cantidad'));
+        
     }
 }
