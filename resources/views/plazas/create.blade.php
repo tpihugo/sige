@@ -1,4 +1,9 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+@section('title', 'Personal')
+
+@section('css')
+    @include('layouts.head_2')
+@stop
 @section('content')
     <div class="container">
         @if (Auth::check())

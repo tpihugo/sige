@@ -24,15 +24,8 @@
             @endif
             <br>
             <div class="row">
-                <h2>Registro de Movimiento de Equipo. 1</h2>
+                <h2>Registro de Movimiento de Equipo - {{ $equipo->id }}</h2>
                 <hr>
-
-                <script type="text/javascript">
-                    $(document).ready(function() {
-                        $('#js-example-basic-single').select2();
-                        $('#js-usuarios').select2();
-                    });
-                </script>
             </div>
             <form action="{{ route('movimientos.store') }}" method="post" enctype="multipart/form-data" class="col-12">
                 <div class="row">
@@ -88,16 +81,6 @@
                                     @endforeach
                                 </select>
                             </div>
-                            {{-- <div class="col-md-6">
-                            <label for="id_area">Areas</label>
-                            <select class="form-control" id="id_area" name="id_area">
-                                <option disabled selected>Elegir Area para Reasignar</option>
-
-                                @foreach ($areas as $area)
-                                    <option value="{{$area->id}}">{{$area->sede}} - {{$area->edificio}} - {{$area->piso}} - {{$area->coordinacion}} - {{$area->area}}</option>
-                                @endforeach
-                            </select>
-                        </div> --}}
                             <div class="col-md-6">
                                 <label for="id_usuario">Usuarios</label>
                                 <select class="form-control" class="form-control" id="js-usuarios" name="id_usuario">
@@ -109,28 +92,14 @@
                                     @endforeach
                                 </select>
                             </div>
-
-                            {{-- <div class="col-md-6">
-                            <label for="id_usuario">Usuario</label>
-                            <select class="form-control" id="id_usuario" name="id_usuario">
-                                <option disabled selected>Elegir usuario para Reasignar</option>
-                                <option value="0">Usuario General falta poner id</option>
-                                @foreach ($usuarios as $usuario)
-                                    <option value="{{$usuario->id}}">{{$usuario->nombre}} - {{$usuario->codigo}}</option>
-                                @endforeach
-                            </select>
-                        </div> --}}
                         </div>
                         <br>
                         <div class="row g-3 align-items-center">
                             <div class="col-md-4">
                                 <label for="registro">Movimiento</label>
                                 <select class="form-control" id="registro" name="registro">
-
-                                    <option {{ isset($tipo) && $tipo == 'alta' ? 'selected' : '' }} value="Alta de Equipo">
-                                        Alta de Equipo</option>
-                                    <option {{ isset($tipo) && $tipo == 'cambio' ? 'selected' : '' }}
-                                        value="Cambio de ubicación">Cambio de ubicación</option>
+                                    <option value="Alta de Equipo">Alta de Equipo</option>
+                                    <option selected value="Cambio de ubicación">Cambio de ubicación</option>
                                     <option value="Traslado">Traslado</option>
                                     <option value="Préstamo">Préstamo</option>
                                     <option value="Baja<">Baja</option>
@@ -153,8 +122,8 @@
                             </div>
 
                         </div>
-                        <div class="row g-3 align-items-center">
-                            <div class="col-md-6">
+                        <div class="row g-3 align-items-center mt-2 justify-content-end">
+                            <div class="col-md-auto">
                                 <a href="{{ route('equipos.index') }}" class="btn btn-danger">Cancelar</a>
                                 <button type="submit" class="btn btn-success">Guardar datos</button>
                             </div>
@@ -166,17 +135,23 @@
 
                 </div>
             </form>
-            <br>
-            <div class="row g-3 align-items-center">
-
-                <br>
-                <h5>En caso de inconsistencias enviar un correo a victor.ramirez@academicos.udg.mx</h5>
-                <hr>
-
-            </div>
     </div>
 @else
     El periodo de Registro de Proyectos a terminado
     @endif
     </div>
+@endsection
+
+
+@section('footer')
+    <h5 class="text-end">En caso de inconsistencias, favor de reportarlas.</h5>
+@endsection
+
+@section('js')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#js-example-basic-single').select2();
+            $('#js-usuarios').select2();
+        });
+    </script>
 @endsection

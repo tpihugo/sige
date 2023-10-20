@@ -128,6 +128,7 @@
         Acceso No válido
     @endif
 @endsection
+
 @section('js')
     @include('layouts.scripts')
     <script>

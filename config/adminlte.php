@@ -382,6 +382,11 @@ return [
                     'text' => 'Consultar Préstamos',
                     'route' => 'prestamos.index'
                 ],
+                [
+                    'text' => 'Crear Préstamo',
+                    'route' => 'prestamos.create',
+                    'can' => 'PRESTAMOS#crear'
+                ],
             ],
         ],
         [

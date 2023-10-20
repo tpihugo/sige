@@ -154,15 +154,14 @@
 
                 </div>
             </form>
-            <br>
-            <div class="row align-items-center">
-                <h5>En caso de inconsistencias enviar un correo a victor.ramirez@academicos.udg.mx</h5>
-                <hr>
-
-            </div>
     </div>
 @else
     El periodo de Registro de Proyectos a terminado
     @endif
 
+@endsection
+
+
+@section('footer')
+    <h5 class="text-end">En caso de inconsistencias, favor de reportarlas.</h5>
 @endsection

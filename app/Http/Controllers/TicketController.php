@@ -151,7 +151,7 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
-        $validateData = $this->validate($request, [
+        $this->validate($request, [
             'area_id' => 'required',
             'solicitante' => 'required',
             'contacto' => 'required',
@@ -178,10 +178,11 @@ class TicketController extends Controller
         $ticket->save();
         //
         $log = new Log();
-        $log->tablas = 'tickets';
-        $log->movimimiento = "�rea id: " . $ticket->area_id . "Solicitante: " . $ticket->solicitante . "Contacto: " . $ticket->contacto . "T�cnico: " . $ticket->tecnico_id . "Categoria: " . $ticket->categoria . "Prioridad: " . $ticket->prioridad . "Estatus: " . $ticket->estatus . "Datos de reporte: " . $ticket->datos_reporte . "Fecha de reporte: " . $ticket->fecha_reporte . "Fecha de inicio: " . $ticket->fecha_inicio . "Fecha de termino: " . $ticket->fecha_termino . "Problema: " . $ticket->problema . "Soluci�n: " . $ticket->solucion;
+        $log->tabla = 'tickets';
+        $log->movimiento = "área id: " . $ticket->area_id . "Solicitante: " . $ticket->solicitante . "Contacto: " . $ticket->contacto . "Técnico: " . $ticket->tecnico_id . "Categoria: " . $ticket->categoria . "Prioridad: " . $ticket->prioridad . "Estatus: " . $ticket->estatus . "Datos de reporte: " . $ticket->datos_reporte . "Fecha de reporte: " . $ticket->fecha_reporte . "Fecha de inicio: " . $ticket->fecha_inicio . "Fecha de termino: " . $ticket->fecha_termino . "Problema: " . $ticket->problema . "Solución: " . $ticket->solucion;
         $log->usuario_id = Auth::user()->id;
         $log->acciones = 'Insertar';
+        $log->save();
         $ticket->save();
         //
         return redirect('tickets')->with(array(
@@ -225,7 +226,7 @@ class TicketController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validateData = $this->validate($request, [
+        $this->validate($request, [
             'area_id' => 'required',
             'solicitante' => 'required',
             'contacto' => 'required',
@@ -510,16 +511,16 @@ class TicketController extends Controller
     }
     public function reporte_area($fecha)
     {
-        
+
         $fechas = explode(",", $fecha);
         $inicio = $fechas[0];
         $fin = $fechas[1];
         $ticket = VsTicket::select('fecha_reporte', 'area')->where('fecha_reporte', '>=', $inicio)->where('fecha_reporte', '<=', $fin)->get();
         foreach ($ticket as $key => $value) {
             $value->division = explode("-", $value->area)[0];
-            if($value->area != null){
+            if ($value->area != null) {
                 $value->departamento = explode("-", $value->area)[1];
-            }else{
+            } else {
                 $value->division = "Sin Área ";
                 $value->departamento = "Área Desconocida";
             }

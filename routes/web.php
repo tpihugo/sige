@@ -500,18 +500,9 @@ Route::get("/lista_servicios", [
 ]);
 
 /* Apartado de Subredes e IP´S*/
-Route::resource("subredes", "App\Http\Controllers\SubredController");
-Route::resource("ips", "App\Http\Controllers\IpController");
-Route::get("/delete-subred/{subred_id}", [
-    "as" => "deletesubred",
-    "middleware" => "auth",
-    "uses" => "App\Http\Controllers\SubredController@delete_subred",
-]);
-Route::post("/filtroSubredes", [
-    "as" => "filtroSubredes",
-    "middleware" => "auth",
-    "uses" => "App\Http\Controllers\SubredController@filtroSubredes",
-]);
+
+Route::resource("ips", "App\Http\Controllers\IpController")->middleware('auth');
+
 
 Route::post("/filIps", [
     "as" => "filIps",
@@ -802,34 +793,13 @@ Route::get('/documento/{filename}', array(
 
 
 /* Apartado de Subredes e IP´S*/
-Route::resource("subredes", "App\Http\Controllers\SubredController");
+
 
 Route::resource('ips', App\Http\Controllers\IpController::class);
 
 Route::resource("ips", "App\Http\Controllers\IpController");
 
-Route::get("/deletesubred/{id_subred}", [
-    "as" => "deletesubred",
-    "middleware" => "auth",
-    "uses" => "App\Http\Controllers\SubredController@deletesubred",
-]);
 
-Route::get("/disponible/{id}", [
-    "as" => "disponible",
-    "middleware" => "auth",
-    "uses" => "App\Http\Controllers\SubredController@disponible",
-]);
-Route::get("/ocupadas/{id}", [
-    "as" => "ocupadas",
-    "middleware" => "auth",
-    "uses" => "App\Http\Controllers\SubredController@ocupadas",
-
-]);
-Route::post("/filtroSubredes", [
-    "as" => "filtroSubredes",
-    "middleware" => "auth",
-    "uses" => "App\Http\Controllers\SubredController@filtroSubredes",
-]);
 
 Route::post("/filIps", [
     "as" => "filIps",

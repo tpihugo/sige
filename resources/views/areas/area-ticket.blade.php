@@ -19,10 +19,14 @@
                 <div class="col-sm-12 col-md-10 order-sm-1 order-md-0">
                     <h2 class="text-center mt-4">Sede {{ $sede }}</h2>
                     @foreach ($areas as $clave => $valor)
-                    <hr>
+                        <hr>
                         {{-- Muestra el listado de Aulas --}}
                         <div class="mb-3 p-4 shadow-sm w-100 border  ">
-                            <h2 class="text-center "><a class="text-dark" href="{{route('area.edificio_equipos',[$sede,$clave])}}">Edificio {{ $clave }}</a> </h2>
+                            <h2 class="text-center "><a class="text-dark"
+                                    href="{{ route('area.edificio_equipos', [$sede, $clave]) }}"><span class="material-icons md-18 pr-1 mr-1">
+                                        devices
+                                    </span>  Edificio {{ $clave }}
+                            </h2>
                             @php
                                 $pisos = collect($valor);
                             @endphp
@@ -40,12 +44,12 @@
                                     <a onclick="modal({{ collect($value) }})" class="text-white {{ $estilos }}"
                                         data-bs-toggle="modal" data-bs-target="#exampleModal">
                                         <span class="d-flex">
-                                            {{ $value['area'] }} 
+                                            {{ $value['area'] }}
                                             {{--
                                             <span class="mx-1 material-icons md-10 ">videocam photo_camera</span>
                                             --}}
                                         </span>
-                                        
+
                                     </a>
                                 @endforeach
                             @endforeach
@@ -99,11 +103,11 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-center mt-2">
-                            
-                                <a href="" id="historial" class="mx-2 btn btn-primary">Historial</a>
-                            
-                                <a href="" id="equipos" class="mx-2 btn btn-primary">Equipos</a>
-                           
+
+                            <a href="" id="historial" class="mx-2 btn btn-primary">Historial</a>
+
+                            <a href="" id="equipos" class="mx-2 btn btn-primary">Equipos</a>
+
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -148,7 +152,7 @@
                 $("#contacto").html(params['tickets'][0]['contacto']);
             } else {
                 document.getElementById('row_datos').style.display = 'none';
-                
+
             }
             var id = params['id'].toString();
             var url = "{{ route('ticket-historial', ':id') }}";

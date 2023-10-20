@@ -1,4 +1,9 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+@section('title', 'Personal')
+
+@section('css')
+    @include('layouts.head_2')
+@stop
 @section('content')
     <div class="container">
         @if (Auth::check())
@@ -65,15 +70,6 @@
                         <br>
                     </form>
                 </div>
-            </div>
-            <br>
-            <div class="row align-items-center">
-
-                <br>
-                <hr>
-                <h5>Coordinación de Tecnologías para el Aprendizaje. CUCSH</h5>
-
-
             </div>
     </div>
 @else

@@ -57,9 +57,9 @@
                                     <td>{{ $item->modelo }}</td>
                                     <td>{{ $item->numero_serie }}</td>
                                     @php
-                                        $area = explode('-', $item->area)
+                                        $area = explode('-', $item->area);
                                     @endphp
-                                    <td>{{ $area[4]."-".$area[6] }}</td>
+                                    <td>{{ $area[4] . '-' . $area[6] }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

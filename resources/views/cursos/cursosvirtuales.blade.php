@@ -52,36 +52,6 @@
                     <br>
                 </div>
                 <div class="row align-items-end">
-                    <div class="col-md-4 pl-0">
-                        {{--  <label for="id_area">Área </label>
-                        <select class="form-control" id="id_area" name="id_area">
-                            @if (isset($areaElegida->id) && !is_null($areaElegida->id))
-                                <option value="{{ $areaElegida->id }}" selected>
-                                    {{ $areaElegida->sede }}
-                                    {{ $areaElegida->edificio }}
-                                    {{ $areaElegida->piso }}
-                                    {{ $areaElegida->division }}
-                                    {{ $areaElegida->coordinacion }}
-                                    {{ $areaElegida->area }}
-                                </option>
-                                <option disabled>Elegir</option>
-                            @else
-                                <option disabled selected>Elegir</option>
-                            @endif
-
-                            @foreach ($areas as $area)
-                                <option value="{{ $area->id }}">
-                                    {{ $area->sede }},
-                                    {{ $area->edificio }},
-                                    {{ $area->piso }},
-                                    {{ $area->division }},
-                                    {{ $area->coordinacion }},
-                                    {{ $area->area }}
-                                </option>
-                            @endforeach
-                        </select> --}}
-                    </div>
-
                     <div class="col-md-auto mt-3 pl-0">
                         <button type="submit" class="btn btn-outline-primary">
                             <i class="fa fa-search"></i> Filtrar

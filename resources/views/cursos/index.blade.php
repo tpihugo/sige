@@ -132,11 +132,6 @@
                 @endif
                 <br>
                 <div class="row g-3 align-items-center">
-
-
-
-
-
                     <div class="col-md-1 offset-md-1">
                         <h6 class="card-title"> <span class="text-success"><i class="fa fa-search"></span></i> Días</6>
                             <select class="form-control" id="filtrodia" name="filtrodia">

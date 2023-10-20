@@ -108,7 +108,7 @@ class AreaController extends Controller
      */
     public function store(Request $request)
     {
-        $validateData = $this->validate($request, [
+        $this->validate($request, [
             'tipo_espacio' => 'required',
             'sede' => 'required',
             'edificio' => 'required',

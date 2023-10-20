@@ -17,10 +17,6 @@
                         </div>
                     @endif
                     <h2 class="mt-3">Logs </h2>
-                    <p align="right">
-                        <a href="{{ route('home') }}" class="btn btn-primary">
-                            Regresar</a>
-                    </p>
                 </div>
             </div>
             <br>
@@ -45,10 +41,6 @@
                 </table>
 
             </div>
-            <p>
-                <a href="{{ route('home') }}" class="btn btn-primary">
-                    < Regresar</a>
-            </p>
         </div>
     @else
         Acceso No válido
@@ -59,7 +51,6 @@
     @include('layouts.scripts')
     <script type="text/javascript">
         var data = @json($logs);
-
         $(document).ready(function() {
             $('#example').DataTable({
                 "data": data,

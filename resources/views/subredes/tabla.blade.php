@@ -1,5 +1,5 @@
 @if (count($equipo->all()) > 0)
-    <table class="table">
+    <table class="display table-striped table-bordered" style="width:100%">
         <thead class="thead-light">
             <tr class="text-center">
                 <th>Id UdeG</th>
@@ -21,13 +21,12 @@
                     <td>{{ $item->mac }}</td>
                     <td>{{ $item->ip }}</td>
                     <td>
-                        <a href="{{ route('desasignarEquipo', $item->ip) }}" class="btn btn-info btn-sm" title="">Desasignar
-                            Equipo</a>
+                        <a href="{{ route('desasignarEquipo', $item->ip) }}" class="btn btn-info btn-sm" title="">Desasignar</a>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
 @else
-    <h2>Sin coincidencias.</h2>
+    <h2>Sin coincidencias</h2>
 @endif

@@ -11,7 +11,7 @@
                 Auth::user()->role == 'auxiliar' ||
                 Auth::user()->role == 'redes'))
         <div class="container-fluid">
-            <div class="row g-3 align-items-center">
+            <div class="row g-3 mt-4 align-items-center">
                 <div class="col-md-12">
                     @if (session('message'))
                         <div class="alert alert-success">
@@ -22,30 +22,28 @@
                             {{ session('error') }}
                         </div>
                     @endif
-                    <h2>Subredes</h2>
+                    <h2 class="text-center">Subredes</h2>
                 </div>
             </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 col-md-offset-2">
-                    <center>
-                        <a href="{{ route('home') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Regresar a
-                            Inicio</a>
-                        <a href="{{ route('subredes.create') }}" class="btn btn-success"><i class="fa fa-plus"></i> Capturar
-                            Subred</a>
-                    </center>
+            <div class="row justify-content-end">
+                <div class="col-sm-12 col-md-auto ">
+                    <a href="{{ route('home') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Regresar a
+                        Inicio</a>
+                    <a href="{{ route('subredes.create') }}" class="btn btn-success"><i class="fa fa-plus"></i> Capturar
+                        Subred</a>
+
                 </div>
             </div>
         </div>
         <div class="row justify-content-center mt-3">
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 <form method="post" class="d-flex" id="form-busqueda">
                     @csrf
                     @method('POST')
-                    <input type="text" name="equipo" placeholder="Buscar equipo" id="equipo" class="form-control">
+                    <input type="text" name="equipo" placeholder="Buscar equipo" id="equipo" class="form-control ">
                     <!-- Button trigger modal -->
-                    <button type="button" onclick="busqueda()" class="btn btn-primary btn-sm">
+                    <button type="button" onclick="busqueda()" data-toggle="modal" data-target="#exampleModal"
+                        class="btn btn-primary btn-sm m-1">
                         Buscar
                     </button>
                 </form>
@@ -54,29 +52,29 @@
         <div class="container-fluid">
             <div class="row-md-6 ">
                 <div class="col-12">
-                    <table id="example" class="table table-striped table-bordered" cellspacing="2" width="100%">
+                    <table id="example" class="display table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
-                                <th>
-                                    <center>VLAN</center>
+                                <th class="text-center">
+                                    VLAN
                                 </th>
-                                <th>
-                                    <center>Rango inicial</center>
+                                <th class="text-center">
+                                    Rango inicial
                                 </th>
-                                <th>
-                                    <center>Rango final</center>
+                                <th class="text-center">
+                                    Rango final
                                 </th>
-                                <th>
-                                    <center>Gateway</center>
+                                <th class="text-center">
+                                    Gateway
                                 </th>
-                                <th>
-                                    <center>Descripción</center>
+                                <th class="text-center">
+                                    Descripción
                                 </th>
-                                <th>
-                                    <center>N° de IP'S</center>
+                                <th class="text-center">
+                                    N° de IP'S
                                 </th>
-                                <th>
-                                    <center>Acciones</center>
+                                <th class="text-center">
+                                    Acciones
                                 </th>
                             </tr>
                         </thead>
@@ -86,7 +84,6 @@
                 </div>
             </div>
         </div>
-
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
@@ -100,11 +97,12 @@
                     <div class="modal-body" id="contenedor">
 
                     </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
                 </div>
             </div>
         </div>
-    @else
-        Acceso No válido
     @endif
 @endsection
 @section('footer')
@@ -123,11 +121,9 @@
                 data: $('#form-busqueda').serialize()
             }).done(function(data) {
                 $('#contenedor').html(data);
-                $('#exampleModal').modal('show');
             });
         }
         var data = @json($listasubredes);
-
         $(document).ready(function() {
             $('#example').DataTable({
                 "data": data,
