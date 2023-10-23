@@ -83,6 +83,11 @@
                                     </select>
                                 </div>
                                 
+                                <div class="col-md-2">
+                                    <label class="font-weight-bold" for="carga_horaria">Carga Horaria: *</label>
+                                    <input class="form-control" id="carga_horaria" name="carga_horaria" type="number"
+                                       >
+                                </div>
                                 <div class="col-md-6">
                                     <label class="font-weight-bold" for="adscripcion">Adscripción: *</label>
                                     <select class="form-control" id="js-example-basic-single3" name="adscripcion">

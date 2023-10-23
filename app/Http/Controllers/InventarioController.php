@@ -61,13 +61,13 @@ class InventarioController extends Controller
             ->first();
 
         /*Localizados*/
-        $total_localizados = DB::table('inventariodetalle')
+        $total_localizados = DB::table('inventario_detalles')
             ->select(DB::raw('COUNT(*) as cuenta_localizados'))
             ->where('estatus', '=', 'Localizado')
             ->first();
 
         /*Con incidentes*/
-        $total_incidentes = DB::table('inventariodetalle')
+        $total_incidentes = DB::table('inventario_detalles')
             ->select(DB::raw('COUNT(*) as cuenta_incidentes'))
             ->where('estatus', '=', 'Revision')
             ->first();
@@ -598,20 +598,20 @@ class InventarioController extends Controller
             ->where('id_area', '=', $area_id)
             ->first();
         /* Localizados inventario Express*/
-        $total_equipos_localizados = DB::table('inventariodetalle')
+        $total_equipos_localizados = DB::table('inventario_detalles')
             ->select(DB::raw('COUNT(*) as localizados'))
             ->where('estatus', '=', 'Localizado')
             ->where('IdArea', '=', $area_id)
             ->first();
         /* Localizados*/
-        $total_equipos_localizados = DB::table('inventariodetalle')
+        $total_equipos_localizados = DB::table('inventario_detalles')
             ->select(DB::raw('COUNT(*) as localizados'))
             ->where('estatus', '=', 'Localizado')
             ->where('IdArea', '=', $area_id)
             ->first();
 
         /* Revisi�n con Nota*/
-        $total_equipos_revision = DB::table('inventariodetalle')
+        $total_equipos_revision = DB::table('inventario_detalles')
             ->select(DB::raw('COUNT(*) as revisiones'))
             ->where('estatus', '=', 'Revision')
             ->where('IdArea', '=', $area_id)
@@ -725,12 +725,12 @@ class InventarioController extends Controller
             ->where('tipo_equipo', 'Impresora')
             ->first();
 
-        $total_equipos_localizados_inventario_anual = DB::table('inventariodetalle')
+        $total_equipos_localizados_inventario_anual = DB::table('inventario_detalles')
             ->select(DB::raw('COUNT(*) as localizados_inv'))
             ->where('estatus', 'Localizado')
             ->first();
 
-        $total_equipos_localizados_con_nota = DB::table('inventariodetalle')
+        $total_equipos_localizados_con_nota = DB::table('inventario_detalles')
             ->select(DB::raw('COUNT(*) as localizados_nota'))
             ->where('notas', '<>', '-')
             ->first();

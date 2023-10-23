@@ -115,7 +115,7 @@ class PlazaController extends Controller
      */
     public function store(Request $request)
     {
-        $validateData = $this->validate($request, [
+        $this->validate($request, [
             'nombre' => 'required',
             'carga_horaria' => 'required',
             'activo' => 'required',
