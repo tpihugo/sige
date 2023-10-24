@@ -68,6 +68,10 @@
                                     <option value="Liceo No. 210">Liceo No. 210</option>
                                     <option value="TOMÁS V. GOMEZ #121">TOMÁS V. GOMEZ #121</option>
                                     <option value="Paseo Poniente #2093">Paseo Poniente #2093</option>
+                                    <option value="Av. Juárez 976, piso 3. Colonia Centro, C.P. 44100">Av. Juárez 976, piso
+                                        3. Colonia Centro, C.P. 44100</option>
+                                    <option value="Periférico Norte Manuel Gómez Morín #1695, Col. Los Belenes">Periférico
+                                        Norte Manuel Gómez Morín #1695, Col. Los Belenes</option>
 
                                 </select>
                             </div>
@@ -231,7 +235,7 @@
                                             Camara
                                         </label>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </div>
