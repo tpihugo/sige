@@ -41,7 +41,7 @@
                     <thead>
                         <tr>
                             <th>Id Mobiliário</th>
-                            <th>Id Resguardante</th>
+                            <th>Id UDG</th>
                             <th>Nombre Resguardante</th>
                             <th>Área</th>
                             <th>Descripción</th>
@@ -67,7 +67,9 @@
     @endif
 @endsection
 @section('footer')
-
+    <div class="row g-3 align-items-center">
+        <h5 class="text-end">En caso de inconsistencias, favor de reportarlas.</h5>
+    </div>
 @endsection
 
 @section('js')
