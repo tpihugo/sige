@@ -1,4 +1,10 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+@section('title', 'Moviliario Crear')
+
+@section('css')
+    @include('layouts.head_2')
+
+@stop
 @section('content')
     <div class="container">
         @if(Auth::check() && (  Auth::user()->role =='admin' || Auth::user()->role =='cta' || Auth::user()->role =='auxiliar' || Auth::user()->role =='redes'))
@@ -11,18 +17,6 @@
             <div class="row">
                 <h2>Edición de Mobiliario</h2>
                 <hr>
-
-                <script type="text/javascript">
-
-                    $(document).ready(function() {
-                        $('#busqueda-empleado').select2();
-                        $('#js-example-basic-single').select2();
-
-                    });
-
-                </script>
-
-
             </div>
             <form action="{{route('mobiliarios.update', $mobiliario->id)}}" method="post" enctype="multipart/form-data" class="col-12">
                 @method('PUT')
@@ -124,4 +118,14 @@
         El periodo de Registro de Proyectos a terminado
     @endif
 
+@endsection
+
+@section('js')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#busqueda-empleado').select2();
+            $('#js-example-basic-single').select2();
+
+        });
+    </script>
 @endsection
