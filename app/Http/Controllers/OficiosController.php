@@ -48,8 +48,8 @@ class OficiosController extends Controller
 
         $this->validate($request, [
             'num_oficio' => 'required|unique:oficios,num_oficio',
-            'dirigido' => 'required|starts_with:Lic.,Mtro.,Doc.',
-            'atencion' => 'required|starts_with:Lic.,Mtro.,Doc.',
+            'dirigido' => 'required|starts_with:Lic.,Mtro.,Dr.,Mtra.,Dra.',
+            'atencion' => 'required|starts_with:Lic.,Mtro.,Dr.,Mtra.,Dra.',
         ], $this->messages);
 
         $oficio = new Oficios();
@@ -69,8 +69,8 @@ class OficiosController extends Controller
 
         $this->validate($request, [
             'num_oficio' => 'required|unique:oficios,num_oficio,' . $oficio->id,
-            'dirigido' => 'required|starts_with:Lic.,Mtro.,Doc.',
-            'atencion' => 'required|starts_with:Lic.,Mtro.,Doc.',
+            'dirigido' => 'required|starts_with:Lic.,Mtro.,Dr.,Mtra.,Dra.',
+            'atencion' => 'required|starts_with:Lic.,Mtro.,Dr.,Mtra.,Dra.',
         ], $this->messages);
 
         foreach ($request->request as $key => $value) {

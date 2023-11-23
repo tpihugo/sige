@@ -49,10 +49,15 @@
                             name="dirigido" id="dirigido">
                     </div>
 
-                    <div class="my-1 col-sm-12 col-md-5">
+                    <div class="my-1 col-sm-12 col-md-4">
                         <label for="atencion">Atención</label>
                         <input type="text" placeholder="Atención" value="{{ old('atencion') }}" class="form-control"
                             name="atencion" id="atencion">
+                    </div>
+                    <div class="my-1 col-sm-12 col-md-2">
+                        <label for="centro_universitario">Centro Universitario</label>
+                        <input type="text" placeholder="Atención" value="{{ old('centro_universitario') }}"
+                            class="form-control" name="centro_universitario" id="centro_universitario">
                     </div>
                     <span class="text-muted my-1"><small>NOTA: Favor de introducir nombres completos del personal</small>
                     </span>

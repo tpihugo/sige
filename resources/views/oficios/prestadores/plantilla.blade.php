@@ -46,23 +46,27 @@
             <span>
                 {{ Str::upper($oficio->dirigido) }}<br>
 
-                SECRETARIO ACADÉMICO DEL <b>Varibale CU</b> <br>
+                SECRETARIO ACADÉMICO DEL {{ $oficio->centro_universitario }} <br>
                 PRESENTE
             </span>
         </div>
         @if (isset($oficio->atencion))
             <div class="row" style="text-align:right;">
                 <span class="text-end">
+                    @php
+                        $oficio->atencion = 'At´n: ' . $oficio->atencion;
+                    @endphp
                     {{ Str::upper($oficio->atencion) }}
                     <br>
-                    Jefe de la Unidad de Servicio Social del <b>CU</b>
+                    Jefe de la Unidad de Servicio Social del {{ $oficio->centro_universitario }}
                 </span>
             </div>
         @endif
 
 
+
         <div style="margin-top:30;">
-            {!! isset($oficio->cuerpo) ? $oficio->cuerpo : '' !!}
+            {!! $oficio->cuerpo !!}
         </div>
 
         <div style="text-align: center;padding-top:50px;">
@@ -86,7 +90,7 @@
                 Coordinador de Tecnologías para el Aprendizaje</b>
         </p>
     </div>
-    <footer style="margin: 50px auto auto auto;text-align:center;">
+    <footer class="text-muted" style="margin: 50px auto auto auto;text-align:center;">
         Av. Parres Arias #150 Colonia San José del Bajío C.P. 45132 Zapopan, Jal. Edificio E Piso 2, <br> Tel. (33)
         38193300
         Ext. 23700

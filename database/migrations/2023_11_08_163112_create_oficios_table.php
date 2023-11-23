@@ -16,9 +16,9 @@ class CreateOficiosTable extends Migration
         Schema::create('oficios', function (Blueprint $table) {
             $table->id();
             $table->integer('num_oficio');
-            $table->string('dirigido',100);
-            $table->string('atencion',100);
-            $table->string('nombre');
+            $table->string('dirigido', 100);
+            $table->string('atencion', 100);
+            $table->string('centro_universitario', 15);
             $table->text('cuerpo');
             $table->timestamps();
         });
