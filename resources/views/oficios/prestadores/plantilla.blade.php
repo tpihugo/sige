@@ -21,6 +21,7 @@
             left: 0px;
             right: 0px;
             height: 50px;
+            bottom: 0px;
             text-align: center;
             line-height: 35px;
         }
