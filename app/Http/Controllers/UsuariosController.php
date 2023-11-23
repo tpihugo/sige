@@ -19,7 +19,7 @@ class UsuariosController extends Controller
     public function index()
     {
         $usuarios = User::orderBy('name')->get();
-        return view('usuarios.index')->with('usuarios',$usuarios);
+        return view('usuarios.index')->with('usuarios', $usuarios);
     }
 
     /**
@@ -40,24 +40,26 @@ class UsuariosController extends Controller
      */
     public function store(Request $request)
     {
-        $retorno = array('Error'    => array(),
-                         'Success'  => array());
+        $retorno = array(
+            'Error'    => array(),
+            'Success'  => array()
+        );
 
         # Validar que las contraseñas sean las mimsas
-        if( $request['password'] != $request['password_confirmation'])
+        if ($request['password'] != $request['password_confirmation'])
             $retorno['Error'][] = "La contraseña y la confirmacion de contraseña no son iguales.";
 
         # Validar que el usuario no exita
-        $existe = User::where('email',$request['email'])->get();
-        if(count($existe) > 0)
+        $existe = User::where('email', $request['email'])->get();
+        if (count($existe) > 0)
             $retorno['Error'][] = "El email ya está previamente registrado.";
 
-        if( !count($retorno['Error']) > 0){
+        if (!count($retorno['Error']) > 0) {
             $nuevo = User::create([
-                                    'name' => $request['name'],
-                                    'email' => $request['email'],
-                                    'password' => Hash::make($request['password']),
-                                ]);
+                'name' => $request['name'],
+                'email' => $request['email'],
+                'password' => Hash::make($request['password']),
+            ]);
 
             $retorno['Success'][] = "Usuario {$request['email']} registrado";
         }
@@ -65,7 +67,7 @@ class UsuariosController extends Controller
         $usuarios = User::orderBy('name')->get();
 
         return view('usuarios.index')->with('usuarios', $usuarios)
-                                    ->with('retorno', $retorno);
+            ->with('retorno', $retorno);
     }
 
     /**
@@ -76,7 +78,6 @@ class UsuariosController extends Controller
      */
     public function show($id)
     {
-
     }
 
     /**
@@ -89,8 +90,8 @@ class UsuariosController extends Controller
     {
         //$usuario = User::where('id', $id)->get();
         $roles = [];
-        $usuario = User::leftjoin('model_has_roles','model_has_roles.model_id','users.id')
-            ->where('users.id',$id)
+        $usuario = User::leftjoin('model_has_roles', 'model_has_roles.model_id', 'users.id')
+            ->where('users.id', $id)
             //->where('model_has_roles.model_type','App\Models\User')
             ->first();
         $roles[] = array('id' => 0, 'name' => 'Seleccione un Rol', 'selected' => '');
@@ -124,8 +125,10 @@ class UsuariosController extends Controller
     {
         $data = [];
         $usuarios = User::all();
-        $retorno = array('Error'    => array(),
-                         'Success'  => array());
+        $retorno = array(
+            'Error'    => array(),
+            'Success'  => array()
+        );
 
         # Validar que las contraseñas sean las mimsas
         if ($request['password'] &&  $request['password_confirmation']) {
@@ -175,8 +178,8 @@ class UsuariosController extends Controller
         $user = ModelsUser::find($id);
         $user->activo = 0;
         $user->update();
-        $user->delete();
+        $user->softDeletes();
 
-        return redirect()->route('usuarios.index')->with(['message' => 'Se desactivo correctamente el usuario - ' . $user->name ]);
+        return redirect()->route('usuarios.index')->with(['message' => 'Se desactivo correctamente el usuario - ' . $user->name]);
     }
 }

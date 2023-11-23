@@ -1,4 +1,9 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+@section('title', 'Búsqueda')
+
+@section('css')
+    @include('layouts.head_2')
+@stop
 @section('content')
     <div class="container">
 
@@ -16,7 +21,7 @@
                 <table class="table table-hover" id="myTable">
                     <thead>
                         <tr>
-                            <th scope="col">IdEquipo</th>
+                            <th scope="col">ID</th>
                             <th scope="col">IDUdeG</th>
                             <th scope="col">Descripción</th>
                             <th scope="col">Estado</th>
@@ -125,14 +130,11 @@
 
     <script>
         function launchModal(equipo_id, area_id, notas) {
-
             document.getElementById('equipo_id').value = equipo_id;
             document.getElementById('area_id').value = area_id;
             document.getElementById('nota').value = notas;
-
             if (notas == '')
                 document.getElementById('nota').value = '-';
-
         }
     </script>
 @endsection

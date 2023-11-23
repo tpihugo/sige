@@ -12,17 +12,13 @@ use App\Models\InventarioDetalle;
 use App\Models\VsEquiposPorTicket;
 use App\Models\VsTicket;
 use App\Models\expediente;
-use App\Models\MovimientoEquipo;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Log;
 use App\Models\Tecnico;
 use App\Models\Mantenimiento;
 use App\Models\mantenimientoEquipo;
-use App\Models\ProyectoActividad;
 use App\Models\RelMttoEquipo;
-use equipo as GlobalEquipo;
 use Illuminate\Support\Facades\Auth;
 
 

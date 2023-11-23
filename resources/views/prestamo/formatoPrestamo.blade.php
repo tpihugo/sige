@@ -18,7 +18,7 @@
     <style>
         .pie {
             font-size: 10px;
-            text-align: right;
+            text-align: center;
         }
 
         td {
@@ -30,8 +30,6 @@
             bottom: 0cm;
             left: 0cm;
             right: 0cm;
-            height: 2cm;
-                 
         }
     </style>
 </head>
@@ -44,16 +42,15 @@
                 <p class="text-center"><img class="img-responsive" src="images/logo.jpg" width="100%"></p>
             </div>
         </div>
-        <br>
         <div class="row">
             <div class="col-md-12 col-xs-12">
                 <table class="table table-bordered">
                     <thead class="thead-light">
                         <tr>
                             <th scope="col" colspan="7">
-                                
-                                    <h5 class="text-center">Formato de Préstamo / Recibo de Equipos</h5>
-                                
+
+                                <h5 class="text-center">Formato de Préstamo / Recibo de Equipos</h5>
+
                             </th>
                         </tr>
                     </thead>
@@ -78,9 +75,10 @@
                             <td colspan="7"><b>Lugar:</b> {{ $prestamo->lugar }}</td>
                         </tr>
                         <tr>
-                            <tr>
-                                <td colspan="7" style="text-align: center;" class="thead-light"><b>Lista de Equipos</b></td>
-                            </tr>
+                        <tr>
+                            <td colspan="7" style="text-align: center;" class="thead-light"><b>Lista de Equipos</b>
+                            </td>
+                        </tr>
                         <tr>
                             <td><b>Id SIGE</b></td>
                             <td><b>IdUdeG</b></td>
@@ -92,7 +90,7 @@
                         </tr>
                         @foreach ($lista_final as $item)
                             <tr style="outline: thin solid">
-                                <td >{{ $item['equipo']['id'] }}</td>
+                                <td>{{ $item['equipo']['id'] }}</td>
                                 <td>{{ $item['equipo']['idUDG'] }}</td>
                                 <td>{{ $item['equipo']['tipo'] }}</td>
                                 <td>{{ $item['equipo']['marca'] }}</td>
@@ -107,9 +105,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <br>
                 <hr>
-                <br>
                 <table class="table table-bordered">
 
                     <tbody>
@@ -133,20 +129,26 @@
                             <td align="left"><b>Nombre:</b> ___________________________________________</td>
                             <td align="left"><b>Firma:</b> ___________________</td>
                         </tr>
+                        <tr>
+                            <td colspan="2"><span class="text-muted">
+                                    ** NOTA - En caso de que el equipo sea robado fuera de las instalaciones de CUCSH,
+                                    me comprometo a levantar los trámites correspondientes en la Fiscalía del Estado.
+                                </span></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
-<footer>
-    <div class="row">
-        <div class="col-md-12 col-xs-12"> 
-             <p class="pie">Hora y día de Impresión: {{ date('d-m-Y H:i:s') }}<br>
-                Realizado por: {{ Auth::user()->name }}<br>
-                Formato CTA-010. Actualización: 28/abril/2021</p>
-        </div>
-    </div>
-</footer>
+        <footer>
+            <div class="row">
+                <div class="col-md-12 col-xs-12">
+                    <p class="pie">Hora y día de Impresión: {{ date('d-m-Y H:i:s') }} /
+                        Realizado por: {{ Auth::user()->name }} /
+                        Formato CTA-010. Actualización: 23/noviembre/2023</p>
+                </div>
+            </div>
+        </footer>
     </div>
 </body>
 

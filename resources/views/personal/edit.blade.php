@@ -8,7 +8,7 @@
     @php
         use App\Models\Area;
         use App\Models\Plaza;
-        
+
         $areas = Area::all();
         $plazas = Plaza::all();
     @endphp
@@ -28,8 +28,8 @@
                 </div>
                 <form action="{{ route('personal.update', $personal->id) }}" method="post" enctype="multipart/form-data"
                     class="col-12">
-                    {!! csrf_field() !!}
-                    {{ method_field('PUT') }}
+                    @csrf
+                    @method('PUT')
                     <div class="row">
                         <div class="col">
                             @if ($errors->any())
@@ -107,12 +107,12 @@
                                 <div class="col-md-6">
                                     <label class="font-weight-bold" for="adscripcion">Adscripción: *</label>
                                     <select class="form-control" id="js-example-basic-single3" name="adscripcion">
-                                        <option selected value="{{ $personal->adscripcion }}">{{ $personal->adscripcion }}
+                                        <option selected value="{{ $personal->id_adscripcion }}-{{ $personal->adscripcion }}">{{ $personal->adscripcion }}
                                         </option>
                                         @foreach ($areas as $item)
-                                        <option value="{{ $item->id }}-{{ $item->area }}"> {{ $item->division }} -
-                                            {{ $item->coordinacion }} - {{ $item->area }}
-                                        </option>
+                                            <option value="{{ $item->id }}-{{ $item->area }}"> {{ $item->division }} -
+                                                {{ $item->coordinacion }} - {{ $item->area }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -133,12 +133,13 @@
 
                                 <div class="col-md-6">
                                     <label for="" class="form-label">Adjuntar Reporte</label>
-                                    <input type="file" name="pdf" id="pdf" class="form-control">
+                                    <input type="file" name="pdf" id="pdf" class="form-control" accept="application/pdf">
                                 </div>
 
                                 <div class="col-md-3">
                                     <label for="" class="form-label">Vencimiento del documento</label>
-                                    <input type="date" value="{{$personal->fecha_documento}}"  name="fecha_documento" id="fecha_documento" class="form-control">
+                                    <input type="date" value="{{ $personal->fecha_documento }}" name="fecha_documento"
+                                        id="fecha_documento" class="form-control">
                                 </div>
                             </div>
                             <br>

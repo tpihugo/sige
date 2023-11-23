@@ -572,6 +572,31 @@
                                     </div>
                                 </div>
                             @endcan
+
+                            @can('OFICIOS#ver')
+                            <div class="col-lg-4 col-sm-12  col-md-6  my-3">
+                                <div class="card card-margin h-100">
+                                    <div class="card-body pt-2">
+                                        <div class="widget-49">
+                                            <div class="widget-49-title-wrapper">
+                                                <div class="widget-49-date-warning">
+                                                    <i class="material-icons">group</i>
+                                                </div>
+                                                <div class="widget-49-meeting-info">
+                                                    <span class="widget-49-pro-title">OFICIOS</span>
+                                                </div>
+                                            </div>
+                                            <div class="mt-3">
+                                                <span><a class="btn btn-outline-danger"
+                                                        href="{{ route('oficios.index') }}">
+                                                        Consultar oficios
+                                                    </a></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endcan
                         </div>
                     </div>
                 </div>

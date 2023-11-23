@@ -492,7 +492,7 @@ class PersonalController extends Controller
 
         $personal = Personal::find($id);
         foreach ($request->request as $key => $value) {
-            if (!is_null($value) && strcmp('_token', $key) != 0 && strcmp('_method', $key) != 0  && strcmp('adscripcion', $key) != 0) {
+            if (!is_null($value) && strcmp('_token', $key) != 0 && strcmp('_method', $key) != 0  && strcmp('adscripcion', $key) != 0 && strcmp('pdf', $key) != 0) {
                 $personal->$key = $request->$key;
             }
         }
@@ -500,13 +500,12 @@ class PersonalController extends Controller
         $personal->id_adscripcion = explode('-', $request->adscripcion)[0];
         $personal->adscripcion = explode('-', $request->adscripcion)[1];
 
-        
+
 
         if ($request->hasFile('pdf')) {
             $nombre = $personal->codigo . "_" . $personal->apellido_paterno . "_" . $personal->apellido_materno . ".pdf";
             $archivo = $request->file('pdf');
             \Storage::disk('documentos')->put($nombre, \File::get($archivo));
-
             $personal->documento = $nombre;
         }
         $personal->update();

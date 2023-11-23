@@ -27,10 +27,9 @@ class HomeController extends Controller
     public function index()
     {
         $ticketsBelenes = VsTicket::where('activo', '=', 1)
-            ->where('estatus', '=', 'Abierto')
-            ->where('sede', '=', 'Belenes')
+            ->where('estatus', 'Abierto')
+            ->where('sede', 'Belenes')
             ->count();
-
 
         $ticketsNormal = VsTicket::where('activo', '=', 1)
             ->where('estatus', '=', 'Abierto')
