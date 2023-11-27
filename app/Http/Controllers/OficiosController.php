@@ -10,7 +10,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class OficiosController extends Controller
 {
-    public $messages  = [
+    public $messages = [
         'dirigido.required' => 'Favor de ingresar a quien va dirigido',
         'num_oficio.required' => 'Favor de ingresar el número de oficio',
         'num_oficio.unique' => 'El número de oficio ya esta registardo',
@@ -18,7 +18,7 @@ class OficiosController extends Controller
         'atencion.required' => 'Favor de ingresar a quien va con atención',
         'atencion.starts_with' => 'Favor de incluir el titulo académico de a quien va dirigido',
     ];
-
+    
     public function index()
     {
         $oficios = Oficios::where('activo', 1)->get();
@@ -44,13 +44,15 @@ class OficiosController extends Controller
 
     public function store(Request $request)
     {
-
-
-        $this->validate($request, [
-            'num_oficio' => 'required|unique:oficios,num_oficio',
-            'dirigido' => 'required|starts_with:Lic.,Mtro.,Dr.,Mtra.,Dra.',
-            'atencion' => 'required|starts_with:Lic.,Mtro.,Dr.,Mtra.,Dra.',
-        ], $this->messages);
+        $this->validate(
+            $request,
+            [
+                'num_oficio' => 'required|unique:oficios,num_oficio',
+                'dirigido' => 'required|starts_with:Lic.,Mtro.,Dr.,Mtra.,Dra.',
+                'atencion' => 'required|starts_with:Lic.,Mtro.,Dr.,Mtra.,Dra.',
+            ],
+            $this->messages,
+        );
 
         $oficio = new Oficios();
         $oficio->activo = '1';
@@ -63,15 +65,17 @@ class OficiosController extends Controller
         return redirect()->route('oficios.index');
     }
 
-
     public function update(Request $request, Oficios $oficio)
     {
-
-        $this->validate($request, [
-            'num_oficio' => 'required|unique:oficios,num_oficio,' . $oficio->id,
-            'dirigido' => 'required|starts_with:Lic.,Mtro.,Dr.,Mtra.,Dra.',
-            'atencion' => 'required|starts_with:Lic.,Mtro.,Dr.,Mtra.,Dra.',
-        ], $this->messages);
+        $this->validate(
+            $request,
+            [
+                'num_oficio' => 'required|unique:oficios,num_oficio,' . $oficio->id,
+                'dirigido' => 'required|starts_with:Lic.,Mtro.,Dr.,Mtra.,Dra.',
+                'atencion' => 'required|starts_with:Lic.,Mtro.,Dr.,Mtra.,Dra.',
+            ],
+            $this->messages,
+        );
 
         foreach ($request->request as $key => $value) {
             if (!is_null($value) && strcmp('_token', $key) != 0 && strcmp('_method', $key) != 0) {

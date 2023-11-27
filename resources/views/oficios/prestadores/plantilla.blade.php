@@ -46,7 +46,7 @@
             <span>
                 {{ Str::upper($oficio->dirigido) }}<br>
 
-                SECRETARIO ACADÉMICO DEL {{ $oficio->centro_universitario }} <br>
+                {{ Str::upper($oficio->puesto_dirigido) }} <br>
                 PRESENTE
             </span>
         </div>
@@ -58,7 +58,7 @@
                     @endphp
                     {{ Str::upper($oficio->atencion) }}
                     <br>
-                    Jefe de la Unidad de Servicio Social del {{ $oficio->centro_universitario }}
+                    {{ Str::upper($oficio->puesto_atencion) }}
                 </span>
             </div>
         @endif

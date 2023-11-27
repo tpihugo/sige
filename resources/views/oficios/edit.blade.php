@@ -28,7 +28,7 @@
                 <form action="{{ route('oficios.update', $oficio->id) }}" method="POST" class="row">
                     @csrf
                     @method('PUT')
-                    <div class="my-1 col-sm-12 col-md-1">
+                    <div class="my-1 col-sm-12 col-md-2">
                         <label for="num_oficio" class=" text-center">Oficio CTA</label>
                         <input type="text" class="text-center form-control" name="num_oficio" id="num_oficio"
                             value="{{ $oficio->num_oficio }}">
@@ -40,18 +40,29 @@
                             name="dirigido" id="dirigido">
                     </div>
 
-                    <div class="my-1 col-sm-12 col-md-4">
+                    <div class="my-1 col-sm-12 col-md-5">
+                        <label for="puesto_dirigido">Puesto Dirigido</label>
+                        <input type="text" placeholder="Puesto a quien va dirigido" value="{{ $oficio->puesto_dirigido }}"
+                            class="form-control" name="puesto_dirigido" id="puesto_dirigido">
+                    </div>
+
+                    <div class="my-1 col-sm-12 col-md-2">
+                        <label for="centro_universitario">Centro Universitario</label>
+                        <input type="text" placeholder="C.U." value="{{ $oficio->centro_universitario }}"
+                            class="form-control" name="centro_universitario" id="centro_universitario">
+                    </div>
+
+                    <div class="my-1 col-sm-12 col-md-5">
                         <label for="atencion">Atención</label>
-                        <input type="text" placeholder="Atención" value="{{ $oficio->atencion }}" class="form-control"
+                        <input type="text" placeholder="Puesto a quien va en Atención" value="{{ $oficio->atencion }}" class="form-control"
                             name="atencion" id="atencion">
                     </div>
-                    @if (strcmp($oficio->centro_universitario, '-') != 0)
-                        <div class="my-1 col-sm-12 col-md-2">
-                            <label for="centro_universitario">Centro Universitario</label>
-                            <input type="text" placeholder="Atención" value="{{ $oficio->centro_universitario }}"
-                                class="form-control" name="centro_universitario" id="centro_universitario">
-                        </div>
-                    @endif
+
+                    <div class="my-1 col-sm-12 col-md-5">
+                        <label for="atencion">Puesto Atención</label>
+                        <input type="text" placeholder="Atención" value="{{ $oficio->puesto_atencion}}"
+                            class="form-control" name="puesto_atencion" id="puesto_atencion">
+                    </div>
                     <span class="text-muted my-1"><small>NOTA: Favor de introducir nombres completos del personal</small>
                     </span>
                     <hr>
