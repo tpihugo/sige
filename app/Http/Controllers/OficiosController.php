@@ -18,7 +18,7 @@ class OficiosController extends Controller
         'atencion.required' => 'Favor de ingresar a quien va con atención',
         'atencion.starts_with' => 'Favor de incluir el titulo académico de a quien va dirigido',
     ];
-    
+
     public function index()
     {
         $oficios = Oficios::where('activo', 1)->get();
@@ -27,9 +27,14 @@ class OficiosController extends Controller
 
     public function create()
     {
+        $id =
+            Oficios::select('num_oficio')->where('activo', 1)
+                ->latest()
+                ->first();
+        $oficio = $id->num_oficio + 1;
         $cuerpo = view('oficios.prestadores.cuerpo')->render();
         //$plantilla = view('oficios.prestadores.plantilla', compact("cuerpo"))->render();
-        return view('oficios.prestadores.create', compact('cuerpo'));
+        return view('oficios.prestadores.create', compact('cuerpo','oficio'));
     }
     public function show(Oficios $oficio)
     {

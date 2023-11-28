@@ -35,12 +35,12 @@
                 <h2 class="text-center my-3">Crear Oficio Liberación Prestador</h2>
             </div>
             <div>
-                <form action="{{ route('oficios.store') }}" method="POST" class="row">
+                <form action="{{ route('oficios.store') }}" method="POST" class="row justify-content-end">
                     @csrf
                     <div class="my-1 col-sm-12 col-md-2">
                         <label for="num_oficio" class=" text-center">Oficio CTA</label>
                         <input type="text" class="text-center form-control" name="num_oficio" id="num_oficio"
-                            value="{{ old('num_oficio') }}">
+                            value="{{ $oficio }}">
                     </div>
 
                     <div class="my-1 col-sm-12 col-md-5">
@@ -63,8 +63,8 @@
 
                     <div class="my-1 col-sm-12 col-md-5">
                         <label for="atencion">Atención</label>
-                        <input type="text" placeholder="Puesto a quien va en Atención" value="{{ old('atencion') }}" class="form-control"
-                            name="atencion" id="atencion">
+                        <input type="text" placeholder="Puesto a quien va en Atención" value="{{ old('atencion') }}"
+                            class="form-control" name="atencion" id="atencion">
                     </div>
 
                     <div class="my-1 col-sm-12 col-md-5">
@@ -83,13 +83,61 @@
                             {{ $cuerpo }}                            
                         </textarea>
                     </div>
-                    <div class="col-sm-12">
+                    <div class="col-md-1 col-sm-1">
                         <button type="submit" class="my-2 btn btn-success">Guardar</button>
                     </div>
+
                 </form>
+                <div>
+                    <h4 class="text-center">Lista de nombres segun su C.U.</h4>
+                </div>
+                <hr>
+
+                <table class=" display text-center " style="width:100%">
+                    <thead>
+                        <tr>
+                            <th scope="col">C.U.</th>
+                            <th scope="col">Secretario Administrativo</th>
+                            <th scope="col">Jefe Servicio Social</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>CUCSH</td>
+                            <td>Lic. Xochitl Ferrer Sandoval</td>
+                            <td>Lic. Alfredo Don Olivera</td>
+                        </tr>
+                        <tr>
+                            <td>CUCEI</td>
+                            <td>Mtra. Claudia Castillo Cruz</td>
+                            <td>Lic. Lucero Araceli Rios Espinoza</td>
+                        </tr>
+                        <tr>
+                            <td>CUCEA</td>
+                            <td>Lic. Denisse Murillo González</td>
+                            <td>Lic. Francisco Martínez Sánchez</td>
+                        </tr>
+                        <tr>
+                            <td>CUTONALA</td>
+                            <td>Mtra. Ana Fabiola del Toro García</td>
+                            <td>Lic. Luis Humberto Gil Navarro</td>
+                        </tr>
+                        <tr>
+                            <td>SUV</td>
+                            <td>Mtra. Cynthia Ruano Méndez</td>
+                            <td>Lic. Edson José Bolaños Rodríguez</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         @else
             El periodo de Registro de Proyectos a terminado
         @endif
+    </div>
+@endsection
+
+@section('footer')
+    <div class="row g-3 align-items-center">
+        <h6 class="text-end">En caso de inconsistencias, favor de reportarlas.</h6>
     </div>
 @endsection

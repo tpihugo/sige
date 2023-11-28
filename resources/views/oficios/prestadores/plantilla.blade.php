@@ -3,6 +3,7 @@
     setlocale(LC_TIME, 'es_VE.UTF-8', 'esp');
     $anio = date('Y');
     $fecha = strtotime(date('Y-m-d'));
+    $img = asset('images/Logo-udg.png');
 @endphp
 <!DOCTYPE html>
 <html lang="es">
@@ -31,7 +32,7 @@
 <body>
     <div>
         <div>
-            <img src="{{ asset('images/Logo-udg.png') }} " width="75px"
+            <img src="{{ $img }}" width="75px"
                 style="float:left;margin-right:20px; padding-right:20px; border-right:solid grey; 2px">
             <p style="margin-top: 30px; ">UNIVERSIDAD DE GUADALAJARA <br>
                 CENTRO UNIVERSITARIO DE CIENCIAS SOCIALES Y HUMANIDADES <br>

@@ -95,3 +95,9 @@
         @endif
     </div>
 @endsection
+
+@section('footer')
+    <div class="row g-3 align-items-center">
+        <h5 class="text-end">En caso de inconsistencias, favor de reportarlas.</h5>
+    </div>
+@endsection

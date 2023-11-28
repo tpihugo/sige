@@ -60,10 +60,6 @@
                     </table>
                 </div>
             </div>
-            <p>
-                <a href="{{ route('home') }}" class="btn btn-primary">
-                    < Regresar</a>
-            </p>
         </div>
     @else
         Acceso No válido

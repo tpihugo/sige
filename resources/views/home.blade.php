@@ -579,7 +579,7 @@
                                     <div class="card-body pt-2">
                                         <div class="widget-49">
                                             <div class="widget-49-title-wrapper">
-                                                <div class="widget-49-date-warning">
+                                                <div class="widget-49-date-primary">
                                                     <i class="material-icons">group</i>
                                                 </div>
                                                 <div class="widget-49-meeting-info">
