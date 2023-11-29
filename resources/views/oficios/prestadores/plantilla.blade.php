@@ -1,9 +1,10 @@
 @php
     date_default_timezone_set('America/Mexico_City');
-    setlocale(LC_TIME, 'es_VE.UTF-8', 'esp');
+    setlocale(LC_TIME, 'es_MX.UTF-8', 'esp');
     $anio = date('Y');
     $fecha = strtotime(date('Y-m-d'));
     $img = asset('images/Logo-udg.png');
+
 @endphp
 <!DOCTYPE html>
 <html lang="es">
@@ -77,7 +78,7 @@
                 “2023, AÑO DEL FOMENTO A LA FORMACIÓN INTEGRAL <br>
                 CON UNA RED DE CENTROS Y SISTEMAS MULTITEMÁTICOS” <br>
 
-                Guadalajara, Jalisco, {{ strftime('%e de %B de %Y', $fecha) }}
+                Zapopan, Jalisco, {{ strftime('%e de %B de %Y', $fecha) }}
             </p>
         </div>
         <table>
