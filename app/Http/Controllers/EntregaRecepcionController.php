@@ -141,7 +141,7 @@ class EntregaRecepcionController extends Controller
 
         $total = $this->total_area($id);
 
-        return view('entregarecepcion.area.equipos', compact('equipos_totales', 'area', 'total'));
+        return view('entregaRecepcion.area.equipos', compact('equipos_totales', 'area', 'total'));
     }
 
     public function total_area($id)

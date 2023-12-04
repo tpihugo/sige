@@ -20,6 +20,7 @@
             <thead>
                 <tr>
                     <th>UDG ID</th>
+                    <th>Tipo</th>
                     <th>Marca</th>
                     <th>Modelo</th>
                     <th>S/N</th>
@@ -32,6 +33,7 @@
                 @foreach ($equipos_totales as $item => $value)
                     <tr>
                         <td>{{ $value->udg_id }}</td>
+                        <td>{{ $value->tipo_equipo }}</td>
                         <td>{{ $value->marca }}</td>
                         <td>{{ $value->modelo }}</td>
                         <td>{{ $value->numero_serie }}</td>
