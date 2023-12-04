@@ -5,47 +5,54 @@
     @include('layouts.head_2')
 @stop
 
-
 @section('content')
     <div class="container">
-        <div class="row ">
-            <h4 class="text-center mt-3">
-                Entrega de Recepcion de equipos por resguardante
-            </h4>
-        </div>
-        
+        <h4 class="text-center">
+            Equipos de del área {{ $area['area'] }}
+        </h4>
         <h6 class="text-center">
-            <span  class="border-bottom border-success btn-sm">
-                Encontrados
-            </span>/
-            <span  class="border-bottom border-primary btn-sm">
-                Totales
-            </span>
+            Total de equipos <span id="total" class="border-bottom border-primary btn-sm">{{ $total[0] }}</span> / Encontrados <span id="encontrados"
+                class="border-bottom border-success btn-sm">{{ $total[1] }}</span> /
+            Faltantes <span id="faltantes" class="border-bottom border-danger btn-sm">{{ $total[0] - $total[1] }} </span>
         </h6>
         <hr>
         <table class="display w-100 table-bordered table-striped" id="resguardantes">
             <thead>
                 <tr>
-                    <th>Código</th>
-                    <th>Nombre</th>
-                    <th>Total Equipos</th>
-                    <th>Acciones</th>
+                    <th>UDG ID</th>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>S/N</th>
+                    <th>Fecha ubicado</th>
+                    <th>Acción</th>
+
                 </tr>
             </thead>
             <tbody>
-                @foreach ($resguardantes as $item => $value)
+                @foreach ($equipos_totales as $item => $value)
                     <tr>
-                        <td>{{ $value->id_resguardante }}</td>
-                        <td>{{ $value->resguardante }}</td>
-                        <td class="text-center">
-                            <span
-                               class="border-bottom border-success btn-sm">{{ $value->total_equipos[1] }}</span> /
-                            <span 
-                                class="border-bottom border-primary btn-sm">{{$value->total_equipos[0]  }} </span>
-                        
+                        <td>{{ $value->udg_id }}</td>
+                        <td>{{ $value->marca }}</td>
+                        <td>{{ $value->modelo }}</td>
+                        <td>{{ $value->numero_serie }}</td>
+                        <td>
+                            @if (isset($value->fecha))
+                                <span id="fecha-{{ $value->udg_id }}">
+                                    {{ $value->fecha }}
+                                </span>
+                            @else
+                                <span id="fecha-{{ $value->udg_id }}">Nunca ubicado</span>
+                            @endif
                         </td>
-                        <td><a href="{{ route('entrega-resguardante.show', $value->id_resguardante) }}"
-                                class="btn btn-sm btn-primary">Ver equipos</a></td>
+                        <td class="text-center ">
+                            @if ($area['id'] != 0)
+                                <input onclick="guardar('{{ $value->udg_id }}')" type="checkbox" name="id_equipo"
+                                    {{ $value->ubicado == 1 ? 'checked' : '' }} id="{{ $value->udg_id }}">
+                            @else
+                                <a class="btn btn-sm btn-primary"
+                                    href="{{ route('cambiar-ubicacion', $value->id) }}">Reubicar</a>
+                            @endif
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
@@ -151,5 +158,32 @@
             }
         });
         //"columnDefs": [{ type: 'portugues', targets: "_all" }],
+    </script>
+    <script>
+        function guardar(elemento) {
+            ubicado = (document.getElementById(elemento).checked) ? 1 : 0;
+            send = {
+                "ubicado": ubicado,
+                "id": elemento,
+                "id_area": '{{ $area['id'] }}'
+            };
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            var url = "{{ route('entregarRecepcion.guardar') }}";
+            $.ajax({
+                url: url,
+                method: 'POST',
+                data: send
+            }).done(function(data) {
+                //console.log(data);
+                document.getElementById('total').innerHTML = data.total;
+                document.getElementById('encontrados').innerHTML = data.encontrados;
+                document.getElementById('faltantes').innerHTML = data.total - data.encontrados;
+                document.getElementById("fecha-" + data.fecha[1]).innerHTML = data.fecha[0];
+            });
+        }
     </script>
 @endsection

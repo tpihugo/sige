@@ -7,11 +7,14 @@
 
 @section('content')
     <div class="container">
-        <h4 class="text-center">
-            Equipos de {{ $resguardante->nombre }}
-        </h4>
+        <div class="row ">
+            <h3 class="text-center mt-4">
+                Equipos de {{ $resguardante->nombre }}
+            </h3>
+        </div>
+
         <h6 class="text-center">
-            Total de equipos <span id="total">{{ $total[0] }}</span> / Encontrados <span id="encontrados"
+            Total de equipos <span id="total" class="border-bottom border-primary btn-sm">{{ $total[0] }}</span> / Encontrados <span id="encontrados"
                 class="border-bottom border-success btn-sm">{{ $total[1] }}</span> /
             Faltantes <span id="faltantes" class="border-bottom border-danger btn-sm">{{ $total[0] - $total[1] }} </span>
         </h6>
@@ -24,6 +27,7 @@
                     <th>Modelo</th>
                     <th>S/N</th>
                     <th>Área</th>
+                    <th>Fecha ubicado</th>
                     <th>Acción</th>
                 </tr>
             </thead>
@@ -34,10 +38,20 @@
                         <td>{{ $value->marca }}</td>
                         <td>{{ $value->modelo }}</td>
                         <td>{{ $value->numero_serie }}</td>
-                        <td>{{ $value->area }}</td>
+                        <td>{{ $value->area_equipo }}</td>
+                        <td>
+                            @if (isset($value->fecha) )
+                            <span id="fecha-{{ $value->udg_id }}">
+                                {{ $value->fecha }}
+                            </span>
+                                
+                            @else
+                                <span id="fecha-{{ $value->udg_id }}">Nunca ubicado</span>
+                            @endif
+                        </td>
                         <td class="text-center ">
-                            <input  onclick="guardar('{{ $value->udg_id }}')" type="checkbox"
-                                name="id_equipo" {{ $value->ubicado == 1 ? 'checked' : '' }} id="{{ $value->udg_id }}">
+                            <input onclick="guardar('{{ $value->udg_id }}')" type="checkbox" name="id_equipo"
+                                {{ $value->ubicado == 1 ? 'checked' : '' }} id="{{ $value->udg_id }}">
                         </td>
                     </tr>
                 @endforeach
@@ -164,9 +178,11 @@
                 method: 'POST',
                 data: send
             }).done(function(data) {
-                document.getElementById('total').innerHTML = data[0];
-                document.getElementById('encontrados').innerHTML = data[1];
-                document.getElementById('faltantes').innerHTML = data[0] - data[1];
+                //console.log(data);
+                document.getElementById('total').innerHTML = data.total;
+                document.getElementById('encontrados').innerHTML = data.encontrados;
+                document.getElementById('faltantes').innerHTML = data.total - data.encontrados;
+                document.getElementById("fecha-"+data.fecha[1]).innerHTML = data.fecha[0];
             });
         }
     </script>

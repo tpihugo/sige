@@ -3,7 +3,7 @@
         Por este medio le saludo cordialmente, aprovecho para hacer de su conocimiento que el <b>C.
             TU NOMBRE</b> alumno de la <b>TU CARRERA</b>
         correspondiente al
-        <b>Varibable CU</b>, con código de estudiante <b>TU CÓDIGO</b> brindó su
+        <b>TÚ C.U.</b>, con código de estudiante <b>TU CÓDIGO</b> brindó su
         <b>TIPO DE PRESTACIÓN</b> dentro de la Coordinación de Tecnologías para
         el Aprendizaje.
     </p>

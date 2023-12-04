@@ -60,13 +60,13 @@
                                                 </div>
                                                 <div class="mt-3">
                                                     <span><a href="{{ route('equipos.create') }}"
-                                                            class="btn-sm  btn m-1 p-2 btn-outline-success">Capturar
+                                                            class="btn-sm  btn btn-sm m-1 btn-outline-success">Capturar
                                                             Equipo</a></span>
                                                     <span><a href="{{ route('prestamos.index') }}"
-                                                            class="btn-sm  btn m-1 p-2 btn-outline-danger">Consultar
+                                                            class="btn-sm  btn btn-sm m-1 btn-outline-danger">Consultar
                                                             Préstamos</a></span>
                                                     <span><a href="{{ route('nuevo-prestamo') }}"
-                                                            class="btn-sm btn m-1 p-2 btn-outline-info">Crear
+                                                            class="btn-sm btn btn-sm m-1 btn-outline-info">Crear
                                                             Préstamo</a></span>
                                                 </div>
 
@@ -99,11 +99,11 @@
                                                     </div>
                                                 </div>
                                                 <div class="mt-3">
-                                                    <span><a class="btn btn-outline-success"
+                                                    <span><a class="btn btn-outline-success btn-sm m-1"
                                                             href="{{ route('tickets.create') }}">Capturar
                                                             Tickets</a></span>
                                                     <span><a href="{{ route('tickets.index') }}"
-                                                            class="btn btn-outline-danger">Consultar
+                                                            class="btn btn-outline-danger btn-sm m-1">Consultar
                                                             Tickets</a></span>
                                                 </div>
                                             </div>
@@ -135,10 +135,10 @@
                                                 </div>
                                                 <div class="mt-3">
                                                     <span><a href="{{ route('llaves.index') }}"
-                                                            class="btn btn-outline-danger">Consultar
+                                                            class="btn btn-outline-danger btn-sm m-1">Consultar
                                                             Llaves</a></span>
                                                     <span><a href="{{ route('agregarllaves') }}"
-                                                            class="btn btn-outline-info">Elegir
+                                                            class="btn btn-outline-info btn-sm m-1">Elegir
                                                             Llaves</a></span>
                                                 </div>
                                             </div>
@@ -168,10 +168,10 @@
                                                     </div>
                                                 </div>
                                                 <div class="mt-3">
-                                                    <span><a class="btn m-1 btn-outline-success"
+                                                    <span><a class="btn m-1 btn-outline-success btn-sm m-1"
                                                             href="{{ route('revision-inventario') }}">Revisión
                                                             Express</a></span>
-                                                    <span><a class="btn m-1 btn-outline-danger"
+                                                    <span><a class="btn m-1 btn-outline-danger btn-sm m-1"
                                                             href="{{ route('panel-inventario') }}">Panel de
                                                             Revisión</a></span>
                                                 </div>
@@ -202,10 +202,10 @@
                                                     </div>
                                                 </div>
                                                 <div class="mt-3">
-                                                    <span><a class="btn btn-outline-success"
+                                                    <span><a class="btn btn-outline-success btn-sm m-1"
                                                             href="{{ route('areas.index') }}">Listado
                                                             &Aacute;reas</a></span>
-                                                    <span><a class="btn btn-outline-danger"
+                                                    <span><a class="btn btn-outline-danger btn-sm m-1"
                                                             href="{{ route('area-ticket', 'Belenes') }}">Detalle
                                                             Aulas</a></span>
                                                 </div>
@@ -230,9 +230,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="mt-3">
-                                                    <span><a class="btn btn-outline-success m-1"
+                                                    <span><a class="btn btn-outline-success btn-sm m-1"
                                                             href="{{ route('cursos-presenciales', '2023A') }}">Presenciales</a></span>
-                                                    <span><a class="btn btn-outline-danger m-1"
+                                                    <span><a class="btn btn-outline-danger btn-sm m-1"
                                                             href="{{ route('cursos-laboratorios', '2023A') }}">Laboratorios</a></span>
                                                 </div>
                                             </div>
@@ -267,13 +267,13 @@
                                                     </div>
                                                 </div>
                                                 <div class="mt-3">
-                                                    <span><a class="btn btn-outline-danger m-1"
+                                                    <span><a class="btn btn-outline-danger btn-sm m-1"
                                                             href="{{ route('usuarios.index') }}">Administrar
                                                             Usuarios</a></span>
-                                                    <span><a class="btn btn-outline-success m-1"
+                                                    <span><a class="btn btn-outline-success btn-sm m-1"
                                                             href="{{ route('roles.index') }}">Adm
                                                             Roles</a></span>
-                                                    <span><a class="btn btn-outline-success m-1"
+                                                    <span><a class="btn btn-outline-secondary  btn-sm m-1"
                                                             href="{{ route('permisos.index') }}">Adm
                                                             Permisos</a></span>
                                                 </div>
@@ -299,12 +299,12 @@
                                                 </div>
                                                 <div class="mt-3">
                                                     @can('MOBILIARIO#crear')
-                                                        <span><a class="btn btn-outline-success m-1"
+                                                        <span><a class="btn btn-outline-success  btn-sm m-1"
                                                                 href="{{ route('mobiliarios.create') }}">Captura
                                                                 Mobiliario</a></span>
                                                     @endcan
                                                     <span><a href="{{ route('mobiliarios.index') }}"
-                                                            class="btn btn-outline-danger">Consulta
+                                                            class="btn btn-outline-danger  btn-sm m-1">Consulta
                                                             Mobiliarios</a></span>
                                                 </div>
                                             </div>
@@ -328,11 +328,11 @@
                                                     </div>
                                                 </div>
                                                 <div class="mt-3">
-                                                    <span><a class="btn btn-outline-success"
+                                                    <span><a class="btn btn-outline-success  btn-sm m-1"
                                                             href="{{ route('proyectos.create') }}">Capturar
                                                             Proyecto</a></span>
                                                     <span><a href="{{ route('proyectos.index') }}"
-                                                            class="btn btn-outline-danger">Consulta
+                                                            class="btn btn-outline-danger  btn-sm m-1">Consulta
                                                             Proyectos</a></span>
                                                 </div>
                                             </div>
@@ -356,11 +356,11 @@
                                                     </div>
                                                 </div>
                                                 <div class="mt-3">
-                                                    <span><a class="btn btn-outline-success m-1"
+                                                    <span><a class="btn btn-outline-success  btn-sm m-1"
                                                             href="{{ route('licencias.create') }}">Capturar
                                                             licencia</a></span>
                                                     <span><a href="{{ route('licencias.index') }}"
-                                                            class="btn btn-outline-danger m-1">Consultar
+                                                            class="btn btn-outline-danger  btn-sm m-1">Consultar
                                                             licencia</a></span>
                                                 </div>
                                             </div>
@@ -384,10 +384,10 @@
                                                     </div>
                                                 </div>
                                                 <div class="mt-3">
-                                                    <span><a class="btn btn-outline-success m-1"
+                                                    <span><a class="btn btn-outline-success  btn-sm m-1"
                                                             href="{{ route('subredes.index') }}">Consultar
                                                             Subredes e IP'S</a></span>
-                                                    <span><a class="btn btn-outline-danger m-1"
+                                                    <span><a class="btn btn-outline-danger  btn-sm m-1"
                                                             href="{{ route('subredes.create') }}">Capturar
                                                             Subred</a></span>
 
@@ -441,11 +441,11 @@
                                                 </div>
                                                 <div class="mt-3">
 
-                                                    <span><a class="btn btn-outline-danger m-1"
+                                                    <span><a class="btn btn-outline-danger  btn-sm m-1"
                                                             href="{{ route('logs.index') }}">Consultar
                                                             Logs</a></span>
                                                     @can('ESTADISTICAS#ver')
-                                                        <span><a class="btn btn-outline-success m-1"
+                                                        <span><a class="btn btn-outline-success  btn-sm m-1"
                                                                 href="{{ route('estadisticas') }}">Consultar
                                                                 Estadisticas</a></span>
                                                     @endcan
@@ -472,11 +472,11 @@
                                                 </div>
                                                 <div class="mt-3">
 
-                                                    <span><a class="btn btn-outline-success m-1"
+                                                    <span><a class="btn btn-outline-success  btn-sm m-1"
                                                             href="{{ route('mantenimiento.index') }}">Consultar
                                                             Mantenimientos</a></span>
 
-                                                    <span><a class="btn btn-outline-danger m-1"
+                                                    <span><a class="btn btn-outline-danger  btn-sm m-1"
                                                             href="{{ route('mantenimiento.create') }}">Capturar
                                                             Mantenimientos</a></span>
                                                 </div>
@@ -502,11 +502,11 @@
                                                 </div>
                                                 <div class="mt-3">
 
-                                                    <span><a class="btn btn-outline-success m-1"
+                                                    <span><a class="btn btn-outline-success  btn-sm m-1"
                                                             href="{{ route('requisicion.create') }}">Capturar
                                                             Requisición</a></span>
                                                     <span><a href="{{ route('requisicion.index') }}"
-                                                            class="btn btn-outline-danger m-1">Consultar
+                                                            class="btn btn-outline-danger  btn-sm m-1">Consultar
                                                             Requisición</a></span>
                                                 </div>
                                             </div>
@@ -530,11 +530,11 @@
                                                 </div>
                                                 <div class="mt-3">
 
-                                                    <span><a class="btn btn-outline-success m-1"
+                                                    <span><a class="btn btn-outline-success  btn-sm m-1"
                                                             href="{{ route('personal.create') }}">Capturar
                                                             Personal</a></span>
                                                     <span><a href="{{ route('personal.index') }}"
-                                                            class="btn btn-outline-danger m-1">Consultar
+                                                            class="btn btn-outline-danger  btn-sm m-1">Consultar
                                                             Personal</a></span>
                                                 </div>
                                             </div>
@@ -562,7 +562,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="mt-3">
-                                                    <span><a class="btn btn-outline-danger"
+                                                    <span><a class="btn btn-outline-danger  btn-sm m-1"
                                                             href="{{ route('tecnicos.index') }}">
                                                             Consultar Tecnicos
                                                         </a></span>
@@ -574,29 +574,59 @@
                             @endcan
 
                             @can('OFICIOS#ver')
-                            <div class="col-lg-4 col-sm-12  col-md-6  my-3">
-                                <div class="card card-margin h-100">
-                                    <div class="card-body pt-2">
-                                        <div class="widget-49">
-                                            <div class="widget-49-title-wrapper">
-                                                <div class="widget-49-date-primary">
-                                                    <i class="material-icons">group</i>
+                                <div class="col-lg-4 col-sm-12  col-md-6  my-3">
+                                    <div class="card card-margin h-100">
+                                        <div class="card-body pt-2">
+                                            <div class="widget-49">
+                                                <div class="widget-49-title-wrapper">
+                                                    <div class="widget-49-date-primary">
+                                                        <i class="material-icons">group</i>
+                                                    </div>
+                                                    <div class="widget-49-meeting-info">
+                                                        <span class="widget-49-pro-title">OFICIOS</span>
+                                                    </div>
                                                 </div>
-                                                <div class="widget-49-meeting-info">
-                                                    <span class="widget-49-pro-title">OFICIOS</span>
+                                                <div class="mt-3">
+                                                    <span><a class="btn btn-outline-danger  btn-sm m-1"
+                                                            href="{{ route('oficios.index') }}">
+                                                            Consultar oficios
+                                                        </a></span>
                                                 </div>
-                                            </div>
-                                            <div class="mt-3">
-                                                <span><a class="btn btn-outline-danger"
-                                                        href="{{ route('oficios.index') }}">
-                                                        Consultar oficios
-                                                    </a></span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        @endcan
+                            @endcan
+
+                            @can('RESGUARDOS#ver')
+                                <div class="col-lg-4 col-sm-12  col-md-6  my-3">
+                                    <div class="card card-margin h-100">
+                                        <div class="card-body pt-2">
+                                            <div class="widget-49">
+                                                <div class="widget-49-title-wrapper">
+                                                    <div class="widget-49-date-secondary">
+                                                        <i class="material-icons">info_outline</i>
+                                                    </div>
+                                                    <div class="widget-49-meeting-info">
+                                                        <span class="widget-49-pro-title">RESGAURDOS</span>
+                                                    </div>
+                                                </div>
+                                                <div class="mt-3">
+                                                    <span><a class="btn btn-outline-danger btn-sm m-1"
+                                                            href="{{ route('entrega-resguardante.index') }}">
+                                                            Consultar por resgaurdante
+                                                        </a></span>
+                                                    <span><a class="btn btn-outline-success btn-sm m-1"
+                                                            href="{{ route('entrega-area.index') }}">
+                                                            Consultar por área
+                                                        </a></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endcan
+
                         </div>
                     </div>
                 </div>

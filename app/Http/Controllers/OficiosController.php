@@ -54,7 +54,6 @@ class OficiosController extends Controller
             [
                 'num_oficio' => 'required|unique:oficios,num_oficio',
                 'dirigido' => 'required|starts_with:Lic.,Mtro.,Dr.,Mtra.,Dra.',
-                'atencion' => 'required|starts_with:Lic.,Mtro.,Dr.,Mtra.,Dra.',
             ],
             $this->messages,
         );
@@ -77,7 +76,6 @@ class OficiosController extends Controller
             [
                 'num_oficio' => 'required|unique:oficios,num_oficio,' . $oficio->id,
                 'dirigido' => 'required|starts_with:Lic.,Mtro.,Dr.,Mtra.,Dra.',
-                'atencion' => 'required|starts_with:Lic.,Mtro.,Dr.,Mtra.,Dra.',
             ],
             $this->messages,
         );

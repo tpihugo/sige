@@ -10,15 +10,14 @@
     <div class="container">
         <div class="row ">
             <h4 class="text-center mt-3">
-                Entrega de Recepcion de equipos por resguardante
+                Equipos por área
             </h4>
         </div>
-        
         <h6 class="text-center">
-            <span  class="border-bottom border-success btn-sm">
+            <span class="border-bottom border-success btn-sm">
                 Encontrados
             </span>/
-            <span  class="border-bottom border-primary btn-sm">
+            <span class="border-bottom border-primary btn-sm">
                 Totales
             </span>
         </h6>
@@ -26,26 +25,24 @@
         <table class="display w-100 table-bordered table-striped" id="resguardantes">
             <thead>
                 <tr>
-                    <th>Código</th>
-                    <th>Nombre</th>
-                    <th>Total Equipos</th>
+                    <th>Área</th>
+                    <th>Totales</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($resguardantes as $item => $value)
+                @foreach ($areas_temp as $item => $value)
                     <tr>
-                        <td>{{ $value->id_resguardante }}</td>
-                        <td>{{ $value->resguardante }}</td>
-                        <td class="text-center">
-                            <span
-                               class="border-bottom border-success btn-sm">{{ $value->total_equipos[1] }}</span> /
-                            <span 
-                                class="border-bottom border-primary btn-sm">{{$value->total_equipos[0]  }} </span>
-                        
-                        </td>
-                        <td><a href="{{ route('entrega-resguardante.show', $value->id_resguardante) }}"
-                                class="btn btn-sm btn-primary">Ver equipos</a></td>
+                        <td>{{ $item }}</td>
+                        @php
+                            $totales = collect($value);
+                            $totales[0] = $totales[0] == null ? 'Ninguno' : $totales[0];
+                            $totales[2] = isset($totales[2]) ? $totales[2] : '0';
+                        @endphp
+                        <td> <span class='border-bottom border-success btn-sm'>{{ $totales[2] }}</span> /
+                            <span class="border-bottom border-primary btn-sm">{{ $totales[1] }}</span> </td>
+                        <td><a href="{{ route('entrega.area.equipos', $totales[0]) }}" class="btn btn-sm btn-primary">Ver
+                                equipos</a> </td>
                     </tr>
                 @endforeach
             </tbody>
@@ -62,7 +59,7 @@
             $('#resguardantes').DataTable({
                 "pageLength": 25,
                 "order": [
-                    [1, "asc"]
+                    [0, "asc"]
                 ],
                 "language": {
                     "sProcessing": "Procesando...",
