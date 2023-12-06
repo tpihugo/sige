@@ -39,17 +39,17 @@
                         <td>{{ $value->numero_serie }}</td>
                         <td>
                             @if (isset($value->fecha))
-                                <span id="fecha-{{ $value->udg_id }}">
+                                <span id="fecha-{{ $value->id }}">
                                     {{ $value->fecha }}
                                 </span>
                             @else
-                                <span id="fecha-{{ $value->udg_id }}">Nunca ubicado</span>
+                                <span id="fecha-{{ $value->id }}">Nunca ubicado</span>
                             @endif
                         </td>
                         <td class="text-center ">
                             @if ($area['id'] != 0)
-                                <input onclick="guardar('{{ $value->udg_id }}')" type="checkbox" name="id_equipo"
-                                    {{ $value->ubicado == 1 ? 'checked' : '' }} id="{{ $value->udg_id }}">
+                                <input onclick="guardar('{{ $value->id }}')" type="checkbox" name="id_equipo"
+                                    {{ $value->ubicado == 1 ? 'checked' : '' }} id="{{ $value->id }}">
                             @else
                                 <a class="btn btn-sm btn-primary"
                                     href="{{ route('cambiar-ubicacion', $value->id) }}">Reubicar</a>

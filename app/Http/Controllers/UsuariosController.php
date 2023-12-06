@@ -178,7 +178,7 @@ class UsuariosController extends Controller
         $user = ModelsUser::find($id);
         $user->activo = 0;
         $user->update();
-        $user->softDeletes();
+        $user->delete();
 
         return redirect()->route('usuarios.index')->with(['message' => 'Se desactivo correctamente el usuario - ' . $user->name]);
     }

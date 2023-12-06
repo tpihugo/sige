@@ -37,6 +37,7 @@ class PDFController extends Controller
             }
             $lista_final[$item] = ["equipo" => $equipo, 'accesorios' => $elements[1]];
         }
+        
         $pdf = \PDF::loadView('prestamo.formatoPrestamo', compact('prestamo', 'lista_final'));
         return $pdf->stream('formatoPrestamo.pdf');
     }
