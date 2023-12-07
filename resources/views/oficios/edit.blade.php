@@ -1,16 +1,22 @@
 @extends('adminlte::page')
-@section('title', 'Crear Oficio Liberación')
+@section('title', 'Editar Oficio')
 
 @section('css')
     @include('layouts.head_2')
+    @php
+        $ruta = asset('js/es_MX.js');
+    @endphp
     <script src="https://cdn.tiny.cloud/1/83792vt0p2ntv8uaehq9hr5zxl05u8zv8n7fkyza9xnw4hqn/tinymce/6/tinymce.min.js"
         referrerpolicy="origin"></script>
     <script>
         tinymce.init({
             selector: 'textarea.cuerpo',
+            language: 'es_MX',
+            language_url: '{{ $ruta }}',
             width: "100%",
             height: 500,
-            menubar: false, // removes the menubar
+            plugins: 'table',
+            menubar: true, // removes the menubar
         });
     </script>
 @stop
@@ -83,9 +89,9 @@
                             {!! $oficio->cuerpo !!}                            
                         </textarea>
                     </div>
-                    
-                        <div id="formulario">
-                            @if (strcmp($oficio->con_copia, '-') != 0)
+
+                    <div id="formulario">
+                        @if (strcmp($oficio->con_copia, '-') != 0)
                             @php
                                 $temp = explode('@', $oficio->con_copia);
                             @endphp
@@ -97,14 +103,14 @@
                                     <br>
                                 </div>
                             @endforeach
-                            @endif
+                        @endif
 
-                        </div>
-                        <div>
-                            <button type="button" class="clonar btn btn-secondary btn-sm">+</button>
-                            <label for="con_copia">Agregar C.C.</label>
-                        </div>
-                  
+                    </div>
+                    <div>
+                        <button type="button" class="clonar btn btn-secondary btn-sm">+</button>
+                        <label for="con_copia">Agregar C.C.</label>
+                    </div>
+
                     <div class="col-sm-12">
                         <button type="submit" class="my-2 btn btn-success">Guardar</button>
                     </div>

@@ -12,9 +12,8 @@
                     <h2>{{ session('message') }}</h2>
                 </div>
             @endif
-
-            <div class="row mt-2">
-                <h2>Oficios</h2>
+            <div class="row mt-3">
+                <h2 class="text-center">Oficios</h2>
             </div>
             <div class="d-flex justify-content-end my-2">
                 <a href="{{ route('oficios.general') }}" class="btn btn-primary mx-1 btn-sm">Crear Oficio</a>
@@ -29,6 +28,7 @@
                                 <th>Núm Oficio</th>
                                 <th>Dirigido</th>
                                 <th>Atención</th>
+                                <th>C.U.</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -38,8 +38,9 @@
                                     <td>{{ $value->num_oficio }}</td>
                                     <td>{{ $value->dirigido }}</td>
                                     <td>{{ $value->atencion }}</td>
+                                    <td>{{ $value->centro_universitario }}</td>
         
-                                    <td><a href="{{ route('oficios.show', $value->id) }}">Imprimir</a>
+                                    <td><a target="_blank" href="{{ route('oficios.show', $value->id) }}">Imprimir</a>
 
                                         <a href="{{ route('oficios.edit', $value->id) }}">Editar</a>
                                     </td>
@@ -61,7 +62,7 @@
     <script>
         $(document).ready(function() {
             $('#usersTable').DataTable({
-                "pageLength": 10,
+                "pageLength": 25,
                 "order": [
                     [0, "desc"]
                 ],

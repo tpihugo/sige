@@ -41,7 +41,7 @@ class OficiosController extends Controller
         $html = view('oficios.prestadores.plantilla', compact('oficio'));
         //return $html;
         $pdf = \PDF::loadHtml($html->render());
-        $nombre = 'Oficio_' . $oficio->num_oficio .".pdf";
+        $nombre = 'CUCSH_SA_CTA_' . $oficio->num_oficio . '_' . date('Y') . '.pdf';
         return $pdf->stream($nombre);
     }
     public function edit(Oficios $oficio)

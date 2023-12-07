@@ -38,7 +38,7 @@
                         <td>{{ $value->modelo }}</td>
                         <td>{{ $value->numero_serie }}</td>
                         <td>
-                            @if (isset($value->fecha))
+                            @if (isset($value->fecha) && $value->ubicado == 1)
                                 <span id="fecha-{{ $value->id }}">
                                     {{ $value->fecha }}
                                 </span>

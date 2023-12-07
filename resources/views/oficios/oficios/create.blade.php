@@ -5,14 +5,20 @@
     @include('layouts.head_2')
 @stop
 @section('content')
+    @php
+        $ruta = asset('js/es_MX.js');
+    @endphp
     <script src="https://cdn.tiny.cloud/1/83792vt0p2ntv8uaehq9hr5zxl05u8zv8n7fkyza9xnw4hqn/tinymce/6/tinymce.min.js"
         referrerpolicy="origin"></script>
     <script>
         tinymce.init({
             selector: 'textarea#cuerpo',
             width: "100%",
+            language: 'es_MX',
+            language_url: '{{ $ruta }}',
             height: 500,
-            menubar: false, // removes the menubar
+            plugins: 'table',
+            menubar: true, // removes the menubar
         });
     </script>
     <div class="container">
@@ -59,7 +65,7 @@
                     <div class="my-1 col-sm-12 col-md-2">
                         <label for="centro_universitario">Centro Universitario</label>
                         <input type="text" placeholder="C.U." value="{{ old('centro_universitario') }}"
-                            class="form-control" name="centro_universitario" id="centro_universitario">
+                            class="form-control text-center" name="centro_universitario" id="centro_universitario">
                     </div>
 
                     <div class="my-1 col-sm-12 col-md-5">
@@ -120,16 +126,10 @@
         }
 
         $('.clonar').click(function() {
-            // Clona el .input-group
-            //let $clone = $('#formulario .input-group').last().clone();
             let form = document.getElementById('formulario');
-            let arreglo = ['con_copia[]'];
-
             var div = document.createElement("div");
             var span = document.createElement("span");
             span.className = "btn btn-danger";
-
-
             span.className = "btn btn-danger m-1";
             span.textContent = 'X';
             let numero = cont;
@@ -137,41 +137,13 @@
                 eliminar(numero)
             }, false);
 
-            let status = ['C.C.'];
-            arreglo.forEach(function(element) {
+            var input = document.createElement("input");
+            input.type = "text";
+            input.name = 'con_copia[]';
+            input.placeholder = "C. C.";
+            input.className = "form-control col-md-3 m-1";
+            div.appendChild(input);
 
-                if (element == 'status[]') {
-                    var input = document.createElement("select");
-                    input.name = element;
-                    input.className = "form-control col-md-3 m-1";
-                    input.setAttribute("id", 'enfermedades');
-                    div.appendChild(input);
-
-                    for (var i = 0; i < status.length; i++) {
-                        var option = document.createElement("option");
-                        option.value = status[i];
-                        option.text = status[i];
-                        input.appendChild(option);
-                    }
-
-                } else {
-                    var input = document.createElement("input");
-                    input.type = "text";
-                    input.name = element;
-                    input.placeholder = element.split('[]')[0];
-
-                    if (element.split('[]')[0] == 'descripcion') {
-                        input.className = "form-control col-md-5 m-1";
-                        console.log(input);
-                    } else {
-                        input.className = "form-control col-md-3 m-1";
-                    }
-
-                    input.setAttribute("id", 'articulos');
-
-                    div.appendChild(input);
-                }
-            });
             div.setAttribute('id', cont);
             div.className = 'input-group d-flex flex-wrap';
             cont = cont + 1;

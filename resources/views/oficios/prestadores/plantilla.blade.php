@@ -57,7 +57,7 @@
                 <b>
                     {{ Str::upper($oficio->dirigido) }}<br>
 
-                    {{ Str::upper($oficio->puesto_dirigido) }} <br>
+                    {{ Str::upper($oficio->puesto_dirigido) . " ".Str::upper($oficio->centro_universitario) }} <br>
                     PRESENTE
                 </b>
 
@@ -106,7 +106,7 @@
                 @foreach (collect($temp) as $item)
                     <tr>
                         <td>
-                            {{ $item }}
+                           c.c. {{ $item }}
                         </td>
                     </tr>
                 @endforeach

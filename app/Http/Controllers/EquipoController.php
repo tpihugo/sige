@@ -86,8 +86,6 @@ class EquipoController extends Controller
         $movimiento_equipo->comentarios = 'Alta equipo';
         $movimiento_equipo->save();
 
-
-
         //
         $log = new Log();
         $log->tabla = 'equipos';
@@ -168,7 +166,7 @@ class EquipoController extends Controller
         $equipo->detalles = $request->input('detalles');
 
         /*$equipo->id_resguardante = $request->input('resguardante.0');
-        $equipo->resguardante = $request->input('resguardante.1');*/
+         $equipo->resguardante = $request->input('resguardante.1');*/
         $equipo->id_empleado = $request->input('usuario');
 
         $equipo->localizado_sici = $request->input('localizado_sici');
@@ -247,7 +245,7 @@ class EquipoController extends Controller
 
         $equipos = $this->cargarDT($vsequipos);
 
-        return view('equipo.busqueda',compact('equipos','busqueda'));
+        return view('equipo.busqueda', compact('equipos', 'busqueda'));
     }
     public function busquedaEquiposTicket(Request $request)
     {
@@ -313,9 +311,9 @@ class EquipoController extends Controller
                 $id_equipo = $equipo->id;
                 if (
                     $consult = MovimientoEquipo::where('id_equipo', '=', $equipo->id)
-                    ->limit(1)
-                    ->latest()
-                    ->first()
+                        ->limit(1)
+                        ->latest()
+                        ->first()
                 ) {
                     // dd($consult, $consult->registro);
 
@@ -350,7 +348,9 @@ class EquipoController extends Controller
     public function inventario_cta()
     {
         //Se hace la ruta, la ruta manda llamar el mÃ©todo y el mÃ©todo manda llamar la plantilla
-        $vsequipos = VsEquipo::where('activo', '=', 1)->where('tipo_sici','equipo')->get();
+        $vsequipos = VsEquipo::where('activo', '=', 1)
+            ->where('tipo_sici', 'equipo')
+            ->get();
         $equipos = $this->cargarDT($vsequipos);
         return view('equipo.inventariocta', [
             'equipos' => $equipos,

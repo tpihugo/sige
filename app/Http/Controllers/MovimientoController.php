@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Area;
 use App\Models\Empleado;
+use App\Models\EntregaRecepcion;
 use App\Models\Equipo;
 use App\Models\MovimientoEquipo;
 
@@ -77,6 +78,9 @@ class MovimientoController extends Controller
         $log->movimiento = $mov;
         $log->usuario_id = Auth::user()->id;
         $log->acciones = "Insercion";
+
+        EntregaRecepcion::updateOrCreate(['id_equipo' => $request->id_equipo], ['id_usuario' => $movimiento->id_usuario, 'fecha' => date('Y-m-d'), 'ubicado' => '0']);
+
         $log->save();
         //
         $tipo = $request->input('tipo');
