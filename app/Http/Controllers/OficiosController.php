@@ -27,18 +27,19 @@ class OficiosController extends Controller
 
     public function create()
     {
-        $id =
-            Oficios::select('num_oficio')->where('activo', 1)
-                ->latest()
-                ->first();
+        $id = Oficios::select('num_oficio')
+            ->where('activo', 1)
+            ->latest()
+            ->first();
         $oficio = $id->num_oficio + 1;
         $cuerpo = view('oficios.prestadores.cuerpo')->render();
         //$plantilla = view('oficios.prestadores.plantilla', compact("cuerpo"))->render();
-        return view('oficios.prestadores.create', compact('cuerpo','oficio'));
+        return view('oficios.prestadores.create', compact('cuerpo', 'oficio'));
     }
     public function show(Oficios $oficio)
     {
         $html = view('oficios.prestadores.plantilla', compact('oficio'));
+        return $html;
         $pdf = \PDF::loadHtml($html->render());
         return $pdf->stream('formatoProyecto.pdf');
     }
@@ -61,10 +62,14 @@ class OficiosController extends Controller
         $oficio = new Oficios();
         $oficio->activo = '1';
         foreach ($request->request as $key => $value) {
-            if (!is_null($value) && strcmp('_token', $key) != 0 && strcmp('_method', $key) != 0) {
+            if (!is_null($value) && strcmp('_token', $key) != 0 && strcmp('_method', $key) != 0 && strcmp('con_copia', $key) != 0) {
                 $oficio->$key = $request->$key;
             }
         }
+
+        $con_copia = implode('@', $request->con_copia);
+        $oficio->con_copia = $con_copia;
+        //return $oficio;
         $oficio->save();
         return redirect()->route('oficios.index');
     }
@@ -81,10 +86,12 @@ class OficiosController extends Controller
         );
 
         foreach ($request->request as $key => $value) {
-            if (!is_null($value) && strcmp('_token', $key) != 0 && strcmp('_method', $key) != 0) {
+            if (!is_null($value) && strcmp('_token', $key) != 0 && strcmp('_method', $key) != 0 && strcmp('con_copia', $key) != 0) {
                 $oficio->$key = $request->$key;
             }
         }
+        $con_copia = implode('@', $request->con_copia);
+        $oficio->con_copia = $con_copia;
         $oficio->update();
         return redirect()->route('oficios.index');
     }

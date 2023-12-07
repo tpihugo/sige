@@ -13,6 +13,17 @@ use JeroenNoten\LaravelAdminLte\View\Components\Widget\Alert;
 
 class EntregaRecepcionController extends Controller
 {
+    public function cunenta_total()
+    {
+        $equipos = VsEquipo::leftJoin('entrega_recepcions', 'vs_equipos.id', '=', 'entrega_recepcions.id_equipo')
+            ->select('vs_equipos.id', 'entrega_recepcions.ubicado')
+            ->where('vs_equipos.activo', 1)
+            ->where('vs_equipos.tipo_sici', 'equipoCTA')
+            ->get();
+
+        $total = ['total' => $equipos->count(), 'encontrados' => $equipos->where('ubicado', '=', 1)->count()];
+        return $total;
+    }
     public function index()
     {
         $resguardantes = VsEquipo::select('id_resguardante', 'resguardante')
@@ -22,11 +33,12 @@ class EntregaRecepcionController extends Controller
             ->distinct()
             ->get();
 
+        $total = $this->cunenta_total();
         foreach ($resguardantes as $key => $value) {
             $id = $value->id_resguardante;
             $value->total_equipos = $this->total_resguardante($id);
         }
-        return view('entregaRecepcion.index', compact('resguardantes'));
+        return view('entregaRecepcion.index', compact('resguardantes', 'total'));
     }
 
     public function show($id_resguardante)
@@ -116,7 +128,10 @@ Metodos por Área
         $areas_temp = $areas->mergeRecursive($temp);
 
         $areas_temp = $areas_temp->mergeRecursive($equipos_encontrados);
-        return view('entregaRecepcion.area.index', compact('areas_temp'));
+
+        $total = $this->cunenta_total();
+        
+        return view('entregaRecepcion.area.index', compact('areas_temp', 'total'));
     }
 
     public function por_area($id)

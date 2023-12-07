@@ -121,23 +121,7 @@
             cont = cont + 1;
             div.appendChild(span);
             form.appendChild(div);
-
-
-
-            /*
-              // Borra los valores de los inputs clonados
-              $clone.find(':input').each(function () {
-                if ($(this).is('select')) {
-                  this.selectedIndex = 0;
-                } else {
-                  this.value = '';
-                }
-              });
-
-              $clone.id = (parseInt(Object.keys(anterior)[0]) + 1).toString();
-              console.log($clone);
-              // Agrega lo clonado al final del #formulario
-              $clone.appendTo('#formulario');*/
+            
         });
     </script>
 @endsection

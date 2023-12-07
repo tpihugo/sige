@@ -3,6 +3,16 @@
 
 @section('css')
     @include('layouts.head_2')
+    <script src="https://cdn.tiny.cloud/1/83792vt0p2ntv8uaehq9hr5zxl05u8zv8n7fkyza9xnw4hqn/tinymce/6/tinymce.min.js"
+        referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea.cuerpo',
+            width: "100%",
+            height: 500,
+            menubar: false, // removes the menubar
+        });
+    </script>
 @stop
 @section('content')
     <div class="container">
@@ -22,7 +32,7 @@
                 </div>
             @endif
             <div class="row ">
-                <h2 class="text-center my-3">Crear Oficio Liberación Prestador</h2>
+                <h2 class="text-center my-3">Editar Oficio</h2>
             </div>
             <div>
                 <form action="{{ route('oficios.update', $oficio->id) }}" method="POST" class="row">
@@ -42,8 +52,9 @@
 
                     <div class="my-1 col-sm-12 col-md-5">
                         <label for="puesto_dirigido">Puesto Dirigido</label>
-                        <input type="text" placeholder="Puesto a quien va dirigido" value="{{ $oficio->puesto_dirigido }}"
-                            class="form-control" name="puesto_dirigido" id="puesto_dirigido">
+                        <input type="text" placeholder="Puesto a quien va dirigido"
+                            value="{{ $oficio->puesto_dirigido }}" class="form-control" name="puesto_dirigido"
+                            id="puesto_dirigido">
                     </div>
 
                     <div class="my-1 col-sm-12 col-md-2">
@@ -54,13 +65,13 @@
 
                     <div class="my-1 col-sm-12 col-md-5">
                         <label for="atencion">Atención</label>
-                        <input type="text" placeholder="Puesto a quien va en Atención" value="{{ $oficio->atencion }}" class="form-control"
-                            name="atencion" id="atencion">
+                        <input type="text" placeholder="Puesto a quien va en Atención" value="{{ $oficio->atencion }}"
+                            class="form-control" name="atencion" id="atencion">
                     </div>
 
                     <div class="my-1 col-sm-12 col-md-5">
                         <label for="atencion">Puesto Atención</label>
-                        <input type="text" placeholder="Atención" value="{{ $oficio->puesto_atencion}}"
+                        <input type="text" placeholder="Atención" value="{{ $oficio->puesto_atencion }}"
                             class="form-control" name="puesto_atencion" id="puesto_atencion">
                     </div>
                     <span class="text-muted my-1"><small>NOTA: Favor de introducir nombres completos del personal</small>
@@ -68,10 +79,30 @@
                     <hr>
                     <div class="col-md-12 p-2 ">
                         <label class="form-label" for="">Descripción</label>
-                        <textarea class="form-control" name="cuerpo" placeholder="Cuerpo del oficio" id="oficio">
+                        <textarea class="form-control cuerpo" name="cuerpo" placeholder="Cuerpo del oficio" id="oficio">
                             {!! $oficio->cuerpo !!}                            
                         </textarea>
                     </div>
+                    @if (strcmp($oficio->con_copia, '') != 0)
+                        <div id="formulario">
+                            @php
+                                $temp = explode('@', $oficio->con_copia);
+                            @endphp
+                            @foreach (collect($temp) as $item)
+                                <div class="input-group d-flex flex-wrap" id="{{ $item }}">
+                                    <input type="text" class="form-control col-md-3 m-1" name="con_copia[]"
+                                        value="{{$item}}">
+                                    <span class="btn  btn-danger m-1" onclick="eliminar(<?php echo $item; ?>)">X</span>
+                                    <br>
+                                </div>
+                            @endforeach
+
+                        </div>
+                        <div>
+                            <button type="button" class="clonar btn btn-secondary btn-sm">+</button>
+                            <label for="con_copia">Agregar C.C.</label>
+                        </div>
+                    @endif
                     <div class="col-sm-12">
                         <button type="submit" class="my-2 btn btn-success">Guardar</button>
                     </div>
@@ -82,3 +113,54 @@
         @endif
     </div>
 @endsection
+@if (strcmp($oficio->con_copia, '') != 0)
+    @section('js')
+        <script>
+            var cont = 0;
+
+            function eliminar(eliminar) {
+                console.log(eliminar.id);
+
+                let elemento = document.getElementById(eliminar.id);
+                let padre = elemento.parentNode;
+                padre.removeChild(elemento);
+            }
+
+            $('.clonar').click(function() {
+                // Clona el .input-group
+                //let $clone = $('#formulario .input-group').last().clone();
+                let form = document.getElementById('formulario');
+                let arreglo = ['con_copia[]'];
+
+                var div = document.createElement("div");
+                var span = document.createElement("span");
+                span.className = "btn btn-danger m-1";
+                span.textContent = 'X';
+                let numero = cont;
+
+                span.addEventListener("click", function() {
+                    eliminar(numero)
+                }, false);
+
+                let status = ['C.C.'];
+                arreglo.forEach(function(element) {
+
+                    var input = document.createElement("input");
+                    input.type = "text";
+                    input.name = element;
+                    input.placeholder = "Con Copia";
+
+                    input.className = "form-control col-md-3 m-1";
+                    div.appendChild(input);
+
+                });
+                div.setAttribute('id', cont);
+                div.className = 'input-group d-flex flex-wrap';
+                cont = cont + 1;
+                div.appendChild(span);
+                form.appendChild(div);
+
+            });
+        </script>
+    @endsection
+@endif

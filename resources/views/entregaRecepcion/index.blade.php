@@ -16,10 +16,10 @@
         
         <h6 class="text-center">
             <span  class="border-bottom border-success btn-sm">
-                Encontrados
+               {{$total['encontrados']}} Encontrados
             </span>/
             <span  class="border-bottom border-primary btn-sm">
-                Totales
+                {{$total['total']}} Totales
             </span>
         </h6>
         <hr>

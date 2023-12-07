@@ -14,12 +14,12 @@
             </h4>
         </div>
         <h6 class="text-center">
-            <span class="border-bottom border-success btn-sm">
-                Encontrados
-            </span>/
-            <span class="border-bottom border-primary btn-sm">
-                Totales
-            </span>
+            <span  class="border-bottom border-success btn-sm">
+                {{$total['encontrados']}} Encontrados
+             </span>/
+             <span  class="border-bottom border-primary btn-sm">
+                 {{$total['total']}}Totales
+             </span>
         </h6>
         <hr>
         <table class="display w-100 table-bordered table-striped" id="resguardantes">

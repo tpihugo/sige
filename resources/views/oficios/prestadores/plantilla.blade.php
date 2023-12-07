@@ -4,6 +4,16 @@
     $anio = date('Y');
     $fecha = strtotime(date('Y-m-d'));
     $img = asset('images/Logo-udg.png');
+    $cuerpoLen = strlen($oficio->cuerpo);
+    if ($cuerpoLen > 700) {
+        $estilosCuerpo = 'margin-top:10; margin-bottom:0px;text-align:justify; ';
+        $estilosNombre = 'text-align: center;margin-top:80px;';
+        $estilosAtentamente = 'text-align: center;margin-top:50px;';
+    } else {
+        $estilosCuerpo = 'margin-top:40; margin-bottom:0px;text-align:justify; ';
+        $estilosNombre = 'text-align: center;margin-top:150px;';
+        $estilosAtentamente = 'text-align: center;margin-top:120px;';
+    }
 
 @endphp
 <!DOCTYPE html>
@@ -14,15 +24,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>
-        CUCSH/SA/CTA/{{ $oficio->num_oficio }}/{{ $anio }}
-    </title>
+    <title>CUCSH/SA/CTA/{{ $oficio->num_oficio }}/{{ $anio }}</title>
     <style>
         footer {
             position: fixed;
             left: 0px;
             right: 0px;
-            height: 50px;
+            height: auto;
             bottom: 0px;
             text-align: center;
             line-height: 35px;
@@ -46,13 +54,16 @@
         </div>
         <div>
             <span>
-                {{ Str::upper($oficio->dirigido) }}<br>
+                <b>
+                    {{ Str::upper($oficio->dirigido) }}<br>
 
-                {{ Str::upper($oficio->puesto_dirigido) }} <br>
-                PRESENTE
+                    {{ Str::upper($oficio->puesto_dirigido) }} <br>
+                    PRESENTE
+                </b>
+
             </span>
         </div>
-        @if (isset($oficio->atencion))
+        @if (strcmp($oficio->atencion, '') != 0)
             <div class="row" style="text-align:right;">
                 <span class="text-end">
                     @php
@@ -67,11 +78,11 @@
 
 
 
-        <div style="margin-top:30;">
+        <div style="{{ $estilosCuerpo }}">
             {!! $oficio->cuerpo !!}
         </div>
 
-        <div style="text-align: center;padding-top:50px;">
+        <div style="{{ $estilosAtentamente }}">
             <p>
                 ATENTAMENTE <br>
                 <b> “PIENSA Y TRABAJA” </b><br>
@@ -81,22 +92,37 @@
                 Zapopan, Jalisco, {{ strftime('%e de %B de %Y', $fecha) }}
             </p>
         </div>
-        <table>
 
-        </table>
+
     </div>
 
     <div>
-        <p style="text-align: center;margin-top:150px;">
+
+    </div>
+    <footer class="text-muted" style="margin:auto;text-align:center;">
+        @if (strcmp($oficio->con_copia, '') != 0)
+            <div id="c_copia" style="font-size: 10px; text-align:left;">
+                <p> @php
+                    $temp = explode('@', $oficio->con_copia);
+                @endphp
+                    @foreach (collect($temp) as $item)
+                        {{ $item }} <br>
+                    @endforeach
+
+                </p>
+
+            </div>
+        @endif
+        <p>
             <b>MTRO. VICTOR HUGO RAMIREZ SALAZAR <br>
                 Coordinador de Tecnologías para el Aprendizaje</b>
         </p>
-    </div>
-    <footer class="text-muted" style="margin: 50px auto auto auto;text-align:center;">
-        Av. Parres Arias #150 Colonia San José del Bajío C.P. 45132 Zapopan, Jal. Edificio E Piso 2, <br> Tel. (33)
-        38193300
-        Ext. 23700
+        <p>Av. Parres Arias #150 Colonia San José del Bajío C.P. 45132 Zapopan, Jal. Edificio E Piso 2, <br> Tel. (33)
+            38193300
+            Ext. 23700</p>
+
     </footer>
+    <script></script>
 </body>
 
 </html>

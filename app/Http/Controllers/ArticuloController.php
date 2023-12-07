@@ -52,6 +52,7 @@ class ArticuloController extends Controller
             'cantidad.0'  => 'required',
             'observacion.0' => 'required',
         ]);
+        
         for ($i = 0; $i < $limit; $i++) {
             $articulos = new Articulo();
             $articulos->codigo = $temp['codigo'][$i];
