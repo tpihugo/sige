@@ -98,6 +98,12 @@ class OficiosController extends Controller
 
     public function general()
     {
-        return view('oficios.oficios.create');
+        $id = Oficios::select('num_oficio')
+            ->where('activo', 1)
+            ->latest()
+            ->first();
+            
+        $oficio = $id->num_oficio + 1;
+        return view('oficios.oficios.create', compact('oficio'));
     }
 }

@@ -41,7 +41,7 @@
                     <div class="my-1 col-sm-12 col-md-2">
                         <label for="num_oficio" class=" text-center">Oficio CTA</label>
                         <input type="text" class="text-center form-control" name="num_oficio" id="num_oficio"
-                            value="{{ old('num_oficio') }}">
+                            value="{{ $oficio }}">
                     </div>
 
                     <div class="my-1 col-sm-12 col-md-5">
@@ -64,14 +64,15 @@
 
                     <div class="my-1 col-sm-12 col-md-5">
                         <label for="atencion">Atención</label>
-                        <input type="text" placeholder="Puesto a quien va en Atención" value="{{ old('atencion') }}"
-                            class="form-control" name="atencion" id="atencion">
+                        <input type="text" placeholder="Atención " value="{{ old('atencion') }}" class="form-control"
+                            name="atencion" id="atencion">
                     </div>
 
                     <div class="my-1 col-sm-12 col-md-5">
                         <label for="atencion">Puesto Atención</label>
-                        <input type="text" placeholder="Atención" value="{{ old('puesto_atencion') }}"
-                            class="form-control" name="puesto_atencion" id="puesto_atencion">
+                        <input type="text" placeholder="Puesto a quien va en Atención"
+                            value="{{ old('puesto_atencion') }}" class="form-control" name="puesto_atencion"
+                            id="puesto_atencion">
                     </div>
 
 
@@ -105,7 +106,7 @@
 @endsection
 
 @section('footer')
-    <div class="row g-3 align-items-center">
+    <div class="row align-items-center">
         <h5 class="text-end">En caso de inconsistencias, favor de reportarlas.</h5>
     </div>
 @endsection
