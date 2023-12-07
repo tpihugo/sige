@@ -83,26 +83,28 @@
                             {!! $oficio->cuerpo !!}                            
                         </textarea>
                     </div>
-                    @if (strcmp($oficio->con_copia, '') != 0)
+                    
                         <div id="formulario">
+                            @if (strcmp($oficio->con_copia, '-') != 0)
                             @php
                                 $temp = explode('@', $oficio->con_copia);
                             @endphp
                             @foreach (collect($temp) as $item)
                                 <div class="input-group d-flex flex-wrap" id="{{ $item }}">
                                     <input type="text" class="form-control col-md-3 m-1" name="con_copia[]"
-                                        value="{{$item}}">
-                                    <span class="btn  btn-danger m-1" onclick="eliminar(<?php echo $item; ?>)">X</span>
+                                        value="{{ $item }}">
+                                    <span class="btn  btn-danger m-1" onclick="eliminar('{{ $item }}')">X</span>
                                     <br>
                                 </div>
                             @endforeach
+                            @endif
 
                         </div>
                         <div>
                             <button type="button" class="clonar btn btn-secondary btn-sm">+</button>
                             <label for="con_copia">Agregar C.C.</label>
                         </div>
-                    @endif
+                  
                     <div class="col-sm-12">
                         <button type="submit" class="my-2 btn btn-success">Guardar</button>
                     </div>
@@ -119,9 +121,8 @@
             var cont = 0;
 
             function eliminar(eliminar) {
-                console.log(eliminar.id);
-
-                let elemento = document.getElementById(eliminar.id);
+                console.log(eliminar);
+                let elemento = document.getElementById(eliminar);
                 let padre = elemento.parentNode;
                 padre.removeChild(elemento);
             }

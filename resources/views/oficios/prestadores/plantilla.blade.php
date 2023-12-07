@@ -96,23 +96,28 @@
 
     </div>
 
-    <div>
-
-    </div>
-    <footer class="text-muted" style="margin:auto;text-align:center;">
-        @if (strcmp($oficio->con_copia, '') != 0)
-            <div id="c_copia" style="font-size: 10px; text-align:left;">
-                <p> @php
+    @if (strcmp($oficio->con_copia, '') != 0)
+        <div id="c_copia" style="font-size: 10px; text-align:left; margin-top:50px;">
+            <p>
+            <table>
+                @php
                     $temp = explode('@', $oficio->con_copia);
                 @endphp
-                    @foreach (collect($temp) as $item)
-                        {{ $item }} <br>
-                    @endforeach
+                @foreach (collect($temp) as $item)
+                    <tr>
+                        <td>
+                            {{ $item }}
+                        </td>
+                    </tr>
+                @endforeach
+            </table>
 
-                </p>
+            </p>
 
-            </div>
-        @endif
+        </div>
+    @endif
+    <footer class="text-muted" style="margin:auto;text-align:center;">
+
         <p>
             <b>MTRO. VICTOR HUGO RAMIREZ SALAZAR <br>
                 Coordinador de Tecnologías para el Aprendizaje</b>

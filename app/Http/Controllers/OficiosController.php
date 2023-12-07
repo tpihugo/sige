@@ -6,7 +6,7 @@ use App\Models\Oficios;
 use compra;
 use Dompdf\Cpdf;
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Arr;
 
 class OficiosController extends Controller
 {
@@ -39,9 +39,10 @@ class OficiosController extends Controller
     public function show(Oficios $oficio)
     {
         $html = view('oficios.prestadores.plantilla', compact('oficio'));
-        return $html;
+        //return $html;
         $pdf = \PDF::loadHtml($html->render());
-        return $pdf->stream('formatoProyecto.pdf');
+        $nombre = 'Oficio_' . $oficio->num_oficio .".pdf";
+        return $pdf->stream($nombre);
     }
     public function edit(Oficios $oficio)
     {
@@ -67,7 +68,7 @@ class OficiosController extends Controller
             }
         }
 
-        $con_copia = implode('@', $request->con_copia);
+        $con_copia = Arr::exists($request, 'con_copia') ? implode('@', $request->con_copia) : '-';
         $oficio->con_copia = $con_copia;
         //return $oficio;
         $oficio->save();
@@ -90,7 +91,7 @@ class OficiosController extends Controller
                 $oficio->$key = $request->$key;
             }
         }
-        $con_copia = implode('@', $request->con_copia);
+        $con_copia = Arr::exists($request, 'con_copia') ? implode('@', $request->con_copia) : '-';
         $oficio->con_copia = $con_copia;
         $oficio->update();
         return redirect()->route('oficios.index');
@@ -102,7 +103,7 @@ class OficiosController extends Controller
             ->where('activo', 1)
             ->latest()
             ->first();
-            
+
         $oficio = $id->num_oficio + 1;
         return view('oficios.oficios.create', compact('oficio'));
     }
