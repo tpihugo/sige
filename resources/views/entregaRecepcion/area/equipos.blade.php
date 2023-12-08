@@ -6,13 +6,16 @@
 @stop
 
 @section('content')
+    @php
+        $date = date('Y-m-d');
+    @endphp
     <div class="container">
         <h4 class="text-center">
             Equipos de del área {{ $area['area'] }}
         </h4>
         <h6 class="text-center">
-            Total de equipos <span id="total" class="border-bottom border-primary btn-sm">{{ $total[0] }}</span> / Encontrados <span id="encontrados"
-                class="border-bottom border-success btn-sm">{{ $total[1] }}</span> /
+            Total de equipos <span id="total" class="border-bottom border-primary btn-sm">{{ $total[0] }}</span> /
+            Encontrados <span id="encontrados" class="border-bottom border-success btn-sm">{{ $total[1] }}</span> /
             Faltantes <span id="faltantes" class="border-bottom border-danger btn-sm">{{ $total[0] - $total[1] }} </span>
         </h6>
         <hr>
@@ -26,7 +29,8 @@
                     <th>S/N</th>
                     <th>Fecha ubicado</th>
                     <th>Acción</th>
-
+                    <th>Usuario quien localizo</th>
+                    <th>Resguardante</th>
                 </tr>
             </thead>
             <tbody>
@@ -55,6 +59,12 @@
                                     href="{{ route('cambiar-ubicacion', $value->id) }}">Reubicar</a>
                             @endif
                         </td>
+                        <td>
+                            {{ $value->nombre_usuario }}
+                        </td>
+                        <td>
+                            {{ $value->resguardante }}
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
@@ -72,6 +82,15 @@
                 "pageLength": 25,
                 "order": [
                     [1, "asc"]
+                ],
+                columnDefs: [{
+                        target: 7,
+                        visible: false,
+                    },
+                    {
+                        target: 8,
+                        visible: false,
+                    }
                 ],
                 "language": {
                     "sProcessing": "Procesando...",
@@ -101,11 +120,15 @@
                 // dom: 'Bfrtip',
                 dom: '<"col-xs-3"l><"col-xs-5"B><"col-xs-4"f>rtip',
                 buttons: [
-                    'copy', 'excel',
+                    'copy', 'pdfHtml5',
                     {
-                        extend: 'pdfHtml5',
+                        extend: 'excelHtml5',
                         orientation: 'landscape',
+                        title: 'Inventario área {{ $area['area'] }} - {{ $date }}',
                         pageSize: 'LETTER',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5, 7, 8]
+                        }
                     }
 
                 ]

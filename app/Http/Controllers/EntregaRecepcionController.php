@@ -47,7 +47,8 @@ class EntregaRecepcionController extends Controller
 
         $equipos = VsEquipo::leftJoin('entrega_recepcions', 'vs_equipos.id', '=', 'entrega_recepcions.id_equipo')
             ->leftjoin('areas', 'vs_equipos.id_area', '=', 'areas.id')
-            ->select('vs_equipos.*', 'entrega_recepcions.ubicado', 'entrega_recepcions.id_usuario', 'entrega_recepcions.fecha', 'areas.area as area_equipo')
+            ->leftjoin('users', 'users.id', '=', 'entrega_recepcions.id_usuario')
+            ->select('vs_equipos.*', 'entrega_recepcions.ubicado', 'entrega_recepcions.id_usuario', 'entrega_recepcions.fecha', 'areas.area as area_equipo', 'users.name as nombre_usuario')
             ->where('vs_equipos.activo', 1)
             ->where('vs_equipos.tipo_sici', 'equipoCTA')
             ->where('vs_equipos.id_resguardante', $id_resguardante)
@@ -111,6 +112,7 @@ Metodos por Área
         // Obtitnes todos los equipos ya ubicados y agrupados por sus respectivas áreas
         $equipos_encontrados = VsEquipo::leftJoin('entrega_recepcions', 'vs_equipos.id', '=', 'entrega_recepcions.id_equipo')
             ->leftjoin('areas', 'vs_equipos.id_area', '=', 'areas.id')
+            
             ->select(DB::raw('count(*) as total'), 'vs_equipos.udg_id', 'vs_equipos.id_area', 'entrega_recepcions.ubicado', 'entrega_recepcions.id_usuario', 'entrega_recepcions.fecha', DB::raw('CONCAT(areas.sede, "-", areas.area) AS area_equipo'))
             ->where('vs_equipos.activo', 1)
             ->where('vs_equipos.tipo_sici', 'equipoCTA')
@@ -121,6 +123,8 @@ Metodos por Área
             ->pluck('total', 'area_equipo')
             ->toArray();
 
+        
+
         // Agrupas los equipos por el área en la que estan y el id de area que tiene cada una
         $areas = $equipos_totales->pluck('vs_equipos.id_area', 'area_equipo');
 
@@ -130,7 +134,7 @@ Metodos por Área
         $areas_temp = $areas_temp->mergeRecursive($equipos_encontrados);
 
         $total = $this->cunenta_total();
-        
+
         return view('entregaRecepcion.area.index', compact('areas_temp', 'total'));
     }
 
@@ -148,8 +152,8 @@ Metodos por Área
             $area = collect(['area' => 'Sin área', 'id' => '0']);
         } else {
             $equipos_totales = VsEquipo::leftjoin('areas', 'vs_equipos.id_area', '=', 'areas.id')
-                ->leftJoin('entrega_recepcions', 'vs_equipos.id', '=', 'entrega_recepcions.id_equipo')
-                ->select('vs_equipos.id', 'vs_equipos.udg_id', 'vs_equipos.id_resguardante', 'vs_equipos.resguardante', 'vs_equipos.localizado_sici', 'vs_equipos.marca', 'vs_equipos.modelo', 'vs_equipos.numero_serie', 'vs_equipos.tipo_equipo', 'entrega_recepcions.ubicado', 'entrega_recepcions.id_usuario', 'entrega_recepcions.fecha')
+                ->leftJoin('entrega_recepcions', 'vs_equipos.id', '=', 'entrega_recepcions.id_equipo')->leftjoin('users', 'users.id', '=', 'entrega_recepcions.id_usuario')
+                ->select('vs_equipos.id', 'vs_equipos.udg_id', 'vs_equipos.id_resguardante', 'vs_equipos.resguardante', 'vs_equipos.localizado_sici', 'vs_equipos.marca', 'vs_equipos.modelo', 'vs_equipos.numero_serie', 'vs_equipos.tipo_equipo', 'entrega_recepcions.ubicado', 'entrega_recepcions.id_usuario', 'entrega_recepcions.fecha', 'users.name as nombre_usuario')
                 ->where('vs_equipos.activo', 1)
                 ->where('vs_equipos.tipo_sici', 'equipoCTA')
                 ->where('id_area', $id)
@@ -159,7 +163,7 @@ Metodos por Área
                 ->first()
                 ->toArray();
         }
-
+        
         $total = $this->total_area($id);
 
         return view('entregaRecepcion.area.equipos', compact('equipos_totales', 'area', 'total'));
