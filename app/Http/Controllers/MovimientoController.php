@@ -29,7 +29,9 @@ class MovimientoController extends Controller
     {
         $equipo = VsEquipo::find($equipo_id);
         $historialMovimientos = VsHistorialEquipos::where('id_equipo', '=', $equipo_id)->get();
-        return view('equipo.historial')->with('historialMovimientos', $historialMovimientos)->with('equipo', $equipo);
+        return view('equipo.historial')
+            ->with('historialMovimientos', $historialMovimientos)
+            ->with('equipo', $equipo);
     }
     /**
      * Show the form for creating a new resource.
@@ -41,7 +43,11 @@ class MovimientoController extends Controller
         $equipo = Equipo::find($id);
         $areas = Area::where('activo', 1)->get();
         $usuarios = Empleado::where('activo', 1)->get();
-        return view('equipo.movimiento')->with('equipo', $equipo)->with('areas', $areas)->with('usuarios', $usuarios)->with('tipo', $tipo);
+        return view('equipo.movimiento')
+            ->with('equipo', $equipo)
+            ->with('areas', $areas)
+            ->with('usuarios', $usuarios)
+            ->with('tipo', $tipo);
     }
 
     /**
@@ -58,7 +64,7 @@ class MovimientoController extends Controller
             'id_usuario' => 'required',
             'registro' => 'required',
             'fecha' => 'required',
-            'comentarios' => 'required'
+            'comentarios' => 'required',
         ]);
         $movimiento = new MovimientoEquipo();
         $movimiento->id_equipo = $request->input('id_equipo');
@@ -71,27 +77,30 @@ class MovimientoController extends Controller
 
         //
         $log = new Log();
-        $log->tabla = "movimientoEquipo";
-        $mov = "";
-        $mov = $mov . " id_equipo:" . $movimiento->id_equipo . " id_area:" . $movimiento->id_area . " id_usuario" . $movimiento->id_usuario;
-        $mov = $mov . " registro:" . $movimiento->registro . " fecha:" . $movimiento->fecha . " comentarios:" . $movimiento->comentarios . ".";
+        $log->tabla = 'movimientoEquipo';
+        $mov = '';
+        $mov = $mov . ' id_equipo:' . $movimiento->id_equipo . ' id_area:' . $movimiento->id_area . ' id_usuario' . $movimiento->id_usuario;
+        $mov = $mov . ' registro:' . $movimiento->registro . ' fecha:' . $movimiento->fecha . ' comentarios:' . $movimiento->comentarios . '.';
         $log->movimiento = $mov;
         $log->usuario_id = Auth::user()->id;
-        $log->acciones = "Insercion";
+        $log->acciones = 'Insercion';
 
-        EntregaRecepcion::updateOrCreate(['id_equipo' => $request->id_equipo], ['id_usuario' => $movimiento->id_usuario, 'fecha' => date('Y-m-d'), 'ubicado' => '0']);
+        $equipo = Equipo::find($request->input('id_equipo'));
+        if (strcmp($equipo->tipo_sici, 'equipoCTA') == 0) {
+            EntregaRecepcion::updateOrCreate(['id_equipo' => $request->id_equipo], ['id_usuario' => $movimiento->id_usuario, 'fecha' => date('Y-m-d'), 'ubicado' => '0']);
+        }
 
         $log->save();
         //
         $tipo = $request->input('tipo');
         if ($tipo == 'inventario') {
-            return redirect('revision-inventario')->with(array(
-                'message' => 'El equipo se actualizo, ya puede volverlo a buscar en inventario'
-            ));
+            return redirect('revision-inventario')->with([
+                'message' => 'El equipo se actualizo, ya puede volverlo a buscar en inventario',
+            ]);
         } else {
-            return redirect('/')->with(array(
-                'message' => 'El equipo se cambió de ubicación correctamente'
-            ));
+            return redirect('/')->with([
+                'message' => 'El equipo se cambió de ubicación correctamente',
+            ]);
         }
     }
 
