@@ -17,10 +17,7 @@
                 <div class="col-12">
                     <h4>Información de Equipo</h4>
                 </div>
-
                 <hr>
-
-
             </div>
             <form action="{{ route('equipos.update', $equipo->id) }}" method="post" enctype="multipart/form-data"
                 class="col-12">
@@ -136,6 +133,14 @@
                             <option value="Wifi y Ethernet">Wifi y Ethernet</option>
                             <option value="Sin conexión">Sin conexión</option>
                         </select>
+                    </div>
+                    <div class="form-check col-md-2">
+                        <input class="form-check-input" type="checkbox" name="tipo_sici"
+                            {{ strcmp($equipo->tipo_sici, 'equipoCTA') == 0 ? 'checked' : '' }}
+                            value="equipoCTA" id="equipoCTA">
+                        <label class="form-check-label" for="equipoCTA">
+                            Equipo de CTA
+                        </label>
                     </div>
                 </div>
                 <div class="row g-3 align-items-center">
