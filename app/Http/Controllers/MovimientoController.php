@@ -66,6 +66,7 @@ class MovimientoController extends Controller
             'fecha' => 'required',
             'comentarios' => 'required',
         ]);
+        
         $movimiento = new MovimientoEquipo();
         $movimiento->id_equipo = $request->input('id_equipo');
         $movimiento->id_area = $request->input('id_area');

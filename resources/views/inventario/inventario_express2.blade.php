@@ -23,7 +23,7 @@
                             <div class="col-sm-12">
                                 <h2 class="text-muted text-center">Gráficas</h2>
                             </div>
-                            <div class="col-sm-12 col-md-6 col-lg-6 mb-3">
+                            <div class="col-sm-12 col-md-12 col-lg-6 mb-3">
                                 <div class="app-card app-card-stats-table h-100 shadow-sm border ">
                                     <div class="app-card-header p-3">
                                         <div class="row justify-content-between align-items-center">
@@ -81,7 +81,6 @@
                                                             </tr>
                                                         @endif
                                                     @endforeach
-
                                                     <tr>
                                                         <td><span>Revision inventario</span></td>
                                                         <td class="stat-cell">{{ $totales['total_inventario'] }}</td>
@@ -89,8 +88,6 @@
                                                             <p class="text-center">{{-- --}} </p>
                                                         </td>
                                                     </tr>
-
-
                                                 </tbody>
                                             </table>
                                         </div>
@@ -337,46 +334,53 @@
         });
     </script>
     <script type="text/javascript">
+
         $(document).ready(function() {
             $('#js-example-basic-single').select2();
         });
 
-        const total_sici_localizados = {!! json_encode($totales['S']) !!};
-        const total_22B_detalleInventario = {!! json_encode($totales['total_inventario']) !!};
-
+        const sici_localizados = {!! json_encode($totales['S']) !!};
+        const total_encontrados = {!! json_encode($totales['total_inventario']) !!};
 
         const ctx = document.getElementById('chart-pie').getContext('2d');
         const ctx2 = document.getElementById('chart-pie2').getContext('2d');
 
-        const myChart = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: ['localizados SICI CTA', 'localizados detalle inventario 22B'],
-                datasets: [{
-                    // label: '# of Votes',
-                    data: [total_sici_localizados, total_22B_detalleInventario],
-                    backgroundColor: [
-                        'rgb(240,173,78)',
-                        'rgb(92,184,92)',
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                    ],
-                    borderWidth: 1
-                }]
-            },
-        });
+
+        const labels = ['Localizados SICI'+ sici_localizados, 'Localizados inventario' + total_encontrados];
+        const data = {
+            labels: labels,
+            datasets: [{
+                label: 'Equipos Localizados',
+                data: [sici_localizados, total_encontrados],
+                backgroundColor: [
+                    'rgb(240,173,78)',
+                    'rgb(92,184,92)',
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                ],
+                borderWidth: 1
+            }]
+        }
+
+        const config = {
+            type: 'polarArea',
+            data: data,
+            options: {}
+        }
+
+        const myChart = new Chart(ctx, config);
 
         const total_equipos = {!! json_encode($totales['total']) !!};
 
         const myChart2 = new Chart(ctx2, {
             type: 'pie',
             data: {
-                labels: ['Total equipos', 'localizados detalle inventario 23A'],
+                labels: ['Total equipos', 'Localizados inventario'],
                 datasets: [{
                     // label: '# of Votes',
-                    data: [total_equipos, total_22B_detalleInventario],
+                    data: [total_equipos, total_encontrados],
                     backgroundColor: [
                         'rgb(240,173,78)',
                         'rgb(92,184,92)',

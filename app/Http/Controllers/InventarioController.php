@@ -27,85 +27,7 @@ class InventarioController extends Controller
      */
     public function index()
     {
-        /*Equipos*/
-        $total_equipos = DB::table('equipos')
-            ->select(DB::raw('COUNT(*) as cuenta_equipos'))
-            ->where('tipo_sici', '!=', null)
-            ->first();
-
-        $total_equipos_localizados_sici = DB::table('equipos')
-            ->select(DB::raw('COUNT(*) as cuenta_equipos_localizados_sici'))
-            ->where('resguardante', '=', 'CTA')
-            ->where('localizado_sici', '=', 'Si')
-            ->first();
-
-        $total_equipos_no_localizados_sici = DB::table('equipos')
-            ->select(DB::raw('COUNT(*) as cuenta_equipos_no_localizados_sici'))
-            ->where('resguardante', '=', 'CTA')
-            ->where('localizado_sici', '=', 'No')
-            ->first();
-
-        /*Muebles*/
-        $total_mobiliario = DB::table('mobiliario')
-            ->select(DB::raw('COUNT(*) as cuenta_mobiliario'))
-            ->first();
-
-        $total_mobiliario_localizado_sici = DB::table('mobiliario')
-            ->select(DB::raw('COUNT(*) as cuenta_mobiliario_localizado_sici'))
-            ->where('localizado_sici', '=', 'S')
-            ->first();
-
-        $total_mobiliario_no_localizado_sici = DB::table('mobiliario')
-            ->select(DB::raw('COUNT(*) as cuenta_mobiliario_no_localizado_sici'))
-            ->where('localizado_sici', '=', 'N')
-            ->first();
-
-        /*Localizados*/
-        $total_localizados = DB::table('inventario_detalles')
-            ->select(DB::raw('COUNT(*) as cuenta_localizados'))
-            ->where('estatus', '=', 'Localizado')
-            ->first();
-
-        /*Con incidentes*/
-        $total_incidentes = DB::table('inventario_detalles')
-            ->select(DB::raw('COUNT(*) as cuenta_incidentes'))
-            ->where('estatus', '=', 'Revision')
-            ->first();
-
-        /*No localizados*/
-        $total_no_localizados = $total_equipos_localizados_sici->cuenta_equipos_localizados_sici - $total_incidentes->cuenta_incidentes - $total_localizados->cuenta_localizados;
-
-        /*Reportados a contralor�a*/
-        $total_equipos_reportados = DB::table('equipos')
-            ->select(DB::raw('COUNT(*) as cuenta_equipos_reportados'))
-            ->where('resguardante', '=', 'CTA')
-            ->where('localizado_sici', '=', 'No')
-            ->first();
-        $total_mobiliario_reportados = DB::table('mobiliario')
-            ->select(DB::raw('COUNT(*) as cuenta_mobiliario_reportados'))
-            ->where('localizado_sici', '=', 'N')
-            ->first();
-        $total_equipos_reportados->cuenta_equipos_reportados += $total_mobiliario_reportados->cuenta_mobiliario_reportados;
-
-        /*AREAS*/
-        $areas = Area::all();
-
-        /*DATA TABLE*/
-        //$equipos = VsEquipo::where('id_area','=',$area_id)->get();
-        $conteo_por_area = Vs_Conteo_Por_Area::all();
-        return view('inventario.estadisticas-generales')
-            ->with('total_equipos', $total_equipos)
-            ->with('total_mobiliario', $total_mobiliario)
-            ->with('total_mobiliario_localizado_sici', $total_mobiliario_localizado_sici)
-            ->with('total_mobiliario_no_localizado_sici', $total_mobiliario_no_localizado_sici)
-            ->with('total_localizados', $total_localizados)
-            ->with('total_incidentes', $total_incidentes)
-            ->with('total_no_localizados', $total_no_localizados)
-            ->with('total_equipos_reportados', $total_equipos_reportados)
-            ->with('conteo_por_area', $conteo_por_area)
-            ->with('total_equipos_localizados_sici', $total_equipos_localizados_sici)
-            ->with('total_equipos_no_localizados_sici', $total_equipos_no_localizados_sici)
-            ->with('areas', $areas);
+        
     }
 
     /**
@@ -214,7 +136,7 @@ class InventarioController extends Controller
     {
         $inventario = '2023B';
 
-        $sici = VsEquipo::select('tipo_sici', DB::raw('count(*) as total'), 'localizado_sici')->where('tipo_sici', '=', 'equipo')
+        $sici = VsEquipo::select('tipo_sici', DB::raw('count(*) as total'), 'localizado_sici')->where('tipo_sici', '=', 'equipoCTA')
             ->where('activo', 1)
             ->groupBy('localizado_sici')
             ->pluck('total', 'localizado_sici');
@@ -222,20 +144,12 @@ class InventarioController extends Controller
 
   
         $inventario_area = DB::table('vs_inventariodetalle')
-            ->select('id_area', DB::raw('count(*) as total'), 'inventario')->where('tipo_sici', '=', 'equipo')->where('inventario', $inventario)
+            ->select('id_area', DB::raw('count(*) as total'), 'inventario')->where('tipo_sici', '=', 'equipoCTA')->where('inventario', $inventario)
             ->groupBy('id_area')
             ->pluck('total', 'id_area');
 
 
         $areas = Area::with('inventario')->where('activo', 1)->where('sede', '=', 'Belenes')->get();
-        /*
-        foreach ($areas as $key => $value) {
-            echo $value->id . "  Area: ". $value->area ."  Inventario: ". $value->inventario->count()  . "<br>";
-        }
-
-
-
-        */
 
         $total_inventario =  DB::table('vs_inventariodetalle')->where('inventario', '=', $inventario)->count();
 
@@ -249,7 +163,7 @@ class InventarioController extends Controller
         
         $areas = DB::table('vs_equipos')
             ->select(DB::raw('COUNT(*) as equipos, id_area, area'))
-            ->where('tipo_sici', '=', 'equipo')->where('activo', 1)->orderBy('id_area')
+            ->where('activo', 1)->orderBy('id_area')
             ->groupBy('id_area')
             ->get();
 
@@ -416,7 +330,7 @@ class InventarioController extends Controller
         $inventario = '2023B';
         /*Total equipos_en_sici*/
 
-        $sici = VsEquipo::select('id_area', DB::raw('count(*) as total'), 'localizado_sici')->where('tipo_sici', '=', 'equipo')
+        $sici = VsEquipo::select('id_area', DB::raw('count(*) as total'), 'localizado_sici')
             ->where('activo', 1)->where('id_area', '=', $area_id)
             ->groupBy('localizado_sici')
             ->pluck('total', 'localizado_sici');
@@ -430,7 +344,7 @@ class InventarioController extends Controller
         $equipos_locales = DB::table('vs_equipos')
             ->select('id', 'udg_id', 'tipo_equipo', 'marca', 'modelo', 'numero_serie', 'detalles', 'area', 'id_area')
             ->where('id_area', $area_id)
-            ->where('tipo_sici', '=', 'equipo')
+            
             ->get();
 
         foreach ($equipos_locales as $key => $value) {
@@ -468,7 +382,7 @@ class InventarioController extends Controller
     }
     public function listarEquipoEncontrado(Request $request)
     {
-        $ciclo = '2023B';
+        $ciclo =  (date('n') > 6)? date('Y') . 'B' : date('Y') . 'A';;
         //Se hace la ruta, la ruta manda llamar el m�todo y el m�todo manda llamar la plantilla
         $listadoEquipos = DB::table('vs_equipo_detalles')
             ->distinct('id')
@@ -515,10 +429,11 @@ class InventarioController extends Controller
             ->count();
 
         if ($articulosRegistrados == 0) {
-            $listadoEquipos = VsEquipo::where('id', '=', $equipo_id)->first();
+
+            $equipo = VsEquipo::where('id', '=', $equipo_id)->first();
             $registroInventario = new InventarioDetalle();
             $registroInventario->id_equipo = $equipo_id;
-            $registroInventario->id_area = $listadoEquipos->id_area;
+            $registroInventario->id_area = $equipo->id_area;
             $registroInventario->id_usuario = $revisor_id;
             $registroInventario->fecha = Carbon::now();
             $registroInventario->inventario = $origen;
