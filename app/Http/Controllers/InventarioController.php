@@ -428,6 +428,8 @@ class InventarioController extends Controller
             ->where('inventario', $origen)
             ->count();
 
+            $inventario = (date('n') > 6)? date('Y') . 'B' : date('Y') . 'A';
+            
         if ($articulosRegistrados == 0) {
 
             $equipo = VsEquipo::where('id', '=', $equipo_id)->first();

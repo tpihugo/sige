@@ -96,7 +96,7 @@
 
     </div>
 
-    @if (strcmp($oficio->con_copia, '') != 0)
+    @if (strcmp($oficio->con_copia, '-') != 0 and isset($oficio->con_copia))
         <div id="c_copia" style="font-size: 10px; text-align:left; margin-top:50px;">
             <p>
             <table>

@@ -66,9 +66,6 @@ class EntregaRecepcionController extends Controller
         $id_usuario = Auth::user()->id;
         $fecha = $request->ubicado == 0 ? 'Nunca ubicado' : date('Y-m-d');
         $registro = EntregaRecepcion::updateOrCreate(['id_equipo' => $request->id], ['id_usuario' => $id_usuario, 'fecha' => $fecha, 'ubicado' => $request->ubicado]);
-
-
-        
         if ($request->ubicado == 1) {
             $inventario = (date('n') > 6)? date('Y') . 'B' : date('Y') . 'A';
 

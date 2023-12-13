@@ -18,7 +18,7 @@
                 {{$total['encontrados']}} Encontrados
              </span>/
              <span  class="border-bottom border-primary btn-sm">
-                 {{$total['total']}}Totales
+                 {{$total['total']}} Totales
              </span>
         </h6>
         <hr>

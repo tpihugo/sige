@@ -48,16 +48,16 @@
                         <td>{{ $value->area_equipo }}</td>
                         <td>
                             @if (isset($value->fecha))
-                                <span id="fecha-{{ $value->udg_id }}">
+                                <span id="fecha-{{ $value->id }}">
                                     {{ $value->fecha }}
                                 </span>
                             @else
-                                <span id="fecha-{{ $value->udg_id }}">Nunca ubicado</span>
+                                <span id="fecha-{{ $value->id }}">Nunca ubicado</span>
                             @endif
                         </td>
                         <td class="text-center ">
-                            <input onclick="guardar('{{ $value->udg_id }}')" type="checkbox" name="id_equipo"
-                                {{ $value->ubicado == 1 ? 'checked' : '' }} id="{{ $value->udg_id }}">
+                            <input onclick="guardar('{{ $value->id }}')" type="checkbox" name="id_equipo"
+                                {{ $value->ubicado == 1 ? 'checked' : '' }} id="{{ $value->id }}">
                         </td>
                         <td>
                             {{ $value->nombre_usuario }}
@@ -185,6 +185,7 @@
                 "id": elemento,
                 "resguardante": '{{ $resguardante->codigo }}'
             };
+            console.log(send);
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -196,7 +197,7 @@
                 method: 'POST',
                 data: send
             }).done(function(data) {
-                //console.log(data);
+                console.log(data);
                 document.getElementById('total').innerHTML = data.total;
                 document.getElementById('encontrados').innerHTML = data.encontrados;
                 document.getElementById('faltantes').innerHTML = data.total - data.encontrados;
