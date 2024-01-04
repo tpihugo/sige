@@ -85,9 +85,9 @@
         <div style="{{ $estilosAtentamente }}">
             <p>
                 ATENTAMENTE <br>
-                <b> “PIENSA Y TRABAJA” </b><br>
-                “2023, AÑO DEL FOMENTO A LA FORMACIÓN INTEGRAL <br>
-                CON UNA RED DE CENTROS Y SISTEMAS MULTITEMÁTICOS” <br>
+                <b> “PIENSA Y TRABAJA”<br>
+                “30 años de la Autonom&iacute;a de la <br>
+                Universidad de Guadalajara y de su organizaci&oacute;n en Red”  </b><br>
 
                 Zapopan, Jalisco, {{ strftime('%e de %B de %Y', $fecha) }}
             </p>
@@ -96,7 +96,7 @@
 
     </div>
 
-    @if (strcmp($oficio->con_copia, '-') != 0 and isset($oficio->con_copia))
+    @if (strcmp($oficio->con_copia, '-') != 0 && isset($oficio->con_copia))
         <div id="c_copia" style="font-size: 10px; text-align:left; margin-top:50px;">
             <p>
             <table>
