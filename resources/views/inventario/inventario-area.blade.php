@@ -141,7 +141,7 @@
                                     <td>
                                         @if (strcmp($value->ultimo_inventario['estatus'], 'Localizado') != 0)
                                             <p><a class="btn btn-outline-success"
-                                                    href="{{ route('registro-inventario', ['equipo_id' => $value->id, 'origen' => '2023B']) }}">Localizar</a>
+                                                    href="{{ route('registro-inventario', ['equipo_id' => $value->id]) }}">Localizar</a>
                                             </p>
                                             <p><a href="{{ route('cambiar-ubicacion', ['equipo_id' => $value->id, 'tipo' => 'cambio']) }}"
                                                     class="btn btn-outline-primary">Reubicar</a></p>

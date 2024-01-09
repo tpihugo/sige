@@ -15,6 +15,13 @@
             <div class="row mt-3">
                 <h2 class="text-center">Oficios</h2>
             </div>
+            <div class="d-flex justify-content-center my-2">
+                @foreach ($anios as $item)
+
+                <a class="btn btn-primary mx-1 btn-sm" href="{{{route('oficios.inicio', $item)}}}">{{ $item }}</a>
+                    
+                @endforeach
+            </div>
             <div class="d-flex justify-content-end my-2">
                 <a href="{{ route('oficios.general') }}" class="btn btn-primary mx-1 btn-sm">Crear Oficio</a>
                 <a href="{{ route('oficios.create') }}" class="btn btn-success mx-1 btn-sm">Crear Oficio Liberación</a>
@@ -69,10 +76,9 @@
                     [0, "desc"]
                 ],
                 columnDefs: [{
-                        targets: [0],
-                        orderData: [0, 1]
-                    }
-                ],
+                    targets: [0],
+                    orderData: [0, 1]
+                }],
                 "language": {
                     "sProcessing": "Procesando...",
                     "sLengthMenu": "Mostrar _MENU_ registros",
