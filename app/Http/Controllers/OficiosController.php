@@ -7,6 +7,8 @@ use compra;
 use Dompdf\Cpdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class OficiosController extends Controller
 {
@@ -77,14 +79,26 @@ class OficiosController extends Controller
 
     public function update(Request $request, Oficios $oficio)
     {
-        $this->validate(
+        $regla = dd(
+            Rule::unique('oficios')->where(function ($query) {
+                $date = date('Y');
+                return $query->where('created_at', 'like', '%' . $date . '%');
+            }),
+        );
+        dd($regla);
+
+        /*
+        Validator::make(
             $request,
             [
-                'num_oficio' => 'required|unique:oficios,num_oficio,' . $oficio->id,
+                'num_oficio' => [
+                    'required',
+                    ,
+                ],
                 'dirigido' => 'required|starts_with:Lic.,Mtro.,Dr.,Mtra.,Dra.',
             ],
             $this->messages,
-        );
+        );*/
 
         foreach ($request->request as $key => $value) {
             if (!is_null($value) && strcmp('_token', $key) != 0 && strcmp('_method', $key) != 0 && strcmp('con_copia', $key) != 0) {

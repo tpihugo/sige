@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Articulo;
 use Illuminate\Http\Request;
 use App\Models\Requisicion;
 use function Ramsey\Uuid\v1;
@@ -37,14 +38,14 @@ class RequisicionController extends Controller
      */
     public function store(Request $request)
     {
-        $validateData = $this->validate($request,[
-            'num_sol'=>'required',
-            'fecha'=>'required',
-            'user'=>'required',
-            'proyecto'=>'required',
-            'fondo'=>'required',
-            'fecha_recibido'=>'required',
-            'quien_recibe'=>'required',
+        $validateData = $this->validate($request, [
+            'num_sol' => 'required',
+            'fecha' => 'required',
+            'user' => 'required',
+            'proyecto' => 'required',
+            'fondo' => 'required',
+            'fecha_recibido' => 'required',
+            'quien_recibe' => 'required',
         ]);
 
         $requisiciones = new Requisicion();
@@ -55,15 +56,14 @@ class RequisicionController extends Controller
         $requisiciones->fondo = $request->get('fondo');
         $requisiciones->fecha_recibido = $request->get('fecha_recibido');
         $requisiciones->quien_recibe = $request->get('quien_recibe');
-        if($request->hasFile('pdf'))
-        {
-            $archivo=$request->file('pdf');
-            $archivo->move(public_path().'/almacen/requis/',$archivo->getClientOriginalName());
-            $requisiciones->documento=$archivo->getClientOriginalName();
+        if ($request->hasFile('pdf')) {
+            $archivo = $request->file('pdf');
+            $archivo->move(public_path() . '/almacen/requis/', $archivo->getClientOriginalName());
+            $requisiciones->documento = $archivo->getClientOriginalName();
         }
         $requisiciones->save();
 
-        return redirect('/requisiciones');  
+        return redirect('/requisiciones');
     }
 
     /**
@@ -108,16 +108,19 @@ class RequisicionController extends Controller
         $requisicion->fondo = $request->get('fondo');
         $requisicion->fecha_recibido = $request->get('fecha_recibido');
         $requisicion->quien_recibe = $request->get('quien_recibe');
-        
-        if(isset($request->pdf))
-        {
+
+        if (strcmp($request->get('estatus'), 'Entregado') == 0) {
+            Articulo::where('requisicion_id', $id)->update(['status' => 'ENTREGADO A CTA']);
+        }
+
+        if (isset($request->pdf)) {
             $archivo = $request->file('pdf');
-            $archivo->move(public_path().'/almacen/requis/',$archivo->getClientOriginalName());
-            $requisicion->documento=$archivo->getClientOriginalName();
+            $archivo->move(public_path() . '/almacen/requis/', $archivo->getClientOriginalName());
+            $requisicion->documento = $archivo->getClientOriginalName();
         }
         $requisicion->save();
 
-        return redirect()->route('requisiciones.index');  
+        return redirect()->route('requisiciones.index');
     }
 
     /**
@@ -132,5 +135,4 @@ class RequisicionController extends Controller
         $requisicion->delete();
         return redirect()->route('requisiciones.index');
     }
-
 }
