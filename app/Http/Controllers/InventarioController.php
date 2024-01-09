@@ -134,7 +134,7 @@ class InventarioController extends Controller
 
     public function inventario_express2()
     {
-        $inventario = '2023B';
+        $inventario = (date('n') > 6)? date('Y') . 'B' : date('Y') . 'A';
 
         $sici = VsEquipo::select('tipo_sici', DB::raw('count(*) as total'), 'localizado_sici')->where('tipo_sici', '=', 'equipoCTA')
             ->where('activo', 1)
@@ -221,7 +221,7 @@ class InventarioController extends Controller
         $equipo_id = $request->input('equipo_id');
         $area_id = $request->input('area_id');
         $user_id = $request->input('user_id');
-        $inventario = '2023B';
+        $inventario = (date('n') > 6)? date('Y') . 'B' : date('Y') . 'A';
         $nota = $request->input('nota');
         $articulosRegistrados = InventarioDetalle::where([['id_equipo', '=', $equipo_id], ['inventario', '=', $inventario]])->count();
         if ($articulosRegistrados == 0) {
@@ -327,7 +327,7 @@ class InventarioController extends Controller
     public function inventario_por_area($area_id = 249)
     {
 
-        $inventario = '2023B';
+        $inventario = (date('n') > 6)? date('Y') . 'B' : date('Y') . 'A';
         /*Total equipos_en_sici*/
 
         $sici = VsEquipo::select('id_area', DB::raw('count(*) as total'), 'localizado_sici')
@@ -424,11 +424,13 @@ class InventarioController extends Controller
     public function registroInventario($equipo_id, $origen = 'revision-inventario')
     {
         $revisor_id = Auth::user()->id;
+        $inventario = (date('n') > 6)? date('Y') . 'B' : date('Y') . 'A';
+
         $articulosRegistrados = InventarioDetalle::where('id_equipo', $equipo_id)
-            ->where('inventario', $origen)
+            ->where('inventario', $inventario)
             ->count();
 
-            $inventario = (date('n') > 6)? date('Y') . 'B' : date('Y') . 'A';
+            
             
         if ($articulosRegistrados == 0) {
 
@@ -438,7 +440,7 @@ class InventarioController extends Controller
             $registroInventario->id_area = $equipo->id_area;
             $registroInventario->id_usuario = $revisor_id;
             $registroInventario->fecha = Carbon::now();
-            $registroInventario->inventario = $origen;
+            $registroInventario->inventario = $inventario;
             $registroInventario->estatus = 'Localizado';
             $registroInventario->notas = '-';
             $registroInventario->save();

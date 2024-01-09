@@ -179,7 +179,7 @@ Route::get("/delete-equipo/{equipo_id}", [
     "middleware" => "auth",
     "uses" => "App\Http\Controllers\EquipoController@delete_equipo",
 ]);
-Route::get("/registro-inventario/{equipo_id}/{origen}", [
+Route::get("/registro-inventario/{equipo_id}", [
     "as" => "registro-inventario",
     "middleware" => "auth",
     "uses" => "App\Http\Controllers\InventarioController@registroInventario",
@@ -683,13 +683,13 @@ Route::get("/delete-item/{item_id}", [
     "middleware" => "auth",
     "uses" => "App\Http\Controllers\BajaController@delete_item",
 ]);
-
+/*
 Route::get("/{id}/edit", [
     "as" => "bajas.edit",
     "middleware" => "auth",
     "uses" => "App\Http\Controllers\BajaController@edit",
 ]);
-
+*/
 Route::get("/imprimirBaja/{baja_id}", [
     "as" => "imprimirBaja",
     "middleware" => "auth",

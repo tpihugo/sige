@@ -588,7 +588,7 @@
                                                 </div>
                                                 <div class="mt-3">
                                                     <span><a class="btn btn-outline-danger  btn-sm m-1"
-                                                            href="{{ route('oficios.index') }}">
+                                                            href="{{ route('oficios.inicio',  date('Y')) }}">
                                                             Consultar oficios
                                                         </a></span>
                                                 </div>

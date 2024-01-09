@@ -15,16 +15,29 @@ class OficiosController extends Controller
     public $messages = [
         'dirigido.required' => 'Favor de ingresar a quien va dirigido',
         'num_oficio.required' => 'Favor de ingresar el número de oficio',
-        'num_oficio.unique' => 'El número de oficio ya esta registardo',
         'dirigido.starts_with' => 'Favor de incluir el titulo académico de a quien va dirigido',
         'atencion.required' => 'Favor de ingresar a quien va con atención',
         'atencion.starts_with' => 'Favor de incluir el titulo académico de a quien va dirigido',
     ];
+    public function index(){
 
-    public function index()
+    }
+
+    public function inicio($anio = null)
     {
-        $oficios = Oficios::where('activo', 1)->get();
-        return view('oficios.index', compact('oficios'));
+        $anio = $anio == null ? date('Y') : $anio;
+
+        $anios = array_keys(Oficios::select('created_at')
+            ->where('activo', 1)
+            ->get()
+            ->groupBy('anio')
+            ->toArray());
+
+        $oficios = Oficios::where('activo', 1)
+            ->where('created_at', 'like', $anio . '%')
+            ->get();
+
+        return view('oficios.index', compact('oficios','anios'));
     }
 
     public function create()
@@ -56,7 +69,7 @@ class OficiosController extends Controller
         $this->validate(
             $request,
             [
-                'num_oficio' => 'required|unique:oficios,num_oficio',
+                'num_oficio' => 'required',
                 'dirigido' => 'required|starts_with:Lic.,Mtro.,Dr.,Mtra.,Dra.',
             ],
             $this->messages,
