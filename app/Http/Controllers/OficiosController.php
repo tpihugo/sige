@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Oficios;
+use App\Models\Oficios;//
 use compra;
 use Dompdf\Cpdf;
 use Illuminate\Http\Request;
@@ -19,8 +19,8 @@ class OficiosController extends Controller
         'atencion.required' => 'Favor de ingresar a quien va con atención',
         'atencion.starts_with' => 'Favor de incluir el titulo académico de a quien va dirigido',
     ];
-    public function index(){
-
+    public function index()
+    {
     }
 
     public function inicio($anio = null)
@@ -37,7 +37,7 @@ class OficiosController extends Controller
             ->where('created_at', 'like', $anio . '%')
             ->get();
 
-        return view('oficios.index', compact('oficios','anios'));
+        return view('oficios.index', compact('oficios', 'anios'));
     }
 
     public function create()
@@ -87,31 +87,12 @@ class OficiosController extends Controller
         $oficio->con_copia = $con_copia;
         //return $oficio;
         $oficio->save();
-        return redirect()->route('oficios.index');
+        $anio = date('Y');
+        return redirect()->route('oficios.inicio', $anio);
     }
 
     public function update(Request $request, Oficios $oficio)
     {
-        $regla = dd(
-            Rule::unique('oficios')->where(function ($query) {
-                $date = date('Y');
-                return $query->where('created_at', 'like', '%' . $date . '%');
-            }),
-        );
-        dd($regla);
-
-        /*
-        Validator::make(
-            $request,
-            [
-                'num_oficio' => [
-                    'required',
-                    ,
-                ],
-                'dirigido' => 'required|starts_with:Lic.,Mtro.,Dr.,Mtra.,Dra.',
-            ],
-            $this->messages,
-        );*/
 
         foreach ($request->request as $key => $value) {
             if (!is_null($value) && strcmp('_token', $key) != 0 && strcmp('_method', $key) != 0 && strcmp('con_copia', $key) != 0) {
@@ -121,7 +102,8 @@ class OficiosController extends Controller
         $con_copia = Arr::exists($request, 'con_copia') ? implode('@', $request->con_copia) : '-';
         $oficio->con_copia = $con_copia;
         $oficio->update();
-        return redirect()->route('oficios.index');
+        $anio = date('Y');
+        return redirect()->route('oficios.inicio', $anio);
     }
 
     public function general()
