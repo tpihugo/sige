@@ -14,15 +14,21 @@
                 <script type="text/javascript">
 
                     $(document).ready(function() {
-                        $('#js-example-basic-single').select2();
+                        $('#js-example-basic-single').select2({
+                            theme: 'bootstrap-5'
+                        });
 
                     });
                     $(document).ready(function() {
-                        $('#js-example-basic-single2').select2();
+                        $('#js-example-basic-single2').select2({
+                            theme: 'bootstrap-5'
+                        });
 
                     });
                     $(document).ready(function() {
-                        $('#js-example-basic-single3').select2();
+                        $('#js-example-basic-single3').select2({
+                            theme: 'bootstrap-5'
+                        });
 
                     });
                 </script>

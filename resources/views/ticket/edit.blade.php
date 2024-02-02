@@ -18,11 +18,15 @@
                 <hr>
                 <script type="text/javascript">
                     $(document).ready(function() {
-                        $('#js-example-basic-single').select2();
+                        $('#js-example-basic-single').select2({
+                            theme: 'bootstrap-5'
+                        });
 
                     });
                     $(document).ready(function() {
-                        $('#js-example-basic-single2').select2();
+                        $('#js-example-basic-single2').select2({
+                            theme: 'bootstrap-5'
+                        });
 
                     });
                 </script>
@@ -50,11 +54,13 @@
                                 <label for="prioridad">Prioridad </label>
                                 <select class="form-control" id="prioridad" name="prioridad" required>
                                     <option disabled>Elegir</option>
-                                    <option value="Baja" {{ strcmp($ticket->prioridad, 'Baja') == 0 ? 'selected' : '' }}>Baja
+                                    <option value="Baja" {{ strcmp($ticket->prioridad, 'Baja') == 0 ? 'selected' : '' }}>
+                                        Baja
                                     </option>
                                     <option value="Media" {{ strcmp($ticket->prioridad, 'Media') == 0 ? 'selected' : '' }}>
                                         Media</option>
-                                    <option value="Alta" {{ strcmp($ticket->prioridad, 'Alta') == 0 ? 'selected' : '' }}>Alta
+                                    <option value="Alta" {{ strcmp($ticket->prioridad, 'Alta') == 0 ? 'selected' : '' }}>
+                                        Alta
                                     </option>
                                 </select>
                             </div>

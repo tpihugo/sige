@@ -334,9 +334,10 @@
         });
     </script>
     <script type="text/javascript">
-
         $(document).ready(function() {
-            $('#js-example-basic-single').select2();
+            $('#js-example-basic-single').select2({
+                theme: 'bootstrap-5'
+            });
         });
 
         const sici_localizados = {!! json_encode($totales['S']) !!};
@@ -346,7 +347,7 @@
         const ctx2 = document.getElementById('chart-pie2').getContext('2d');
 
 
-        const labels = ['Localizados SICI'+ sici_localizados, 'Localizados inventario' + total_encontrados];
+        const labels = ['Localizados SICI' + sici_localizados, 'Localizados inventario' + total_encontrados];
         const data = {
             labels: labels,
             datasets: [{

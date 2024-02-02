@@ -117,7 +117,9 @@
     @include('layouts.scripts')
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#usuario').select2();
+            $('#usuario').select2({
+                theme: 'bootstrap-5'
+            });
         });
     </script>
 @endsection

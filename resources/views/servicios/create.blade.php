@@ -1,4 +1,14 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+@section('title', 'Servicios')
+@section('css')
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css"
+        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    @include('layouts.head')
+@stop
 @section('content')
     <div class="container">
         @if (Auth::check() && (Auth::user()->role =="admin" || Auth::user()->role =="auxiliar" || Auth::user()->role =="cta"))

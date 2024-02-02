@@ -217,8 +217,12 @@
     @include('layouts.scripts')
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#asignar_tecnico').select2();
-            $('#tecnico_id').select2();
+            $('#asignar_tecnico').select2({
+                theme: 'bootstrap-5'
+            });
+            $('#tecnico_id').select2({
+                theme: 'bootstrap-5'
+            });
 
         });
 

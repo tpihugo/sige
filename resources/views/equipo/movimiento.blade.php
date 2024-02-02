@@ -150,8 +150,12 @@
 @section('js')
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#js-example-basic-single').select2();
-            $('#js-usuarios').select2();
+            $('#js-example-basic-single').select2({
+                theme: 'bootstrap-5'
+            });
+            $('#js-usuarios').select2({
+                theme: 'bootstrap-5'
+            });
         });
     </script>
 @endsection
