@@ -32,7 +32,9 @@
             </div>
             <script type="text/javascript">
                 $(document).ready(function() {
-                    $('#numero_serie').select2();
+                    $('#numero_serie').select2({
+                        theme: 'bootstrap-5'
+                    });
                 });
             </script>
             <div class="row">
@@ -67,7 +69,7 @@
 
                             </div>
                             <!--Aparto para que le usuario selecione los datos del equipo (Numero de serie, Tipo de equipo, MAC)
-                                                            y el nombre del usuario-->
+                                                                y el nombre del usuario-->
                             <div class="row align-items-center">
                                 <div class="col-md-12 pl-0">
                                     <center><label class="font-weight-bold" for="">Datos del equipo. </label>

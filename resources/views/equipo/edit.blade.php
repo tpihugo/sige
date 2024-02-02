@@ -136,8 +136,8 @@
                     </div>
                     <div class="form-check col-md-2">
                         <input class="form-check-input" type="checkbox" name="tipo_sici"
-                            {{ strcmp($equipo->tipo_sici, 'equipoCTA') == 0 ? 'checked' : '' }}
-                            value="equipoCTA" id="equipoCTA">
+                            {{ strcmp($equipo->tipo_sici, 'equipoCTA') == 0 ? 'checked' : '' }} value="equipoCTA"
+                            id="equipoCTA">
                         <label class="form-check-label" for="equipoCTA">
                             Equipo de CTA
                         </label>
@@ -171,8 +171,12 @@
 @section('js')
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#js-example-basic-single').select2();
-            $('#js-example-basic-single2').select2();
+            $('#js-example-basic-single').select2({
+                theme: 'bootstrap-5'
+            });
+            $('#js-example-basic-single2').select2({
+                theme: 'bootstrap-5'
+            });
         });
     </script>
 @endsection

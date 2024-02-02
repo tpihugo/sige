@@ -134,8 +134,12 @@
 @section('js')
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#busqueda-empleado').select2();
-            $('#js-example-basic-single').select2();
+            $('#busqueda-empleado').select2({
+                theme: 'bootstrap-5'
+            });
+            $('#js-example-basic-single').select2({
+                theme: 'bootstrap-5'
+            });
         });
     </script>
 @endsection

@@ -107,7 +107,8 @@
                                 <div class="col-md-6">
                                     <label class="font-weight-bold" for="adscripcion">Adscripción: *</label>
                                     <select class="form-control" id="js-example-basic-single3" name="adscripcion">
-                                        <option selected value="{{ $personal->id_adscripcion }}-{{ $personal->adscripcion }}">{{ $personal->adscripcion }}
+                                        <option selected value="{{ $personal->id_adscripcion }}-{{ $personal->adscripcion }}">
+                                            {{ $personal->adscripcion }}
                                         </option>
                                         @foreach ($areas as $item)
                                             <option value="{{ $item->id }}-{{ $item->area }}"> {{ $item->division }} -
@@ -133,7 +134,8 @@
 
                                 <div class="col-md-6">
                                     <label for="" class="form-label">Adjuntar Reporte</label>
-                                    <input type="file" name="pdf" id="pdf" class="form-control" accept="application/pdf">
+                                    <input type="file" name="pdf" id="pdf" class="form-control"
+                                        accept="application/pdf">
                                 </div>
 
                                 <div class="col-md-3">
@@ -235,9 +237,15 @@
 @section('js')
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#js-example-basic-single').select2();
-            $('#js-example-basic-single2').select2();
-            $('#js-example-basic-single3').select2();
+            $('#js-example-basic-single').select2({
+                theme: 'bootstrap-5'
+            });
+            $('#js-example-basic-single2').select2({
+                theme: 'bootstrap-5'
+            });
+            $('#js-example-basic-single3').select2({
+                theme: 'bootstrap-5'
+            });
         });
     </script>
 @endsection

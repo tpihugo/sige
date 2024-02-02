@@ -31,7 +31,9 @@
             </div>
             <script type="text/javascript">
                 $(document).ready(function() {
-                    $('#numero_serie').select2();
+                    $('#numero_serie').select2({
+                        theme: 'bootstrap-5'
+                    });
                 });
             </script>
             <div class="row">
@@ -65,7 +67,7 @@
 
                             </div>
                             <!--Aparto para que le usuario selecione los datos del equipo (Numero de serie, Tipo de equipo, MAC)
-                                y el nombre del usuario-->
+                                    y el nombre del usuario-->
                             <div class="row align-items-center">
                                 <div class="col-md-12 pl-0">
                                     <center><label class="font-weight-bold" for="">Datos del Equipo. </label>
@@ -122,7 +124,7 @@
                                     <br>
                                     <!--Ubicacion Fisica del Equipo.-->
                                     <label class="font-weight-bold" for="subred">Ubicación del Equipo:</label>
-                                    <textarea style="background-color: #fcfcfc;"  rows="2.5" id="area" name="area" class="form-control"
+                                    <textarea style="background-color: #fcfcfc;" rows="2.5" id="area" name="area" class="form-control"
                                         placeholder="Disabled input">{{ $edit->area }}</textarea>
                                 </div>
                                 <div class="col-md-1 pl-0">
