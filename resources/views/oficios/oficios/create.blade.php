@@ -4,6 +4,28 @@
 @section('css')
     @include('layouts.head_2')
 @stop
+@php
+    date_default_timezone_set('America/Mexico_City');
+    setlocale(LC_TIME, 'es_MX.UTF-8', 'esp');
+    $fecha = strftime('%e de %B de %Y', strtotime(date('Y-m-d')));
+    $att =
+        "<div style='text-align:center;line-height: 1;'>
+            <p>
+                ATENTAMENTE <br>
+                <b> “PIENSA Y TRABAJA”<br>
+                    “30 años de la Autonom&iacute;a de la <br>
+                    Universidad de Guadalajara y de su organizaci&oacute;n en Red” </b><br>
+
+                Zapopan, Jalisco, " .
+        $fecha .
+        "
+            </p>
+        </div>";
+    $coordinador = "<p style='text-align:center;line-height: 1;'>
+                <b>MTRO. VICTOR HUGO RAMIREZ SALAZAR <br>
+                    Coordinador de Tecnologías para el Aprendizaje</b>
+            </p>";
+@endphp
 @section('content')
     @php
         $ruta = asset('js/es_MX.js');
@@ -88,7 +110,11 @@
                     <hr>
                     <div class="col-md-12 p-2 ">
                         <label class="form-label" for="">Descripción</label>
-                        <textarea class="form-control" name="cuerpo" placeholder="Cuerpo del oficio" id="cuerpo">{{ old('cuerpo') }}</textarea>
+                        <textarea class="form-control" name="cuerpo" placeholder="Cuerpo del oficio" id="cuerpo">{{ old('cuerpo') }}
+                            {!! $att !!}
+                            <br><br><br><br>
+                            {{ $coordinador }}
+                            </textarea>
                     </div>
                     <div id="formulario">
 
