@@ -18,7 +18,9 @@
     <style>
         .pie {
             font-size: 10px;
-            text-align: center;
+            text-align: right;
+            border-top: grey 1px solid;
+            margin-top:10px;padding-top:10px;
         }
 
         td {
@@ -26,130 +28,138 @@
         }
 
         footer {
-            position: absolute;
+            position: fixed;
             bottom: 0cm;
             left: 0cm;
             right: 0cm;
+            height: 2cm;
+        }
+
+        @page {
+            margin-top: 10px;
+            margin-bottom: 0px;
         }
     </style>
 </head>
 
 <body>
-    <br>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 col-xs-12">
-                <p class="text-center"><img class="img-responsive" src="images/logo.jpg" width="100%"></p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 col-xs-12">
-                <table class="table table-bordered">
-                    <thead class="thead-light">
-                        <tr>
-                            <th scope="col" colspan="7">
-
-                                <h5 class="text-center">Formato de Préstamo / Recibo de Equipos</h5>
-
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td colspan="2"><b>Folio:</b> {{ $prestamo->id }}</td>
-                            <td colspan="3"><b>Fecha:
-                                </b>{{ \Carbon\Carbon::parse($prestamo->fecha_inicio)->format('d/m/Y') }}
-                            </td>
-                            <td colspan="2"><b>Tipo:</b> {{ $prestamo->estado }}</td>
-                        </tr>
-                        <tr>
-
-                            <td colspan="7"><b>Solicitante: </b> {{ $prestamo->solicitante }}</td>
-                        </tr>
-                        <tr>
-                            <td colspan="3"><b>Cargo: </b> {{ $prestamo->cargo }}</td>
-                            <td colspan="4"><b>Contacto: </b> {{ $prestamo->contacto }}</td>
-
-                        </tr>
-                        <tr>
-                            <td colspan="7"><b>Lugar:</b> {{ $prestamo->lugar }}</td>
-                        </tr>
-                        <tr>
-                        <tr>
-                            <td colspan="7" style="text-align: center;" class="thead-light"><b>Lista de Equipos</b>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><b>Id SIGE</b></td>
-                            <td><b>IdUdeG</b></td>
-                            <td><b>Tipo Equipo</b></td>
-                            <td><b>Marca</b></td>
-                            <td><b>Modelo</b></td>
-                            <td><b>N/S</b></td>
-                            <td><b>Accesorios</b></td>
-                        </tr>
-                        @foreach ($lista_final as $item)
-                            <tr style="outline: thin solid">
-                                <td>{{ $item['equipo']['id'] }}</td>
-                                <td>{{ $item['equipo']['idUDG'] }}</td>
-                                <td>{{ $item['equipo']['tipo'] }}</td>
-                                <td>{{ $item['equipo']['marca'] }}</td>
-                                <td>{{ $item['equipo']['modelo'] }}</td>
-                                <td>{{ $item['equipo']['n_s'] }}</td>
-                                <td>{{ $item['accesorios'] }}</td>
-                            </tr>
-                        @endforeach
-                        </tr>
-                        </tr>
-                        <td colspan="7"><b>Observaciones:</b> {{ $prestamo->observaciones }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <hr>
-                <table class="table table-bordered">
-
-                    <tbody>
-                        <tr>
-                            <td align="center" colspan="2" style="background-color: #BEC6C7;"><b>ENTREGÓ</b></td>
-                        </tr>
-                        <tr>
-                            <td align="left"><b>Nombre:</b> ___________________________________________</td>
-                            <td align="left"><b>Firma:</b> ___________________</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <hr>
-                <table class="table table-bordered">
-
-                    <tbody>
-                        <tr>
-                            <td align="center" colspan="2" style="background-color: #BEC6C7;"><b>RECIBIÓ</b></td>
-                        </tr>
-                        <tr>
-                            <td align="left"><b>Nombre:</b> ___________________________________________</td>
-                            <td align="left"><b>Firma:</b> ___________________</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"><span class="text-muted">
-                                    ** NOTA - En caso de que el equipo sea robado fuera de las instalaciones de CUCSH,
-                                    me comprometo a levantar los trámites correspondientes en la Fiscalía del Estado.
-                                </span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <footer>
-            <div class="row">
-                <div class="col-md-12 col-xs-12">
-                    <p class="pie">Hora y día de Impresión: {{ date('d-m-Y H:i:s') }} /
-                        Realizado por: {{ Auth::user()->name }} /
-                        Formato CTA-010. Actualización: 23/noviembre/2023</p>
+    <footer>
+        <p class="pie">Fecha: {{ date('d-m-Y H:i:s') }} /
+            Realizado por: {{ Auth::user()->name }} /
+            Formato CTA-010. Actualización: 23 / noviembre / 2023</p>
+    </footer>
+    <main id="content">
+        <div>
+            <div >
+                <div >
+                    <p class="text-center"><img class="img-responsive" src="images/logo.jpg" width="100%"></p>
                 </div>
             </div>
-        </footer>
-    </div>
+            <div >
+                <div>
+                    <table class="table table-bordered" style="width:100%;">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col" colspan="7">
+
+                                    <h5 class="text-center">Formato de Préstamo / Recibo de Equipos</h5>
+
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="2"><b>Folio:</b> {{ $prestamo->id }}</td>
+                                <td colspan="3"><b>Fecha:
+                                    </b>{{ \Carbon\Carbon::parse($prestamo->fecha_inicio)->format('d/m/Y') }}
+                                </td>
+                                <td colspan="2"><b>Tipo:</b> {{ $prestamo->estado }}</td>
+                            </tr>
+                            <tr>
+
+                                <td colspan="7"><b>Solicitante: </b> {{ $prestamo->solicitante }}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><b>Cargo: </b> {{ $prestamo->cargo }}</td>
+                                <td colspan="4"><b>Contacto: </b> {{ $prestamo->contacto }}</td>
+
+                            </tr>
+                            <tr>
+                                <td colspan="7"><b>Lugar:</b> {{ $prestamo->lugar }}</td>
+                            </tr>
+                            <tr>
+                            <tr>
+                                <td colspan="7" style="text-align: center;" class="thead-light"><b>Lista de
+                                        Equipos</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>Id SIGE</b></td>
+                                <td><b>IdUdeG</b></td>
+                                <td><b>Tipo Equipo</b></td>
+                                <td><b>Marca</b></td>
+                                <td><b>Modelo</b></td>
+                                <td><b>N/S</b></td>
+                                <td><b>Accesorios</b></td>
+                            </tr>
+                            @foreach ($lista_final as $item)
+                                <tr style="outline: thin solid">
+                                    <td>{{ $item['equipo']['id'] }}</td>
+                                    <td>{{ $item['equipo']['idUDG'] }}</td>
+                                    <td>{{ $item['equipo']['tipo'] }}</td>
+                                    <td>{{ $item['equipo']['marca'] }}</td>
+                                    <td>{{ $item['equipo']['modelo'] }}</td>
+                                    <td>{{ $item['equipo']['n_s'] }}</td>
+                                    <td>{{ $item['accesorios'] }}</td>
+                                </tr>
+                            @endforeach
+                            </tr>
+                            </tr>
+                            <td colspan="7"><b>Observaciones:</b> {{ $prestamo->observaciones }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr>
+                    <table class="table table-bordered">
+
+                        <tbody>
+                            <tr>
+                                <td align="center" colspan="2" style="background-color: #BEC6C7;"><b>ENTREGÓ</b></td>
+                            </tr>
+                            <tr>
+                                <td align="left"><b>Nombre:</b> ___________________________________________</td>
+                                <td align="left"><b>Firma:</b> ___________________</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr>
+                    <table class="table table-bordered">
+
+                        <tbody>
+                            <tr>
+                                <td align="center" colspan="2" style="background-color: #BEC6C7;"><b>RECIBIÓ</b></td>
+                            </tr>
+                            <tr>
+                                <td align="left"><b>Nombre:</b> ___________________________________________</td>
+                                <td align="left"><b>Firma:</b> ___________________</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><span class="text-muted">
+                                        ** NOTA - En caso de que el equipo sea robado fuera de las instalaciones de
+                                        CUCSH,
+                                        me comprometo a levantar los trámites correspondientes en la Fiscalía del
+                                        Estado.
+                                    </span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+        </div>
+    </main>
+
 </body>
 
 </html>

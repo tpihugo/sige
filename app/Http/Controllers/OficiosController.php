@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\OficiosExport;
 use App\Models\Oficios;//
-use compra;
 use Dompdf\Cpdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
+use Maatwebsite\Excel\Excel;
 
 class OficiosController extends Controller
 {
@@ -70,7 +70,7 @@ class OficiosController extends Controller
             $request,
             [
                 'num_oficio' => 'required',
-                'dirigido' => 'required|starts_with:Lic.,Mtro.,Dr.,Mtra.,Dra.',
+                'dirigido' => 'required'
             ],
             $this->messages,
         );
