@@ -41,7 +41,7 @@
                 <h2 class="text-center my-3">Editar Oficio</h2>
             </div>
             <div>
-                <form action="{{ route('oficios.update', $oficio->id) }}" method="POST" class="row">
+                <form action="{{ route('oficios.update', $oficio->id) }}" method="POST" class="row justify-content-center">
                     @csrf
                     @method('PUT')
                     <div class="my-1 col-sm-12 col-md-2">
@@ -79,6 +79,12 @@
                         <label for="atencion">Puesto Atención</label>
                         <input type="text" placeholder="Atención" value="{{ $oficio->puesto_atencion }}"
                             class="form-control" name="puesto_atencion" id="puesto_atencion">
+                    </div>
+                    <div class="my-1 col-sm-12 col-md-5">
+                        <label for="atencion">Asunto</label>
+                        <input type="text" placeholder="Asunto del oficio"
+                            value="{{ old('asunto') }}" class="form-control" name="asunto"
+                            id="asunto">
                     </div>
                     <span class="text-muted my-1"><small>NOTA: Favor de introducir nombres completos del personal</small>
                     </span>

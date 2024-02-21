@@ -63,9 +63,8 @@
                 <h2 class="text-center my-3">Crear Oficio</h2>
             </div>
             <div>
-                <form action="{{ route('oficios.store') }}" method="POST" class="row">
+                <form action="{{ route('oficios.store') }}" method="POST" class="row justify-content-center">
                     @csrf
-
                     <div class="my-1 col-sm-12 col-md-2">
                         <label for="num_oficio" class=" text-center">Oficio CTA</label>
                         <input type="text" class="text-center form-control" name="num_oficio" id="num_oficio"
@@ -102,6 +101,12 @@
                             value="{{ old('puesto_atencion') }}" class="form-control" name="puesto_atencion"
                             id="puesto_atencion">
                     </div>
+                    <div class="my-1 col-sm-12 col-md-5">
+                        <label for="atencion">Asunto</label>
+                        <input type="text" placeholder="Asunto del oficio"
+                            value="{{ old('asunto') }}" class="form-control" name="asunto"
+                            id="asunto">
+                    </div>
 
 
                     <span class="text-muted my-1"><small>NOTA: Favor de introducir nombres completos del personal</small>
@@ -130,6 +135,7 @@
 
 
                 </form>
+                
             </div>
         @else
             El periodo de Registro de Proyectos a terminado

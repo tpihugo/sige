@@ -16,16 +16,16 @@
     <title>CUCSH/SA/CTA/{{ $oficio->num_oficio }}/{{ $anio }}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
     <style>
-        footer {
+        #footer {
             position: fixed;
             bottom: 0cm;
             left: 0cm;
             right: 0cm;
-            height: 1cm;
+            height:2cm;
         }
 
         @page {
-            margin-top: 10px;
+            margin-top: 15px;
             margin-bottom: 0px;
         }
 
@@ -33,25 +33,30 @@
             font-size: 10px;
             text-align: center;
             border-top: grey 1px solid;
-            margin-top: 10px;
+            margin-top: 15px;
             padding-top: 10px;
+        }
+
+        #footer .page:after {
+            content: counter(page, decimal);
         }
     </style>
 </head>
 
 <body>
-    <footer>
+    <footer id="footer">
         <p class="pie">Av. Parres Arias #150 Colonia San José del Bajío C.P. 45132 Zapopan, Jal. Edificio E
-            Piso 2, <br> Tel. (33) 38193300 Ext. 23700</p>
+            Piso 2, <br> Tel. (33) 38193300 Ext. 23700 / <span class="page">Página </span></p>
     </footer>
+
     <main id="content">
         <div>
             <div>
                 <img src="{{ $img }}" width="75px"
                     style="float:left;margin-right:20px; padding-right:20px; border-right:solid grey; 2px">
-                <p style="margin-top: 30px; ">UNIVERSIDAD DE GUADALAJARA <br>
+                <p style="margin-top: 30px; line-height:1;font-size:16px;">UNIVERSIDAD DE GUADALAJARA <br>
                     CENTRO UNIVERSITARIO DE CIENCIAS SOCIALES Y HUMANIDADES <br>
-                    SECRETARÍA ACADÉMICA | COORDINACIÓN DE TECNOLOGÍAS PARA EL APRENDIZAJE</p>
+                    SECRETARÍA ACADÉMICA <br> COORDINACIÓN DE TECNOLOGÍAS PARA EL APRENDIZAJE</p>
             </div>
             <div style="clear: both; margin-top:50px;text-align:right;">
                 <div class="col-auto ">
@@ -60,7 +65,7 @@
             </div>
 
             <div>
-                <span>
+                <span style="line-height:1;">
                     <b>
                         {{ Str::upper($oficio->dirigido) }}<br>
 
@@ -82,7 +87,7 @@
                     </span>
                 </div>
             @endif
-            <div>
+            <div style="margin-top:15px;  margin-bottom:1.10cm; padding-bottom:15px;">
                 {!! $oficio->cuerpo !!}
             </div>
 

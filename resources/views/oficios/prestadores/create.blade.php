@@ -35,7 +35,7 @@
                 <h2 class="text-center my-3">Crear Oficio Liberación Prestador</h2>
             </div>
             <div>
-                <form action="{{ route('oficios.store') }}" method="POST" class="row justify-content-end">
+                <form action="{{ route('oficios.store') }}" method="POST" class="row justify-content-center">
                     @csrf
                     <div class="my-1 col-sm-12 col-md-2">
                         <label for="num_oficio" class=" text-center">Oficio CTA</label>
@@ -58,7 +58,7 @@
                     <div class="my-1 col-sm-12 col-md-2">
                         <label for="centro_universitario">Centro Universitario</label>
                         <input type="text" placeholder="C.U." value="{{ old('centro_universitario') }}"
-                            class="form-control" name="centro_universitario" id="centro_universitario">
+                            class="form-control text-center" name="centro_universitario" id="centro_universitario">
                     </div>
 
                     <div class="my-1 col-sm-12 col-md-5">
@@ -73,6 +73,10 @@
                             class="form-control" name="puesto_atencion" id="puesto_atencion">
                     </div>
 
+                    <div class="my-1 col-sm-12 col-md-5">
+                        <label for="atencion">Asunto</label>
+                        <input type="text" class="form-control" name="asunto" id="asunto" value="Liberacion de servicio/practicas">
+                    </div>
 
                     <span class="text-muted my-1"><small>NOTA: Favor de introducir nombres completos del personal</small>
                     </span>
