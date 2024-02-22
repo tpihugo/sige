@@ -18,6 +18,7 @@ class OficiosController extends Controller
         'dirigido.starts_with' => 'Favor de incluir el titulo académico de a quien va dirigido',
         'atencion.required' => 'Favor de ingresar a quien va con atención',
         'atencion.starts_with' => 'Favor de incluir el titulo académico de a quien va dirigido',
+        'asunto.required' => 'Favor de incluir el asunto'
     ];
     public function index()
     {
@@ -37,7 +38,7 @@ class OficiosController extends Controller
             ->where('created_at', 'like', $anio . '%')
             ->get();
 
-        return view('oficios.index', compact('oficios', 'anios'));
+        return view('oficios.index', compact('oficios', 'anios','anio'));
     }
 
     public function create()
@@ -54,10 +55,8 @@ class OficiosController extends Controller
     public function show(Oficios $oficio)
     {
         $html = view('oficios.prestadores.plantilla', compact('oficio'));
-        //return $html;
         $pdf = \PDF::loadHtml($html->render());
-        $nombre = 'CUCSH_SA_CTA_' . $oficio->num_oficio . '_' . date('Y') . '.pdf';
-        return $pdf->stream($nombre);
+        return $pdf->stream();
     }
     public function edit(Oficios $oficio)
     {
@@ -70,7 +69,8 @@ class OficiosController extends Controller
             $request,
             [
                 'num_oficio' => 'required',
-                'dirigido' => 'required'
+                'dirigido' => 'required',
+                'asunto' => 'required'
             ],
             $this->messages,
         );

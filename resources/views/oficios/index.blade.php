@@ -13,7 +13,7 @@
                 </div>
             @endif
             <div class="row mt-3">
-                <h2 class="text-center">Oficios</h2>
+                <h2 class="text-center">Oficios {{$anio}}</h2>
             </div>
             <div class="d-flex justify-content-center my-2">
                 @foreach ($anios as $item)
@@ -32,11 +32,11 @@
                     <table id="usersTable" class="display table-striped table-bordered" width="100%">
                         <thead>
                             <tr>
-                                <th>Núm Oficio</th>
-                                <th>Año</th>
+                                <th>Oficio</th>
                                 <th>Dirigido</th>
                                 <th>Atención</th>
                                 <th>C.U.</th>
+                                <th>Asunto</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -44,14 +44,13 @@
                             @foreach ($oficios as $item => $value)
                                 <tr>
                                     <td>{{ $value->num_oficio }}</td>
-                                    <td>{{ $value->created_at->format('Y') }}</td>
                                     <td>{{ $value->dirigido }}</td>
                                     <td>{{ $value->atencion }}</td>
                                     <td>{{ $value->centro_universitario }}</td>
+                                    <td>{{ $value->asunto }}</td>
+                                    <td class="text-center"><a target="_blank"   class="btn btn-sm btn-primary my-1" href="{{ route('oficios.show', $value->id) }}"><i class="far fa-file"></i></a>
 
-                                    <td><a target="_blank" href="{{ route('oficios.show', $value->id) }}">Imprimir</a>
-
-                                        <a href="{{ route('oficios.edit', $value->id) }}">Editar</a>
+                                        <a href="{{ route('oficios.edit', $value->id) }}"  class="btn btn-sm btn-success  my-1" ><i class="far fa-edit"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
