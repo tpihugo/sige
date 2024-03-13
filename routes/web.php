@@ -29,6 +29,7 @@ include_once 'articulos.php';
 include_once 'areas.php';
 include_once 'oficios.php';
 include_once 'entrega.php';
+include_once 'modulos.php';
 
 Route::middleware(["auth:sanctum", "verified"])
     ->get("/", [App\Http\Controllers\HomeController::class, "index"])

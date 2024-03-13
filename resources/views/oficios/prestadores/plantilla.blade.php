@@ -21,7 +21,7 @@
             bottom: 0cm;
             left: 0cm;
             right: 0cm;
-            height:2cm;
+            height: 2cm;
         }
 
         @page {
@@ -69,7 +69,8 @@
                     <b>
                         {{ Str::upper($oficio->dirigido) }}<br>
 
-                        {{ Str::upper($oficio->puesto_dirigido) }}<br> {{ Str::upper($oficio->centro_universitario) }}
+                        {{ strcmp($oficio->puesto_dirigido, '-') != 0 ? Str::upper($oficio->puesto_dirigido) : '' }}<br>
+                        {{ Str::upper($oficio->centro_universitario) }}
                         <br>
                         PRESENTE
                     </b>

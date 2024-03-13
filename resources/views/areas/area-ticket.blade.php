@@ -11,7 +11,7 @@
 @section('content')
     @if (Auth::check() &&
             (Auth::user()->role == 'admin' ||
-                Auth::user()->role == 'rh' ||
+                Auth::user()->role == 'Planeación' ||
                 Auth::user()->role == 'redes' ||
                 Auth::user()->role == 'cta'))
         <div class="container">
@@ -23,9 +23,10 @@
                         {{-- Muestra el listado de Aulas --}}
                         <div class="mb-3 p-4 shadow-sm w-100 border  ">
                             <h2 class="text-center "><a class="text-dark"
-                                    href="{{ route('area.edificio_equipos', [$sede, $clave]) }}"><span class="material-icons md-18 pr-1 mr-1">
+                                    href="{{ route('area.edificio_equipos', [$sede, $clave]) }}"><span
+                                        class="material-icons md-18 pr-1 mr-1">
                                         devices
-                                    </span>  Edificio {{ $clave }}
+                                    </span> Edificio {{ $clave }}
                             </h2>
                             @php
                                 $pisos = collect($valor);
@@ -44,12 +45,26 @@
                                     <a onclick="modal({{ collect($value) }})" class="text-white {{ $estilos }}"
                                         data-bs-toggle="modal" data-bs-target="#exampleModal">
                                         <span class="d-flex">
-                                            {{ $value['area'] }}
-                                            {{--
-                                            <span class="mx-1 material-icons md-10 ">videocam photo_camera</span>
-                                            --}}
-                                        </span>
+                                            <span class="mx-1">
+                                                {{ $value['area'] }}
+                                            </span>
+                                            @if (str_contains($value['equipamiento'], 'PC'))
+                                                <span class="material-symbols-outlined mx-1">
+                                                    computer
+                                                </span>
+                                            @endif
+                                            @if (str_contains($value['equipamiento'], 'TV'))
+                                                <span class="material-symbols-outlined">
+                                                    tv
+                                                </span>
+                                            @endif
 
+                                            @if (str_contains($value['equipamiento'], 'Proyector'))
+                                                <span class="material-symbols-outlined mx-1">
+                                                    videocam
+                                                </span>
+                                            @endif
+                                        </span>
                                     </a>
                                 @endforeach
                             @endforeach
@@ -58,21 +73,39 @@
 
                 </div>
                 <div class="col-md-2 col-sm-12 order-sm-0 order-md-1">
-                    <div class="d-flex flex-column align-items-center ">
-                        <p class="font-weight-bold">Sedes</p>
+                    <div class="d-flex flex-column">
+                        <p class="font-weight-bold text-center mt-5">Sedes</p>
                         @if (strcmp($sede, 'Belenes') == 0)
                             <a href="{{ route('area-ticket', 'Belenes') }}"
-                                class="col-auto my-2 btn  btn-primary  w-100">Belenes</a>
+                                class="col-auto mb-2 btn  btn-primary  w-100">Belenes</a>
                             <a href="{{ route('area-ticket', 'La Normal') }}"
-                                class="col-auto my-2 btn btn-outline-dark w-100">La
+                                class="col-auto mb-2 btn btn-outline-dark w-100">La
                                 Normal</a>
                         @else
                             <a href="{{ route('area-ticket', 'Belenes') }}"
-                                class="col-auto my-2 btn btn-outline-dark w-100">Belenes</a>
+                                class="col-auto mb-2 btn btn-outline-dark w-100">Belenes</a>
                             <a href="{{ route('area-ticket', 'La Normal') }}"
-                                class="col-auto my-2 btn btn-primary  w-100">La
+                                class="col-auto mb-2 btn btn-primary  w-100">La
                                 Normal</a>
                         @endif
+                        <div class="d-flex ">
+                            <span class="material-symbols-outlined mx-1">
+                                tv
+                            </span>
+                            Pantalla
+                        </div>
+                        <div class="d-flex ">
+                            <span class="material-symbols-outlined mx-1">
+                                computer
+                            </span>
+                            Computadora
+                        </div>
+                        <div class="d-flex ">
+                            <span class="material-symbols-outlined mx-1">
+                                videocam
+                            </span>
+                            Proyector
+                        </div>
                     </div>
                 </div>
             </div>
@@ -102,6 +135,7 @@
                                 <p>Prioridad: <span id="prioridad"></span></p>
                             </div>
                         </div>
+                        @can('TICKETS#ver')
                         <div class="d-flex justify-content-center mt-2">
 
                             <a href="" id="historial" class="mx-2 btn btn-primary">Historial</a>
@@ -109,6 +143,7 @@
                             <a href="" id="equipos" class="mx-2 btn btn-primary">Equipos</a>
 
                         </div>
+                        @endcan
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cerrar</button>
@@ -125,20 +160,19 @@
 @section('js')
     <script>
         function modal(params) {
-            console.log(params);
             $("#exampleModalLabel").html(params['area']);
             if (params['imagen_1'] == 'Sin imagen') {
                 document.getElementById('slide').style.display = 'none';
             } else {
                 document.getElementById('slide').style.display = 'block';
-                var url = "{{ url('storage/images/:id') }}";
+                var url = "{{ asset('storage/images/:id') }}";
                 url = url.replace(':id', params['imagen_1']);
                 $('#img1').attr("src", url);
                 if (params['imagen_2'] == 'Sin imagen') {
                     document.getElementById('slide_2').style.display = 'none';
                 } else {
                     document.getElementById('slide_2').style.display = 'block';
-                    var url = "{{ url('storage/images/:id') }}";
+                    var url = "{{ asset('storage/images/:id') }}";
                     url = url.replace(':id', params['imagen_2']);
                     $('#img2').attr("src", url);
                 }

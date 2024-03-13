@@ -13,6 +13,7 @@
         "barryvdh/laravel-dompdf": "*",
         "guzzlehttp/guzzle": "^7.0.1",
         "jeroennoten/laravel-adminlte": "^3.8",
+        "laravel-admin-ext/lock-screen": "^1.0",
         "laravel/framework": "^10.0",
         "laravel/jetstream": "^2.2",
         "laravel/sanctum": "^3.3",

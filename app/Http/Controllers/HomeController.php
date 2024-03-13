@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\VsTicket;
 use Illuminate\Support\Carbon;
 use App\Models\VsPrestamo;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Modulos;
+use DragonCode\Support\Facades\Helpers\Arr as HelpersArr;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -41,17 +46,33 @@ class HomeController extends Controller
             ->where('estado', 'En préstamo')
             ->get();
 
-        $prestamos_contador = VsPrestamo::where('activo', '=', 1)
+        $prestamos = VsPrestamo::where('activo', '=', 1)
             ->where('estado', 'En préstamo')
             ->count();
 
-        $prestamos_expirados = $this->Notificacion_prestamos($vsprestamos);
+        $notificacion = $this->Notificacion_prestamos($vsprestamos);
+
+
+        $user = Auth::user();
+        $permissionNames = $user->getPermissionsViaRoles();
+
+        $mapped = Arr::map($permissionNames->pluck('name')->toArray(), function (string $value, string $key) {
+            return explode('#', $value)[0];
+        });
+
+        $oficios_titulacion = DB::connection('mysql2')->table('oficios_titulacion')->where('enviado', 1)->where('estatus', null)->count();
+
+        $nombres = array_values(array_unique($mapped));
+
+        $modulos = Modulos::with('enlaces')->select('id', 'nombre', 'nombre_permiso', 'icono', 'color')->whereIn('nombre_permiso', $nombres)->orderBy('orden')->get();
+
+        return view('home2', compact('modulos', 'ticketsNormal', 'ticketsBelenes', 'notificacion', 'prestamos', 'oficios_titulacion'));
 
         return view('home')
             ->with('ticketsNormal', $ticketsNormal)
             ->with('ticketsBelenes', $ticketsBelenes)
-            ->with('notificacion', $prestamos_expirados)
-            ->with('prestamos', $prestamos_contador);
+            ->with('notificacion', $notificacion)
+            ->with('prestamos', $prestamos);
     }
 
     public function Notificacion_prestamos($vsprestamos)

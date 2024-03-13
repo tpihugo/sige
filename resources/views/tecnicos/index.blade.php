@@ -45,14 +45,12 @@
                         <thead>
                             <tr>
                                 <th>Nombre</th>
-                                <th>Ciclo</th>
                                 <th>Teléfono</th>
                                 <th>Teléfono de emergencia</th>
                                 <th>Asistencia</th>
                                 <th>Carrera</th>
                                 <th>Institución</th>
-                                <th>Orden</th>
-                                <th>Programa/Comentario</th>
+                                <th>Ciclo</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -80,7 +78,7 @@
                 "data": data,
                 "pageLength": 25,
                 "order": [
-                    [0, "desc"]
+                    [0, "asc"]
                 ],
                 "language": {
                     "sProcessing": "Procesando...",

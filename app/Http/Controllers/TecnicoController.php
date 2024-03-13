@@ -36,10 +36,10 @@ class TecnicoController extends Controller
             $acciones = '
                 <div class="btn-acciones">
                     <div class="btn-circle">
-                        <a href="'.$actualizar.'" class="btn btn-success" title="Actualizar">
+                        <a href="'.$actualizar.'" class="btn btn-success btn-sm" title="Actualizar">
                             <i class="far fa-edit"></i>
                         </a>
-                        <a href="#'.$ruta.'" role="button" class="btn btn-danger" data-toggle="modal" title="Eliminar">
+                        <a href="#'.$ruta.'" role="button" class="btn btn-danger btn-sm" data-toggle="modal" title="Eliminar">
                             <i class="far fa-trash-alt"></i>
                         </a>
                     </div>
@@ -54,8 +54,8 @@ class TecnicoController extends Controller
                       </button>
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <a href="'.$eliminar.'" type="button" class="btn btn-danger">Eliminar</a>
+                      <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                      <a href="'.$eliminar.'" type="button" class="btn btn-danger btn-sm">Eliminar</a>
                     </div>
                   </div>
                 </div>
@@ -64,14 +64,12 @@ class TecnicoController extends Controller
 
             $tecnicos[$key] = array(
                 $value['nombre'],
-                $value['ciclo_inicio'],
                 $value['telefono'],
                 $value['telefono_emergencia'],
                 $value['asistencia'],
                 $value['carrera'],
                 $value['institucion'],
-                $value['orden'],
-                $value['comentarios'],
+                $value['ciclo_inicio'],
                 $acciones,
             );
 

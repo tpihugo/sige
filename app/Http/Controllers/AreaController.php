@@ -185,7 +185,7 @@ class AreaController extends Controller
      */
     public function edit($id)
     {
-        $equipamiento = ['Pantalla Proyección' => '', 'Proyector' => '', 'PC' => '', 'Pantalla' => '', 'Bocinas' => '', 'Camara' => ''];
+        $equipamiento = [ 'Proyector' => '', 'PC' => '', 'TV' => '','Camara' => ''];
         $area = Area::find($id);
         $equipos_area = explode(",", $area->equipamiento);
 

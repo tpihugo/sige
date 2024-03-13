@@ -37,12 +37,13 @@ class PDFController extends Controller
             }
             $lista_final[$item] = ["equipo" => $equipo, 'accesorios' => $elements[1]];
         }
-        $html = view('prestamo.formatoPrestamo', compact('prestamo', 'lista_final'));
+        //$html = view('prestamo.formatoPrestamo', compact('prestamo', 'lista_final'));
         //return $html;
-        $pdf = \PDF::loadHtml($html->render());
-        //$pdf = \PDF::loadView('prestamo.formatoPrestamo', compact('prestamo', 'lista_final'));
+        //$pdf = \PDF::loadHtml($html->render());
+
+        $pdf = \PDF::loadView('prestamo.formatoPrestamo', compact('prestamo', 'lista_final'));
         $nombre = "Prestamo_" . $prestamo->id . ".pdf";
-        return $pdf->stream($nombre);
+        return $pdf->stream('formatopersonal.pdf');
     }
 
     public function imprimirRecibo($ticket_id)

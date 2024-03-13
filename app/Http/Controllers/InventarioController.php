@@ -144,9 +144,10 @@ class InventarioController extends Controller
 
   
         $inventario_area = DB::table('vs_inventariodetalle')
-            ->select('id_area', DB::raw('count(*) as total'), 'inventario')->where('tipo_sici', '=', 'equipoCTA')->where('inventario', $inventario)
-            ->groupBy('id_area')
-            ->pluck('total', 'id_area');
+            ->select('id_area', DB::raw('count(DISTINCT(id_equipo)) as total'), 'inventario')->where('tipo_sici', '=', 'equipoCTA')
+            ->where('inventario', $inventario)
+           ->groupBy('id_area')
+           ->pluck('total', 'id_area');
 
 
         $areas = Area::with('inventario')->where('activo', 1)->where('sede', '=', 'Belenes')->get();
@@ -354,6 +355,7 @@ class InventarioController extends Controller
                 ->where('inventario', $inventario)
                 ->latest()
                 ->first();
+                
             if ($ultimo_invemtario == null) {
                 $ultimo_invemtario = DB::table('inventario_detalles')
                     ->where('id_area', $area_id)

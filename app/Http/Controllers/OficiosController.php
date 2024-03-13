@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Exports\OficiosExport;
-use App\Models\Oficios;//
+use App\Mail\RespuestaAlumnos;
+use App\Models\Oficios; //
+use App\Models\User;
 use Dompdf\Cpdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Excel;
 
@@ -20,6 +24,7 @@ class OficiosController extends Controller
         'atencion.starts_with' => 'Favor de incluir el titulo académico de a quien va dirigido',
         'asunto.required' => 'Favor de incluir el asunto'
     ];
+
     public function index()
     {
     }
@@ -34,11 +39,11 @@ class OficiosController extends Controller
             ->groupBy('anio')
             ->toArray());
 
-        $oficios = Oficios::where('activo', 1)
+        $oficios = Oficios::where('activo', 1)->where('asunto', '!=', 'Oficio de Titulación')
             ->where('created_at', 'like', $anio . '%')
             ->get();
 
-        return view('oficios.index', compact('oficios', 'anios','anio'));
+        return view('oficios.index', compact('oficios', 'anios', 'anio'));
     }
 
     public function create()
@@ -115,5 +120,53 @@ class OficiosController extends Controller
 
         $oficio = $id->num_oficio + 1;
         return view('oficios.oficios.create', compact('oficio'));
+    }
+
+    public function oficios_titulacion()
+    {
+        $oficios_titulacion =  DB::connection('mysql2')->table('oficios_titulacion')->select('id', 'name', 'codigo', 'carrera', 'email', 'estatus')
+            ->where('enviado', 1)->where('estatus', '=', null)->get();
+
+        return view('oficios.titulacion.index', compact('oficios_titulacion'));
+    }
+    public function oficios_titulacion_notificar(Request $request)
+    {
+
+        if (strcmp($request->estatus, 'aceptar') == 0) {
+
+
+            $id = Oficios::select('num_oficio')
+                ->where('activo', 1)
+                ->latest()
+                ->first();
+
+            $numero = $id->num_oficio + 1;
+            $oficio = Oficios::updateOrCreate(
+                ['dirigido' => $request->nombre, 'asunto' => 'Oficio de Titulación', 'activo' => 1],
+                [
+                    'num_oficio' => $numero, 'dirigido' => $request->nombre, 'asunto' => 'Oficio de Titulación', 'atencion' => '-',
+                    'centro_universitario' => 'CUCSH', 'cuerpo' => 'Oficio para titulación'
+                ]
+            );
+            $num_oficio = $oficio->id;
+            $usuario = DB::connection('mysql2')->table('users')->where('id',$request->id)->first();
+            dd(new User($usuario));
+            Mail::to($usuario->email)->send(new RespuestaAlumnos($usuario));
+            return $usuario;
+        } else {
+            $num_oficio = "No aceptado";
+        }
+        //dd((strcmp($request->estatus, 'aceptar') == 0) ? 0 : 1);
+
+        DB::connection('mysql2')->table('oficios')->updateOrInsert(
+            ['user_id' => $request->id],
+            [
+                'user_id' => $request->id,
+                'num_oficio' => $num_oficio,
+                'estatus' => (strcmp($request->estatus, 'aceptar') == 0) ? 1 : 0
+            ]
+
+        );
+        return redirect()->route('oficios.titulacion');
     }
 }
