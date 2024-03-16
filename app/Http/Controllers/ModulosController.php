@@ -47,6 +47,7 @@ class ModulosController extends Controller
             'nombre' => $request->nombre,
             'icono' => $request->icono,
             'color' => $request->color,
+            'nombre_permiso' => $request->nombre_permiso,
             'orden' => $request->orden
         ]);
 

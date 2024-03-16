@@ -30,7 +30,7 @@
                     <div class="mx-1">
                         <input type="number" placeholder="Orden de ubicación" name="orden" class="form-control">
                     </div>
-                    
+
                     <div class="mx-1">
                         <input type="color" placeholder="Color" name="color" value="#563d7c"
                             class="form-control form-control-color">
@@ -49,6 +49,7 @@
                                 <th>Nombre</th>
                                 <th>Color</th>
                                 <th>Icon</th>
+                                <th>Orden</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -58,7 +59,7 @@
                                     <td>{{ $value->nombre }}</td>
                                     <td>{{ $value->color }}</td>
                                     <td>{{ $value->icono }}</td>
-
+                                    <td>{{ $value->orden }}</td>
                                     <td><a href="{{ route('modulos.edit', $value->id) }}"
                                             class="btn btn-sm btn-primary">editar</a>
 
@@ -119,4 +120,8 @@
             });
         });
     </script>
+@endsection
+
+@section('footer')
+    <h4>Favor de reportar cualquier falla</h4>
 @endsection

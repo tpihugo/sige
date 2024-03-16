@@ -26,7 +26,6 @@ include_once 'tickets.php';
 include_once 'subredes.php';
 include_once 'requisiciones.php';
 include_once 'articulos.php';
-include_once 'areas.php';
 include_once 'oficios.php';
 include_once 'entrega.php';
 include_once 'modulos.php';
@@ -764,10 +763,10 @@ Route::middleware('auth')->get('/historial-areas', [AulaHistorialController::cla
 
 
 /**
- * 
+ *
  * Rutas de personal
- * 
- * 
+ *
+ *
  */
 Route::resource('/plazas', PlazaController::class)->names('plazas');
 

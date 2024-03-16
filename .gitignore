@@ -13,3 +13,4 @@ npm-debug.log
 yarn-error.log
 /resources/lang/vendor
 /.idea
+/storage/debugbar/*

@@ -34,7 +34,8 @@
                             class="form-control">
                     </div>
                     <div class="mx-1">
-                        <input type="number" placeholder="Orden de ubicación" name="orden" class="form-control">
+                        <input type="number" placeholder="Orden de ubicación" name="orden" class="form-control"
+                            value="{{ $modulo->orden }}">
                     </div>
                     <div class="mx-1">
                         <input type="color" placeholder="Color" name="color" value="{{ $modulo->color }}"

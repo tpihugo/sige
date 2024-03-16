@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('titulo', 50);
             $table->string('enlace', 100);
             $table->string('estilos', 50);
-            $table->string('parametro', 50);
-            
+            $table->string('parametro', 50)->nullable();
+            $table->tinyInteger('activo')->default(1);
             $table->unsignedBigInteger('modulo_id');
             $table->foreign('modulo_id')->references('id')->on('modulos');
             $table->timestamps();

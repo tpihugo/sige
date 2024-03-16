@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
@@ -16,6 +17,8 @@ return new class extends Migration {
             $table->string('nombre_permiso', 50);
             $table->string('color', 15)->default('#563d7c');
             $table->string('icono', 50)->default('info');
+            $table->tinyInteger('orden')->default(0);
+            $table->tinyInteger('activo')->default(1);
             $table->timestamps();
         });
     }

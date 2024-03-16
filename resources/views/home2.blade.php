@@ -37,7 +37,6 @@
                     <div class="col-sm-12">
                         <h3 class="text-center w-100 my-4">Sistema Integral de Gesti&oacute;n</h3>
                     </div>
-
                     <div class="col-sm-12">
                         @if (session('status'))
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
