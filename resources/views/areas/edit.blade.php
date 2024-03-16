@@ -5,8 +5,8 @@
     @include('layouts.head_2')
 @stop
 @section('content')
-    <div class="container">
-        @if (Auth::check())
+    @if (Auth::check())
+        <div class="container">
             @if (session('message'))
                 <div class="alert alert-success">
                     <h2>{{ session('message') }}</h2>
@@ -150,7 +150,7 @@
                                     value="{{ $area->area }}">
                             </div>
                         </div>
-                        
+
                         <div class="row align-items-center mt-2">
                             <div class="col-md-12">
                                 <label class="font-weight-bold" for="imagen_1">Exclusivo para aulas o laboratorios</label>
@@ -178,46 +178,31 @@
                                 <h6 class="font-weight-bold " for="Equipamiento">Equipamiento</h6>
                                 <div class="d-flex flex-row flex-wrap">
                                     <div class="form-check d-flex flex-row m-1">
-                                        <input class="form-check-input" type="checkbox" {{$equipamiento['Bocinas']}} name="equipamiento[]"
-                                            value="Bocinas" id="equipamiento_bocinas">
-                                        <label class="form-check-label" for="equipamiento_bocinas">
-                                            Bocinas
-                                        </label>
-                                    </div>
-
-                                    <div class="form-check d-flex flex-row m-1">
-                                        <input class="form-check-input" type="checkbox" {{$equipamiento['Pantalla']}} name="equipamiento[]"
-                                            value="Pantalla" id="equipamiento_pantalla">
-                                        <label class="form-check-label" for="equipamiento_pantalla">
+                                        <input class="form-check-input" type="checkbox" {{ $equipamiento['TV'] }}
+                                            name="equipamiento[]" value="TV" id="equipamiento_tv">
+                                        <label class="form-check-label" for="equipamiento_tv">
                                             Pantalla
                                         </label>
                                     </div>
 
                                     <div class="form-check d-flex flex-row m-1">
-                                        <input class="form-check-input" type="checkbox" {{$equipamiento['PC']}} name="equipamiento[]"
-                                            value="PC" id="equipamiento_pc">
+                                        <input class="form-check-input" type="checkbox" {{ $equipamiento['PC'] }}
+                                            name="equipamiento[]" value="PC" id="equipamiento_pc">
                                         <label class="form-check-label" for="equipamiento_pc">
                                             PC
                                         </label>
                                     </div>
 
                                     <div class="form-check d-flex flex-row m-1">
-                                        <input class="form-check-input" type="checkbox" {{$equipamiento['Proyector']}} name="equipamiento[]"
-                                            value="Proyetor" id="flexCheckDefault">
+                                        <input class="form-check-input" type="checkbox" {{ $equipamiento['Proyector'] }}
+                                            name="equipamiento[]" value="Proyector" id="flexCheckDefault">
                                         <label class="form-check-label" for="flexCheckDefault">
                                             Proyector
                                         </label>
                                     </div>
                                     <div class="form-check d-flex flex-row m-1">
-                                        <input class="form-check-input" type="checkbox" {{$equipamiento['Pantalla Proyección']}} name="equipamiento[]"
-                                            value="Pantalla Proyección" id="equipamiento_proyeccion">
-                                        <label class="form-check-label" for="equipamiento_proyeccion">
-                                            Pantalla Proyección
-                                        </label>
-                                    </div>
-                                    <div class="form-check d-flex flex-row m-1">
-                                        <input class="form-check-input" type="checkbox" {{$equipamiento['Camara']}} name="equipamiento[]"
-                                            value="Camara" id="equipamiento_camara">
+                                        <input class="form-check-input" type="checkbox" {{ $equipamiento['Camara'] }}
+                                            name="equipamiento[]" value="Camara" id="equipamiento_camara">
                                         <label class="form-check-label" for="equipamiento_camara">
                                             Camara
                                         </label>
@@ -225,7 +210,6 @@
                                 </div>
                             </div>
                         </div>
-                        
                         <div class="row align-items-center mt-3">
                             <div class="col-md-6">
                                 <a href="{{ route('home') }}" class="btn btn-danger">Cancelar</a>
@@ -237,15 +221,27 @@
                         </div>
                         <br>
                     </form>
+
                 </div>
             </div>
-    </div>
-@else
-    El periodo de Registro de Proyectos a terminado
+            @if (isset($area->imagen_1))
+                <div class="d-flex justify-content-center">
+                    <span>Foto 1</span>
+                    <div class="m-2" style="max-width:250px;width:100%;"><img class="w-100"
+                            src="{{ asset('storage/images/' . $area->imagen_1) }}" alt=""></div>
+                    @if (isset($area->imagen_2))
+                        <span>Foto 2</span>
+                        <div class="m-2" style="max-width:250px;width:100%;"><img class="w-100"
+                                src="{{ asset('storage/images/' . $area->imagen_2) }}" alt=""></div>
+                    @endif
+                </div>
+            @endif
+        </div>
+    @else
+        El periodo de Registro de Proyectos a terminado
     @endif
 
 @endsection
-
 @section('footer')
-    <h5 class="text-end">En caso de inconsistencias, favor de reportarlas</h5>
+    <span class="text-end">En caso de inconsistencias, favor de reportarlas</span>
 @endsection

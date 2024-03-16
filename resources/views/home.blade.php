@@ -5,7 +5,6 @@
     @include('layouts.head_2')
 
 @stop
-
 @section('content')
     <div class="content">
         <div class="container">
@@ -29,14 +28,6 @@
                                 @if (session('message'))
                                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                                         {{ session('message') }}
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                @endif
-                                @if ($errors->any())
-                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                        Debe de escribir un criterio de búsqueda
                                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -73,12 +64,9 @@
                                             </div>
                                         </div>
                                         <div class="card-footer" style="font-size: 12px">
-                                            <i class="material-icons text-dark" style="font-size: 12px">important_devices</i>
-                                            Préstamos
-                                            totales:
-                                            {{ $prestamos }} <i class="material-icons text-dark"
-                                                style="font-size: 12px">access_time</i> Fuera de
-                                            tiempo: {{ $notificacion }}
+                                            <i class="material-icons text-dark" style="font-size: 12px">important_devices</i> Préstamos totales:
+                                            {{ $prestamos }} <br> 
+                                            <i class="material-icons text-dark" style="font-size: 12px">access_time</i> Fuera de  tiempo: {{ $notificacion }}
                                         </div>
                                     </div>
                                 </div>

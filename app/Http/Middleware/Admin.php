@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class IsAdmin
+class Admin
 {
     /**
      * Handle an incoming request.
@@ -16,7 +16,7 @@ class IsAdmin
     public function handle(Request $request, Closure $next): Response
     {
         if (!$request->user()->hasRole('admin')) {
-            return redirect()->route('home');
+            return response()->json('Your account is inactive');
         }
         return $next($request);
     }

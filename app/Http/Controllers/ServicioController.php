@@ -68,8 +68,6 @@ class ServicioController extends Controller
             ';
 
             $servicios[$key] = array(
-              
-                $value['id'],
                 $value['nombre'],
                 $value['categoria'],
                 $value['descripcion'],                

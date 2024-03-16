@@ -19,8 +19,8 @@ class Area extends Model
             'equipo',
             'tipo_sici',
             '=',
-            'equipo'
-        )->where('inventario', '=', '2023A');
+            'equipoCTA'
+        )->where('inventario', '=', '2024A');
     }
 
     public function getTotalEquipoAttribute()

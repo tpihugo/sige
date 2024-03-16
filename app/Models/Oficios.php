@@ -10,11 +10,20 @@ class Oficios extends Model
     use HasFactory;
     protected $appends = ['anio'];
 
-    public function getAnioAttribute(){
+    protected $fillable = [
+        'num_oficio',
+        'asunto',
+        'dirigido',
+        'asunto',
+        'atencion',
+        'centro_universitario',
+        'cuerpo'
+    ];
+    public function getAnioAttribute()
+    {
         return $this->created_at->format('Y');
     }
     protected $casts = [
         'created_at' => 'datetime:Y',
     ];
-
 }

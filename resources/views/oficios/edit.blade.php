@@ -83,7 +83,7 @@
                     <div class="my-1 col-sm-12 col-md-5">
                         <label for="atencion">Asunto</label>
                         <input type="text" placeholder="Asunto del oficio"
-                            value="{{ old('asunto') }}" class="form-control" name="asunto"
+                            value="{{ $oficio->asunto }}" class="form-control" name="asunto"
                             id="asunto">
                     </div>
                     <span class="text-muted my-1"><small>NOTA: Favor de introducir nombres completos del personal</small>

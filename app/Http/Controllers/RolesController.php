@@ -212,7 +212,7 @@ class RolesController extends Controller
         $array_permisos = explode(",",$permisos);
         $role = Role::findOrFail($request->get('role_id'));
         //$role->givePermissionTo($permisos);
-        $role->syncPermissions($array_permisos);
+        $role->syncPermissions(collect($array_permisos)->map(fn($val)=>(int)$val));
 
         $roles = Role::all();
         return view('roles.index')->with('roles', $roles)->with('success', 'Permisos asignados correctamente.');
