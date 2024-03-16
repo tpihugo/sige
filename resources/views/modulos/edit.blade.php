@@ -46,7 +46,7 @@
                         <div id="formulario">
                             @if (strcmp($enlaces, '-') != 0)
                                 @foreach ($enlaces as $item)
-                                    <div class="input-group d-flex flex-wrap" id="{{ $item->enlace }}">
+                                    <div class="input-group d-flex flex-wrap" id="{{ $item->id }}">
                                         <input type="text" class="form-control col-md-3 m-1" name="titulo[]"
                                             value="{{ $item->titulo }}">
 
@@ -58,19 +58,13 @@
 
                                         <input type="text" class="form-control col-md-3 m-1" name="estilos[]"
                                             value="{{ $item->estilos }}">
-                                        @if ($item->activo == 0)
-                                            <a class="btn btn-success btn-sm  m-1 d-flex align-items-center"
-                                                onclick="activar('{{ $item->enlace }}')"><span class="material-icons"
-                                                    style="display: flex; align-items: center;">
-                                                    toggle_on
-                                                </span></a>
-                                        @else
-                                            <a class="btn btn-danger btn-sm m-1 d-flex align-items-center"
-                                                onclick="eliminar('{{ $item->enlace }}')"><span class="material-icons"
-                                                    style="display: flex; align-items: center;">
-                                                    toggle_off
-                                                </span></a>
-                                        @endif
+
+                                        <a class="btn btn-danger btn-sm m-1 d-flex align-items-center"
+                                            onclick="eliminar('{{ $item->id }}')"><span class="material-icons"
+                                                style="display: flex; align-items: center;">
+                                                toggle_off
+                                            </span></a>
+
                                     </div>
                                 @endforeach
                             @endif
@@ -149,7 +143,7 @@
                 url: url,
                 method: 'POST',
                 data: {
-                    'enlace': item
+                    'id': item
                 }
             }).done(function(data) {
                 location.reload();

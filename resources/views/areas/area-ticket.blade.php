@@ -11,7 +11,7 @@
 @section('content')
     @if (Auth::check() &&
             (Auth::user()->role == 'admin' ||
-                Auth::user()->role == 'Planeación' ||
+                Auth::user()->role == 'planeacion' ||
                 Auth::user()->role == 'redes' ||
                 Auth::user()->role == 'cta'))
         <div class="container">
@@ -136,13 +136,13 @@
                             </div>
                         </div>
                         @can('TICKETS#ver')
-                        <div class="d-flex justify-content-center mt-2">
+                            <div class="d-flex justify-content-center mt-2">
 
-                            <a href="" id="historial" class="mx-2 btn btn-primary">Historial</a>
+                                <a href="" id="historial" class="mx-2 btn btn-primary">Historial</a>
 
-                            <a href="" id="equipos" class="mx-2 btn btn-primary">Equipos</a>
+                                <a href="" id="equipos" class="mx-2 btn btn-primary">Equipos</a>
 
-                        </div>
+                            </div>
                         @endcan
                     </div>
                     <div class="modal-footer">
