@@ -76,26 +76,12 @@ class ModulosController extends Controller
     }
     public function eliminar_enlace(Request $request)
     {
-        $enlace = EnlaceModulos::where('enlace', $request->enlace)->first();
-        $enlace->activo = 0;
-        if ($enlace->update()) {
+        $enlace = EnlaceModulos::where('id', $request->id)->first();
+        if ($enlace->delete()) {
             Alert::success('SUCCESS', 'SE HA DESACTIVADO EL ENALCE');
             return 'Se elimino correctamente';
         }
         Alert::danger('DANGER', 'OCURRIO UN ERROR AL DESACTIVAR EL ENALCE');
-        return 'Hubo un error al eliminar';
-    }
-    public function activar_enlace(Request $request)
-    {
-        $enlace = EnlaceModulos::where('id', $request->id)
-            ->where('modulo_id', $request->modulo_id)
-            ->first();
-        $enlace->delete();
-        if ($enlace->update()) {
-            Alert::success('SUCCESS', 'SE HA ACTIVADO EL ENALCE');
-            return 'Se elimino correctamente';
-        }
-        Alert::danger('DANGER', 'OCURRIO UN ERROR AL ACTIVAR EL ENALCE');
         return 'Hubo un error al eliminar';
     }
 
