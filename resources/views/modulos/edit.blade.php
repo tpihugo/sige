@@ -129,7 +129,7 @@
 
         });
 
-        async function eliminar(item) {
+        function eliminar(item) {
             let elemento = document.getElementById(item);
             let padre = elemento.parentNode;
             padre.removeChild(elemento);
@@ -139,31 +139,12 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+            console.log(item);
             $.ajax({
                 url: url,
                 method: 'POST',
                 data: {
                     'id': item
-                }
-            }).done(function(data) {
-                location.reload();
-            });
-        }
-
-        async function activar(item) {
-            var elemento = document.getElementById(item);
-            var url = "{{ route('activar.enlace') }}";
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: url,
-                method: 'POST',
-                data: {
-                    'enlace': item,
-                    'modulo_id': "{{ $modulo->id }}"
                 }
             }).done(function(data) {
                 location.reload();
