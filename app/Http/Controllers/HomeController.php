@@ -31,15 +31,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $ticketsBelenes = VsTicket::where('activo', '=', 1)
-            ->where('estatus', 'Abierto')
+        $ticketsBelenes = VsTicket::where('status', '=', 1)
             ->where('sede', 'Belenes')
             ->count();
 
-        $ticketsNormal = VsTicket::where('activo', '=', 1)
-            ->where('estatus', '=', 'Abierto')
+        $ticketsNormal = VsTicket::where('status', '=', 1)
             ->where('sede', '=', 'La Normal')
-            ->where('categoria', '<>', 'Reporte de aula')
             ->count();
 
         $vsprestamos = VsPrestamo::where('activo', '=', 1)
@@ -60,13 +57,13 @@ class HomeController extends Controller
             return explode('#', $value)[0];
         });
 
-        $oficios_titulacion = DB::connection('mysql2')->table('oficios_titulacion')->where('enviado', 1)->where('estatus', null)->count();
+       // $oficios_titulacion = DB::connection('mysql2')->table('oficios_titulacion')->where('enviado', 1)->where('estatus', null)->count();
 
         $nombres = array_values(array_unique($mapped));
 
         $modulos = Modulos::with('enlaces')->select('id', 'nombre', 'nombre_permiso', 'icono', 'color')->whereIn('nombre_permiso', $nombres)->orderBy('orden')->get();
 
-        return view('home2', compact('modulos', 'ticketsNormal', 'ticketsBelenes', 'notificacion', 'prestamos', 'oficios_titulacion'));
+        return view('home2', compact('modulos', 'ticketsNormal', 'ticketsBelenes', 'notificacion', 'prestamos'));
 
         return view('home')
             ->with('ticketsNormal', $ticketsNormal)

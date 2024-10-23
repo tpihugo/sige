@@ -103,9 +103,7 @@
                             <th scope="col">Fecha Reporte</th>
                             <th scope="col">Área</th>
                             <th scope="col">Solicitante</th>
-                            <th scope="col">Contacto</th>
                             <th scope="col">Técnico</th>
-                            <th scope="col">Categoría y Prioridad</th>
                             <th scope="col">Reporte</th>
                             <th scope="col">Acciones</th>
                         </tr>

@@ -29,8 +29,7 @@ class TicketController extends Controller
     //este es el que tengo que modificar DZ-- inicia la modificacion 1
     public function index()
     {
-        $vstickets = VsTicket::where('activo', '=', 1)
-            ->where('estatus', '=', 'Abierto')->get();
+        $vstickets = VsTicket::where('status', '=', 1)->get();
 
         $tecnicos = Tecnico::where('activo', '=', 1)->orderBy('nombre')->get();
         $tickets = $this->cargarDT($vstickets);
@@ -112,10 +111,8 @@ class TicketController extends Controller
                 $value['fecha_reporte'] = \Carbon\Carbon::parse($value->fecha_reporte)->format('d/m/Y H:i'),
                 $area,
                 $value['solicitante'],
-                $value['contacto'],
                 $value['tecnico'],
-                $value['categoria'] . ". Prioridad: " . $value['prioridad'],
-                $value['datos_reporte'],
+                $value['reporte'],
                 $acciones,
             );
         }

@@ -95,8 +95,8 @@
                                     name="area_id" required>
                                     <option disable selected>Selecciona una área</option>
                                     @foreach ($areas as $area)
-                                        <option value="{{ $area->id }}">{{ $area->sede }} - {{ $area->division }} -
-                                            {{ $area->coordinacion }} - {{ $area->area }}</option>
+                                        <option value="{{ $area->id }}">{{ $area->sede }} - {{ $area->area }} -
+                                            {{ $area->edificio }} - {{ $area->piso }}</option>
                                     @endforeach
                                 </select>
                             </div>
