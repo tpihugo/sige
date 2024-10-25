@@ -108,7 +108,7 @@
                 <br>
                 <div class="row align-items-end justify-content-end">
                     <div class="col-md-4">
-                        <a href="{{ route('home') }}" class="btn btn-danger">Cancelar</a>
+                        <a href="{{ route('tickets.index') }}" class="btn btn-danger">Cancelar</a>
                         <button type="submit" class="btn btn-success">
                             Guardar datos
                             <i class="ml-1 fas fa-save"></i>
