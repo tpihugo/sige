@@ -54,40 +54,7 @@
                         @endif
                         <br>
 
-                        <div class="row g-3 align-items-center">
-                            <div class="col-md-4">
-                                <label for="prioridad">Prioridad </label>
-                                <select class="form-control" id="prioridad" name="prioridad">
-                                    <option disabled>Elegir</option>
-                                    <option value="Baja">Baja</option>
-                                    <option value="Media">Media</option>
-                                    <option value="Alta" selected>Alta</option>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="estatus">Estatus </label>
-                                <select class="form-control" id="estatus" name="estatus">
-                                    <option disabled>Elegir</option>
-                                    <option value="Abierto" selected>Abierto</option>
-                                    <option value="Cerrado">Cerrado</option>
-                                    <option value="En Espera">En Espera</option>
-                                    <option value="Escalado">Escalado</option>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="categoria">Categoría </label>
-                                <select class="form-control" id="categoria" name="categoria">
-                                    <option disabled>Elegir</option>
-                                    <option value="Incidente" selected>Incidente</option>
-                                    <option value="Solicitudes de Servicio">Solicitudes de Servicio</option>
-                                    <option value="Reporte de aula">Reporte de aula</option>
-                                    <option value="Reinstalación  de S.O.">Reinstalación de S.O.</option>
-                                    <option value="Instalación de Paqueteria">Instalación de Paqueteria</option>
-                                    <option value="Asignación de IP">Asignación de IP</option>
-                                </select>
-                            </div>
-                        </div>
-                        <br>
+
                         <div class="row g-3 align-items-center">
                             <div class="col-md-12">
                                 <label for="area_id">Áreas</label>
@@ -104,30 +71,32 @@
                         </div>
                         <br>
                         <div class="row g-3 align-items-center">
-                            <div class="col-md-4">
-                                <label for="tecnico_id">Técnico </label>
-                                <select class="form-control" id="js-example-basic-single2" name="tecnico_id" required>
+                            <div class="col-md-12">
+                                <label for="solicitante_id">Solicitante </label>
+                                <select class="form-control" id="js-example-basic-single2" name="solicitante_id" required>
                                     <option disabled selected>Elegir</option>
-                                    @foreach ($tecnicos as $tecnico)
-                                        <option value="{{ $tecnico->id }}">{{ $tecnico->nombre }}</option>
+                                    @foreach ($solicitantes as $solicitante)
+                                        <option value="{{ $solicitante->id }}">{{ $solicitante->nombre }} - {{ $solicitante->contacto_principal}}  </option>
                                     @endforeach
                                 </select>
-                            </div>
-                            <div class="col-md-5">
-                                <label for="solicitante">Solicitante</label>
-                                <input type="text" class="form-control" id="solicitante" name="solicitante"
-                                    value="{{ old('solicitante') }}" required>
-                            </div>
-                            <div class="col-md-3">
-                                <label for="contacto">Contacto</label>
-                                <input type="text" class="form-control" id="contacto" name="contacto"
-                                    value="{{ old('contacto') }}" required>
                             </div>
                         </div>
                         <br>
                         <div class="row g-3 align-items-center">
                             <div class="col-md-12">
-                                <label for="datos_reporte">Reporte</label>
+                                <label for="servicio_id">Servicios </label>
+                                <select class="form-control" id="js-example-basic-single2" name="servicio_id" required>
+                                    <option disabled selected>Elegir</option>
+                                    @foreach ($servicios as $servicio)
+                                        <option value="{{ $servicio->id }}">{{ $servicio->nombre }} - {{ $servicio->descripcion}}  </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row g-3 align-items-center">
+                            <div class="col-md-12">
+                                <label for="datos_reporte">Comentarios del reporte</label>
                                 <textarea class="form-control" id="datos_reporte" name="datos_reporte">{{ old('datos_reporte') }}</textarea>
                             </div>
                         </div>

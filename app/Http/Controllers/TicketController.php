@@ -7,6 +7,8 @@ use App\Models\Empleado;
 use App\Models\Equipo;
 use App\Models\Tecnico;
 use App\Models\Ticket;
+use App\Models\Solicitante;
+use App\Models\Servicio;
 use App\Models\ticket_historial;
 use App\Models\VsEquiposPorTicket;
 use App\Models\VsTicket;
@@ -136,8 +138,10 @@ class TicketController extends Controller
         $equipos = Equipo::all();
         //$areas = Area::pluck('id','area')->prepend('seleciona');
         $areas = Area::where('activo', 1)->get();
-        $tecnicos = Tecnico::where('activo', '=', 1)->orderBy('nombre')->get();
-        return view('ticket.create')->with('equipos', $equipos)->with('areas', $areas)->with('tecnicos', $tecnicos);
+        //$tecnicos = Tecnico::where('activo', '=', 1)->orderBy('nombre')->get();
+        $solicitantes = Solicitante::orderBy('nombre')->get();
+        $servicios = Servicio::orderBy('nombre')->get();
+        return view('ticket.create')->with('equipos', $equipos)->with('areas', $areas)->with('servicios', $servicios)->with('solicitantes', $solicitantes);
     }
 
     /**
@@ -150,33 +154,19 @@ class TicketController extends Controller
     {
         $this->validate($request, [
             'area_id' => 'required',
-            'solicitante' => 'required',
-            'contacto' => 'required',
-            'tecnico_id' => 'required',
-            'categoria' => 'required',
-            'prioridad' => 'required',
-            'estatus' => 'required',
-            'datos_reporte' => 'required',
+            'solicitante_id' => 'required',
+            'servicio_id' => 'required',
         ]);
         $ticket = new Ticket();
         $ticket->area_id = $request->input('area_id');
-        $ticket->solicitante = $request->input('solicitante');
-        $ticket->contacto = $request->input('contacto');
-        $ticket->tecnico_id = $request->input('tecnico_id');
-        $ticket->categoria = $request->input('categoria');
-        $ticket->prioridad = $request->input('prioridad');
-        $ticket->estatus = $request->input('estatus');
+        $ticket->solicitante_id = $request->input('solicitante_id');
+        $ticket->servicio_id = $request->input('servicio_id');
         $ticket->datos_reporte = $request->input('datos_reporte');
-        $ticket->fecha_reporte = date('Y/m/d H:m:s');
-        $ticket->fecha_inicio  = $request->input('fecha_inicio ');
-        $ticket->fecha_termino = $request->input('fecha_termino');
-        $ticket->problema = $request->input('problema');
-        $ticket->solucion = $request->input('solucion');
         $ticket->save();
         //
         $log = new Log();
         $log->tabla = 'tickets';
-        $log->movimiento = "área id: " . $ticket->area_id . "Solicitante: " . $ticket->solicitante . "Contacto: " . $ticket->contacto . "Técnico: " . $ticket->tecnico_id . "Categoria: " . $ticket->categoria . "Prioridad: " . $ticket->prioridad . "Estatus: " . $ticket->estatus . "Datos de reporte: " . $ticket->datos_reporte . "Fecha de reporte: " . $ticket->fecha_reporte . "Fecha de inicio: " . $ticket->fecha_inicio . "Fecha de termino: " . $ticket->fecha_termino . "Problema: " . $ticket->problema . "Solución: " . $ticket->solucion;
+        $log->movimiento = "área id: " . $ticket->area_id . "Solicitante: " . $ticket->solicitante_id.  "Datos de reporte: " . $ticket->datos_reporte;
         $log->usuario_id = Auth::user()->id;
         $log->acciones = 'Insertar';
         $log->save();
