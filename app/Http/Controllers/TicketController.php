@@ -50,6 +50,7 @@ class TicketController extends Controller
             $actualizar =  route('tickets.edit', $value['id']);
             $recibo = route('recepcionEquipo',  $value['id']);
             $tomar = route('tomar-ticket', $value['id']);
+            $cerrar = route('cerrar-ticket', $value['id']);
             $registro_historial = ticket_historial::where('id_ticket', $value['id'])->orderBy('created_at')->get();
             $historial = '';
             
@@ -59,17 +60,25 @@ class TicketController extends Controller
                 <i class="far fa-hand-paper"></i>
               </button>
               ';
+              $cerrar = '<button type="button" onclick="cerrar_ticket(' . $value['id'] . ')" class="btn btn-success btn-sm m-1" data-toggle="modal" data-target="#cerrar-ticket" title="Cerrar ticket">
+                    <i class="far fa-check"></i>
+                </button>';
             } elseif (isset($tecnico)) {
                 if ($tecnico->id != $value['tecnico_id']) {
                     $tomar = '<a href="' . $tomar . '" class="btn btn-warning btn-sm" title="Tomar ticket">
                     <i class="far fa-hand-paper"></i>
                </a>';
+                    $cerrar = '';
                 } else {
                     $tomar = '';
+                    $cerrar = '';
                 }
                 if ($tecnico->id == $value['tecnico_id']) {
                     $tomar = '<button type="button" onclick="soltar_ticket(' . $value['id'] . ')"  class="m-1 btn btn-sm" style="background-color: #3f6791; color:#fff;" data-toggle="modal" data-target="#soltar-ticket">
                     <i class="far fa-hand-paper"></i>
+                  </button>';
+                  $cerrar = '<button type="button" onclick="cerrar_ticket(' . $value['id'] . ')" class="btn btn-success btn-sm m-1" data-toggle="modal" data-target="#cerrar-ticket" title="Cerrar ticket">
+                    <i class="far fa-check"></i>
                   </button>';
                 }
             }
@@ -91,7 +100,7 @@ class TicketController extends Controller
 			            <a href="' . $recibo . '" class="btn btn-primary btn-sm m-1 " title="Recibo de Equipo">
                             <i class="far fa-file"></i>
                         </a>'
-                . $tomar . $historial .
+                . $tomar . $cerrar . $historial .
                 '
                     </div>
                 </div>
@@ -436,6 +445,25 @@ class TicketController extends Controller
         $ticket->save();
         return redirect()->route('tickets.index')->with(array(
             'message' => 'Se libero el ticket correctamente'
+        ));
+    }
+    public function cerrar_ticket($id, Request $request)
+    {
+        $validateData = $this->validate($request, [
+            'solucion' => 'required',
+        ]);
+        date_default_timezone_set('America/Mexico_City');
+        $historial = new ticket_historial();
+        $historial->id_user = Auth::user()->id;
+        $historial->id_ticket = $id;
+        $historial->motivo = "Solución";
+        $historial->detalles = $request->solucion;
+        $historial->save();
+        $ticket = Ticket::find($id);
+        $ticket->estatus  = '0';
+        $ticket->save();
+        return redirect()->route('tickets.index')->with(array(
+            'message' => 'Se cerro el ticket correctamente'
         ));
     }
 

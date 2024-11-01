@@ -61,6 +61,7 @@ Route::resource("cursos", "App\Http\Controllers\CursoController")->middleware('a
 Route::resource("logs", "App\Http\Controllers\LogController")->middleware('auth');
 Route::resource("licencias", "App\Http\Controllers\LicenciaController");
 Route::resource("servicios", "App\Http\Controllers\ServicioController");
+Route::resource("solicitantes", "App\Http\Controllers\SolicitanteController");
 Route::resource("tecnicos", "App\Http\Controllers\TecnicoController");
 Route::resource(
     "mantenimiento",
@@ -750,6 +751,12 @@ Route::post('/tickets/soltar-ticket/{id}', array(
     'as' => 'soltar-ticket',
     'middleware' => 'auth',
     'uses' => '\App\Http\Controllers\TicketController@soltar_ticket'
+));
+
+Route::post('/tickets/cerrar-ticket/{id}', array(
+    'as' => 'cerrar-ticket',
+    'middleware' => 'auth',
+    'uses' => '\App\Http\Controllers\TicketController@cerrar_ticket'
 ));
 
 Route::get('/equipo-area/{id}', array(

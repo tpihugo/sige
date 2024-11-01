@@ -22,7 +22,8 @@
                 <h2 class="mt-3">Tickets </h2>
                 <p align="right">
                     <a href="{{ route('tickets.create') }}" class="btn btn-success">Capturar Ticket</a>
-                    <a href="{{ route('tickets.reporte') }}" class="btn btn-primary">Estadisticas de Ticket's</a>
+                    <a href="{{ route('solicitantes.create') }}" class="btn btn-success">Capturar Solicitante</a>
+                    {{--<a href="{{ route('tickets.reporte') }}" class="btn btn-primary">Estadisticas de Ticket's</a>--}}
                 </p>
             </div>
         </div>
@@ -183,6 +184,30 @@
                     </div>
                 </div>
             </div>
+
+            <div class="modal fade" id="cerrar-ticket" tabindex="-1" aria-labelledby="asignar-usuario" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form action="" id="cerrar" class="row justify-content-center" method="POST">
+                                @csrf
+                                <label for="solicion" class="col-md-12 form-label">Solución</label>
+                                <div class="col-sm-12">
+                                    <textarea name="solucion" id="solucion" class="form-control" required></textarea>
+                                </div>
+                                <div class="col">
+                                    <button type="submit" class="btn btn-primary">Cerrar ticket</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
             <div class="modal  fade" id="historial-ticket" tabindex="-1" aria-labelledby="asignar-usuario"
                 aria-hidden="true">
                 <div class="modal-dialog modal-lg">
@@ -234,6 +259,12 @@
             var url = "{{ route('soltar-ticket', ':id') }}";
             url = url.replace(':id', params);
             document.getElementById('soltar').action = url;
+        }
+
+        function cerrar_ticket(params) {
+            var url = "{{ route('cerrar-ticket', ':id') }}";
+            url = url.replace(':id', params);
+            document.getElementById('cerrar').action = url;
         }
 
         function historial(params) {
