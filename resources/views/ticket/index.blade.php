@@ -68,9 +68,8 @@
                         @else
                             <option disabled selected>Elegir</option>
                         @endif
-                        <option value="Abierto">Abierto</option>
-                        <option value="Cerrado">Cerrado</option>
-                        <option value="Escalado">Escalado</option>
+                        <option value="1">Abierto</option>
+                        <option value="0">Cerrado</option>
                     </select>
 
                 </div>

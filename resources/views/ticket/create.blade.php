@@ -5,6 +5,7 @@
     @include('layouts.head_2')
     <!-- Styles -->
 
+
 @stop
 @section('content')
     <div class="container">
@@ -22,20 +23,7 @@
             <div class="row">
                 <h2>Captura de Tickets</h2>
                 <hr>
-                <script type="text/javascript">
-                    $(document).ready(function() {
-                        $('#js-example-basic-single').select2({
-                            theme: 'bootstrap-5'
-                        });
 
-                    });
-                    $(document).ready(function() {
-                        $('#js-example-basic-single2').select2({
-                            theme: 'bootstrap-5'
-                        });
-
-                    });
-                </script>
 
             </div>
 
@@ -85,7 +73,7 @@
                         <div class="row g-3 align-items-center">
                             <div class="col-md-12">
                                 <label for="servicio_id">Servicios </label>
-                                <select class="form-control" id="js-example-basic-single2" name="servicio_id" required>
+                                <select class="form-control" id="js-example-basic-single3" name="servicio_id" required>
                                     <option disabled selected>Elegir</option>
                                     @foreach ($servicios as $servicio)
                                         <option value="{{ $servicio->id }}">{{ $servicio->nombre }} - {{ $servicio->descripcion}}  </option>
@@ -125,4 +113,25 @@
     <div class="row g-3 align-items-center">
         <h5 class="text-end">En caso de inconsistencias, favor de reportarlas.</h5>
     </div>
+@endsection
+
+@section('js')
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#js-example-basic-single').select2({
+            theme: 'bootstrap-5'
+        });
+    });
+
+    $(document).ready(function() {
+        $('#js-example-basic-single2').select2({
+            theme: 'bootstrap-5'
+        });
+    });
+    $(document).ready(function() {
+        $('#js-example-basic-single3').select2({
+            theme: 'bootstrap-5'
+        });
+    });
+</script>
 @endsection

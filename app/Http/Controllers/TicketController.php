@@ -52,7 +52,7 @@ class TicketController extends Controller
             $tomar = route('tomar-ticket', $value['id']);
             $registro_historial = ticket_historial::where('id_ticket', $value['id'])->orderBy('created_at')->get();
             $historial = '';
-            $tomar = '';
+            
 
             if (Auth::user()->id == 161 || Auth::user()->role  == 'admin') {
                 $tomar = '<button type="button" onclick="tomar_ticket(' . $value['id'] . ')" class="btn btn-warning btn-sm m-1" data-toggle="modal" data-target="#tomar-ticket">
@@ -124,7 +124,7 @@ class TicketController extends Controller
     }
     public function revisionTickets()
     {
-        $vstickets = VsTicket::where('activo', '=', 1)->get();
+        $vstickets = VsTicket::where('estatus', '=', 1)->get();
         $tecnicos = Tecnico::where('activo', '=', 1)->get();
         $tickets = $this->cargarDT($vstickets);
         return view('ticket.revisionTickets')->with('tickets', $tickets)->with('tecnicos', $tecnicos);
@@ -274,42 +274,38 @@ class TicketController extends Controller
         if ((isset($tecnico) && !is_null($tecnico)) && (isset($estatus) && !is_null($estatus))) {
             if (isset($sede)) {
                 $vstickets = VsTicket::where('tecnico_id', '=', $tecnico)
-                    ->Where('activo', '=', 1)
                     ->Where('estatus', '=', $estatus)
                     ->where('sede', $sede)
                     ->get();
             } else {
                 $vstickets = VsTicket::where('tecnico_id', '=', $tecnico)
-                    ->Where('activo', '=', 1)
                     ->Where('estatus', '=', $estatus)
                     ->get();
             }
         } elseif ((isset($tecnico) && !is_null($tecnico)) && (!isset($estatus) && is_null($estatus))) {
             if (isset($sede)) {
                 $vstickets = VsTicket::where('tecnico_id', '=', $tecnico)
-                    ->Where('activo', '=', 1)->where('sede', $sede)
+                    ->where('sede', $sede)
                     ->get();
             } else {
                 $vstickets = VsTicket::where('tecnico_id', '=', $tecnico)
-                    ->Where('activo', '=', 1)
                     ->get();
             }
         } elseif ((!isset($tecnico) && is_null($tecnico)) && (isset($estatus) && !is_null($estatus))) {
             if (isset($sede)) {
                 $vstickets = VsTicket::where('estatus', '=', $estatus)
-                    ->Where('activo', '=', 1)->where('sede', $sede)
+                    ->where('sede', $sede)
                     ->get();
             } else {
 
                 $vstickets = VsTicket::where('estatus', '=', $estatus)
-                    ->Where('activo', '=', 1)
                     ->get();
             }
         } else {
             if (isset($sede)) {
-                $vstickets = VsTicket::where('activo', '=', 1)->where('sede', $sede)->get();
+                $vstickets = VsTicket::where('sede', $sede)->get();
             } else {
-                $vstickets = VsTicket::where('activo', '=', 1)->get();
+                $vstickets = VsTicket::get();
             }
         }
         $tickets = $this->cargarDT($vstickets);
@@ -400,13 +396,13 @@ class TicketController extends Controller
 
 
         if (isset($request->tecnico)) {
-            $tecnico =  Tecnico::select('id')->where('activo', '=', 1)->where('id', $request->tecnico)->first();
+            $tecnico =  Tecnico::select('id')->where('id', $request->tecnico)->first();
         } else {
             //return Auth::user()->id;
             $tecnico =  Tecnico::select('id')->where('activo', '=', 1)->where('user_id', Auth::user()->id)->first();
         }
         //return $tecnico;
-        $total = VsTicket::where('activo', '=', 1)->where('tecnico_id', '=', $tecnico->id)->where('estatus', 'Abierto')->get();
+        $total = VsTicket::where('tecnico_id', '=', $tecnico->id)->get();
 
         //return count($total);
         if (count($total) < 3 || $tecnico->id == 161) {

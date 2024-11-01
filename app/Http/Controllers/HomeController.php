@@ -31,11 +31,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $ticketsBelenes = VsTicket::where('status', '=', 1)
+        $ticketsBelenes = VsTicket::where('estatus', '=', 1)
             ->where('sede', 'Belenes')
             ->count();
 
-        $ticketsNormal = VsTicket::where('status', '=', 1)
+        $ticketsNormal = VsTicket::where('estatus', '=', 1)
             ->where('sede', '=', 'La Normal')
             ->count();
 
