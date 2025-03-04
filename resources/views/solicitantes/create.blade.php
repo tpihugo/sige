@@ -1,12 +1,12 @@
 @extends('adminlte::page')
 @section('title', 'Solicitantes')
-@section('css')
 
-    @include('layouts.head')
+@section('css')
+    @include('layouts.head_2')
 @stop
 @section('content')
     <div class="container">
-        @if (Auth::check() && (Auth::user()->role =="admin" || Auth::user()->role =="auxiliar" || Auth::user()->role =="cta"))
+        @if (Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'auxiliar' || Auth::user()->role == 'cta'))
             @if (session('message'))
                 <div class="alert alert-success">
                     <h2>{{ session('message') }}</h2>
@@ -23,7 +23,8 @@
 
             <div class="row">
                 <div class="col-12">
-                    <form action="{{ route('solicitantes.store') }}" method="post" enctype="multipart/form-data" class="col-12">
+                    <form action="{{ route('solicitantes.store') }}" method="post" enctype="multipart/form-data"
+                        class="col-12">
                         {!! csrf_field() !!}
                         @if ($errors->any())
                             <div class="alert alert-danger">
@@ -40,17 +41,19 @@
 
                             <div class="col-md-12">
                                 <label class="font-weight-bold form-label" for="nombre">Nombre del solicitante </label>
-                                <input name="nombre" id="nombre"  class="form-control">
+                                <input name="nombre" id="nombre" class="form-control">
                             </div>
 
                             <div class="col-md-12">
-                                <label class="font-weight-bold form-label" for="contacto_principal">Contacto principal</label>
-                                <input name="contacto_principal" id="contacto_principal"  class="form-control">
+                                <label class="font-weight-bold form-label" for="contacto_principal">Contacto
+                                    principal</label>
+                                <input name="contacto_principal" id="contacto_principal" class="form-control">
                             </div>
 
                             <div class="col-md-12">
-                                <label class="font-weight-bold form-label" for="contacto_secundario">Contacto secundario</label>
-                                <input name="contacto_secundario" id="contacto_secundario"  class="form-control">
+                                <label class="font-weight-bold form-label" for="contacto_secundario">Contacto
+                                    secundario</label>
+                                <input name="contacto_secundario" id="contacto_secundario" class="form-control">
                             </div>
                             <div class="row g-3 align-items-center">
                                 <div class="col-md-12">
@@ -66,7 +69,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+                    </br>
                         <div class="row align-items-center">
                             <div class="col-md-6">
                                 <a href="{{ route('tickets.index') }}" class="btn btn-danger">Cancelar</a>
@@ -81,16 +84,7 @@
                 </div>
             </div>
             <br>
-            <div class="row align-items-center">
-
-                <br>
-                <hr>
-                <h5>Coordinación de Tecnologías para el Aprendizaje. CUCSH</h5>
-
-
-            </div>
     </div>
-
 @else
     Accceso no autorizado
     @endif
@@ -98,11 +92,12 @@
 @endsection
 
 @section('js')
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#js-example-basic-single').select2({
-            theme: 'bootstrap-5'
+    @include('layouts.scripts')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#js-example-basic-single').select2({
+                theme: "bootstrap-5"
+            });
         });
-    });
-</script>
+    </script>
 @endsection
