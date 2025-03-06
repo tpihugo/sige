@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Log;
 use Illuminate\Http\Request;
 use App\Models\Tecnico;
+use App\Models\Vs_Tecnico;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 

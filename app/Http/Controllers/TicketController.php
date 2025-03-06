@@ -12,12 +12,12 @@ use App\Models\Servicio;
 use App\Models\ticket_historial;
 use App\Models\VsEquiposPorTicket;
 use App\Models\VsTicket;
+use App\Models\VsTecnico;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\EquipoTicket;
 use DateTime;
 use App\Models\Log;
-use compra;
 use Illuminate\Support\Facades\Auth;
 use Detection\MobileDetect as MobileDetect;
 
@@ -32,10 +32,12 @@ class TicketController extends Controller
     public function index()
     {
         $vstickets = VsTicket::where('estatus', '=', 1)->get();
-
-        $tecnicos = Tecnico::where('activo', '=', 1)->orderBy('nombre')->get();
+      //  with($vstickets)->where id tecnico 
+        $tecnicos = VsTecnico::where('activo', '=', 1)->orderBy('nombre')->get();
         $tickets = $this->cargarDT($vstickets);
         $id_tecnico = Tecnico::where('activo', 1)->where('user_id', Auth::user()->id)->first();
+
+
 
         return view('ticket.index', compact('id_tecnico'))->with('tickets', $tickets)->with('tecnicos', $tecnicos);
     }
@@ -107,6 +109,8 @@ class TicketController extends Controller
                 </div>
               </div>
             ';
+
+
             $area = $value['area'];
             if (str_contains($area, 'Belenes')) {
                 $area = str_replace('- Belenes ', "", $area);
@@ -210,7 +214,7 @@ class TicketController extends Controller
         $solicitantes = Solicitante::orderBy('nombre')->get();
         $servicios = Servicio::orderBy('nombre')->get();
         $ticket = VsTicket::find($id);
-        $tecnicos = Tecnico::where('activo', '=', 1)->orderBy('nombre')->get();
+        $tecnicos = VsTecnico::where('activo', '=', 1)->orderBy('nombre')->get();
         return view('ticket.edit')->with('ticket', $ticket)->with('areas', $areas)->with('tecnicos', $tecnicos)->with('solicitantes', $solicitantes)->with('servicios', $servicios);
     }
 
@@ -279,6 +283,7 @@ class TicketController extends Controller
         $sede = $request->sede;
         //return $sede;
         $tecnicoElegido = Tecnico::find($tecnico);
+        
 
         if ((isset($tecnico) && !is_null($tecnico)) && (isset($estatus) && !is_null($estatus))) {
             if (isset($sede)) {
@@ -441,7 +446,7 @@ class TicketController extends Controller
         $historial->detalles = $request->detalle;
         $historial->save();
         $ticket = Ticket::find($id);
-        $ticket->tecnico_id  = 137;
+        $ticket->tecnico_id  = 41;
         $ticket->save();
         return redirect()->route('tickets.index')->with(array(
             'message' => 'Se libero el ticket correctamente'
