@@ -41,11 +41,35 @@ class TicketController extends Controller
     //este es el que tengo que modificar DZ-- inicia la modificacion 1
     public function index()
     {
-        $vstickets = VsTicket::where('estatus', '=', 1)->get();
+        $id_tecnico = Tecnico::where('activo', 1)->where('user_id', Auth::user()->id)->first();
+        $vstickets = VsTicket::where('estatus', '=', 1)->where('tecnico_id', $id_tecnico->id)->get();
+        if(isset($vstickets)){
+            
+            $experiencia = VsTicket::select('servicio_id', \DB::raw('count(*) as total'))
+            ->where('estatus', '=', 0)
+            ->where('tecnico_id', $id_tecnico->id)
+            ->groupBy('servicio_id')
+            ->orderByDesc('total')
+            ->first();
+            if(isset($experiencia)){
+                return "Aqui";
+                $vstickets = VsTicket::where('estatus', '=', 1)
+                ->where('servicio_id', $experiencia->servicio_id)
+                ->orderBy('prioridad')
+                ->take(2)
+                ->get();
+            }
+
+        } else {
+            $vstickets = VsTicket::where('estatus', '=', 1)
+            ->orderBy('prioridad')
+            ->take(2)
+            ->get();
+        }
       //  with($vstickets)->where id tecnico 
         $tecnicos = VsTecnico::where('activo', '=', 1)->orderBy('nombre')->get();
         $tickets = $this->cargarDT($vstickets);
-        $id_tecnico = Tecnico::where('activo', 1)->where('user_id', Auth::user()->id)->first();
+        
 
 
 
