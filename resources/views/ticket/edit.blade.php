@@ -17,20 +17,6 @@
                 <h2 class="mt-3">Edición de ticket folio {{ $ticket->id }}</h2>
                 <p>Creado el: {{ \Carbon\Carbon::parse($ticket->creado)->format('d/m/Y H:i') }}</p>
                 <hr>
-                <script type="text/javascript">
-                    $(document).ready(function() {
-                        $('#js-example-basic-single').select2({
-                            theme: 'bootstrap-5'
-                        });
-
-                    });
-                    $(document).ready(function() {
-                        $('#js-example-basic-single2').select2({
-                            theme: 'bootstrap-5'
-                        });
-
-                    });
-                </script>
 
             </div>
             <form action="{{ route('tickets.update', $ticket->id) }}" method="post" enctype="multipart/form-data"
@@ -51,7 +37,7 @@
                         <div class="row g-3 align-items-center">
                             <div class="col-md-4">
                                 <label for="estatus">Estatus</label>
-                                <select class="form-control" class="form-control" id="js-example-basic-single"
+                                <select class="form-control" class="form-control"
                                     name="estatus" required>
                                     <option value="{{ $ticket->estatus }}" selected>
                                         @if ($ticket->estatus='1')
@@ -90,7 +76,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="tecnico_id">Técnico </label>
-                                <select class="form-control" id="js-example-basic-single2" name="tecnico_id" required>
+                                <select class="form-control" id="js-example-basic-single3" name="tecnico_id" required>
                                     <option value="{{ $ticket->tecnico_id }}" selected>{{ $ticket -> tecnico }}</option>
                                     @foreach ($tecnicos as $tecnico)
                                         <option value="{{ $tecnico->id }}">{{ $tecnico->nombre }} </option>
@@ -102,7 +88,7 @@
                         <div class="row g-3 align-items-center">
                             <div class="col-md-12">
                                 <label for="servicio_id">Servicio </label>
-                                <select class="form-control" id="js-example-basic-single2" name="servicio_id" required>
+                                <select class="form-control" id="js-example-basic-single4" name="servicio_id" required>
                                     <option value="{{ $ticket->servicio_id }}" selected>{{ $ticket -> nombre_servicio }}</option>
                                     @foreach ($servicios as $servicio)
                                         <option value="{{ $servicio->id }}">{{ $servicio->nombre }} - {{ $servicio->descripcion}}  </option>
@@ -138,4 +124,33 @@
     <div class="row g-3 align-items-center">
         <h5 class="text-end">En caso de inconsistencias, favor de reportarlas.</h5>
     </div>
+@endsection
+
+@section('js')
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#js-example-basic-single').select2({
+            theme: 'bootstrap-5'
+        });
+
+    });
+    $(document).ready(function() {
+        $('#js-example-basic-single2').select2({
+            theme: 'bootstrap-5'
+        });
+
+    });
+    $(document).ready(function() {
+        $('#js-example-basic-single3').select2({
+            theme: 'bootstrap-5'
+        });
+
+    });
+    $(document).ready(function() {
+        $('#js-example-basic-single4').select2({
+            theme: 'bootstrap-5'
+        });
+
+    });
+</script>
 @endsection
