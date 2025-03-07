@@ -339,10 +339,9 @@ class AreaController extends Controller
             }
 
             // Se obtienen los tickets abiertos para el aula
-            $ticket = VsTicket::select('id', 'datos_reporte', 'area', 'area_id', 'solicitante', 'fecha_reporte', 'prioridad', 'contacto')
-                ->where('activo', 1)
+            $ticket = VsTicket::select('id', 'datos_reporte', 'area', 'area_id', 'solicitante', 'creado', 'prioridad')
                 ->where('area_id', '=', $item->id)
-                ->where('estatus', 'Abierto')
+                ->where('estatus', '1')
                 ->get();
 
             if (strcmp('Planta Baja', $item->piso) == 0) {
