@@ -70,7 +70,7 @@
                             <div class="row g-3 align-items-center">
                                 <div class="col-md-12">
                                     <label for="area_principal">Área principal</label>
-                                    <select class="form-control" class="form-control" id="js-example-basic-single"
+                                    <select class="form-control" class="form-control" id="js-example-basic-single2"
                                         name="area_principal" required>
                                         <option disable selected value="">Selecciona una área</option>
                                         @foreach ($areas as $area)
@@ -108,6 +108,11 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $('#js-example-basic-single').select2({
+                theme: "bootstrap-5"
+            });
+        });
+        $(document).ready(function() {
+            $('#js-example-basic-single2').select2({
                 theme: "bootstrap-5"
             });
         });
