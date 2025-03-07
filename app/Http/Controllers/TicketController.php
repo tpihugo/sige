@@ -20,9 +20,19 @@ use DateTime;
 use App\Models\Log;
 use Illuminate\Support\Facades\Auth;
 use Detection\MobileDetect as MobileDetect;
+use Illuminate\Support\Facades\DB;
 
 class TicketController extends Controller
 {
+
+    protected $indice_influencia = [
+        ['Moderada','Moderada','Significativa'],
+        ['Moderada','Moderada','Significativa'],
+        ['Significativa','Significativa','Significativa'],
+        ['Significativa','Significativa','Significativa'],
+        ['Baja','Moderada','Moderada'],
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -170,11 +180,42 @@ class TicketController extends Controller
             'solicitante_id' => 'required',
             'servicio_id' => 'required',
         ]);
+
+
+
+
+        $solicitante= Solicitante::where('id',$request->solicitante_id)->first();
+        $area= Area::where('id',$request->area_id)->first();
+        $prioridades=DB::table("prioridades_incidente")->get();
+
+        $porcentaje_afectados=($area->cantidad_usuarios*100)/14298;
+        if($porcentaje_afectados<=10){
+            $porcentaje=0;
+        } elseif($porcentaje_afectados<=30){
+            $porcentaje=1;
+        } else {
+            $porcentaje=2;
+        }
+        $influencia=$this->indice_influencia[$solicitante->rol-1][$porcentaje];
+    
+        $servicio= Servicio::where('id',$request->servicio_id)->first();
+        //return $servicio;
+        $prioridad=DB::table("prioridades_incidente")
+        ->select('indice')
+        ->where('urgencia',$servicio->urgencia)
+        ->where('influencia',$influencia)->first();
+
+
+
+
+
+
         $ticket = new Ticket();
         $ticket->area_id = $request->input('area_id');
         $ticket->solicitante_id = $request->input('solicitante_id');
         $ticket->servicio_id = $request->input('servicio_id');
         $ticket->datos_reporte = $request->input('datos_reporte');
+        $ticket->prioridad = $prioridad->indice;
         $ticket->save();
         //
         $log = new Log();
@@ -235,6 +276,28 @@ class TicketController extends Controller
             'estatus' => 'required',
         ]);
 
+        $solicitante= Solicitante::where('id',$request->solicitante_id)->first();
+        $area= Area::where('id',$request->area_id)->first();
+        $prioridades=DB::table("prioridades_incidente")->get();
+
+        $porcentaje_afectados=($area->cantidad_usuarios*100)/14298;
+        if($porcentaje_afectados<=10){
+            $porcentaje=0;
+        } elseif($porcentaje_afectados<=30){
+            $porcentaje=1;
+        } else {
+            $porcentaje=2;
+        }
+        $influencia=$this->indice_influencia[$solicitante->rol-1][$porcentaje];
+    
+        $servicio= Servicio::where('id',$request->servicio_id)->first();
+        //return $servicio;
+        $prioridad=DB::table("prioridades_incidente")
+        ->select('indice')
+        ->where('urgencia',$servicio->urgencia)
+        ->where('influencia',$influencia)->first();
+
+
         $ticket = Ticket::find($id);
         $ticket->area_id = $request->input('area_id');
         $ticket->solicitante_id = $request->input('solicitante_id');
@@ -277,7 +340,7 @@ class TicketController extends Controller
 
     public function filtroTickets(Request $request)
     {
-        $tecnicos = Tecnico::where('activo', '=', 1)->get();
+        $tecnicos = VsTecnico::where('activo', '=', 1)->get();
         $tecnico = $request->input('tecnico_id');
         $estatus = $request->input('estatus');
         $sede = $request->sede;
