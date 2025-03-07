@@ -106,12 +106,15 @@ class SolicitanteController extends Controller
         $validateData = $this->validate($request,[
             'nombre'=>'required',
             'contacto_principal'=>'required',
+            'rol'=>'required',
+
         ]);
 
         $solicitante = new solicitante();
         $solicitante->nombre = $request->input('nombre');
         $solicitante->contacto_principal = $request->input('contacto_principal');
         $solicitante->contacto_secundario = $request->input('contacto_secundario');
+        $solicitante->rol = $request->input('rol');
         $solicitante->area_principal = $request->input('area_principal');
         
 
