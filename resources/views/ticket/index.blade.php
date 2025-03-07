@@ -155,11 +155,11 @@
                         <div class="modal-body">
                             <form action="" id="soltar" class="row justify-content-center" method="POST">
                                 @csrf
-                                <label for="rol" class="col-md-12 form-label">Seleccioan el motivo por el que dejas
+                                <label for="rol" class="col-md-12 form-label">Selecciona el motivo por el que dejas
                                     el ticket</label>
                                 <div class="col-md-12">
                                     <select class="form-control" id="motivo" name="motivo" required>
-                                        <option selected disabled>selecciona una opción</option>
+                                        <option selected disabled>Selecciona una opción</option>
                                         <option value="área equivocada">Área equivocada</option>
                                         <option value="no se encontro personal">No se encontro personal</option>
                                         <option value="falta material">Falta material</option>

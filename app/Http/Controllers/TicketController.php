@@ -132,7 +132,7 @@ class TicketController extends Controller
             }
             if (count($registro_historial) > 0) {
                 foreach ($registro_historial as $item) {
-                    $tecnico_nombre = Tecnico::where('user_id', $item->id_user)->first();
+                    $tecnico_nombre = VsTecnico::where('user_id', $item->id_user)->first();
                     $item->nombre = $tecnico_nombre->nombre;
                 }
                 $historial = '<button type="button" onclick=' . "'" . 'historial(' . $registro_historial . ')' . "'" . ' class="m-1 btn btn-sm"style="background-color: #3f6791; color:#fff;"  data-toggle="modal" data-target="#historial-ticket">
@@ -184,7 +184,7 @@ class TicketController extends Controller
     public function revisionTickets()
     {
         $vstickets = VsTicket::where('estatus', '=', 1)->get();
-        $tecnicos = Tecnico::where('activo', '=', 1)->get();
+        $tecnicos = VsTecnico::where('activo', '=', 1)->get();
         $tickets = $this->cargarDT($vstickets);
         return view('ticket.revisionTickets')->with('tickets', $tickets)->with('tecnicos', $tecnicos);
     }
