@@ -513,7 +513,9 @@ class TicketController extends Controller
             $tecnico =  Tecnico::select('id')->where('activo', '=', 1)->where('user_id', Auth::user()->id)->first();
         }
         //return $tecnico;
-        $total = VsTicket::where('tecnico_id', '=', $tecnico->id)->get();
+        $total = VsTicket::where('tecnico_id', '=', $tecnico->id)
+        ->where('estatus',1)
+        ->get();
 
         //return count($total);
         if (count($total) < 3 || $tecnico->id == 161) {
