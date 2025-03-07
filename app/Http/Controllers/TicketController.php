@@ -170,7 +170,7 @@ class TicketController extends Controller
             $tickets[$key] = array(
 
                 $value['id'],
-                $value['fecha_reporte'] = \Carbon\Carbon::parse($value->fecha_reporte)->format('d/m/Y H:i'),
+                $value['fecha_reporte'] = \Carbon\Carbon::parse($value->creado)->format('d/m/Y H:i'),
                 $area,
                 $value['solicitante'],
                 $value['tecnico'],
