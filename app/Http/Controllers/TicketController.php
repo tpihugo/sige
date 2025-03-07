@@ -66,12 +66,14 @@ class TicketController extends Controller
                 foreach ($experiencia as $key => $value) {
                     $vstickets_temp[] = VsTicket::where('estatus', '=', 1)
                     ->where('servicio_id', $value->servicio_id)
+                    ->where('tecnico_id','41')
                     ->orderBy('prioridad')
                     ->get();
                 }
                 $vstickets = $vstickets_temp->collapse();
             } else {
                 $vstickets = VsTicket::where('estatus', '=', 1)
+                ->where('tecnico_id','41')
                 ->orderBy('prioridad')
                 ->get();
             }
