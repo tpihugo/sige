@@ -127,8 +127,7 @@
                         </div>
                         <div class="row mt-2" id="row_datos" style="display:none;">
                             <div class="col-sm-12">
-                                <h5 class="text-center">Solicitante: <span id="solicitante"></span> - Contacto: <span
-                                        id="contacto"></span></h5>
+                                <h5 class="text-center">Solicitante: <span id="solicitante"></span> </h5>
                                 <hr>
                                 <p>Datos reporte: <span id="datos"></span></p>
                                 <p>Fecha reporte: <span id="fecha"></span></p>
@@ -181,9 +180,8 @@
                 document.getElementById('row_datos').style.display = 'block';
                 $("#datos").html(params['tickets'][0]['datos_reporte']);
                 $("#solicitante").html(params['tickets'][0]['solicitante']);
-                $("#fecha").html(params['tickets'][0]['fecha_reporte']);
+                $("#fecha").html(params['tickets'][0]['creado']);
                 $("#prioridad").html(params['tickets'][0]['prioridad']);
-                $("#contacto").html(params['tickets'][0]['contacto']);
             } else {
                 document.getElementById('row_datos').style.display = 'none';
 

@@ -11,5 +11,6 @@
             </main>
         </div>
         @include('layouts.scripts')
+        @yield('js')
     </body>
 </html>

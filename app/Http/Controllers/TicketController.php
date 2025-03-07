@@ -7,20 +7,32 @@ use App\Models\Empleado;
 use App\Models\Equipo;
 use App\Models\Tecnico;
 use App\Models\Ticket;
+use App\Models\Solicitante;
+use App\Models\Servicio;
 use App\Models\ticket_historial;
 use App\Models\VsEquiposPorTicket;
 use App\Models\VsTicket;
+use App\Models\VsTecnico;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\EquipoTicket;
 use DateTime;
 use App\Models\Log;
-use compra;
 use Illuminate\Support\Facades\Auth;
 use Detection\MobileDetect as MobileDetect;
+use Illuminate\Support\Facades\DB;
 
 class TicketController extends Controller
 {
+
+    protected $indice_influencia = [
+        ['Moderada','Moderada','Significativa'],
+        ['Moderada','Moderada','Significativa'],
+        ['Significativa','Significativa','Significativa'],
+        ['Significativa','Significativa','Significativa'],
+        ['Baja','Moderada','Moderada'],
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -29,12 +41,49 @@ class TicketController extends Controller
     //este es el que tengo que modificar DZ-- inicia la modificacion 1
     public function index()
     {
-        $vstickets = VsTicket::where('activo', '=', 1)
-            ->where('estatus', '=', 'Abierto')->get();
-
-        $tecnicos = Tecnico::where('activo', '=', 1)->orderBy('nombre')->get();
-        $tickets = $this->cargarDT($vstickets);
         $id_tecnico = Tecnico::where('activo', 1)->where('user_id', Auth::user()->id)->first();
+        $tecnicos = VsTecnico::where('activo', '=', 1)->orderBy('nombre')->get();
+        
+
+        //vista de admin
+        if(!Auth::user()->hasRole('cta')){
+            $vstickets = VsTicket::where('estatus', '=', 1)->get();
+            $tickets = $this->cargarDT($vstickets);
+            return view('ticket.index')->with('tickets', $tickets)->with('tecnicos', $tecnicos);
+        }
+        
+        $vstickets = VsTicket::where('estatus', '=', 1)->where('tecnico_id', $id_tecnico->id)->get();
+        if($vstickets->count()==0){
+            $experiencia = VsTicket::select('servicio_id', DB::raw('count(*) as total'))
+            ->where('estatus', '=', '0')
+            ->where('tecnico_id', $id_tecnico->id)
+            ->groupBy('servicio_id')
+            ->orderBy('total','desc')
+            ->get();
+            
+            if($experiencia->count()>0){
+                $vstickets_temp = collect([]);
+                foreach ($experiencia as $key => $value) {
+                    $vstickets_temp[] = VsTicket::where('estatus', '=', 1)
+                    ->where('servicio_id', $value->servicio_id)
+                    ->where('tecnico_id','41')
+                    ->orderBy('prioridad')
+                    ->get();
+                }
+                $vstickets = $vstickets_temp->collapse();
+            } else {
+                $vstickets = VsTicket::where('estatus', '=', 1)
+                ->where('tecnico_id','41')
+                ->orderBy('prioridad')
+                ->get();
+            }
+        } 
+
+      //  with($vstickets)->where id tecnico 
+        $tickets = $this->cargarDT($vstickets->take(2));
+        
+
+
 
         return view('ticket.index', compact('id_tecnico'))->with('tickets', $tickets)->with('tecnicos', $tecnicos);
     }
@@ -49,32 +98,41 @@ class TicketController extends Controller
             $actualizar =  route('tickets.edit', $value['id']);
             $recibo = route('recepcionEquipo',  $value['id']);
             $tomar = route('tomar-ticket', $value['id']);
+            $cerrar = route('cerrar-ticket', $value['id']);
             $registro_historial = ticket_historial::where('id_ticket', $value['id'])->orderBy('created_at')->get();
             $historial = '';
-            $tomar = '';
+            
 
             if (Auth::user()->id == 161 || Auth::user()->role  == 'admin') {
                 $tomar = '<button type="button" onclick="tomar_ticket(' . $value['id'] . ')" class="btn btn-warning btn-sm m-1" data-toggle="modal" data-target="#tomar-ticket">
                 <i class="far fa-hand-paper"></i>
               </button>
               ';
+              $cerrar = '<button type="button" onclick="cerrar_ticket(' . $value['id'] . ')" class="btn btn-success btn-sm m-1" data-toggle="modal" data-target="#cerrar-ticket" title="Cerrar ticket">
+                    <i class="far fa-check"></i>
+                </button>';
             } elseif (isset($tecnico)) {
                 if ($tecnico->id != $value['tecnico_id']) {
                     $tomar = '<a href="' . $tomar . '" class="btn btn-warning btn-sm" title="Tomar ticket">
                     <i class="far fa-hand-paper"></i>
                </a>';
+                    $cerrar = '';
                 } else {
                     $tomar = '';
+                    $cerrar = '';
                 }
                 if ($tecnico->id == $value['tecnico_id']) {
                     $tomar = '<button type="button" onclick="soltar_ticket(' . $value['id'] . ')"  class="m-1 btn btn-sm" style="background-color: #3f6791; color:#fff;" data-toggle="modal" data-target="#soltar-ticket">
                     <i class="far fa-hand-paper"></i>
                   </button>';
+                  $cerrar = '<button type="button" onclick="cerrar_ticket(' . $value['id'] . ')" class="btn btn-success btn-sm m-1" data-toggle="modal" data-target="#cerrar-ticket" title="Cerrar ticket">
+                    <i class="far fa-check"></i>
+                  </button>';
                 }
             }
             if (count($registro_historial) > 0) {
                 foreach ($registro_historial as $item) {
-                    $tecnico_nombre = Tecnico::where('user_id', $item->id_user)->first();
+                    $tecnico_nombre = VsTecnico::where('user_id', $item->id_user)->first();
                     $item->nombre = $tecnico_nombre->nombre;
                 }
                 $historial = '<button type="button" onclick=' . "'" . 'historial(' . $registro_historial . ')' . "'" . ' class="m-1 btn btn-sm"style="background-color: #3f6791; color:#fff;"  data-toggle="modal" data-target="#historial-ticket">
@@ -90,13 +148,15 @@ class TicketController extends Controller
 			            <a href="' . $recibo . '" class="btn btn-primary btn-sm m-1 " title="Recibo de Equipo">
                             <i class="far fa-file"></i>
                         </a>'
-                . $tomar . $historial .
+                . $tomar . $cerrar . $historial .
                 '
                     </div>
                 </div>
                 </div>
               </div>
             ';
+
+
             $area = $value['area'];
             if (str_contains($area, 'Belenes')) {
                 $area = str_replace('- Belenes ', "", $area);
@@ -105,6 +165,7 @@ class TicketController extends Controller
                 $area = str_replace('- La Normal ', "", $area);
                 $area = '<b>La Normal</b> - ' . $area;
             }
+            $reporte=$value['nombre_servicio']." - ".$value['datos_reporte'];
 
             $tickets[$key] = array(
 
@@ -112,10 +173,8 @@ class TicketController extends Controller
                 $value['fecha_reporte'] = \Carbon\Carbon::parse($value->fecha_reporte)->format('d/m/Y H:i'),
                 $area,
                 $value['solicitante'],
-                $value['contacto'],
                 $value['tecnico'],
-                $value['categoria'] . ". Prioridad: " . $value['prioridad'],
-                $value['datos_reporte'],
+                $reporte,
                 $acciones,
             );
         }
@@ -124,8 +183,8 @@ class TicketController extends Controller
     }
     public function revisionTickets()
     {
-        $vstickets = VsTicket::where('activo', '=', 1)->get();
-        $tecnicos = Tecnico::where('activo', '=', 1)->get();
+        $vstickets = VsTicket::where('estatus', '=', 1)->get();
+        $tecnicos = VsTecnico::where('activo', '=', 1)->get();
         $tickets = $this->cargarDT($vstickets);
         return view('ticket.revisionTickets')->with('tickets', $tickets)->with('tecnicos', $tecnicos);
     }
@@ -136,11 +195,12 @@ class TicketController extends Controller
      */
     public function create()
     {
-        $equipos = Equipo::all();
-        //$areas = Area::pluck('id','area')->prepend('seleciona');
+        
         $areas = Area::where('activo', 1)->get();
-        $tecnicos = Tecnico::where('activo', '=', 1)->orderBy('nombre')->get();
-        return view('ticket.create')->with('equipos', $equipos)->with('areas', $areas)->with('tecnicos', $tecnicos);
+        //$tecnicos = Tecnico::where('activo', '=', 1)->orderBy('nombre')->get();
+        $solicitantes = Solicitante::orderBy('nombre')->get();
+        $servicios = Servicio::orderBy('nombre')->get();
+        return view('ticket.create') ->with('areas', $areas)->with('servicios', $servicios)->with('solicitantes', $solicitantes);
     }
 
     /**
@@ -153,33 +213,48 @@ class TicketController extends Controller
     {
         $this->validate($request, [
             'area_id' => 'required',
-            'solicitante' => 'required',
-            'contacto' => 'required',
-            'tecnico_id' => 'required',
-            'categoria' => 'required',
-            'prioridad' => 'required',
-            'estatus' => 'required',
-            'datos_reporte' => 'required',
+            'solicitante_id' => 'required',
+            'servicio_id' => 'required',
         ]);
+
+
+
+
+        $solicitante= Solicitante::where('id',$request->solicitante_id)->first();
+        $area= Area::where('id',$request->area_id)->first();
+        $prioridades=DB::table("prioridades_incidente")->get();
+
+        $porcentaje_afectados=($area->cantidad_usuarios*100)/14298;
+        if($porcentaje_afectados<=10){
+            $porcentaje=0;
+        } elseif($porcentaje_afectados<=30){
+            $porcentaje=1;
+        } else {
+            $porcentaje=2;
+        }
+        $influencia=$this->indice_influencia[$solicitante->rol-1][$porcentaje];
+        $servicio= Servicio::where('id',$request->servicio_id)->first();
+        $prioridad=DB::table("prioridades_incidente")
+        ->select('indice')
+        ->where('urgencia',$servicio->urgencia)
+        ->where('influencia',$influencia)->first();
+
+
+
+
+
+
         $ticket = new Ticket();
         $ticket->area_id = $request->input('area_id');
-        $ticket->solicitante = $request->input('solicitante');
-        $ticket->contacto = $request->input('contacto');
-        $ticket->tecnico_id = $request->input('tecnico_id');
-        $ticket->categoria = $request->input('categoria');
-        $ticket->prioridad = $request->input('prioridad');
-        $ticket->estatus = $request->input('estatus');
+        $ticket->solicitante_id = $request->input('solicitante_id');
+        $ticket->servicio_id = $request->input('servicio_id');
         $ticket->datos_reporte = $request->input('datos_reporte');
-        $ticket->fecha_reporte = date('Y/m/d H:m:s');
-        $ticket->fecha_inicio  = $request->input('fecha_inicio ');
-        $ticket->fecha_termino = $request->input('fecha_termino');
-        $ticket->problema = $request->input('problema');
-        $ticket->solucion = $request->input('solucion');
+        $ticket->prioridad = $prioridad->indice;
         $ticket->save();
         //
         $log = new Log();
         $log->tabla = 'tickets';
-        $log->movimiento = "área id: " . $ticket->area_id . "Solicitante: " . $ticket->solicitante . "Contacto: " . $ticket->contacto . "Técnico: " . $ticket->tecnico_id . "Categoria: " . $ticket->categoria . "Prioridad: " . $ticket->prioridad . "Estatus: " . $ticket->estatus . "Datos de reporte: " . $ticket->datos_reporte . "Fecha de reporte: " . $ticket->fecha_reporte . "Fecha de inicio: " . $ticket->fecha_inicio . "Fecha de termino: " . $ticket->fecha_termino . "Problema: " . $ticket->problema . "Solución: " . $ticket->solucion;
+        $log->movimiento = "área id: " . $ticket->area_id . "Solicitante: " . $ticket->solicitante_id.  "Datos de reporte: " . $ticket->datos_reporte;
         $log->usuario_id = Auth::user()->id;
         $log->acciones = 'Insertar';
         $log->save();
@@ -209,12 +284,13 @@ class TicketController extends Controller
      */
     public function edit($id)
     {
-        $equipos = Equipo::all();
-        //$areas = Area::pluck('id','area')->prepend('seleciona');
+        
         $areas = Area::all();
+        $solicitantes = Solicitante::orderBy('nombre')->get();
+        $servicios = Servicio::orderBy('nombre')->get();
         $ticket = VsTicket::find($id);
-        $tecnicos = Tecnico::where('activo', '=', 1)->orderBy('nombre')->get();
-        return view('ticket.edit')->with('ticket', $ticket)->with('equipos', $equipos)->with('areas', $areas)->with('tecnicos', $tecnicos);
+        $tecnicos = VsTecnico::where('activo', '=', 1)->orderBy('nombre')->get();
+        return view('ticket.edit')->with('ticket', $ticket)->with('areas', $areas)->with('tecnicos', $tecnicos)->with('solicitantes', $solicitantes)->with('servicios', $servicios);
     }
 
     /**
@@ -228,50 +304,54 @@ class TicketController extends Controller
     {
         $this->validate($request, [
             'area_id' => 'required',
-            'solicitante' => 'required',
-            'contacto' => 'required',
+            'solicitante_id' => 'required',
             'tecnico_id' => 'required',
-            'categoria' => 'required',
-            'prioridad' => 'required',
+            'servicio_id' => 'required',
             'estatus' => 'required',
-            'datos_reporte' => 'required',
-            'fecha_reporte' => 'required'
         ]);
+
+        $solicitante= Solicitante::where('id',$request->solicitante_id)->first();
+        $area= Area::where('id',$request->area_id)->first();
+        $prioridades=DB::table("prioridades_incidente")->get();
+
+        $porcentaje_afectados=($area->cantidad_usuarios*100)/14298;
+        if($porcentaje_afectados<=10){
+            $porcentaje=0;
+        } elseif($porcentaje_afectados<=30){
+            $porcentaje=1;
+        } else {
+            $porcentaje=2;
+        }
+        $influencia=$this->indice_influencia[$solicitante->rol-1][$porcentaje];
+    
+        $servicio= Servicio::where('id',$request->servicio_id)->first();
+        //return $servicio;
+        $prioridad=DB::table("prioridades_incidente")
+        ->select('indice')
+        ->where('urgencia',$servicio->urgencia)
+        ->where('influencia',$influencia)->first();
+
 
         $ticket = Ticket::find($id);
         $ticket->area_id = $request->input('area_id');
-        $ticket->solicitante = $request->input('solicitante');
-        $ticket->contacto = $request->input('contacto');
+        $ticket->solicitante_id = $request->input('solicitante_id');
         $ticket->tecnico_id = $request->input('tecnico_id');
-        $ticket->categoria = $request->input('categoria');
-        $ticket->prioridad = $request->input('prioridad');
-        $ticket->estatus = $request->input('estatus');
         $ticket->datos_reporte = $request->input('datos_reporte');
-        //$ticket->fecha_reporte = $request->input('fecha_reporte');
-        $ticket->fecha_inicio  = $request->input('fecha_inicio ');
-
-        $ticket->fecha_termino = $request->input('fecha_termino');
-
-        if (!is_null($ticket->fecha_termino) && isset($ticket->fecha_termino)) {
-            $ticket->estatus = 'Cerrado';
-        }
-        $ticket->problema = $request->input('problema');
-        $ticket->solucion = $request->input('solucion');
+        $ticket->prioridad = $prioridad->indice;
+        $ticket->estatus = $request->input('estatus');
         $ticket->update();
         //
         $log = new Log();
         $log->tabla = "tickets";
         $mov = "";
-        $mov = $mov . " area_id: " . $ticket->area_id . " solicitante: " . $ticket->solicitante . " contacto " . $ticket->contacto;
-        $mov = $mov . " tecnico_id: " . $ticket->tecnico_id . " categoria: " . $ticket->categoria . " prioridad " . $ticket->prioridad;
-        if (!is_null($ticket->fecha_termino) && isset($ticket->fecha_termino)) {
+        $mov = $mov . " area_id: " . $ticket->area_id . " solicitante_id: " . $ticket->solicitante_id;
+        $mov = $mov . " tecnico_id: " . $ticket->tecnico_id;
+        /*if (!is_null($ticket->fecha_termino) && isset($ticket->fecha_termino)) {
             $mov = $mov . " estatus: Cerrado";
         } else {
             $mov = $mov . " estatus:" . $ticket->estatus;
-        }
-        $mov = $mov . " datos_reporte: " . $ticket->datos_reporte . " fecha_reporte " . $ticket->fecha_reporte;
-        $mov = $mov . " fecha_inicio: " . $ticket->fecha_inicio . " datos_reporte: " . $ticket->datos_reporte . " fecha_termino " . $ticket->fecha_termino;
-        $mov = $mov . " problema: " . $ticket->problema . " solucion: " . $ticket->solucion . ".";
+        }*/
+        $mov = $mov . " datos_reporte: " . $ticket->datos_reporte;
         $log->movimiento = $mov;
         $log->usuario_id = Auth::user()->id;
         $log->acciones = "Edicion";
@@ -295,52 +375,49 @@ class TicketController extends Controller
 
     public function filtroTickets(Request $request)
     {
-        $tecnicos = Tecnico::where('activo', '=', 1)->get();
+        $tecnicos = VsTecnico::where('activo', '=', 1)->get();
         $tecnico = $request->input('tecnico_id');
         $estatus = $request->input('estatus');
         $sede = $request->sede;
         //return $sede;
         $tecnicoElegido = Tecnico::find($tecnico);
+        
 
         if ((isset($tecnico) && !is_null($tecnico)) && (isset($estatus) && !is_null($estatus))) {
             if (isset($sede)) {
                 $vstickets = VsTicket::where('tecnico_id', '=', $tecnico)
-                    ->Where('activo', '=', 1)
                     ->Where('estatus', '=', $estatus)
                     ->where('sede', $sede)
                     ->get();
             } else {
                 $vstickets = VsTicket::where('tecnico_id', '=', $tecnico)
-                    ->Where('activo', '=', 1)
                     ->Where('estatus', '=', $estatus)
                     ->get();
             }
         } elseif ((isset($tecnico) && !is_null($tecnico)) && (!isset($estatus) && is_null($estatus))) {
             if (isset($sede)) {
                 $vstickets = VsTicket::where('tecnico_id', '=', $tecnico)
-                    ->Where('activo', '=', 1)->where('sede', $sede)
+                    ->where('sede', $sede)
                     ->get();
             } else {
                 $vstickets = VsTicket::where('tecnico_id', '=', $tecnico)
-                    ->Where('activo', '=', 1)
                     ->get();
             }
         } elseif ((!isset($tecnico) && is_null($tecnico)) && (isset($estatus) && !is_null($estatus))) {
             if (isset($sede)) {
                 $vstickets = VsTicket::where('estatus', '=', $estatus)
-                    ->Where('activo', '=', 1)->where('sede', $sede)
+                    ->where('sede', $sede)
                     ->get();
             } else {
 
                 $vstickets = VsTicket::where('estatus', '=', $estatus)
-                    ->Where('activo', '=', 1)
                     ->get();
             }
         } else {
             if (isset($sede)) {
-                $vstickets = VsTicket::where('activo', '=', 1)->where('sede', $sede)->get();
+                $vstickets = VsTicket::where('sede', $sede)->get();
             } else {
-                $vstickets = VsTicket::where('activo', '=', 1)->get();
+                $vstickets = VsTicket::get();
             }
         }
         $tickets = $this->cargarDT($vstickets);
@@ -431,13 +508,15 @@ class TicketController extends Controller
 
 
         if (isset($request->tecnico)) {
-            $tecnico =  Tecnico::select('id')->where('activo', '=', 1)->where('id', $request->tecnico)->first();
+            $tecnico =  Tecnico::select('id')->where('id', $request->tecnico)->first();
         } else {
             //return Auth::user()->id;
             $tecnico =  Tecnico::select('id')->where('activo', '=', 1)->where('user_id', Auth::user()->id)->first();
         }
         //return $tecnico;
-        $total = VsTicket::where('activo', '=', 1)->where('tecnico_id', '=', $tecnico->id)->where('estatus', 'Abierto')->get();
+        $total = VsTicket::where('tecnico_id', '=', $tecnico->id)
+        ->where('estatus',1)
+        ->get();
 
         //return count($total);
         if (count($total) < 3 || $tecnico->id == 161) {
@@ -467,10 +546,29 @@ class TicketController extends Controller
         $historial->detalles = $request->detalle;
         $historial->save();
         $ticket = Ticket::find($id);
-        $ticket->tecnico_id  = 137;
+        $ticket->tecnico_id  = 41;
         $ticket->save();
         return redirect()->route('tickets.index')->with(array(
             'message' => 'Se libero el ticket correctamente'
+        ));
+    }
+    public function cerrar_ticket($id, Request $request)
+    {
+        $validateData = $this->validate($request, [
+            'solucion' => 'required',
+        ]);
+        date_default_timezone_set('America/Mexico_City');
+        $historial = new ticket_historial();
+        $historial->id_user = Auth::user()->id;
+        $historial->id_ticket = $id;
+        $historial->motivo = "Solución";
+        $historial->detalles = $request->solucion;
+        $historial->save();
+        $ticket = Ticket::find($id);
+        $ticket->estatus  = '0';
+        $ticket->save();
+        return redirect()->route('tickets.index')->with(array(
+            'message' => 'Se cerro el ticket correctamente'
         ));
     }
 
