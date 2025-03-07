@@ -233,9 +233,7 @@ class TicketController extends Controller
             $porcentaje=2;
         }
         $influencia=$this->indice_influencia[$solicitante->rol-1][$porcentaje];
-    
         $servicio= Servicio::where('id',$request->servicio_id)->first();
-        //return $servicio;
         $prioridad=DB::table("prioridades_incidente")
         ->select('indice')
         ->where('urgencia',$servicio->urgencia)
@@ -339,6 +337,7 @@ class TicketController extends Controller
         $ticket->solicitante_id = $request->input('solicitante_id');
         $ticket->tecnico_id = $request->input('tecnico_id');
         $ticket->datos_reporte = $request->input('datos_reporte');
+        $ticket->prioridad = $prioridad->indice;
         $ticket->estatus = $request->input('estatus');
         $ticket->update();
         //
