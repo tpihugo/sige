@@ -42,33 +42,43 @@ class TicketController extends Controller
     public function index()
     {
         $id_tecnico = Tecnico::where('activo', 1)->where('user_id', Auth::user()->id)->first();
+        $tecnicos = VsTecnico::where('activo', '=', 1)->orderBy('nombre')->get();
+        
+
+        //vista de admin
+        if(!Auth::user()->hasRole('cta')){
+            $vstickets = VsTicket::where('estatus', '=', 1)->get();
+            $tickets = $this->cargarDT($vstickets);
+            return view('ticket.index')->with('tickets', $tickets)->with('tecnicos', $tecnicos);
+        }
+        
         $vstickets = VsTicket::where('estatus', '=', 1)->where('tecnico_id', $id_tecnico->id)->get();
-        if(isset($vstickets)){
-            
-            $experiencia = VsTicket::select('servicio_id', \DB::raw('count(*) as total'))
-            ->where('estatus', '=', 0)
+        if($vstickets->count()==0){
+            $experiencia = VsTicket::select('servicio_id', DB::raw('count(*) as total'))
+            ->where('estatus', '=', '0')
             ->where('tecnico_id', $id_tecnico->id)
             ->groupBy('servicio_id')
-            ->orderByDesc('total')
-            ->first();
-            if(isset($experiencia)){
-                return "Aqui";
+            ->orderBy('total','desc')
+            ->get();
+            
+            if($experiencia->count()>0){
+                $vstickets_temp = collect([]);
+                foreach ($experiencia as $key => $value) {
+                    $vstickets_temp[] = VsTicket::where('estatus', '=', 1)
+                    ->where('servicio_id', $value->servicio_id)
+                    ->orderBy('prioridad')
+                    ->get();
+                }
+                $vstickets = $vstickets_temp->collapse();
+            } else {
                 $vstickets = VsTicket::where('estatus', '=', 1)
-                ->where('servicio_id', $experiencia->servicio_id)
                 ->orderBy('prioridad')
-                ->take(2)
                 ->get();
             }
+        } 
 
-        } else {
-            $vstickets = VsTicket::where('estatus', '=', 1)
-            ->orderBy('prioridad')
-            ->take(2)
-            ->get();
-        }
       //  with($vstickets)->where id tecnico 
-        $tecnicos = VsTecnico::where('activo', '=', 1)->orderBy('nombre')->get();
-        $tickets = $this->cargarDT($vstickets);
+        $tickets = $this->cargarDT($vstickets->take(2));
         
 
 
