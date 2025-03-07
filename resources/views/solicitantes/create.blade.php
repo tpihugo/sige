@@ -55,7 +55,6 @@
                                     secundario</label>
                                 <input name="contacto_secundario" id="contacto_secundario" class="form-control">
                             </div>
-                            <div class="row g-3 align-items-center">
                                 <div class="col-md-12">
                                     <label for="rol">Rol</label>
                                     <select class="form-control" class="form-control" id="js-example-basic-single"
@@ -68,7 +67,6 @@
                                         <option value="5">5. Alumno</option>                                           
                                     </select>
                                 </div>
-                            </div>
                             <div class="row g-3 align-items-center">
                                 <div class="col-md-12">
                                     <label for="area_principal">Área principal</label>

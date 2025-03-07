@@ -60,13 +60,19 @@
                         <br>
                         <div class="row g-3 align-items-center">
                             <div class="col-md-12">
-                                <label for="solicitante_id">Solicitante </label>
-                                <select class="form-control" id="js-example-basic-single2" name="solicitante_id" required>
-                                    <option disabled selected>Elegir</option>
-                                    @foreach ($solicitantes as $solicitante)
-                                        <option value="{{ $solicitante->id }}">{{ $solicitante->nombre }} - {{ $solicitante->contacto_principal}}  </option>
-                                    @endforeach
-                                </select>
+                                <label for="area_id">Solicitante</label>
+                            </div>
+
+                        </div>
+                        <div class="row g-3 d-flex align-items-center">
+                            <div class="col-md-12 d-flex">
+                                    <select class="form-control" id="js-example-basic-single2" name="solicitante_id" required>
+                                        <option disabled selected>Elegir un solicitante</option>
+                                        @foreach ($solicitantes as $solicitante)
+                                            <option value="{{ $solicitante->id }}">{{ $solicitante->nombre }} - {{ $solicitante->contacto_principal}}  </option>
+                                        @endforeach
+                                    </select>
+                                <a href="{{ route('solicitantes.create') }}" class="btn btn-sm btn-primary">Agregar</a>
                             </div>
                         </div>
                         <br>
