@@ -41,13 +41,13 @@
 
                             <div class="col-md-12">
                                 <label class="font-weight-bold form-label" for="nombre">Nombre del solicitante </label>
-                                <input name="nombre" id="nombre" class="form-control">
+                                <input name="nombre" id="nombre" class="form-control" required>
                             </div>
 
                             <div class="col-md-12">
                                 <label class="font-weight-bold form-label" for="contacto_principal">Contacto
                                     principal</label>
-                                <input name="contacto_principal" id="contacto_principal" class="form-control">
+                                <input name="contacto_principal" id="contacto_principal" class="form-control" required>
                             </div>
 
                             <div class="col-md-12">
@@ -59,7 +59,7 @@
                                     <label for="rol">Rol</label>
                                     <select class="form-control" class="form-control" id="js-example-basic-single"
                                         name="rol" required>
-                                        <option disable selected>Selecciona una rol</option>
+                                        <option disable selected value="">Selecciona una rol</option>
                                         <option value="1">1. Académico</option>
                                         <option value="2">2. Administrativo</option>
                                         <option value="3">3. Rectoría</option>
@@ -72,7 +72,7 @@
                                     <label for="area_principal">Área principal</label>
                                     <select class="form-control" class="form-control" id="js-example-basic-single"
                                         name="area_principal" required>
-                                        <option disable selected>Selecciona una área</option>
+                                        <option disable selected value="">Selecciona una área</option>
                                         @foreach ($areas as $area)
                                             <option value="{{ $area->id }}">{{ $area->sede }} - {{ $area->area }} -
                                                 {{ $area->edificio }} - {{ $area->piso }}</option>

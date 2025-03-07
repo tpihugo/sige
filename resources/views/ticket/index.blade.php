@@ -195,7 +195,8 @@
                                 <div class="col-sm-12">
                                     <textarea name="solucion" id="solucion" class="form-control" required></textarea>
                                 </div>
-                                <div class="col">
+                            <br>
+                                <div class="ol-sm-12">
                                     <button type="submit" class="btn btn-primary">Cerrar ticket</button>
                                 </div>
                             </form>
