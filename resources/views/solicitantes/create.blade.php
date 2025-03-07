@@ -57,6 +57,20 @@
                             </div>
                             <div class="row g-3 align-items-center">
                                 <div class="col-md-12">
+                                    <label for="rol">Rol</label>
+                                    <select class="form-control" class="form-control" id="js-example-basic-single"
+                                        name="rol" required>
+                                        <option disable selected>Selecciona una rol</option>
+                                        <option value="1">1. Académico</option>
+                                        <option value="2">2. Administrativo</option>
+                                        <option value="3">3. Rectoría</option>
+                                        <option value="4">4. Jefatura</option>
+                                        <option value="5">5. Alumno</option>                                           
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row g-3 align-items-center">
+                                <div class="col-md-12">
                                     <label for="area_principal">Área principal</label>
                                     <select class="form-control" class="form-control" id="js-example-basic-single"
                                         name="area_principal" required>
