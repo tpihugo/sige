@@ -248,6 +248,7 @@ class TicketController extends Controller
         $ticket->area_id = $request->input('area_id');
         $ticket->solicitante_id = $request->input('solicitante_id');
         $ticket->servicio_id = $request->input('servicio_id');
+        $ticket->tecnico_id = 41;
         $ticket->datos_reporte = $request->input('datos_reporte');
         $ticket->prioridad = $prioridad->indice;
         $ticket->save();
