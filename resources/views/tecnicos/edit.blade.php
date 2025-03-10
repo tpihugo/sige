@@ -37,11 +37,6 @@
                             <br>
                             <div class="row g-3 align-items-center">
                                 <div class="col-md-6">
-                                    <label for="nombre">Nombre del Técnico</label>
-                                    <input class="form-control" id="nombre" name="nombre"
-                                        value="{{ $tecnico->nombre }} ">
-                                </div>
-                                <div class="col-md-6">
                                     <label for="ciclo_inicio">Ciclo de Inicio</label>
                                     <input class="form-control" id="ciclo_inicio" name="ciclo_inicio"
                                         value="{{ $tecnico->ciclo_inicio }}" />
