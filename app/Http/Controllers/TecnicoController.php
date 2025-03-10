@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Log;
 use Illuminate\Http\Request;
 use App\Models\Tecnico;
-use App\Models\Vs_Tecnico;
+use App\Models\VsTecnico;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,7 +19,7 @@ class TecnicoController extends Controller
      */
     public function index()
     {
-        $tecnicos = Tecnico::where('activo','=',1)->get();
+        $tecnicos = VsTecnico::where('activo','=',1)->get();
         $vstecnicos = $this->cargarDT($tecnicos);
         return view('tecnicos.index')->with('tecnicos',$vstecnicos);
     }
@@ -86,7 +86,8 @@ class TecnicoController extends Controller
      */
     public function create()
     {
-        return view('tecnicos.create');
+        $users = User::where('activo',1)->orderBy('name')->get();
+        return view('tecnicos.create', compact('users'));
     }
 
     /**
@@ -98,7 +99,7 @@ class TecnicoController extends Controller
     public function store(Request $request)
     {
         $validateData = $this->validate($request,[
-            'nombre'=>'required',
+            'usuario'=>'required',
             'telefono'=>'required',
             'asistencia'=>'required',
             'carrera'=>'required',
@@ -109,7 +110,7 @@ class TecnicoController extends Controller
         ]);
 
         $tecnico = new Tecnico();
-        $tecnico->nombre = $request->input('nombre');
+        $tecnico->user_id = $request->input('usuario');
         $tecnico->telefono = $request->input('telefono');
         $tecnico->telefono_emergencia = $request->input('telefono_emergencia');
         $tecnico->asistencia = $request->input('asistencia');
@@ -154,7 +155,7 @@ class TecnicoController extends Controller
      */
     public function edit($id)
     {
-        $tecnico = Tecnico::find($id);
+        $tecnico = VsTecnico::find($id);
         $users = User::where('activo',1)->orderBy('name')->get();
         return view('tecnicos.edit',compact('users'))->with('tecnico', $tecnico);
     }
@@ -169,12 +170,10 @@ class TecnicoController extends Controller
     public function update(Request $request, $id)
     {
         $validateData = $this->validate($request,[
-            'nombre'=>'required',
             'telefono'=>'required',
         ]);
 
         $tecnico = Tecnico::find($id);
-        $tecnico->nombre = $request->input('nombre');
         $tecnico->ciclo_inicio = $request->input('ciclo_inicio');
         $tecnico->telefono = $request->input('telefono');
         $tecnico->telefono_emergencia = $request->input('telefono_emergencia');

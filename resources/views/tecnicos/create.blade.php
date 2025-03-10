@@ -34,8 +34,13 @@
                             <br>
                             <div class="row g-3 align-items-center">
                                 <div class="col-md-6">
-                                    <label for="nombre">Nombre del Técnico</label>
-                                    <input class="form-control" id="nombre" name="nombre" value="{{ old('nombre') }} ">
+                                    <label for="usuario">Selecciona el usuario</label>
+                                    <select class="form-control" id="usuario" name="usuario">
+                                        <option disabled selected>Selecciona un usuario</option>
+                                        @foreach ($users as $item)
+                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="ciclo_inicio">Ciclo de Inicio</label>
@@ -94,4 +99,14 @@
 
 @section('footer')
     <h5 class="text-end">En caso de inconsistencias, favor de reportarlas.</h5>
+@endsection
+@section('js')
+    @include('layouts.scripts')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#usuario').select2({
+                theme: 'bootstrap-5'
+            });
+        });
+    </script>
 @endsection
