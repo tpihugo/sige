@@ -49,7 +49,10 @@ class TicketController extends Controller
         if(!Auth::user()->hasRole('cta')){
             $vstickets = VsTicket::where('estatus', '=', 1)->get();
             $tickets = $this->cargarDT($vstickets);
-            return view('ticket.index')->with('tickets', $tickets)->with('tecnicos', $tecnicos);
+            $id_tecnico = new Tecnico();
+            $id_tecnico->id=41;
+            return view('ticket.index')->with('tickets', $tickets)->with('tecnicos', $tecnicos)->with('id_tecnico',$id_tecnico);
+
         }
         
         $vstickets = VsTicket::where('estatus', '=', 1)->where('tecnico_id', $id_tecnico->id)->get();
@@ -85,7 +88,7 @@ class TicketController extends Controller
 
 
 
-        return view('ticket.index', compact('id_tecnico'))->with('tickets', $tickets)->with('tecnicos', $tecnicos);
+        return view('ticket.index', compact('id_tecnico'))->with('tickets', $tickets)->with('tecnicos', $tecnicos)->with('id_tecnico',$id_tecnico);
     }
     //este el que se modificó fin de la modificación 1
     public function cargarDT($consulta)

@@ -252,6 +252,7 @@
         function tomar_ticket(params) {
             var url = "{{ route('tomar-ticket', ':id') }}";
             url = url.replace(':id', params);
+            
             document.getElementById('asignar').action = url;
 
         }
@@ -265,6 +266,7 @@
         function cerrar_ticket(params) {
             var url = "{{ route('cerrar-ticket', ':id') }}";
             url = url.replace(':id', params);
+            console.log(document.getElementById('cerrar'));
             document.getElementById('cerrar').action = url;
         }
 
