@@ -46,7 +46,7 @@ class TicketController extends Controller
         
 
         //vista de admin
-        if(Auth::user()->hasRole('cta')){
+        if(Auth::user()->hasRole('admin')){
             $vstickets = VsTicket::where('estatus', '=', 1)
             ->orderBy('prioridad')
             ->get();
@@ -56,6 +56,7 @@ class TicketController extends Controller
             return view('ticket.index')->with('tickets', $tickets)->with('tecnicos', $tecnicos)->with('id_tecnico',$id_tecnico);
 
         }
+        //vista de tecnico
         if(isset($id_tecnico->id)){
         $vstickets = VsTicket::where('estatus', '=', 1)->where('tecnico_id', $id_tecnico->id)->get();
         if($vstickets->count()==0){
@@ -154,7 +155,11 @@ class TicketController extends Controller
             if (count($registro_historial) > 0) {
                 foreach ($registro_historial as $item) {
                     $tecnico_nombre = VsTecnico::where('user_id', $item->id_user)->first();
-                    $item->nombre = $tecnico_nombre->name;
+                    if(is_null($tecnico_nombre)){
+                        $item->nombre  = "CTA";
+                    } else {
+                        $item->nombre = $tecnico_nombre->nombre;
+                    }
                 }
                 $historial = '<button type="button" onclick=' . "'" . 'historial(' . $registro_historial . ')' . "'" . ' class="m-1 btn btn-sm"style="background-color: #3f6791; color:#fff;"  data-toggle="modal" data-target="#historial-ticket">
                 <i class="far fa-list-alt"></i>
@@ -417,34 +422,40 @@ class TicketController extends Controller
                     $vstickets = VsTicket::where('tecnico_id', '=', $tecnico)
                         ->Where('estatus', '=', $estatus)
                         ->where('sede', $sede)
+                        ->orderBy('prioridad')
                         ->get();
                 } else {
                     $vstickets = VsTicket::where('tecnico_id', '=', $tecnico)
                         ->Where('estatus', '=', $estatus)
+                        ->orderBy('prioridad')
                         ->get();
                 }
             } elseif ((isset($tecnico) && !is_null($tecnico)) && (!isset($estatus) && is_null($estatus))) {
                 if (isset($sede)) {
                     $vstickets = VsTicket::where('tecnico_id', '=', $tecnico)
                         ->where('sede', $sede)
+                        ->orderBy('prioridad')
                         ->get();
                 } else {
                     $vstickets = VsTicket::where('tecnico_id', '=', $tecnico)
+                        ->orderBy('prioridad')
                         ->get();
                 }
             } elseif ((!isset($tecnico) && is_null($tecnico)) && (isset($estatus) && !is_null($estatus))) {
                 if (isset($sede)) {
                     $vstickets = VsTicket::where('estatus', '=', $estatus)
                         ->where('sede', $sede)
+                        ->orderBy('prioridad')
                         ->get();
                 } else {
 
                     $vstickets = VsTicket::where('estatus', '=', $estatus)
+                        ->orderBy('prioridad')
                         ->get();
                 }
             } else {
                 if (isset($sede)) {
-                    $vstickets = VsTicket::where('sede', $sede)->get();
+                    $vstickets = VsTicket::where('sede', $sede)->orderBy('prioridad')->get();
                 } else {
                     $vstickets = VsTicket::get();
                 }
