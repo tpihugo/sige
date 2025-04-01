@@ -78,12 +78,13 @@
                 </div>
                 @if (Auth::user()->role == 'cta' || Auth::user()->role == 'admin')
                 <div class="col-sm-12 col-md-2 m-1">
+                    <label for="estatus">Sede </label>
                     <select name="sede" id="" class="form-control">
                         @if (isset($sede))
                             <option value="{{ $sede }}">{{ $sede }}</option>
                             <option disabled>Elegir</option>
                         @else
-                            <option selected disabled>Seleccion una sede</option>
+                            <option selected disabled>Selecciona una sede</option>
                         @endif
                         <option value="Belenes">Belenes</option>
                         <option value="La Normal">La Normal</option>
