@@ -48,11 +48,14 @@ class OficiosController extends Controller
 
     public function create()
     {
+        $anio = date('Y');
+
         $id = Oficios::select('num_oficio')
-            ->where('activo', 1)
+            ->where('activo', 1)->where('created_at', 'like', $anio . '%')
             ->latest()
             ->first();
-        $oficio = $id->num_oficio + 1;
+
+        $oficio = isset($id) ? $id->num_oficio + 1 : 1;
         $cuerpo = view('oficios.prestadores.cuerpo')->render();
         //$plantilla = view('oficios.prestadores.plantilla', compact("cuerpo"))->render();
         return view('oficios.prestadores.create', compact('cuerpo', 'oficio'));
@@ -82,8 +85,16 @@ class OficiosController extends Controller
 
         $oficio = new Oficios();
         $oficio->activo = '1';
+        $anio = date('Y');
+
+        $id = Oficios::select('num_oficio')
+            ->where('activo', 1)->where('created_at', 'like', $anio . '%')
+            ->latest()
+            ->first();
+
+        $oficio->num_oficio = isset($id) ? $id->num_oficio + 1 : 1;
         foreach ($request->request as $key => $value) {
-            if (!is_null($value) && strcmp('_token', $key) != 0 && strcmp('_method', $key) != 0 && strcmp('con_copia', $key) != 0) {
+            if (!is_null($value) && strcmp('_token', $key) != 0 && strcmp('_method', $key) != 0 && strcmp('con_copia', $key) != 0 && strcmp('num_oficio', $key) != 0) {
                 $oficio->$key = $request->$key;
             }
         }
@@ -107,19 +118,21 @@ class OficiosController extends Controller
         $con_copia = Arr::exists($request, 'con_copia') ? implode('@', $request->con_copia) : '-';
         $oficio->con_copia = $con_copia;
         $oficio->update();
+
         $anio = date('Y');
         return redirect()->route('oficios.inicio', $anio);
     }
 
     public function general()
     {
+        $anio = date('Y');
+
         $id = Oficios::select('num_oficio')
-            ->where('activo', 1)
+            ->where('activo', 1)->where('created_at', 'like', $anio . '%')
             ->latest()
             ->first();
 
-        $oficio = $id->num_oficio + 1;
-        return view('oficios.oficios.create', compact('oficio'));
+        $oficio = isset($id) ? $id->num_oficio + 1 : 1;        return view('oficios.oficios.create', compact('oficio'));
     }
 
     public function oficios_titulacion()
@@ -134,13 +147,14 @@ class OficiosController extends Controller
 
         if (strcmp($request->estatus, 'aceptar') == 0) {
 
+            $anio = date('Y');
 
             $id = Oficios::select('num_oficio')
-                ->where('activo', 1)
+                ->where('activo', 1)->where('created_at', 'like', $anio . '%')
                 ->latest()
                 ->first();
 
-            $numero = $id->num_oficio + 1;
+            $numero = isset($id) ? $id->num_oficio + 1 : 1;
             $oficio = Oficios::updateOrCreate(
                 ['dirigido' => $request->nombre, 'asunto' => 'Oficio de Titulación', 'activo' => 1],
                 [

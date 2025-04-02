@@ -6,9 +6,7 @@
     @php
         $ruta = asset('js/es_MX.js');
     @endphp
-    <script src="https://cdn.tiny.cloud/1/83792vt0p2ntv8uaehq9hr5zxl05u8zv8n7fkyza9xnw4hqn/tinymce/6/tinymce.min.js"
-        referrerpolicy="origin"></script>
-    <script>
+<script src="https://cdn.tiny.cloud/1/hxrvn0kxyxx274tvb7b2a0ruwwvc0kpe8d59dle7zc9ggndh/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>    <script>
         tinymce.init({
             selector: 'textarea.cuerpo',
             language: 'es_MX',
