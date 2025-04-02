@@ -104,9 +104,13 @@
                     <div class="col-md-12 p-2 ">
                         <label class="form-label" for="">Descripción</label>
                         <textarea class="form-control" name="cuerpo" placeholder="Cuerpo del oficio" id="oficio">
+                            {{ $cuerpo }}                            
+                            <br>
+                            <br>
+                            <br>
                             {!! $att !!}
                             <br><br><br><br>
-                            {{ $coordinador }}                          
+                            {{ $coordinador }}
                         </textarea>
                     </div>
                     <div class="col-md-1 col-sm-1">
@@ -135,7 +139,7 @@
                         </tr>
                         <tr>
                             <td>CUCEI</td>
-                            <td>Mtra. Claudia Castillo Cruz</td>
+                            <td>Mtra. Dulce Angélica Valdivia Chávez</td>
                             <td>Lic. Lucero Araceli Rios Espinoza</td>
                         </tr>
                         <tr>
