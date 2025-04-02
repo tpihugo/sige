@@ -4,6 +4,27 @@
 @section('css')
     @include('layouts.head_2')
 @stop
+@php
+    date_default_timezone_set('America/Mexico_City');
+    setlocale(LC_TIME, 'es_MX.UTF-8', 'esp');
+    $fecha = strftime('%e de %B de %Y', strtotime(date('Y-m-d')));
+    $att =
+        "<div style='text-align:center;line-height: 1;'>
+            <p>
+                ATENTAMENTE <br>
+                <b> “PIENSA Y TRABAJA”<br>
+                    “1925-2025, Un Siglo de Pensar y Trabajar” </b><br>
+
+                Zapopan, Jalisco, " .
+        $fecha .
+        "
+            </p>
+        </div>";
+    $coordinador = "<p style='text-align:center;line-height: 1;'>
+                <b>MTRO. VICTOR HUGO RAMIREZ SALAZAR <br>
+                    Coordinador de Tecnologías para el Aprendizaje</b>
+            </p>";
+@endphp
 @section('content')
 <script src="https://cdn.tiny.cloud/1/hxrvn0kxyxx274tvb7b2a0ruwwvc0kpe8d59dle7zc9ggndh/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
@@ -83,7 +104,9 @@
                     <div class="col-md-12 p-2 ">
                         <label class="form-label" for="">Descripción</label>
                         <textarea class="form-control" name="cuerpo" placeholder="Cuerpo del oficio" id="oficio">
-                            {{ $cuerpo }}                            
+                            {!! $att !!}
+                            <br><br><br><br>
+                            {{ $coordinador }}                          
                         </textarea>
                     </div>
                     <div class="col-md-1 col-sm-1">
