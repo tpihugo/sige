@@ -24,8 +24,8 @@ class TicketHistorialController extends Controller
         }
 
         $activeTechnicians = DB::table('vs_tecnicos')
-            ->join('tickets', 'vs_tecnicos.id','=','tickets.tecnico_id')
-            ->select('tickets.id','vs_tecnicos.nombre as tecnico')
+            ->join('vs_tickets', 'vs_tecnicos.id','=','vs_tickets.tecnico_id')
+            ->select('vs_tickets.id','vs_tecnicos.nombre as tecnico')
             ->where('vs_tecnicos.activo',1)
             ->get()
             ->groupBy(function ($activeTechnicians){
@@ -49,7 +49,7 @@ class TicketHistorialController extends Controller
             $tecnical[] = $solicitante;
             $countTickets[] = count($id);
         }
-        $ticketsIssue = VsTicket::select('id', 'problema')->get()->groupBy(function ($ticketsIssue) {
+        $ticketsIssue = VsTicket::select('id', 'nombre_servicio')->get()->groupBy(function ($ticketsIssue) {
             return $ticketsIssue->problema;
         });
 
@@ -61,7 +61,7 @@ class TicketHistorialController extends Controller
             $idTickets[] = count($item);
         }
 
-        $ticketsCategory = VsTicket::select('id', 'servicio_id')->get()->groupBy(function ($ticketsCategory) {
+        $ticketsCategory = VsTicket::select('id', 'nombre_servicio')->get()->groupBy(function ($ticketsCategory) {
             return $ticketsCategory->categoria;
         });
         $ticketsC = [];
