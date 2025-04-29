@@ -13,7 +13,7 @@ class TicketHistorialController extends Controller
     public function index()
     {
 
-        $data = Ticket::select('id', 'created_at')->get()->groupBy(function ($data) {
+        $data = VsTicket::select('id', 'creado')->get()->groupBy(function ($data) {
             return Carbon::parse($data->created_at)->locale('es')->format('M');
         });
         $months = [];
