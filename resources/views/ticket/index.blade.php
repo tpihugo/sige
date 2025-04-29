@@ -45,6 +45,7 @@
                 <br>
             </div>
             <div class="row g-3 align-items-end">
+                @if (Auth::user()->role == 'cta' || Auth::user()->role == 'admin')
                 <div class="col-md-4">
                     <label for="tecnico_id">Técnico </label>
                     <select class="form-control" id="tecnico_id" name="tecnico_id">
@@ -60,6 +61,7 @@
                         @endforeach
                     </select>
                 </div>
+                @endif
                 <div class="col-md-2">
                     <label for="estatus">Estatus </label>
                     <select class="form-control" id="estatus" name="estatus">
@@ -74,18 +76,21 @@
                     </select>
 
                 </div>
+                @if (Auth::user()->role == 'cta' || Auth::user()->role == 'admin')
                 <div class="col-sm-12 col-md-2 m-1">
+                    <label for="estatus">Sede </label>
                     <select name="sede" id="" class="form-control">
                         @if (isset($sede))
                             <option value="{{ $sede }}">{{ $sede }}</option>
                             <option disabled>Elegir</option>
                         @else
-                            <option selected disabled>Seleccion una sede</option>
+                            <option selected disabled>Selecciona una sede</option>
                         @endif
                         <option value="Belenes">Belenes</option>
                         <option value="La Normal">La Normal</option>
                     </select>
                 </div>
+                @endif
                 <div class="col-md-2 ">
                     <button type="submit" class="btn btn-outline-primary">Filtrar</button>
                     <a href="{{ route('tickets.index') }}" class="btn btn-outline-success">Quitar Filtro</a>
@@ -137,11 +142,9 @@
                                             class="text-center w-100 btn btn-sm btn-primary">Asignar</button>
                                     </div>
                                 </div>
-
                             </form>
                         </div>
                         <div class="modal-footer">
-
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                         </div>
                     </div>

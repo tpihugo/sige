@@ -13,7 +13,9 @@
                 (Auth::user()->role == 'admin' ||
                     Auth::user()->role == 'cta' ||
                     Auth::user()->role == 'auxiliar' ||
-                    Auth::user()->role == 'redes'))
+                    Auth::user()->role == 'redes' ||
+                    Auth::user()->role == 'general'
+                    ))
             @if (session('message'))
                 <div class="alert alert-success">
                     <h2>{{ session('message') }}</h2>
@@ -42,7 +44,27 @@
                         @endif
                         <br>
 
+                        <!--Validación de usuario para quitar el nombre del solicitante -->
+                         @if( Auth::user()->role != 'general') 
+                            <div class="row g-3 align-items-center">
+                                <div class="col-md-12">
+                                    <label for="area_id">Solicitante</label>
+                                </div>
 
+                            </div>
+                            <div class="row g-3 d-flex align-items-center">
+                                <div class="col-md-12 d-flex">
+                                        <select class="form-control" id="js-example-basic-single2" name="solicitante_id" required>
+                                            <option disabled selected>Elegir un solicitante</option>
+                                            @foreach ($solicitantes as $solicitante)
+                                                <option value="{{ $solicitante->id }}">{{ $solicitante->nombre }} - {{ $solicitante->contacto_principal}}  </option>
+                                            @endforeach
+                                        </select>
+                                    <a href="{{ route('solicitantes.create') }}" class="btn btn-sm btn-primary">Agregar</a>
+                                </div>
+                            </div>
+                            <br>
+                        @endif
                         <div class="row g-3 align-items-center">
                             <div class="col-md-12">
                                 <label for="area_id">Áreas</label>
@@ -60,25 +82,7 @@
                         <br>
                         <div class="row g-3 align-items-center">
                             <div class="col-md-12">
-                                <label for="area_id">Solicitante</label>
-                            </div>
-
-                        </div>
-                        <div class="row g-3 d-flex align-items-center">
-                            <div class="col-md-12 d-flex">
-                                    <select class="form-control" id="js-example-basic-single2" name="solicitante_id" required>
-                                        <option disabled selected>Elegir un solicitante</option>
-                                        @foreach ($solicitantes as $solicitante)
-                                            <option value="{{ $solicitante->id }}">{{ $solicitante->nombre }} - {{ $solicitante->contacto_principal}}  </option>
-                                        @endforeach
-                                    </select>
-                                <a href="{{ route('solicitantes.create') }}" class="btn btn-sm btn-primary">Agregar</a>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row g-3 align-items-center">
-                            <div class="col-md-12">
-                                <label for="servicio_id">Servicios </label>
+                                <label for="servicio_id">Servicio </label>
                                 <select class="form-control" id="js-example-basic-single3" name="servicio_id" required>
                                     <option disabled selected>Elegir</option>
                                     @foreach ($servicios as $servicio)
