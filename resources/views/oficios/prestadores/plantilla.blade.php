@@ -1,7 +1,7 @@
 @php
     date_default_timezone_set('America/Mexico_City');
     setlocale(LC_TIME, 'es_MX.UTF-8', 'esp');
-    $anio = explode("-",$oficio->created_at)[0];
+    $anio = explode('-', $oficio->created_at)[0];
     $fecha = strtotime(date('Y-m-d'));
     $img = asset('images/Logo-udg.png');
 @endphp
@@ -21,19 +21,19 @@
             bottom: 0cm;
             left: 0cm;
             right: 0cm;
-            height: 2cm;
+            height: 2.5cm;
         }
 
         @page {
             margin-top: 10px;
-            margin-bottom: 0px;
+            margin-bottom: 15px;
         }
 
         .pie {
             font-size: 10px;
             text-align: center;
             border-top: grey 1px solid;
-            margin-top: 15px;
+            margin-top: 20px;
             padding-top: 10px;
         }
 
@@ -51,7 +51,8 @@
             /** Extra personal styles **/
             line-height: 35px;
         }
-        *{
+
+        * {
             margin-bottom: 0px !important;
         }
     </style>
@@ -70,7 +71,8 @@
     </header>
 
     <footer id="footer">
-        <p class="pie">Av. Parres Arias #150 Colonia San José del Bajío C.P. 45132 Zapopan, Jal. Edificio E
+        <p class="pie">
+            Av. Parres Arias #150 Colonia San José del Bajío C.P. 45132 Zapopan, Jal. Edificio E
             Piso 2, <br> Tel. (33) 38193300 Ext. 23700 / <span class="page">Página </span></p>
     </footer>
 
@@ -82,8 +84,8 @@
             </div>
         </div>
 
-        <div>
-            <span style="line-height:1;">
+        <div style="width:100%;margin-top:1cm;">
+            <span style="line-height:1;overflow-wrap: break-word;width:100%">
                 <b>
                     {{ Str::upper($oficio->dirigido) }}<br>
 
@@ -98,7 +100,7 @@
             <div style="text-align:right;">
                 <span class="text-end">
                     @php
-                        $oficio->atencion = 'At´n: ' . $oficio->atencion;
+                        $oficio->atencion = 'Atención: ' . $oficio->atencion;
                     @endphp
                     {{ Str::upper($oficio->atencion) }}
                     <br>
@@ -122,7 +124,7 @@
                     @foreach (collect($temp) as $item)
                         <tr>
                             <td>
-                                c.c. {{ $item }}
+                                c.c.p. {{ $item }}
                             </td>
                         </tr>
                     @endforeach

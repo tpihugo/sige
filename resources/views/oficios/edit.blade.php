@@ -9,6 +9,7 @@
 <script src="https://cdn.tiny.cloud/1/hxrvn0kxyxx274tvb7b2a0ruwwvc0kpe8d59dle7zc9ggndh/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>    <script>
         tinymce.init({
             selector: 'textarea.cuerpo',
+            content_style: "body, p { line-height: 1.5 !important; }",
             language: 'es_MX',
             language_url: '{{ $ruta }}',
             width: "100%",
