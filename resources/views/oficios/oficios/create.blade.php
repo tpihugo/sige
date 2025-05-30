@@ -13,8 +13,7 @@
             <p>
                 ATENTAMENTE <br>
                 <b> “PIENSA Y TRABAJA”<br>
-                    “30 años de la Autonom&iacute;a de la <br>
-                    Universidad de Guadalajara y de su organizaci&oacute;n en Red” </b><br>
+                    “1925-2025, Un Siglo de Pensar y Trabajar” </b><br>
 
                 Zapopan, Jalisco, " .
         $fecha .
@@ -30,11 +29,12 @@
     @php
         $ruta = asset('js/es_MX.js');
     @endphp
-    <script src="https://cdn.tiny.cloud/1/83792vt0p2ntv8uaehq9hr5zxl05u8zv8n7fkyza9xnw4hqn/tinymce/6/tinymce.min.js"
+    <script src="https://cdn.tiny.cloud/1/hxrvn0kxyxx274tvb7b2a0ruwwvc0kpe8d59dle7zc9ggndh/tinymce/7/tinymce.min.js"
         referrerpolicy="origin"></script>
     <script>
         tinymce.init({
             selector: 'textarea#cuerpo',
+            content_style: "body, p { line-height: 1.5 !important; }",
             width: "100%",
             language: 'es_MX',
             language_url: '{{ $ruta }}',
@@ -103,9 +103,8 @@
                     </div>
                     <div class="my-1 col-sm-12 col-md-5">
                         <label for="atencion">Asunto</label>
-                        <input type="text" placeholder="Asunto del oficio"
-                            value="{{ old('asunto') }}" class="form-control" name="asunto"
-                            id="asunto">
+                        <input type="text" placeholder="Asunto del oficio" value="{{ old('asunto') }}"
+                            class="form-control" name="asunto" id="asunto">
                     </div>
 
 
@@ -115,10 +114,13 @@
                     <hr>
                     <div class="col-md-12 p-2 ">
                         <label class="form-label" for="">Descripción</label>
-                        <textarea class="form-control" name="cuerpo" placeholder="Cuerpo del oficio" id="cuerpo">{{ old('cuerpo') }}
+                        <textarea class="form-control" name="cuerpo" placeholder="Cuerpo del oficio" id="cuerpo">{{ old('cuerpo') }} <br>
+                            <p style="line-height: 1 !important;">
                             {!! $att !!}
                             <br><br><br><br>
                             {{ $coordinador }}
+                            </p>
+
                             </textarea>
                     </div>
                     <div id="formulario">
@@ -135,7 +137,7 @@
 
 
                 </form>
-                
+
             </div>
         @else
             El periodo de Registro de Proyectos a terminado
