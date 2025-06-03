@@ -26,7 +26,6 @@
             </p>";
 @endphp
 @section('content')
-<script src="https://cdn.tiny.cloud/1/hxrvn0kxyxx274tvb7b2a0ruwwvc0kpe8d59dle7zc9ggndh/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         tinymce.init({
             selector: 'textarea',
@@ -95,7 +94,8 @@
 
                     <div class="my-1 col-sm-12 col-md-5">
                         <label for="atencion">Asunto</label>
-                        <input type="text" class="form-control" name="asunto" id="asunto" value="Liberacion de servicio/practicas">
+                        <input type="text" class="form-control" name="asunto" id="asunto"
+                            value="Liberacion de servicio/practicas">
                     </div>
 
                     <span class="text-muted my-1"><small>NOTA: Favor de introducir nombres completos del personal</small>
@@ -134,7 +134,7 @@
                     <tbody>
                         <tr>
                             <td>CUCSH</td>
-                            <td>Lic. Xochitl Ferrer Sandoval</td>
+                            <td>Lic. Nallely Guadalupe Robles Ortiz</td>
                             <td>Lic. Alfredo Don Olivera</td>
                         </tr>
                         <tr>

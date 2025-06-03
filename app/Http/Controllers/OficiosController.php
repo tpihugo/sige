@@ -25,9 +25,7 @@ class OficiosController extends Controller
         'asunto.required' => 'Favor de incluir el asunto'
     ];
 
-    public function index()
-    {
-    }
+    public function index() {}
 
     public function inicio($anio = null)
     {
@@ -63,7 +61,18 @@ class OficiosController extends Controller
     public function show(Oficios $oficio)
     {
         $html = view('oficios.prestadores.plantilla', compact('oficio'));
-        $pdf = \PDF::loadHtml($html->render());
+        $pdf = \PDF::loadHtml($html->render())->setPaper('letter', 'portrait');
+        $pdf->output();
+        $dompdf = $pdf->getDomPDF();
+        $canvas = $dompdf->get_canvas();
+        $width = $canvas->get_width();
+        $x_center = ($width / 2) - 50; // Ajusta según el ancho del texto
+
+        $canvas->page_text(150, 750, "Av. Parres Arias #150 Colonia San José del Bajío C.P. 45132 Zapopan, Jal.", null, 10, [0, 0, 0]);
+        $canvas->page_text(200, 760, "Edificio E Piso 2, Tel. (33) 38193300 Ext. 23700", null, 10, [0, 0, 0]);
+        $canvas->page_text($x_center, 770, "Página {PAGE_NUM} de {PAGE_COUNT}", null, 10, [0, 0, 0]);
+
+
         return $pdf->stream();
     }
     public function edit(Oficios $oficio)
@@ -99,8 +108,7 @@ class OficiosController extends Controller
             }
         }
 
-        $con_copia = Arr::exists($request, 'con_copia') ? implode('@', $request->con_copia) : '-';
-        $oficio->con_copia = $con_copia;
+        $oficio->con_copia = $request->con_copia;
         //return $oficio;
         $oficio->save();
         $anio = date('Y');
@@ -115,8 +123,7 @@ class OficiosController extends Controller
                 $oficio->$key = $request->$key;
             }
         }
-        $con_copia = Arr::exists($request, 'con_copia') ? implode('@', $request->con_copia) : '-';
-        $oficio->con_copia = $con_copia;
+        $oficio->con_copia = $request->con_copia;
         $oficio->update();
 
         $anio = date('Y');
@@ -132,7 +139,8 @@ class OficiosController extends Controller
             ->latest()
             ->first();
 
-        $oficio = isset($id) ? $id->num_oficio + 1 : 1;        return view('oficios.oficios.create', compact('oficio'));
+        $oficio = isset($id) ? $id->num_oficio + 1 : 1;
+        return view('oficios.oficios.create', compact('oficio'));
     }
 
     public function oficios_titulacion()
@@ -158,13 +166,16 @@ class OficiosController extends Controller
             $oficio = Oficios::updateOrCreate(
                 ['dirigido' => $request->nombre, 'asunto' => 'Oficio de Titulación', 'activo' => 1],
                 [
-                    'num_oficio' => $numero, 'dirigido' => $request->nombre, 'asunto' => 'Oficio de Titulación', 'atencion' => '-',
-                    'centro_universitario' => 'CUCSH', 'cuerpo' => 'Oficio para titulación'
+                    'num_oficio' => $numero,
+                    'dirigido' => $request->nombre,
+                    'asunto' => 'Oficio de Titulación',
+                    'atencion' => '-',
+                    'centro_universitario' => 'CUCSH',
+                    'cuerpo' => 'Oficio para titulación'
                 ]
             );
             $num_oficio = $oficio->id;
-            $usuario = DB::connection('mysql2')->table('users')->where('id',$request->id)->first();
-            dd(new User($usuario));
+            $usuario = DB::connection('mysql2')->table('users')->where('id', $request->id)->first();
             Mail::to($usuario->email)->send(new RespuestaAlumnos($usuario));
             return $usuario;
         } else {

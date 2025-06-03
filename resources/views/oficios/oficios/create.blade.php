@@ -29,8 +29,7 @@
     @php
         $ruta = asset('js/es_MX.js');
     @endphp
-    <script src="https://cdn.tiny.cloud/1/hxrvn0kxyxx274tvb7b2a0ruwwvc0kpe8d59dle7zc9ggndh/tinymce/7/tinymce.min.js"
-        referrerpolicy="origin"></script>
+
     <script>
         tinymce.init({
             selector: 'textarea#cuerpo',
@@ -39,8 +38,20 @@
             language: 'es_MX',
             language_url: '{{ $ruta }}',
             height: 500,
-            plugins: 'table',
+            plugins: 'table | pagebreak | print',
+            toolbar: 'print | pagebreak',
             menubar: true, // removes the menubar
+        });
+
+        tinymce.init({
+            selector: 'textarea#ccp',
+            content_style: "body, p { line-height: 1 !important; }",
+            language: 'es_MX',
+            language_url: '{{ $ruta }}',
+            height: 150,
+            resize: 'both',
+            menubar: false,
+            toolbar: false
         });
     </script>
     <div class="container">
@@ -63,7 +74,7 @@
                 <h2 class="text-center my-3">Crear Oficio</h2>
             </div>
             <div>
-                <form action="{{ route('oficios.store') }}" method="POST" class="row justify-content-center">
+                <form action="{{ route('oficios.store') }}" method="POST" class="row">
                     @csrf
                     <div class="my-1 col-sm-12 col-md-2">
                         <label for="num_oficio" class=" text-center">Oficio CTA</label>
@@ -114,21 +125,22 @@
                     <hr>
                     <div class="col-md-12 p-2 ">
                         <label class="form-label" for="">Descripción</label>
-                        <textarea class="form-control" name="cuerpo" placeholder="Cuerpo del oficio" id="cuerpo">{{ old('cuerpo') }} <br>
-                            <p style="line-height: 1 !important;">
-                            {!! $att !!}
-                            <br><br><br><br>
-                            {{ $coordinador }}
-                            </p>
+                        <textarea class="form-control" name="cuerpo" placeholder="Cuerpo del oficio" id="cuerpo">
+                            
+                          {!! old('cuerpo') ? old('cuerpo') : "<br/>$att<br/><br/><br/>$coordinador" !!}
 
-                            </textarea>
+                        </textarea>
                     </div>
                     <div id="formulario">
 
                     </div>
-                    <div>
+                    <div class="col-md-3 col-sm-12">
+                        <label for="agregar">C.c.p.</label>
+                        <textarea class="form-control" id="ccp" name="con_copia">{{ old('con_copia') }} </textarea>
+                        {{-- 
                         <button type="button" id="agregar" class="clonar btn btn-secondary btn-sm">+</button>
                         <label for="agregar">Agregar C.C.</label>
+                         --}}
                     </div>
 
                     <div class="col-sm-12">
@@ -149,41 +161,4 @@
     <div class="row align-items-center">
         <h5 class="text-end">En caso de inconsistencias, favor de reportarlas.</h5>
     </div>
-@endsection
-@section('js')
-    <script>
-        var cont = 0;
-
-        function eliminar(eliminar) {
-            let elemento = document.getElementById(eliminar);
-            elemento.parentNode.removeChild(elemento);
-        }
-
-        $('.clonar').click(function() {
-            let form = document.getElementById('formulario');
-            var div = document.createElement("div");
-            var span = document.createElement("span");
-            span.className = "btn btn-danger";
-            span.className = "btn btn-danger m-1";
-            span.textContent = 'X';
-            let numero = cont;
-            span.addEventListener("click", function() {
-                eliminar(numero)
-            }, false);
-
-            var input = document.createElement("input");
-            input.type = "text";
-            input.name = 'con_copia[]';
-            input.placeholder = "C. C.";
-            input.className = "form-control col-md-3 m-1";
-            div.appendChild(input);
-
-            div.setAttribute('id', cont);
-            div.className = 'input-group d-flex flex-wrap';
-            cont = cont + 1;
-            div.appendChild(span);
-            form.appendChild(div);
-
-        });
-    </script>
 @endsection

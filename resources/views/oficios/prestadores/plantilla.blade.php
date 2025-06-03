@@ -16,29 +16,10 @@
     <title>CUCSH/SA/CTA/{{ $oficio->num_oficio }}/{{ $anio }}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
     <style>
-        #footer {
-            position: fixed;
-            bottom: 0cm;
-            left: 0cm;
-            right: 0cm;
-            height: 2.5cm;
-        }
-
         @page {
             margin-top: 10px;
-            margin-bottom: 15px;
-        }
-
-        .pie {
-            font-size: 10px;
-            text-align: center;
-            border-top: grey 1px solid;
-            margin-top: 20px;
-            padding-top: 10px;
-        }
-
-        #footer .page:after {
-            content: counter(page, decimal);
+            size: letter;
+            margin-bottom: 50mm;
         }
 
         #header {
@@ -54,6 +35,28 @@
 
         * {
             margin-bottom: 0px !important;
+        }
+
+        main {
+            margin-bottom: 40px !important;
+        }
+
+
+        .pie {
+            font-size: 10px;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        #footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            border-top: 1px solid gray;
+            /* Borde superior */
+            padding-top: 5px;
+            height: 1.5cm;
         }
     </style>
 </head>
@@ -71,11 +74,8 @@
     </header>
 
     <footer id="footer">
-        <p class="pie">
-            Av. Parres Arias #150 Colonia San José del Bajío C.P. 45132 Zapopan, Jal. Edificio E
-            Piso 2, <br> Tel. (33) 38193300 Ext. 23700 / <span class="page">Página </span></p>
-    </footer>
 
+    </footer>
 
     <main style="clear: both;">
         <div style="text-align:right;">
@@ -116,20 +116,7 @@
 
         @if (strcmp($oficio->con_copia, '-') != 0 && isset($oficio->con_copia))
             <div style="font-size: 10px; text-align:left;">
-                <p>
-                <table>
-                    @php
-                        $temp = explode('@', $oficio->con_copia);
-                    @endphp
-                    @foreach (collect($temp) as $item)
-                        <tr>
-                            <td>
-                                c.c.p. {{ $item }}
-                            </td>
-                        </tr>
-                    @endforeach
-                </table>
-                </p>
+                {!! $oficio->con_copia !!}
             </div>
         @endif
     </main>
