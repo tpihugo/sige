@@ -108,7 +108,7 @@ class OficiosController extends Controller
             }
         }
 
-        $oficio->con_copia = $request->con_copia;
+        $oficio->con_copia = isset($request->con_copia) ? $request->con_copia : '';
         //return $oficio;
         $oficio->save();
         $anio = date('Y');
@@ -123,7 +123,7 @@ class OficiosController extends Controller
                 $oficio->$key = $request->$key;
             }
         }
-        $oficio->con_copia = $request->con_copia;
+        $oficio->con_copia =isset($request->con_copia) ? $request->con_copia : '';
         $oficio->update();
 
         $anio = date('Y');
