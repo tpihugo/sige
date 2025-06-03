@@ -21,7 +21,7 @@
             </p>
         </div>";
     $coordinador = "<p style='text-align:center;line-height: 1;'>
-                <b>MTRO. VICTOR HUGO RAMIREZ SALAZAR <br>
+                <b>MTRO. VÍCTOR HUGO RAMÍREZ SALAZAR <br>
                     Coordinador de Tecnologías para el Aprendizaje</b>
             </p>";
 @endphp
@@ -32,7 +32,7 @@
     <script>
         tinymce.init({
             selector: 'textarea#cuerpo',
-            content_style: "body, p { line-height: 1.5 !important; }",
+            content_style: "body, p { line-height: 1.4 !important; }",
             width: "100%",
             language: 'es_MX',
             language_url: '{{ $ruta }}',
