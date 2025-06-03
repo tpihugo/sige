@@ -29,7 +29,6 @@
     @php
         $ruta = asset('js/es_MX.js');
     @endphp
-
     <script>
         tinymce.init({
             selector: 'textarea#cuerpo',
@@ -38,8 +37,7 @@
             language: 'es_MX',
             language_url: '{{ $ruta }}',
             height: 500,
-            plugins: 'table | pagebreak | print',
-            toolbar: 'print | pagebreak',
+            plugins: 'table',
             menubar: true, // removes the menubar
         });
 

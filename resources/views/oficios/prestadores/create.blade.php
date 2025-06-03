@@ -135,7 +135,7 @@
                         <tr>
                             <td>CUCSH</td>
                             <td>Lic. Nallely Guadalupe Robles Ortiz</td>
-                            <td>Lic. Alfredo Don Olivera</td>
+                            <td>Lic. Francisco Saúl Pérez Avila</td>
                         </tr>
                         <tr>
                             <td>CUCEI</td>
