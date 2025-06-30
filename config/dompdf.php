@@ -45,7 +45,7 @@ return array(
          * Times-Roman, Times-Bold, Times-BoldItalic, Times-Italic,
          * Symbol, ZapfDingbats.
          */
-        "font_dir" => storage_path('fonts'), // advised by dompdf (https://github.com/dompdf/dompdf/pull/782)
+        "font_dir" => public_path('fonts'), // advised by dompdf (https://github.com/dompdf/dompdf/pull/782)
 
         /**
          * The location of the DOMPDF font cache directory
@@ -55,7 +55,7 @@ return array(
          *
          * Note: This directory must exist and be writable by the webserver process.
          */
-        "font_cache" => storage_path('fonts'),
+        "font_cache" => public_path('fonts'),
 
         /**
          * The location of a temporary directory.
@@ -96,9 +96,9 @@ return array(
             "https://" => ["rules" => []]
         ],
 
-         /**
-          * @var string
-          */
+        /**
+         * @var string
+         */
         'log_output_file' => null,
 
         /**
@@ -169,15 +169,15 @@ return array(
          *
          * @see CPDF_Adapter::PAPER_SIZES for valid sizes ('letter', 'legal', 'A4', etc.)
          */
-        "default_paper_size" => "a4",
+        "default_paper_size" => "letter",
 
-         /**
-          * The default paper orientation.
-          *
-          * The orientation of the page (portrait or landscape).
-          *
-          * @var string
-          */
+        /**
+         * The default paper orientation.
+         *
+         * The orientation of the page (portrait or landscape).
+         *
+         * @var string
+         */
         'default_paper_orientation' => "portrait",
 
         /**
@@ -221,7 +221,7 @@ return array(
          *
          * @var int
          */
-        "dpi" => 96,
+        "dpi" => 100,
 
         /**
          * Enable inline PHP
@@ -278,6 +278,13 @@ return array(
          * @var bool
          */
         "enable_html5_parser" => true,
+
+        'font_data' => [
+            'Montserrat' => [
+                'R' => 'Montserrat-Regular.ttf',
+                'B' => 'Montserrat--Bold.ttf',   
+            ],
+        ],
     ),
 
 

@@ -3,7 +3,8 @@
     setlocale(LC_TIME, 'es_MX.UTF-8', 'esp');
     $anio = explode('-', $oficio->created_at)[0];
     $fecha = strtotime(date('Y-m-d'));
-    $img = asset('images/Logo-udg.png');
+    $img = asset('images/logo_nuevo.png');
+
 @endphp
 <!DOCTYPE html>
 <html lang="es">
@@ -16,10 +17,33 @@
     <title>CUCSH/SA/CTA/{{ $oficio->num_oficio }}/{{ $anio }}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
     <style>
+        @font-face {
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 400;
+            src: url('{{ asset('fonts/Montserrat-Regular.ttf') }}') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 700;
+            src: url('{{ asset('fonts/Montserrat-Bold.ttf') }}') format('truetype');
+        }
+
+        body {
+            font-family: 'Montserrat';
+            font-size: 16px;
+        }
+
         @page {
             margin-top: 10px;
             size: letter;
             margin-bottom: 50mm;
+        }
+
+        .bold-text {
+            font-weight: bold;
         }
 
         #header {
@@ -28,8 +52,6 @@
             left: 0px;
             right: 0px;
             height: 50px;
-
-            /** Extra personal styles **/
             line-height: 35px;
         }
 
@@ -40,7 +62,6 @@
         main {
             margin-bottom: 40px !important;
         }
-
 
         .pie {
             font-size: 10px;
@@ -58,6 +79,7 @@
             padding-top: 5px;
             height: 1.5cm;
         }
+        
     </style>
 </head>
 
@@ -65,11 +87,13 @@
 <body>
     <header id="header">
         <div style="height: 100%">
-            <img src="{{ $img }}" width="75px"
-                style="float:left;margin-right:20px; padding-right:20px; border-right:solid grey; 2px">
-            <p style="margin-top: 30px; line-height:1;font-size:16px;">UNIVERSIDAD DE GUADALAJARA <br>
-                CENTRO UNIVERSITARIO DE CIENCIAS SOCIALES Y HUMANIDADES <br>
-                SECRETARÍA ACADÉMICA <br> COORDINACIÓN DE TECNOLOGÍAS PARA EL APRENDIZAJE</p>
+            <img src="{{ $img }}" width="100px" style="float:left;margin-right:20px; padding-right:20px;">
+            <p style="margin-top: 30px;line-height:.8;" >
+                <span style="font-size: 11pt;" class="bold-text">UNIVERSIDAD DE GUADALAJARA </span><br>
+                <span style="color:#7D91BE;font-size: 10pt;" class="bold-text"> CENTRO UNIVERSITARIO DE CIENCIAS SOCIALES Y HUMANIDADES</span> <br>
+                <span style="font-size: 8pt;">SECRETARÍA ACADÉMICA</span> <br>
+                <span style="font-size: 8pt;">COORDINACIÓN DE TECNOLOGÍAS PARA EL APRENDIZAJE</span>
+            </p>
         </div>
     </header>
 
@@ -81,34 +105,32 @@
         <div style="text-align:right;">
             <div class="col-auto ">
                 CUCSH/SA/CTA/{{ $oficio->num_oficio }}/{{ $anio }}
-            </div>
+            </div>.
         </div>
-
         <div style="width:100%;margin-top:1cm;">
-            <span style="line-height:1;overflow-wrap: break-word;width:100%">
-                <b>
-                    {{ Str::upper($oficio->dirigido) }}<br>
+            <p style="line-height:1;overflow-wrap: break-word;" class="bold-text">
 
-                    {{ strcmp($oficio->puesto_dirigido, '-') != 0 ? Str::upper($oficio->puesto_dirigido) : '' }}<br>
-                    {{ Str::upper($oficio->centro_universitario) }}
-                    <br>
-                    PRESENTE
-                </b>
-            </span>
+                {{ Str::upper($oficio->dirigido) }}<br>
+
+                {{ strcmp($oficio->puesto_dirigido, '-') != 0 ? Str::upper($oficio->puesto_dirigido) : '' }}<br>
+                {{ Str::upper($oficio->centro_universitario) }} <br>
+                PRESENTE
+
+            </p>
         </div>
         @if (strcmp($oficio->atencion, '') != 0)
-            <div style="text-align:right;">
-                <span class="text-end">
+            <div style="text-align:right;line-height:1;">
+                <p class="text-end">
                     @php
                         $oficio->atencion = 'Atención: ' . $oficio->atencion;
                     @endphp
                     {{ Str::upper($oficio->atencion) }}
                     <br>
                     {{ Str::upper($oficio->puesto_atencion) }}
-                </span>
+                </p>
             </div>
         @endif
-
+        <script src="{{ asset('js/tinymce/tinymce.min.js') }}"></script>
 
         <div style="margin-top:15px;  margin-bottom:1.10cm !important; padding-bottom:15px; width:100%;">
             {!! $oficio->cuerpo !!}

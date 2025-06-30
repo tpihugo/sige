@@ -384,12 +384,12 @@ class AreaController extends Controller
             ->first();
 
         $equipo = VsEquipo::where('activo', 1)->select('id', 'udg_id', 'resguardante', 'marca', 'modelo', 'numero_serie', 'tipo_equipo')->where('id_area', '=', $id)
-            ->whereIn('tipo_equipo', ['CPU', 'Proyector', 'Pantalla', 'No break', 'Bocinas', 'Soporte para Proyector', 'Botonera', 'Camara'])->orderBy('tipo_equipo')
+            ->whereIn('tipo_equipo', ['CPU', 'Proyector', 'Monitor', 'Pantalla', 'No break', 'Bocinas', 'Soporte para Proyector', 'Botonera', 'Camara'])->orderBy('tipo_equipo')
             ->get();
 
         $grupos = VsEquipo::where('activo', 1)
             ->where('id_area', '=', $id)
-            ->whereIn('tipo_equipo', ['CPU', 'Proyector', 'Pantalla', 'No break', 'Bocinas', 'Soporte para Proyector', 'Botonera', 'Camara'])->get()->groupBy(function ($elmento) {
+            ->whereIn('tipo_equipo', ['CPU', 'Monitor','Proyector', 'Pantalla', 'No break', 'Bocinas', 'Soporte para Proyector', 'Botonera', 'Camara'])->get()->groupBy(function ($elmento) {
                 return $elmento->tipo_equipo;
             });
 
