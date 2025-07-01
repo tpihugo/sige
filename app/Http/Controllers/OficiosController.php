@@ -75,10 +75,10 @@ class OficiosController extends Controller
         $width = $canvas->get_width();
         $x_center = ($width / 2) - 50; // Ajusta según el ancho del texto
 
-        $canvas->page_text($x_center, 750, "Parres Arias No. 150 Los Belenes C.P. 45132.", null, 10, [0, 0, 0]);
-        $canvas->page_text(100, 760, "www.cucsh.udg.mx", null, 10, [0, 0, 0]);
-        $canvas->page_text($x_center, 760, "Zapopan, Jalisco, México.   Tel. +52 (33) 38193300 Ext. 23700", null, 10, [0, 0, 0]);
-        $canvas->page_text($x_center, 770, "Página {PAGE_NUM} de {PAGE_COUNT}", null, 10, [0, 0, 0]);
+        $canvas->page_text($x_center, 750, "Parres Arias No. 150 Los Belenes C.P. 45132.", null, 8, [0, 0, 0]);
+        $canvas->page_text(100, 760, "www.cucsh.udg.mx", null, 11, "#7D91BE");
+        $canvas->page_text($x_center, 760, "Zapopan, Jalisco, México.   Tel. +52 (33) 38193300 Ext. 23700", null, 8, [0, 0, 0]);
+        $canvas->page_text($x_center, 770, "Página {PAGE_NUM} de {PAGE_COUNT}", null, 8, [0, 0, 0]);
 
         return $pdf->stream();
     }
@@ -128,6 +128,9 @@ class OficiosController extends Controller
         foreach ($request->request as $key => $value) {
             if (!is_null($value) && strcmp('_token', $key) != 0 && strcmp('_method', $key) != 0 && strcmp('con_copia', $key) != 0) {
                 $oficio->$key = $request->$key;
+            }
+            if (is_null($value)) {
+                $oficio->$key = null;
             }
         }
         $oficio->con_copia = isset($request->con_copia) ? $request->con_copia : '';

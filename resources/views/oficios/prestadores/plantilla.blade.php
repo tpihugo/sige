@@ -31,9 +31,16 @@
             src: url('{{ asset('fonts/Montserrat-Bold.ttf') }}') format('truetype');
         }
 
+        @font-face {
+            font-family: 'Times New Roman';
+            font-style: normal;
+            font-weight: 700;
+            src: url('{{ asset('fonts/Times New Roman Bold.ttf') }}') format('truetype');
+        }
+
         body {
             font-family: 'Montserrat';
-            font-size: 16px;
+            font-size: 11pt;
         }
 
         @page {
@@ -79,7 +86,11 @@
             padding-top: 5px;
             height: 1.5cm;
         }
-        
+
+        .titulo {
+            font-family: "Times New Roman", "Monserrat";
+            font-size: 11pt;
+        }
     </style>
 </head>
 
@@ -87,10 +98,11 @@
 <body>
     <header id="header">
         <div style="height: 100%">
-            <img src="{{ $img }}" width="100px" style="float:left;margin-right:20px; padding-right:20px;">
-            <p style="margin-top: 30px;line-height:.8;" >
-                <span style="font-size: 11pt;" class="bold-text">UNIVERSIDAD DE GUADALAJARA </span><br>
-                <span style="color:#7D91BE;font-size: 10pt;" class="bold-text"> CENTRO UNIVERSITARIO DE CIENCIAS SOCIALES Y HUMANIDADES</span> <br>
+            <img src="{{ $img }}" height="100px" style="float:left;margin-right:20px; padding-right:20px;">
+            <p style="margin-top: 30px;line-height:.8;">
+                <span class="bold-text titulo">UNIVERSIDAD DE GUADALAJARA </span><br>
+                <span style="color:#7D91BE;font-size: 10pt;" class="bold-text"> CENTRO UNIVERSITARIO DE CIENCIAS
+                    SOCIALES Y HUMANIDADES</span> <br>
                 <span style="font-size: 8pt;">SECRETARÍA ACADÉMICA</span> <br>
                 <span style="font-size: 8pt;">COORDINACIÓN DE TECNOLOGÍAS PARA EL APRENDIZAJE</span>
             </p>
@@ -108,7 +120,7 @@
             </div>.
         </div>
         <div style="width:100%;margin-top:1cm;">
-            <p style="line-height:1;overflow-wrap: break-word;" class="bold-text">
+            <p style="line-height:.8;overflow-wrap: break-word;" class="bold-text">
 
                 {{ Str::upper($oficio->dirigido) }}<br>
 
@@ -118,7 +130,7 @@
 
             </p>
         </div>
-        @if (strcmp($oficio->atencion, '') != 0)
+        @if (isset($oficio->atencion))
             <div style="text-align:right;line-height:1;">
                 <p class="text-end">
                     @php
@@ -136,7 +148,7 @@
             {!! $oficio->cuerpo !!}
         </div>
 
-        @if (strcmp($oficio->con_copia, '-') != 0 && isset($oficio->con_copia))
+        @if (isset($oficio->con_copia))
             <div style="font-size: 10px; text-align:left;">
                 {!! $oficio->con_copia !!}
             </div>
