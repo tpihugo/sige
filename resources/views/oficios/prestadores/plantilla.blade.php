@@ -40,7 +40,7 @@
 
         body {
             font-family: 'Montserrat';
-            font-size: 11pt;
+            font-size: 10pt;
         }
 
         @page {
@@ -93,8 +93,6 @@
         }
     </style>
 </head>
-
-
 <body>
     <header id="header">
         <div style="height: 100%">

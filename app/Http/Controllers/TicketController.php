@@ -102,12 +102,6 @@ class TicketController extends Controller
 
     }
 
-    
-
-
-
-
-
     }
     //este el que se modificó fin de la modificación 1
     public function cargarDT($consulta)

@@ -1,5 +1,6 @@
 {
     "montserrat": {
-        "normal": "montserrat_normal_afb59213e72d0ba797a1270a7e2db631"
+        "normal": "./montserrat_normal_05647064c713a6568f17b81b59b4b258",
+        "bold": "./montserrat_bold_be0446d43d457058c5ec8ce0945cb72e"
     }
 }

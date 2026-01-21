@@ -16,15 +16,38 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
 
     <style>
+        @font-face {
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 400;
+            src: url('{{ asset('fonts/Montserrat-Regular.ttf') }}') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 700;
+            src: url('{{ asset('fonts/Montserrat-Bold.ttf') }}') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'Times New Roman';
+            font-style: normal;
+            font-weight: 700;
+            src: url('{{ asset('fonts/Times New Roman Bold.ttf') }}') format('truetype');
+        }
+
+        body {
+            font-family: 'Montserrat';
+            font-size: 10pt;
+        }
+
         .pie {
             font-size: 10px;
             text-align: right;
             border-top: grey 1px solid;
-            margin-top:10px;padding-top:10px;
-        }
-
-        td {
-            font-size: 12px;
+            margin-top: 10px;
+            padding-top: 10px;
         }
 
         footer {
@@ -34,6 +57,12 @@
             right: 0cm;
             height: 2cm;
         }
+
+        td {
+            font-size: 12px;
+        }
+
+
 
         @page {
             margin-top: 10px;
@@ -50,12 +79,12 @@
     </footer>
     <main id="content">
         <div>
-            <div >
-                <div >
+            <div>
+                <div>
                     <p class="text-center"><img class="img-responsive" src="images/logo.jpg" width="100%"></p>
                 </div>
             </div>
-            <div >
+            <div>
                 <div>
                     <table class="table table-bordered" style="width:100%;">
                         <thead class="thead-light">
