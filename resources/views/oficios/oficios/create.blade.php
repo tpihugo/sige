@@ -13,7 +13,7 @@
             <p>
                 ATENTAMENTE <br>
                 <b> “PIENSA Y TRABAJA”<br>
-                    “1925-2025, Un Siglo de Pensar y Trabajar” </b><br>
+                    “40 años de la Feria Internacional del Libro de Guadalajara” </b><br>
 
                 Zapopan, Jalisco, " .
         $fecha .
