@@ -115,7 +115,7 @@
         <div style="text-align:right;">
             <div class="col-auto ">
                 CUCSH/SA/CTA/{{ $oficio->num_oficio }}/{{ $anio }}
-            </div>.
+            </div>
         </div>
         <div style="width:100%;margin-top:1cm;">
             <p style="line-height:.8;overflow-wrap: break-word;" class="bold-text">
