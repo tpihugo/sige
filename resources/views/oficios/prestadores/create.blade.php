@@ -21,7 +21,7 @@
             </p>
         </div>";
     $coordinador = "<p style='text-align:center;line-height: 1;'>
-                <b>MTRO. VÍCTOR HUGO RAMÍREZ SALAZAR <br>
+                <b>ING. DIEGO ALBERTO AYALA VÁZQUEZ <br>
                     Coordinador de Tecnologías para el Aprendizaje</b>
             </p>";
 @endphp
